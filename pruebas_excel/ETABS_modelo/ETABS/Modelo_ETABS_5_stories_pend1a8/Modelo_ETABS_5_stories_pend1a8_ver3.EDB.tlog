@@ -1,0 +1,9 @@
+﻿Índice fuera de los límites de la matriz.
+   en arw.i(Object A_0, EventArgs A_1)
+   en System.Windows.Forms.Timer.OnTick(EventArgs e)
+   en System.Windows.Forms.Timer.TimerNativeWindow.WndProc(Message& m)
+   en System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)Índice fuera de los límites de la matriz.
+   en arw.i(Object A_0, EventArgs A_1)
+   en System.Windows.Forms.Timer.OnTick(EventArgs e)
+   en System.Windows.Forms.Timer.TimerNativeWindow.WndProc(Message& m)
+   en System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)

@@ -1,0 +1,12 @@
+﻿Referencia a objeto no establecida como instancia de un objeto.
+   en at6.a(Int32 ipw)
+   en at6.a(Int32& A_0, Boolean A_1, Boolean A_2, Boolean A_3, Boolean A_4)
+   en CSI.ETABS.mdiMainForm.mdiMainForm_Resize(Object sender, EventArgs e)
+   en System.Windows.Forms.Control.OnResize(EventArgs e)
+   en System.Windows.Forms.Form.OnResize(EventArgs e)
+   en System.Windows.Forms.Control.OnSizeChanged(EventArgs e)
+   en System.Windows.Forms.Control.UpdateBounds(Int32 x, Int32 y, Int32 width, Int32 height, Int32 clientWidth, Int32 clientHeight)
+   en System.Windows.Forms.Control.UpdateBounds()
+   en System.Windows.Forms.Control.WndProc(Message& m)
+   en System.Windows.Forms.Form.WndProc(Message& m)
+   en System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)

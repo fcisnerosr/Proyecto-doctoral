@@ -1,0 +1,12 @@
+﻿Un componente externo produjo una excepción.
+   en SharpDX.Direct2D1.RenderTarget.FillGeometry(Geometry geometry, Brush brush, Brush opacityBrush)
+   en CSI.CSICommon.DX11.Graphics.Graphics.RenderD2D_DrawUnShaddedAreas(List`1 AreaList)
+   en CSI.CSICommon.DX11.Graphics.Graphics.RenderD2D()
+   en CSI.CSICommon.DX11.Graphics.Graphics.Render(Single rotation)
+   en CSI.CSICommon.DX11.Graphics.Graphics.Frame()
+   en CSI.CSICommon.DX11.System.System.Frame()
+   en CSI.CSICommon.DX11.System.System.RenderFrame()
+   en avl.i(Int32& A_0)
+   en at6.a(Int32& A_0, Boolean A_1, Boolean A_2, Boolean A_3, Boolean A_4)
+   en at6.a(Int32& A_0, Boolean A_1)
+   en apd.b2(String ToolName)

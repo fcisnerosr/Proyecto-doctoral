@@ -1,0 +1,40 @@
+11/may/24
+ETABS
+	MODEL DEFINITION
+		System Data
+			Towers, Stories and Grids
+				Table: Tower and Base Story Definitions
+				Table: Story Definitions
+		Property Definitions
+			Material Properties
+				Materia Properties - Basic Mechanical Properties
+			Frame Section Properties
+				Table: Frame Section Property Definitions - Summary
+				Table: Frame Section Property Definitions - Steel Pipe
+				Table: Frame Section Property Definitions - Steel I/Wide Flange
+		Other Definitions
+			Group Data
+				Table: Group Definitions o Table: Group Assigments				
+		Connectivity Data
+			Bays
+				Table: Point Bays
+				Table: Beam Bays
+				Table: Brace Bays
+			Object Connectivity
+				Table: Point Object Connectivity
+				Table: Beam Object Connectivity
+				Table: Brace Object Connectivity
+				Table: Dimension Line Object Connectivity
+		Joint Assigments
+			Joint Item Assigments
+				Table: Joint Assigments - Restraints				
+		Frame Assigments
+			Frame Item Assigments
+				Table: Frame Assigments - Summary
+				Table: Frame Assigments - Section Properties
+	
+	ANALYSIS RESULTS
+		Joint Output
+			Joint Masses
+				Table: Aseembled Joint Masses		
+
