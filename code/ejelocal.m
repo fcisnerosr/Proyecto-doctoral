@@ -25,7 +25,8 @@ vyuser  = vyuser1/norm(vyuser1);
 vzuser1 = cross(vxl,vyuser);
 vzuser  = vzuser1/norm(vzuser1);
 
-cosalpha = round(dot(vyuser,vydef),5);
+% cosalpha = round(dot(vyuser,vydef),5);
+cosalpha = round(dot(vyuser,vydef));
 alpha    = acos(cosalpha);
 if cosalpha == 0
     sinalpha = sum(cross(vyuser,vydef));
