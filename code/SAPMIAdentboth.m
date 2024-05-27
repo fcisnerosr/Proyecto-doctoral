@@ -29,7 +29,7 @@ format shortG
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% Datos iniciales de entrada
-    archivo_excel = 'E:\Archivos_Jaret\Mis_modificaciones\pruebas_excel\Datos_nudos_elementos_secciones_masas_nuevo_pend1a8_vigasI.xlsx';
+    archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\Datos_nudos_elementos_secciones_masas_nuevo_pend1a8_vigasI.xlsx';
     tirante = 87000;    % en mm
     tiempo  = 03;       % en años
     d_agua = 1.07487 * 10^-8; % unidades de la densidad del agua en N/mm^3
