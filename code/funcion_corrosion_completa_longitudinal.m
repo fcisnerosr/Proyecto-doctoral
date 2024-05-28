@@ -20,7 +20,6 @@ format short G
             end                                                             %                  
         D       = 600;      % Diametro_de_elemento_tubular_en_mm;           %
         t       = 25.4;     % Espesor_en_mm;                                %
-%         L_D     = Long;     % longitud dañada_en_mm;                      %
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%% COMENTAR hasta ACÁ %%%%
     L = Long;
