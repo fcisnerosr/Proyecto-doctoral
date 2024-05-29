@@ -44,43 +44,31 @@
 % % Convertir a valores numéricos
 % numeric_array = cell2mat(cell_array)
 
-% NE = 10;
-% no_elemento_a_danar = [1, 6];
-% elem_rep = zeros(length(no_elemento_a_danar),NE);
-% 
-% for i = 1:length(no_elemento_a_danar)
-%     for j = 1:NE
-%         elem_rep(i,j) = no_elemento_a_danar(i);
-%     end
-% end
-% 
-% elem_rep_fila = zeros(length(1),NE);
-% j = [];
+NE = 10;
+no_elemento_a_danar = [1, 6];
+elem_rep = zeros(length(no_elemento_a_danar),NE);
+
+for i = 1:length(no_elemento_a_danar)
+    for j = 1:NE
+        elem_rep(i,j) = no_elemento_a_danar(i);
+    end
+end
+
+elem_rep_fila = zeros(length(1),NE);
+j = [];
 % for i = 1:height(elem_rep)
 %     j(i) = i;
 % end
-% 
-% % for i = 1:length(j)
-% 
-%     vector1 = elem_rep(1,no_elemento_a_danar(1):no_elemento_a_danar(2)-1)
-%     vector2 = elem_rep(2,no_elemento_a_danar(2):end)
-%     vector_concatenado = horzcat(vector1, vector2)
-%     vector3 = elem_rep(2,no_elemento_a_danar(2):end)
-% end
-% 
 
+d = 'd'
 
-% j = 1
-% for j = 1:height(elem_rep)
-% for i = 1:length(elem_rep_fila) 
-% 
-% 
-%     if elem_rep(i,j) == no_elemento_a_danar(j)
-%             elem_rep_fila(i) = elem_rep(i,j)
-%             % j = j+1;
-%         end
-%     end
-% end
+for i = 1:length(elem_rep_fila) 
+    for j = 1:height(elem_rep)
+        if elem_rep_fila(i) == no_elemento_a_danar(j(i)) | elem_rep_fila(i) < no_elemento_a_danar(j(i))
+            elem_rep_fila(i) = elem_rep(i,j)
+        end
+    end
+end
 
 
 
@@ -112,22 +100,4 @@
 
 
 
-
-NE = 100;
-no_elemento_a_danar = [1, 6, 7,90];  % Puedes modificar estos valores según sea necesario
-
-% Inicializar vector_concatenado como un vector vacío
-vector_concatenado = [];
-
-% Construir el vector_concatenado
-for i = 1:length(no_elemento_a_danar)
-    if i < length(no_elemento_a_danar)
-        vector_concatenado = [vector_concatenado, ones(1, no_elemento_a_danar(i + 1) - no_elemento_a_danar(i)) * no_elemento_a_danar(i)];
-    else
-        vector_concatenado = [vector_concatenado, ones(1, NE - no_elemento_a_danar(i) + 1) * no_elemento_a_danar(i)];
-    end
-end
-
-% Mostrar el resultado
-disp(vector_concatenado);
 
