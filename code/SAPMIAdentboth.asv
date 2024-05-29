@@ -6,8 +6,7 @@ tic
 format shortG
 
 %% Datos iniciales de entrada
-    % archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\Datos_nudos_elementos_secciones_masas_nuevo_pend1a8_vigasI.xlsx';
-    archivo_excel = '/home/francisco/Documents/Proyecto-doctoral/pruebas_excel/Datos_nudos_elementos_secciones_masas_nuevo_pend1a8_vigasI.xlsx';
+    archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\Datos_nudos_elementos_secciones_masas_nuevo_pend1a8_vigasI.xlsx';
     tirante = 87000;    % en mm
     tiempo  = 03;       % en anos
     d_agua = 1.07487 * 10^-8; % unidades de la densidad del agua en N/mm^3
@@ -15,8 +14,8 @@ format shortG
     % Valor de la dessidad del crecimiento marino
             % Valor de internet = 1325 kg/m^3
             % Conversión: 1325 kg/m^3 * (1 N / 9.81 kg) * (1 m^3/1000^3 m^3) = 1.3506*10^-7 en N/mm^3
-    % pathfile = 'E:\Archivos_Jaret\Mis_modificaciones\pruebas_excel\marco3Ddam0.xlsx';
-    pathfile = '/home/francisco/Documents/Proyecto-doctoral/pruebas_excel/marco3Ddam0.xlsx';
+    pathfile = 'E:\Archivos_Jaret\Mis_modificaciones\pruebas_excel\marco3Ddam0.xlsx';
+    % pathfile = 'E:\Archivos_Jaret\todos\Jaret3erPlataforma_wo.xlsx';
 
 %% Corregir de formato los números en la tabla importada de ETABS: En todo este bloque de código, se realizó el cambio de formato de los números, debido a que ETABS importa sus tablas en formato de texto en algunas columnas.
 % % % % correccion_format_TablaETABS(archivo_excel);
@@ -31,16 +30,16 @@ format shortG
 
 
 % Lectura de datos del modelo de ETABS
-    % coordenadas, vxz, conectividad, prop_geom, matriz_restriccion, matriz_cell_secciones]    = lectura_datos_modelo_ETABS(archivo_excel); 
+    [coordenadas, vxz, conectividad, prop_geom, matriz_restriccion, matriz_cell_secciones]    = lectura_datos_modelo_ETABS(archivo_excel); 
 
 % Modificación de la matriz de masas
-    % [masas_en_cada_nodo]                                                                      = modificacion_matriz_masas(archivo_excel, tirante, d_agua, matriz_cell_secciones, tiempo, densidad_crec);
+    [masas_en_cada_nodo]                                                                      = modificacion_matriz_masas(archivo_excel, tirante, d_agua, matriz_cell_secciones, tiempo, densidad_crec);
 
 % Escritura de los datos hacia la hoja de excel del Dr. Rolando
-    % escritura_datos_hoja_excel_del_dr_Rolando(coordenadas, vxz, conectividad, prop_geom, matriz_restriccion,masas_en_cada_nodo);
+    escritura_datos_hoja_excel_del_dr_Rolando(coordenadas, vxz, conectividad, prop_geom, matriz_restriccion,masas_en_cada_nodo);
 
 % Matriz de masas completa y condensada
-    % [M_cond]                                                                                  = Matriz_M_completa_y_condensada(coordenadas, masas_en_cada_nodo);
+    [M_cond]                                                                                  = Matriz_M_completa_y_condensada(coordenadas, masas_en_cada_nodo);
 
 % Lectura de datos de la hoja de EXCEL del dr. Rolando para la función "Ensamblaje de matrices globales"
     [NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, E, G, vxz, ID, KG, KGtu] = lectura_hoja_excel(pathfile);
@@ -82,55 +81,52 @@ format shortG
             % en el siguiente subloque se convierte se la matriz de transformacion T para convertirla en matriz de rigidez local completa. Ya que al intentar
             % invertirla produce valores indeterminados
         f_AA_d  = zeros( 6,  6, length(no_elemento_a_danar));
-        % ke_d    = zeros(12, 12, length(no_elemento_a_danar)); 
-        ke_d    = zeros(12, 12, NE); 
+        ke_d    = zeros(12, 12, length(no_elemento_a_danar)); 
         % SUBLOQUE: Asignación de corrosión al area y a las inercias de la seccion 
-        % for j = i:NE
-            for i = 1:length(no_elemento_a_danar)
-                % reduccion de espesor por corrosion
-                t(i)        = prop_geom(i,10);                      % Estraccion de espesor sin dano
-                t_corro(i)  = dano_porcentaje_corr(i) * t(i) / 100; % Espesor que va a restar al espesor sin dano
-                t_d(i)      = t(i) - t_corro(i);                    % Espesor ya reducido. El subíndice "_d" es de "damaged"
-                % Área con corrosion
-                D(i)            = prop_geom(i,8);
-                D_d(i)          = D(i) - (2*t_corro(i));
-                R_d(i)          = 0.5 * D_d(i);
-                A1_d(i)         = pi  * R_d(i)^2;  
-                R_interior_d(i) = 0.5 * (D_d(i) - (2*t_d(i)));
-                A2_d(i)         = pi  * R_interior_d(i)^2;
-                A_d(i)          = A1_d(i) - A2_d(i);             % en mm^2. El subíndice "_u" es de "undamaged" 
-                % Momento de inercia con dano
-                R_ext_d(i)          = 0.5*D_d(i);
-                I_ext_d(i)          = 1/4 * pi * R_ext_d(i)^4;
-                I_int_d(i)          = 1/4 * pi *  R_interior_d(i)^4;
-                I_d(i)              = I_ext_d(i) - I_int_d(i);
-                L                   = long_elem_con_dano(i);
-                % SUBLOQUE: Matriz de flexibilidades y usop de matriz de transformación T para convertirla a la matriz de rigidez local completa sin necesidad de
-                % invertirla.
-                % Elemento tubular dañado
-                f_AA_d(:,:,i) = [L/(E(i)*A_d(i))    0                       0                       0                 0                     0;...
-                                0                   L^3/(3*E(i)*I_d(i))     0                       0                 0                     L^2/(2*E(i)*I_d(i));...
-                                0                   0                       L^3/(3*E(i)*I_d(i))     0                 -L^2/(2*E(i)*I_d(i))  0;...
-                                0                   0                       0                       L/(G(i)*J(i))     0                     0;...
-                                0                   0                       -L^2/(2*E(i)*I_d(i))    0                 L/(E(i)*I_d(i))       0;...
-                                0                   L^2/(2*E(i)*I_d(i))     0                       0                 0                     L/(E(i)*I_d(i))];
-                % Matriz de transformación para evitar invertir la matriz de flexibilidades
-                T   = [-1    0      0       0   0   0
-                        0    -1     0       0   0   0 
-                        0    0      -1      0   0   0
-                        0    0      0       -1  0   0
-                        0    0      L       0   -1  0
-                        0   -L      0       0   0  -1
-                        1    0      0       0   0   0
-                        0    1      0       0   0   0
-                        0    0      1       0   0   0
-                        0    0      0       1   0   0
-                        0    0      0       0   1   0
-                        0    0      0       0   0   1];
-                ke_d(:,:,i) = T * f_AA_d(:,:,i)^(-1) * T';   % Matriz de rigidecez local del elemento tubular
-                clear L                                      % Se borra la variable L ya que en el ensamblaje de matriz de rigidez se vuelve a usar esta variable
-            end
-        % end
+        for i = 1:length(no_elemento_a_danar)
+            % reduccion de espesor por corrosion
+            t(i)        = prop_geom(i,10);                      % Estraccion de espesor sin dano
+            t_corro(i)  = dano_porcentaje_corr(i) * t(i) / 100; % Espesor que va a restar al espesor sin dano
+            t_d(i)      = t(i) - t_corro(i);                    % Espesor ya reducido. El subíndice "_d" es de "damaged"
+            % Área con corrosion
+            D(i)            = prop_geom(i,8);
+            D_d(i)          = D(i) - (2*t_corro(i));
+            R_d(i)          = 0.5 * D_d(i);
+            A1_d(i)         = pi  * R_d(i)^2;  
+            R_interior_d(i) = 0.5 * (D_d(i) - (2*t_d(i)));
+            A2_d(i)         = pi  * R_interior_d(i)^2;
+            A_d(i)          = A1_d(i) - A2_d(i);             % en mm^2. El subíndice "_u" es de "undamaged" 
+            % Momento de inercia con dano
+            R_ext_d(i)          = 0.5*D_d(i);
+            I_ext_d(i)          = 1/4 * pi * R_ext_d(i)^4;
+            I_int_d(i)          = 1/4 * pi *  R_interior_d(i)^4;
+            I_d(i)              = I_ext_d(i) - I_int_d(i);
+            L                   = long_elem_con_dano(i);
+            % SUBLOQUE: Matriz de flexibilidades y usop de matriz de transformación T para convertirla a la matriz de rigidez local completa sin necesidad de
+            % invertirla.
+            % Elemento tubular dañado
+            f_AA_d(:,:,i) = [L/(E(i)*A_d(i))    0                       0                       0                 0                     0;...
+                            0                   L^3/(3*E(i)*I_d(i))     0                       0                 0                     L^2/(2*E(i)*I_d(i));...
+                            0                   0                       L^3/(3*E(i)*I_d(i))     0                 -L^2/(2*E(i)*I_d(i))  0;...
+                            0                   0                       0                       L/(G(i)*J(i))     0                     0;...
+                            0                   0                       -L^2/(2*E(i)*I_d(i))    0                 L/(E(i)*I_d(i))       0;...
+                            0                   L^2/(2*E(i)*I_d(i))     0                       0                 0                     L/(E(i)*I_d(i))];
+            % Matriz de transformación para evitar invertir la matriz de flexibilidades
+            T   = [-1    0      0       0   0   0
+                    0    -1     0       0   0   0 
+                    0    0      -1      0   0   0
+                    0    0      0       -1  0   0
+                    0    0      L       0   -1  0
+                    0   -L      0       0   0  -1
+                    1    0      0       0   0   0
+                    0    1      0       0   0   0
+                    0    0      1       0   0   0
+                    0    0      0       1   0   0
+                    0    0      0       0   1   0
+                    0    0      0       0   0   1];
+            ke_d(:,:,i) = T * f_AA_d(:,:,i)^(-1) * T';   % Matriz de rigidecez local del elemento tubular
+            clear L                                      % Se borra la variable L ya que en el ensamblaje de matriz de rigidez se vuelve a usar esta variable
+        end
         
 %     % Abolladura
 %     % Efecto P-delta
@@ -156,146 +152,86 @@ format shortG
 % Vector de longitud NE con los elementos danados dentro que sirve como criterio en la siguiente seccion para saber que matriz de rigidez local intacta reemplazarla por
 % las que tienen dano
 % Inicializar elem_con_dano_long_NE como un vector vacío
-% elem_con_dano_long_NE = [];
-% 
-% % Construir el elem_con_dano_long_NE
-% for i = 1:length(no_elemento_a_danar)
-%     if i < length(no_elemento_a_danar)
-%         elem_con_dano_long_NE = [elem_con_dano_long_NE, ones(1, no_elemento_a_danar(i + 1) - no_elemento_a_danar(i)) * no_elemento_a_danar(i)];
-%     else
-%         elem_con_dano_long_NE = [elem_con_dano_long_NE, ones(1, NE - no_elemento_a_danar(i) + 1) * no_elemento_a_danar(i)];
-%     end
-% end
+elem_con_dano_long_NE = [];
 
-% %% función "Ensamblaje de matrices globales"
-%     % [KG_undamage, ke] = ensamblaje_matriz_rigidez_global(NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, E, G, vxz, ID, KG, KGtu);
-%     for i = 1:NE
-%         KGf     = zeros(IDmax,IDmax);
-%         KGtuf   = zeros(IDmax,NEn);
-%         % Length of the elements
-%         L(i) = sqrt((nodes(elements(i,2),2)-nodes(elements(i,3),2))^2 + ...
-%                (nodes(elements(i,2),3)-nodes(elements(i,3),3))^2 + ...
-%                (nodes(elements(i,2),4)-nodes(elements(i,3),4))^2);
-% 
-%         CZ(i) = (nodes(elements(i,3),4)-nodes(elements(i,2),4))/L(i);
-%         CY(i) = (nodes(elements(i,3),3)-nodes(elements(i,2),3))/L(i);
-%         CX(i) = (nodes(elements(i,3),2)-nodes(elements(i,2),2))/L(i);
-%         CXY(i)= sqrt(CX(i)^2 + CY(i)^2);
-% 
-%         locdam  = find(damele == i,1);
-%         locdent = find(eledent==i,1);
-%         if isempty(locdam) && isempty(locdent)
-%             % local stiffness matrix of the elements
-%             if i == elem_con_dano_long_NE(i)
-%                 ke(:,:,i) = localkeframe3D(A(i),Iy(i),Iz(i),J(i),E(i),G(i),L(i));
-%             else
-%                 ke(:,:,i) = localkeframe3D(A(i),Iy(i),Iz(i),J(i),E(i),G(i),L(i));
-%             end
-%         elseif isempty(locdent)
-%             xdc = xdcr(locdam) * L(i);
-%             if strcmp(tipo(i),'circular')
-%                 depthr1 = depthr(locdam) * radio(i);
-%                 ke(:,:,i) = ZhengcircT(L(i),xdc,A(i),Iz(i),Iy(i),J(i),E(i),locdam,depthr1,G(i));
-%             elseif  strcmp(tipo(i),'rectangular')
-%                 depthr1 = depthr(locdam) * h(i);
-%                 ke(:,:,i) = Zhengrectub(L(i),xdc,A(i),Iz(i),Iy(i),J(i),E(i),locdam,depthr1,G(i),h(i),b(i),trec(i));  
-%             end             
-%         elseif isempty(locdam)
-%             ident = eledent(locdent);
-%             x1dent = x1dentr * L(ident);
-%             x2dent = x2dentr * L(ident);
-%             ke(:,:,i) = FEMdent(L(ident),Adent(locdent),Izdent(locdent),...
-%                         Iydent(locdent),Jdent(locdent),A(ident),Iz(ident),Iy(ident),...
-%                         J(ident),x1dent,x2dent,E(ident),G(ident));                
-%         end
-%         vxzl(:,i) = vxz(i,2:end);
-%         [cosalpha,sinalpha] = ejelocal(CX(i),CY(i),CZ(i),CXY(i),vxzl(:,i));
-%         % Transformation matrix 3D
-%         LT(:,:,i) = TransfM3Dframe(CX(i),CY(i),CZ(i),CXY(i),cosalpha,sinalpha);
-%         % global stiffnes matrix of the elements  
-%         kg(:,:,i) = LT(:,:,i)' * ke(:,:,i) * LT(:,:,i);
-%         LV(:,i) = [ID(:,elements(i,2)); ID(:,elements(i,3))];
-%         indxLV = find(LV(:,i)>0);
-%         indxLVn = find(LV(:,i)<0);
-%         % assamblage general stiffness matrix
-%         KGf(LV(indxLV,i),LV(indxLV,i)) = kg(indxLV,indxLV,i); 
-%         KGtuf(LV(indxLV,i),LV(indxLVn,i) * (-1)-IDmax) = kg(indxLV,indxLVn,i);
-%         KG = KGf + KG;
-%         % stiffness matrix for reactions
-%         KGtu = KGtuf + KGtu;
-%         clear KGf;
-%         clear KGtuf;
-%     end
-%     KG_damaged = KG;
-%     clear KG
+% Construir el elem_con_dano_long_NE
+for i = 1:length(no_elemento_a_danar)
+    if i < length(no_elemento_a_danar)
+        elem_con_dano_long_NE = [elem_con_dano_long_NE, ones(1, no_elemento_a_danar(i + 1) - no_elemento_a_danar(i)) * no_elemento_a_danar(i)];
+    else
+        elem_con_dano_long_NE = [elem_con_dano_long_NE, ones(1, NE - no_elemento_a_danar(i) + 1) * no_elemento_a_danar(i)];
+    end
+end
 
-    %% KG intacta
-    % for i = 1:NE
-    %     KGf     = zeros(IDmax,IDmax);
-    %     KGtuf   = zeros(IDmax,NEn);
-    %     % Length of the elements
-    %     L(i) = sqrt((nodes(elements(i,2),2)-nodes(elements(i,3),2))^2 + ...
-    %            (nodes(elements(i,2),3)-nodes(elements(i,3),3))^2 + ...
-    %            (nodes(elements(i,2),4)-nodes(elements(i,3),4))^2);
-    % 
-    %     CZ(i) = (nodes(elements(i,3),4)-nodes(elements(i,2),4))/L(i);
-    %     CY(i) = (nodes(elements(i,3),3)-nodes(elements(i,2),3))/L(i);
-    %     CX(i) = (nodes(elements(i,3),2)-nodes(elements(i,2),2))/L(i);
-    %     CXY(i)= sqrt(CX(i)^2 + CY(i)^2);
-    % 
-    %     locdam  = find(damele == i,1);
-    %     locdent = find(eledent==i,1);
-    %     if isempty(locdam) && isempty(locdent)
-    %         % local stiffness matrix of the elements
-    %         ke(:,:,i) = localkeframe3D(A(i),Iy(i),Iz(i),J(i),E(i),G(i),L(i));
-    %     elseif isempty(locdent)
-    %         xdc = xdcr(locdam) * L(i);
-    %         if strcmp(tipo(i),'circular')
-    %             depthr1 = depthr(locdam) * radio(i);
-    %             ke(:,:,i) = ZhengcircT(L(i),xdc,A(i),Iz(i),Iy(i),J(i),E(i),locdam,depthr1,G(i));
-    %         elseif  strcmp(tipo(i),'rectangular')
-    %             depthr1 = depthr(locdam) * h(i);
-    %             ke(:,:,i) = Zhengrectub(L(i),xdc,A(i),Iz(i),Iy(i),J(i),E(i),locdam,depthr1,G(i),h(i),b(i),trec(i));  
-    %         end             
-    %     elseif isempty(locdam)
-    %         ident = eledent(locdent);
-    %         x1dent = x1dentr * L(ident);
-    %         x2dent = x2dentr * L(ident);
-    %         ke(:,:,i) = FEMdent(L(ident),Adent(locdent),Izdent(locdent),...
-    %                     Iydent(locdent),Jdent(locdent),A(ident),Iz(ident),Iy(ident),...
-    %                     J(ident),x1dent,x2dent,E(ident),G(ident));                
-    %     end
-    %     vxzl(:,i) = vxz(i,2:end);
-    %     [cosalpha,sinalpha] = ejelocal(CX(i),CY(i),CZ(i),CXY(i),vxzl(:,i));
-    % 
-    %     %alpha = pi/4;
-    % 
-    %     % Transformation matrix 3D
-    %     LT(:,:,i) = TransfM3Dframe(CX(i),CY(i),CZ(i),CXY(i),cosalpha,sinalpha);
-    % 
-    % 
-    %     % global stiffnes matrix of the elements  
-    %     kg(:,:,i) = LT(:,:,i)' * ke(:,:,i) * LT(:,:,i);
-    % 
-    %     LV(:,i) = [ID(:,elements(i,2)); ID(:,elements(i,3))];
-    % 
-    %     indxLV = find(LV(:,i)>0);
-    %     indxLVn = find(LV(:,i)<0);
-    % 
-    %     % assamblage general stiffness matrix
-    %     KGf(LV(indxLV,i),LV(indxLV,i)) = kg(indxLV,indxLV,i); 
-    %     KGtuf(LV(indxLV,i),LV(indxLVn,i) * (-1)-IDmax) = kg(indxLV,indxLVn,i);
-    %     KG = KGf + KG;
-    %     % stiffness matrix for reactions
-    %     KGtu = KGtuf + KGtu;
-    %     clear KGf;
-    %     clear KGtuf;
-    % end
-    % KG_undamage = KG;
-    % clear KG
+%% función "Ensamblaje de matrices globales"
+    % [KG_undamage, ke] = ensamblaje_matriz_rigidez_global(NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, E, G, vxz, ID, KG, KGtu);
+    for i = 1:NE
+        KGf     = zeros(IDmax,IDmax);
+        KGtuf   = zeros(IDmax,NEn);
+        % Length of the elements
+        L(i) = sqrt((nodes(elements(i,2),2)-nodes(elements(i,3),2))^2 + ...
+               (nodes(elements(i,2),3)-nodes(elements(i,3),3))^2 + ...
+               (nodes(elements(i,2),4)-nodes(elements(i,3),4))^2);
+
+        CZ(i) = (nodes(elements(i,3),4)-nodes(elements(i,2),4))/L(i);
+        CY(i) = (nodes(elements(i,3),3)-nodes(elements(i,2),3))/L(i);
+        CX(i) = (nodes(elements(i,3),2)-nodes(elements(i,2),2))/L(i);
+        CXY(i)= sqrt(CX(i)^2 + CY(i)^2);
+
+        locdam  = find(damele == i,1);
+        locdent = find(eledent==i,1);
+        if isempty(locdam) && isempty(locdent)
+            % local stiffness matrix of the elements
+            if i == 
+                ke(:,:,i) = localkeframe3D(A(i),Iy(i),Iz(i),J(i),E(i),G(i),L(i));
+            end
+        elseif isempty(locdent)
+            xdc = xdcr(locdam) * L(i);
+            if strcmp(tipo(i),'circular')
+                depthr1 = depthr(locdam) * radio(i);
+                ke(:,:,i) = ZhengcircT(L(i),xdc,A(i),Iz(i),Iy(i),J(i),E(i),locdam,depthr1,G(i));
+            elseif  strcmp(tipo(i),'rectangular')
+                depthr1 = depthr(locdam) * h(i);
+                ke(:,:,i) = Zhengrectub(L(i),xdc,A(i),Iz(i),Iy(i),J(i),E(i),locdam,depthr1,G(i),h(i),b(i),trec(i));  
+            end             
+        elseif isempty(locdam)
+            ident = eledent(locdent);
+            x1dent = x1dentr * L(ident);
+            x2dent = x2dentr * L(ident);
+            ke(:,:,i) = FEMdent(L(ident),Adent(locdent),Izdent(locdent),...
+                        Iydent(locdent),Jdent(locdent),A(ident),Iz(ident),Iy(ident),...
+                        J(ident),x1dent,x2dent,E(ident),G(ident));                
+        end
+        vxzl(:,i) = vxz(i,2:end);
+        [cosalpha,sinalpha] = ejelocal(CX(i),CY(i),CZ(i),CXY(i),vxzl(:,i));
+
+        %alpha = pi/4;
+
+        % Transformation matrix 3D
+        LT(:,:,i) = TransfM3Dframe(CX(i),CY(i),CZ(i),CXY(i),cosalpha,sinalpha);
+
+
+        % global stiffnes matrix of the elements  
+        kg(:,:,i) = LT(:,:,i)' * ke(:,:,i) * LT(:,:,i);
+
+        LV(:,i) = [ID(:,elements(i,2)); ID(:,elements(i,3))];
+
+        indxLV = find(LV(:,i)>0);
+        indxLVn = find(LV(:,i)<0);
+
+        % assamblage general stiffness matrix
+        KGf(LV(indxLV,i),LV(indxLV,i)) = kg(indxLV,indxLV,i); 
+        KGtuf(LV(indxLV,i),LV(indxLVn,i) * (-1)-IDmax) = kg(indxLV,indxLVn,i);
+        KG = KGf + KG;
+        % stiffness matrix for reactions
+        KGtu = KGtuf + KGtu;
+        clear KGf;
+        clear KGtuf;
+    end
+    KG_undamage = KG;
 
 % %% Función Condensación estática    
-%     KG_cond = condensacion_estatica(KG);
+%     KG_cond = condensacion_estatica(KG_undamage);
 % 
 % % Modos y frecuencias de estructura condensados y globales
 %     [modos_cond,frec_cond] = modos_frecuencias(KG_cond,M_cond);
