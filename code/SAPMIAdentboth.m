@@ -6,8 +6,8 @@ tic
 format shortG
 
 %% Datos iniciales de entrada
-    % archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\Datos_nudos_elementos_secciones_masas_nuevo_pend1a8_vigasI.xlsx';
-    archivo_excel = '/home/francisco/Documents/Proyecto-doctoral/pruebas_excel/Datos_nudos_elementos_secciones_masas_nuevo_pend1a8_vigasI.xlsx';
+    archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\Datos_nudos_elementos_secciones_masas_nuevo_pend1a8_vigasI.xlsx';
+    % archivo_excel = '/home/francisco/Documents/Proyecto-doctoral/pruebas_excel/Datos_nudos_elementos_secciones_masas_nuevo_pend1a8_vigasI.xlsx';
     tirante = 87000;    % en mm
     tiempo  = 03;       % en anos
     d_agua = 1.07487 * 10^-8; % unidades de la densidad del agua en N/mm^3
@@ -15,8 +15,8 @@ format shortG
     % Valor de la dessidad del crecimiento marino
             % Valor de internet = 1325 kg/m^3
             % Conversión: 1325 kg/m^3 * (1 N / 9.81 kg) * (1 m^3/1000^3 m^3) = 1.3506*10^-7 en N/mm^3
-    % pathfile = 'E:\Archivos_Jaret\Mis_modificaciones\pruebas_excel\marco3Ddam0.xlsx';
-    pathfile = '/home/francisco/Documents/Proyecto-doctoral/pruebas_excel/marco3Ddam0.xlsx';
+    pathfile = 'E:\Archivos_Jaret\Mis_modificaciones\pruebas_excel\marco3Ddam0.xlsx';
+    % pathfile = '/home/francisco/Documents/Proyecto-doctoral/pruebas_excel/marco3Ddam0.xlsx';
 
 %% Corregir de formato los números en la tabla importada de ETABS: En todo este bloque de código, se realizó el cambio de formato de los números, debido a que ETABS importa sus tablas en formato de texto en algunas columnas.
 % % % % correccion_format_TablaETABS(archivo_excel);
@@ -31,16 +31,16 @@ format shortG
 
 
 % Lectura de datos del modelo de ETABS
-    % coordenadas, vxz, conectividad, prop_geom, matriz_restriccion, matriz_cell_secciones]    = lectura_datos_modelo_ETABS(archivo_excel); 
+    [coordenadas, vxz, conectividad, prop_geom, matriz_restriccion, matriz_cell_secciones]    = lectura_datos_modelo_ETABS(archivo_excel); 
 
 % Modificación de la matriz de masas
-    % [masas_en_cada_nodo]                                                                      = modificacion_matriz_masas(archivo_excel, tirante, d_agua, matriz_cell_secciones, tiempo, densidad_crec);
+    [masas_en_cada_nodo]                                                                      = modificacion_matriz_masas(archivo_excel, tirante, d_agua, matriz_cell_secciones, tiempo, densidad_crec);
 
 % Escritura de los datos hacia la hoja de excel del Dr. Rolando
-    % escritura_datos_hoja_excel_del_dr_Rolando(coordenadas, vxz, conectividad, prop_geom, matriz_restriccion,masas_en_cada_nodo);
+    escritura_datos_hoja_excel_del_dr_Rolando(coordenadas, vxz, conectividad, prop_geom, matriz_restriccion,masas_en_cada_nodo);
 
 % Matriz de masas completa y condensada
-    % [M_cond]                                                                                  = Matriz_M_completa_y_condensada(coordenadas, masas_en_cada_nodo);
+    [M_cond]                                                                                  = Matriz_M_completa_y_condensada(coordenadas, masas_en_cada_nodo);
 
 % Lectura de datos de la hoja de EXCEL del dr. Rolando para la función "Ensamblaje de matrices globales"
     [NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, E, G, vxz, ID, KG, KGtu] = lectura_hoja_excel(pathfile);
@@ -81,55 +81,55 @@ format shortG
         % SUBLOQUE: Matrices con ceros, f_AA_d es la matriz de flexibilidad pero solo el primer cuadrante de un extremo por eso de 6 x 6, ke_d es la matriz de rigidez local completa
             % en el siguiente subloque se convierte se la matriz de transformacion T para convertirla en matriz de rigidez local completa. Ya que al intentar
             % invertirla produce valores indeterminados
-        f_AA_d  = zeros( 6,  6, length(no_elemento_a_danar));
-        % ke_d    = zeros(12, 12, length(no_elemento_a_danar)); 
-        ke_d    = zeros(12, 12, NE); 
-        % SUBLOQUE: Asignación de corrosión al area y a las inercias de la seccion 
-        % for j = i:NE
-            for i = 1:length(no_elemento_a_danar)
-                % reduccion de espesor por corrosion
-                t(i)        = prop_geom(i,10);                      % Estraccion de espesor sin dano
-                t_corro(i)  = dano_porcentaje_corr(i) * t(i) / 100; % Espesor que va a restar al espesor sin dano
-                t_d(i)      = t(i) - t_corro(i);                    % Espesor ya reducido. El subíndice "_d" es de "damaged"
-                % Área con corrosion
-                D(i)            = prop_geom(i,8);
-                D_d(i)          = D(i) - (2*t_corro(i));
-                R_d(i)          = 0.5 * D_d(i);
-                A1_d(i)         = pi  * R_d(i)^2;  
-                R_interior_d(i) = 0.5 * (D_d(i) - (2*t_d(i)));
-                A2_d(i)         = pi  * R_interior_d(i)^2;
-                A_d(i)          = A1_d(i) - A2_d(i);             % en mm^2. El subíndice "_u" es de "undamaged" 
-                % Momento de inercia con dano
-                R_ext_d(i)          = 0.5*D_d(i);
-                I_ext_d(i)          = 1/4 * pi * R_ext_d(i)^4;
-                I_int_d(i)          = 1/4 * pi *  R_interior_d(i)^4;
-                I_d(i)              = I_ext_d(i) - I_int_d(i);
-                L                   = long_elem_con_dano(i);
-                % SUBLOQUE: Matriz de flexibilidades y usop de matriz de transformación T para convertirla a la matriz de rigidez local completa sin necesidad de
-                % invertirla.
-                % Elemento tubular dañado
-                f_AA_d(:,:,i) = [L/(E(i)*A_d(i))    0                       0                       0                 0                     0;...
-                                0                   L^3/(3*E(i)*I_d(i))     0                       0                 0                     L^2/(2*E(i)*I_d(i));...
-                                0                   0                       L^3/(3*E(i)*I_d(i))     0                 -L^2/(2*E(i)*I_d(i))  0;...
-                                0                   0                       0                       L/(G(i)*J(i))     0                     0;...
-                                0                   0                       -L^2/(2*E(i)*I_d(i))    0                 L/(E(i)*I_d(i))       0;...
-                                0                   L^2/(2*E(i)*I_d(i))     0                       0                 0                     L/(E(i)*I_d(i))];
-                % Matriz de transformación para evitar invertir la matriz de flexibilidades
-                T   = [-1    0      0       0   0   0
-                        0    -1     0       0   0   0 
-                        0    0      -1      0   0   0
-                        0    0      0       -1  0   0
-                        0    0      L       0   -1  0
-                        0   -L      0       0   0  -1
-                        1    0      0       0   0   0
-                        0    1      0       0   0   0
-                        0    0      1       0   0   0
-                        0    0      0       1   0   0
-                        0    0      0       0   1   0
-                        0    0      0       0   0   1];
-                ke_d(:,:,i) = T * f_AA_d(:,:,i)^(-1) * T';   % Matriz de rigidecez local del elemento tubular
-                clear L                                      % Se borra la variable L ya que en el ensamblaje de matriz de rigidez se vuelve a usar esta variable
-            end
+        % f_AA_d  = zeros( 6,  6, length(no_elemento_a_danar));
+        % % ke_d    = zeros(12, 12, length(no_elemento_a_danar)); 
+        % ke_d    = zeros(12, 12, NE); 
+        % % SUBLOQUE: Asignación de corrosión al area y a las inercias de la seccion 
+        % % for j = i:NE
+        %     for i = 1:length(no_elemento_a_danar)
+        %         % reduccion de espesor por corrosion
+        %         t(i)        = prop_geom(i,10);                      % Estraccion de espesor sin dano
+        %         t_corro(i)  = dano_porcentaje_corr(i) * t(i) / 100; % Espesor que va a restar al espesor sin dano
+        %         t_d(i)      = t(i) - t_corro(i);                    % Espesor ya reducido. El subíndice "_d" es de "damaged"
+        %         % Área con corrosion
+        %         D(i)            = prop_geom(i,8);
+        %         D_d(i)          = D(i) - (2*t_corro(i));
+        %         R_d(i)          = 0.5 * D_d(i);
+        %         A1_d(i)         = pi  * R_d(i)^2;  
+        %         R_interior_d(i) = 0.5 * (D_d(i) - (2*t_d(i)));
+        %         A2_d(i)         = pi  * R_interior_d(i)^2;
+        %         A_d(i)          = A1_d(i) - A2_d(i);             % en mm^2. El subíndice "_u" es de "undamaged" 
+        %         % Momento de inercia con dano
+        %         R_ext_d(i)          = 0.5*D_d(i);
+        %         I_ext_d(i)          = 1/4 * pi * R_ext_d(i)^4;
+        %         I_int_d(i)          = 1/4 * pi *  R_interior_d(i)^4;
+        %         I_d(i)              = I_ext_d(i) - I_int_d(i);
+        %         L                   = long_elem_con_dano(i);
+        %         % SUBLOQUE: Matriz de flexibilidades y usop de matriz de transformación T para convertirla a la matriz de rigidez local completa sin necesidad de
+        %         % invertirla.
+        %         % Elemento tubular dañado
+        %         f_AA_d(:,:,i) = [L/(E(i)*A_d(i))    0                       0                       0                 0                     0;...
+        %                         0                   L^3/(3*E(i)*I_d(i))     0                       0                 0                     L^2/(2*E(i)*I_d(i));...
+        %                         0                   0                       L^3/(3*E(i)*I_d(i))     0                 -L^2/(2*E(i)*I_d(i))  0;...
+        %                         0                   0                       0                       L/(G(i)*J(i))     0                     0;...
+        %                         0                   0                       -L^2/(2*E(i)*I_d(i))    0                 L/(E(i)*I_d(i))       0;...
+        %                         0                   L^2/(2*E(i)*I_d(i))     0                       0                 0                     L/(E(i)*I_d(i))];
+        %         % Matriz de transformación para evitar invertir la matriz de flexibilidades
+        %         T   = [-1    0      0       0   0   0
+        %                 0    -1     0       0   0   0 
+        %                 0    0      -1      0   0   0
+        %                 0    0      0       -1  0   0
+        %                 0    0      L       0   -1  0
+        %                 0   -L      0       0   0  -1
+        %                 1    0      0       0   0   0
+        %                 0    1      0       0   0   0
+        %                 0    0      1       0   0   0
+        %                 0    0      0       1   0   0
+        %                 0    0      0       0   1   0
+        %                 0    0      0       0   0   1];
+        %         ke_d(:,:,i) = T * f_AA_d(:,:,i)^(-1) * T';   % Matriz de rigidecez local del elemento tubular
+        %         clear L                                      % Se borra la variable L ya que en el ensamblaje de matriz de rigidez se vuelve a usar esta variable
+        %     end
         % end
         
 %     % Abolladura
