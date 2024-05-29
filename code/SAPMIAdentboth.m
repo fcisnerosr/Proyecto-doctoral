@@ -49,7 +49,7 @@ format shortG
     %% SECCION: Elementos a danar y parametros de dano segun el dano inducido
     prop_geom(:,8:9)    = [];                           % eliminacion de 'circular' y 'wo', si no se eliminan la conversion a matriz numerica no es posible
     prop_geom           = cell2mat(prop_geom);          % Conversion de prop_geo que era un cell, en esta seccion se extraen los valores del espesor
-    no_elemento_a_danar = [1, 6];
+    no_elemento_a_danar = [1, 6, 9];
     caso_dano           = {'corrosion', 'corrosion'};
     dano_porcentaje_corr= [50, 50];
     
@@ -77,61 +77,80 @@ format shortG
             long_elem_con_dano(i)  = elementos_y_long(no_elemento_a_danar(i),2);
         end
         
-        %% SECCION: Matriz de rigidez local con corrosion (ke_d)
+        %% SECCION (elem_con_dano_long_NE)
+        % Vector de longitud NE con los elementos danados dentro que sirve como criterio en la siguiente seccion para saber que matriz de rigidez local intacta reemplazarla por
+        % las que tienen dano
+        % Inicializar elem_con_dano_long_NE como un vector vacío
+        elem_con_dano_long_NE = [];
+        
+        % Construir el elem_con_dano_long_NE
+        for i = 1:length(no_elemento_a_danar)
+            if i < length(no_elemento_a_danar)
+                elem_con_dano_long_NE = [elem_con_dano_long_NE, ones(1, no_elemento_a_danar(i + 1) - no_elemento_a_danar(i)) * no_elemento_a_danar(i)];
+            else
+                elem_con_dano_long_NE = [elem_con_dano_long_NE, ones(1, NE - no_elemento_a_danar(i) + 1) * no_elemento_a_danar(i)];
+            end
+        end
+
+        % SECCION: Matriz de rigidez local con corrosion (ke_d)
         % SUBLOQUE: Matrices con ceros, f_AA_d es la matriz de flexibilidad pero solo el primer cuadrante de un extremo por eso de 6 x 6, ke_d es la matriz de rigidez local completa
-            % en el siguiente subloque se convierte se la matriz de transformacion T para convertirla en matriz de rigidez local completa. Ya que al intentar
-            % invertirla produce valores indeterminados
-        % f_AA_d  = zeros( 6,  6, length(no_elemento_a_danar));
-        % % ke_d    = zeros(12, 12, length(no_elemento_a_danar)); 
-        % ke_d    = zeros(12, 12, NE); 
+        %     en el siguiente subloque se convierte se la matriz de transformacion T para convertirla en matriz de rigidez local completa. Ya que al intentar
+        %%     invertirla produce valores indeterminados
+        f_AA_d  = zeros( 6,  6, length(no_elemento_a_danar));
+        ke_d    = zeros(12, 12, length(no_elemento_a_danar)); 
         % % SUBLOQUE: Asignación de corrosión al area y a las inercias de la seccion 
-        % % for j = i:NE
-        %     for i = 1:length(no_elemento_a_danar)
-        %         % reduccion de espesor por corrosion
-        %         t(i)        = prop_geom(i,10);                      % Estraccion de espesor sin dano
-        %         t_corro(i)  = dano_porcentaje_corr(i) * t(i) / 100; % Espesor que va a restar al espesor sin dano
-        %         t_d(i)      = t(i) - t_corro(i);                    % Espesor ya reducido. El subíndice "_d" es de "damaged"
-        %         % Área con corrosion
-        %         D(i)            = prop_geom(i,8);
-        %         D_d(i)          = D(i) - (2*t_corro(i));
-        %         R_d(i)          = 0.5 * D_d(i);
-        %         A1_d(i)         = pi  * R_d(i)^2;  
-        %         R_interior_d(i) = 0.5 * (D_d(i) - (2*t_d(i)));
-        %         A2_d(i)         = pi  * R_interior_d(i)^2;
-        %         A_d(i)          = A1_d(i) - A2_d(i);             % en mm^2. El subíndice "_u" es de "undamaged" 
-        %         % Momento de inercia con dano
-        %         R_ext_d(i)          = 0.5*D_d(i);
-        %         I_ext_d(i)          = 1/4 * pi * R_ext_d(i)^4;
-        %         I_int_d(i)          = 1/4 * pi *  R_interior_d(i)^4;
-        %         I_d(i)              = I_ext_d(i) - I_int_d(i);
-        %         L                   = long_elem_con_dano(i);
-        %         % SUBLOQUE: Matriz de flexibilidades y usop de matriz de transformación T para convertirla a la matriz de rigidez local completa sin necesidad de
-        %         % invertirla.
-        %         % Elemento tubular dañado
-        %         f_AA_d(:,:,i) = [L/(E(i)*A_d(i))    0                       0                       0                 0                     0;...
-        %                         0                   L^3/(3*E(i)*I_d(i))     0                       0                 0                     L^2/(2*E(i)*I_d(i));...
-        %                         0                   0                       L^3/(3*E(i)*I_d(i))     0                 -L^2/(2*E(i)*I_d(i))  0;...
-        %                         0                   0                       0                       L/(G(i)*J(i))     0                     0;...
-        %                         0                   0                       -L^2/(2*E(i)*I_d(i))    0                 L/(E(i)*I_d(i))       0;...
-        %                         0                   L^2/(2*E(i)*I_d(i))     0                       0                 0                     L/(E(i)*I_d(i))];
-        %         % Matriz de transformación para evitar invertir la matriz de flexibilidades
-        %         T   = [-1    0      0       0   0   0
-        %                 0    -1     0       0   0   0 
-        %                 0    0      -1      0   0   0
-        %                 0    0      0       -1  0   0
-        %                 0    0      L       0   -1  0
-        %                 0   -L      0       0   0  -1
-        %                 1    0      0       0   0   0
-        %                 0    1      0       0   0   0
-        %                 0    0      1       0   0   0
-        %                 0    0      0       1   0   0
-        %                 0    0      0       0   1   0
-        %                 0    0      0       0   0   1];
-        %         ke_d(:,:,i) = T * f_AA_d(:,:,i)^(-1) * T';   % Matriz de rigidecez local del elemento tubular
-        %         clear L                                      % Se borra la variable L ya que en el ensamblaje de matriz de rigidez se vuelve a usar esta variable
+        for i = 1:length(no_elemento_a_danar)
+            % reduccion de espesor por corrosion
+            t(i)        = prop_geom(i,10);                      % Estraccion de espesor sin dano
+            t_corro(i)  = dano_porcentaje_corr(i) * t(i) / 100; % Espesor que va a restar al espesor sin dano
+            t_d(i)      = t(i) - t_corro(i);                    % Espesor ya reducido. El subíndice "_d" es de "damaged"
+            % Área con corrosion
+            D(i)            = prop_geom(i,8);
+            D_d(i)          = D(i) - (2*t_corro(i));
+            R_d(i)          = 0.5 * D_d(i);
+            A1_d(i)         = pi  * R_d(i)^2;  
+            R_interior_d(i) = 0.5 * (D_d(i) - (2*t_d(i)));
+            A2_d(i)         = pi  * R_interior_d(i)^2;
+            A_d(i)          = A1_d(i) - A2_d(i);             % en mm^2. El subíndice "_u" es de "undamaged" 
+            % Momento de inercia con dano
+            R_ext_d(i)          = 0.5*D_d(i);
+            I_ext_d(i)          = 1/4 * pi * R_ext_d(i)^4;
+            I_int_d(i)          = 1/4 * pi *  R_interior_d(i)^4;
+            I_d(i)              = I_ext_d(i) - I_int_d(i);
+            L                   = long_elem_con_dano(i);
+            % SUBLOQUE: Matriz de flexibilidades y usop de matriz de transformación T para convertirla a la matriz de rigidez local completa sin necesidad de
+            % invertirla.
+            % Elemento tubular dañado
+            f_AA_d(:,:,i) = [L/(E(i)*A_d(i))    0                       0                       0                 0                     0;...
+                            0                   L^3/(3*E(i)*I_d(i))     0                       0                 0                     L^2/(2*E(i)*I_d(i));...
+                            0                   0                       L^3/(3*E(i)*I_d(i))     0                 -L^2/(2*E(i)*I_d(i))  0;...
+                            0                   0                       0                       L/(G(i)*J(i))     0                     0;...
+                            0                   0                       -L^2/(2*E(i)*I_d(i))    0                 L/(E(i)*I_d(i))       0;...
+                            0                   L^2/(2*E(i)*I_d(i))     0                       0                 0                     L/(E(i)*I_d(i))];
+            % Matriz de transformación para evitar invertir la matriz de flexibilidades
+            T   = [-1    0      0       0   0   0
+                    0    -1     0       0   0   0 
+                    0    0      -1      0   0   0
+                    0    0      0       -1  0   0
+                    0    0      L       0   -1  0
+                    0   -L      0       0   0  -1
+                    1    0      0       0   0   0
+                    0    1      0       0   0   0
+                    0    0      1       0   0   0
+                    0    0      0       1   0   0
+                    0    0      0       0   1   0
+                    0    0      0       0   0   1];
+            ke_d(:,:,i) = T * f_AA_d(:,:,i)^(-1) * T';   % Matriz de rigidecez local del elemento tubular
+            clear L                                      % Se borra la variable L ya que en el ensamblaje de matriz de rigidez se vuelve a usar esta variable
+        end
+        %%
+        % ke_d_total  = zeros(12, 12, NE);
+        % for j = 1:NE
+        %     if j == elem_con_dano_long_NE(j)
+        %         ke_d_total(:,:,j) = ke_d(:,:,j);
         %     end
         % end
-        
+
 %     % Abolladura
 %     % Efecto P-delta
 %     % Fatiga
@@ -152,20 +171,7 @@ format shortG
 %     end
 
 
-%% SECCION (elem_con_dano_long_NE)
-% Vector de longitud NE con los elementos danados dentro que sirve como criterio en la siguiente seccion para saber que matriz de rigidez local intacta reemplazarla por
-% las que tienen dano
-% Inicializar elem_con_dano_long_NE como un vector vacío
-% elem_con_dano_long_NE = [];
-% 
-% % Construir el elem_con_dano_long_NE
-% for i = 1:length(no_elemento_a_danar)
-%     if i < length(no_elemento_a_danar)
-%         elem_con_dano_long_NE = [elem_con_dano_long_NE, ones(1, no_elemento_a_danar(i + 1) - no_elemento_a_danar(i)) * no_elemento_a_danar(i)];
-%     else
-%         elem_con_dano_long_NE = [elem_con_dano_long_NE, ones(1, NE - no_elemento_a_danar(i) + 1) * no_elemento_a_danar(i)];
-%     end
-% end
+
 
 % %% función "Ensamblaje de matrices globales"
 %     % [KG_undamage, ke] = ensamblaje_matriz_rigidez_global(NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, E, G, vxz, ID, KG, KGtu);
