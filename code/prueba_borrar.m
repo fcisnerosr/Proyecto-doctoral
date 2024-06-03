@@ -1,5 +1,5 @@
 
-% clc; clear all
+clc; clear all
 
 % % Crear el dato de entrada
 % SECC_registr_inctacto = table([1; 3; 2; 4], {'SECC01'; 'SECC01'; 'SECC03'; 'SECC04'}, 'VariableNames', {'UniqueName', 'SectionProperty'})
@@ -113,21 +113,37 @@
 
 
 
-NE = 100;
-no_elemento_a_danar = [1, 6, 7,90];  % Puedes modificar estos valores según sea necesario
+% NE = 100;
+% no_elemento_a_danar = [1, 6, 7,90];  % Puedes modificar estos valores según sea necesario
+% 
+% % Inicializar vector_concatenado como un vector vacío
+% vector_concatenado = [];
+% 
+% % Construir el vector_concatenado
+% for i = 1:length(no_elemento_a_danar)
+%     if i < length(no_elemento_a_danar)
+%         vector_concatenado = [vector_concatenado, ones(1, no_elemento_a_danar(i + 1) - no_elemento_a_danar(i)) * no_elemento_a_danar(i)];
+%     else
+%         vector_concatenado = [vector_concatenado, ones(1, NE - no_elemento_a_danar(i) + 1) * no_elemento_a_danar(i)];
+%     end
+% end
+% 
+% % Mostrar el resultado
+% disp(vector_concatenado);
 
-% Inicializar vector_concatenado como un vector vacío
-vector_concatenado = [];
+%%
+A = [1, 2; 2 4];
+B = [3, 1; 1 0];
+C = [3, 1; 6 4];
 
-% Construir el vector_concatenado
-for i = 1:length(no_elemento_a_danar)
-    if i < length(no_elemento_a_danar)
-        vector_concatenado = [vector_concatenado, ones(1, no_elemento_a_danar(i + 1) - no_elemento_a_danar(i)) * no_elemento_a_danar(i)];
-    else
-        vector_concatenado = [vector_concatenado, ones(1, NE - no_elemento_a_danar(i) + 1) * no_elemento_a_danar(i)];
-    end
+A_B = cat(3, A, B,C)
+
+%%
+index = [1, 3, 9];
+
+M(:,:,10) = zeros(2);
+%%
+% Llenar los valores de M en los índices especificados por index
+for i = 1:length(index)
+    M(:,:,index(i)) = A_B(:,:,i);
 end
-
-% Mostrar el resultado
-disp(vector_concatenado);
-
