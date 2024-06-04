@@ -1,7 +1,4 @@
-function [ke_d_total, ke_d, elem_con_dano_long_NE] = corrosionlocal(no_elemento_a_danar, dano_porcentaje, archivo_excel, NE, prop_geom, E, G, J)
-    % Ajustar las propiedades
-    prop_geom(:,8:9)    = [];                           % eliminacion de 'circular' y 'wo', si no se eliminan la conversion a matriz numerica no es posible
-    prop_geom           = cell2mat(prop_geom);          % Conversion de prop_geo que era un cell, en esta seccion se extraen los valores del espesor
+function [ke_d_total, ke_d, elem_con_dano_long_NE] = corrosionlocal(no_elemento_a_danar, dano_porcentaje, archivo_excel, NE, prop_geom, E, G, J);
     %% CORROSION LOCAL
     %% SECCION: variables de la corrosion local de ceros
     t               = zeros(1, length(no_elemento_a_danar));
