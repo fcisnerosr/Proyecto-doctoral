@@ -1,4 +1,5 @@
-function [KG_undamage, ke] = ensamblaje_matriz_rigidez_global(NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, E, G, vxz, ID, KG, KGtu)
+function [KG_undamage] = ensamblaje_matriz_rigidez_global_intacta(NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, E, G, vxz, ID, KG, KGtu)
+    %% KG intacta
     for i = 1:NE
         KGf     = zeros(IDmax,IDmax);
         KGtuf   = zeros(IDmax,NEn);
@@ -6,12 +7,12 @@ function [KG_undamage, ke] = ensamblaje_matriz_rigidez_global(NE, IDmax, NEn, el
         L(i) = sqrt((nodes(elements(i,2),2)-nodes(elements(i,3),2))^2 + ...
                (nodes(elements(i,2),3)-nodes(elements(i,3),3))^2 + ...
                (nodes(elements(i,2),4)-nodes(elements(i,3),4))^2);
-     
+
         CZ(i) = (nodes(elements(i,3),4)-nodes(elements(i,2),4))/L(i);
         CY(i) = (nodes(elements(i,3),3)-nodes(elements(i,2),3))/L(i);
         CX(i) = (nodes(elements(i,3),2)-nodes(elements(i,2),2))/L(i);
         CXY(i)= sqrt(CX(i)^2 + CY(i)^2);
-         
+
         locdam  = find(damele == i,1);
         locdent = find(eledent==i,1);
         if isempty(locdam) && isempty(locdent)
@@ -31,26 +32,26 @@ function [KG_undamage, ke] = ensamblaje_matriz_rigidez_global(NE, IDmax, NEn, el
             x1dent = x1dentr * L(ident);
             x2dent = x2dentr * L(ident);
             ke(:,:,i) = FEMdent(L(ident),Adent(locdent),Izdent(locdent),...
-                Iydent(locdent),Jdent(locdent),A(ident),Iz(ident),Iy(ident),...
-                J(ident),x1dent,x2dent,E(ident),G(ident));                
+                        Iydent(locdent),Jdent(locdent),A(ident),Iz(ident),Iy(ident),...
+                        J(ident),x1dent,x2dent,E(ident),G(ident));                
         end
         vxzl(:,i) = vxz(i,2:end);
         [cosalpha,sinalpha] = ejelocal(CX(i),CY(i),CZ(i),CXY(i),vxzl(:,i));
-        
+
         %alpha = pi/4;
-        
+
         % Transformation matrix 3D
         LT(:,:,i) = TransfM3Dframe(CX(i),CY(i),CZ(i),CXY(i),cosalpha,sinalpha);
-        
-         
+
+
         % global stiffnes matrix of the elements  
         kg(:,:,i) = LT(:,:,i)' * ke(:,:,i) * LT(:,:,i);
-        
+
         LV(:,i) = [ID(:,elements(i,2)); ID(:,elements(i,3))];
-        
+
         indxLV = find(LV(:,i)>0);
         indxLVn = find(LV(:,i)<0);
-        
+
         % assamblage general stiffness matrix
         KGf(LV(indxLV,i),LV(indxLV,i)) = kg(indxLV,indxLV,i); 
         KGtuf(LV(indxLV,i),LV(indxLVn,i) * (-1)-IDmax) = kg(indxLV,indxLVn,i);
@@ -61,4 +62,5 @@ function [KG_undamage, ke] = ensamblaje_matriz_rigidez_global(NE, IDmax, NEn, el
         clear KGtuf;
     end
     KG_undamage = KG;
+    clear KG
 end
