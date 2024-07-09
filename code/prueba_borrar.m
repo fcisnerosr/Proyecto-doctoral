@@ -132,18 +132,106 @@ clc; clear all
 % disp(vector_concatenado);
 
 %%
-A = [1, 2; 2 4];
-B = [3, 1; 1 0];
-C = [3, 1; 6 4];
+% A = [1, 2; 2 4];
+% B = [3, 1; 1 0];
+% C = [3, 1; 6 4];
+% 
+% A_B = cat(3, A, B,C)
+% 
+% %%
+% index = [1, 3, 9];
+% 
+% M(:,:,10) = zeros(2);
+% %%
+% % Llenar los valores de M en los índices especificados por index
+% for i = 1:length(index)
+%     M(:,:,index(i)) = A_B(:,:,i);
+% end
 
-A_B = cat(3, A, B,C)
+% % Coordenadas de los 5 puntos
+% close all
+% x = [1, 2, 3, 4, 5];
+% y = [1, 4, 9, 16, 25];
+% 
+% % Crear una figura
+% figure;
+% 
+% % Graficar los 5 puntos
+% plot(x, y, 'bo', 'MarkerSize', 5, 'MarkerFaceColor', 'b'); % 'bo' grafica puntos azules
+% hold on;
+% 
+% % Dibujar la línea solo entre el segundo y el cuarto punto
+% plot([x(2), x(4)], [y(2), y(4)], 'r-', 'LineWidth', 2); % 'g-' dibuja una línea roja
+% 
+% % Configurar la gráfica
+% grid on;
+% xlabel('Eje X');
+% ylabel('Eje Y');
+% title('Unión de Puntos Específicos');
+% legend('Puntos', 'Línea entre primer y último punto', 'Línea entre segundo y cuarto punto');
 
 %%
-index = [1, 3, 9];
+close all
+% % Coordenadas de los 5 puntos en 3D
+% x = [1, 2, 3, 4, 5];
+% y = [1, 4, 9, 16, 25];
+% z = [2, 8, 18, 32, 50];
+% 
+% % Crear una figura
+% figure;
+% 
+% % Graficar los 5 puntos en 3D
+% plot3(x, y, z, 'bo', 'MarkerSize', 10, 'MarkerFaceColor', 'b'); % 'bo' grafica puntos azules
+% hold on;
+% 
+% % Dibujar la línea solo entre el primer y el último punto
+% plot3([x(1), x(end)], [y(1), y(end)], [z(1), z(end)], 'r-', 'LineWidth', 2); % 'r-' dibuja una línea roja
+% 
+% % Dibujar la línea solo entre el segundo y el cuarto punto
+% plot3([x(2), x(4)], [y(2), y(4)], [z(2), z(4)], 'g-', 'LineWidth', 2); % 'g-' dibuja una línea verde
+% 
+% % Configurar la gráfica
+% grid on;
+% xlabel('Eje X');
+% ylabel('Eje Y');
+% zlabel('Eje Z');
+% title('Unión de Puntos Específicos en 3D');
+% legend('Puntos', 'Línea entre primer y último punto', 'Línea entre segundo y cuarto punto');
+% 
+% % Opcional: Cambiar la vista de la gráfica para mejor visualización
+% view(3); % Vista en 3D
 
-M(:,:,10) = zeros(2);
-%%
-% Llenar los valores de M en los índices especificados por index
-for i = 1:length(index)
-    M(:,:,index(i)) = A_B(:,:,i);
+% % Coordenadas de los 5 puntos
+% X = [1, 2, 3, 4, 5];
+% Y = [1, 4, 9, 16, 25];
+% Z = [1, 8, 27, 64, 125];
+% 
+% % Crear una figura
+% figure;
+% 
+% % Graficar los 5 puntos en 3D
+% plot3(X, Y, Z, 'bo', 'MarkerSize', 10, 'MarkerFaceColor', 'b'); % 'bo' grafica puntos azules
+% hold on;
+% 
+% % Dibujar la línea solo entre el segundo y el cuarto punto
+% plot3([X(2), X(4)], [Y(2), Y(4)], [Z(2), Z(4)], 'b-', 'LineWidth', 3); % 'b-' dibuja una línea azul
+% 
+% % Agregar etiquetas de texto para los índices de los puntos
+% for i = 1:length(X)
+%     text(X(i), Y(i), Z(i), num2str(i), 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'right');
+% end
+% 
+% % Configurar la gráfica
+% grid on;
+% xlabel('Eje X');
+% ylabel('Eje Y');
+% zlabel('Eje Z');
+% title('Unión de Segundo y Cuarto Punto con Índices');
+% legend('Puntos', 'Línea entre segundo y cuarto punto');
+% 
+% % Opcional: Cambiar la vista de la gráfica para mejor visualización
+% view(3);  % Vista en 3D
+
+for i = 1:76
+    fprintf("text(X(%d), Y(%d), Z(%d), num2str(%d), 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'right');\n", i, i, i, i);
 end
