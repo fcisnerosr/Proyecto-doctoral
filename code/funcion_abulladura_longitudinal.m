@@ -2,11 +2,11 @@
 %%%%%%%%%%%%%% F  U  N  C  I  Ó  N %%%%%%%%%%%%%%%%
 %% ============================================= %%
 
-function [ke_d] = funcion_abulladura_longitudinal_210623(ed, porcent, Long, D, t, L_D);
+% function [ke_d] = funcion_abulladura_longitudinal_210623(ed, porcent, Long, D, t, L_D);
     format short G
-    %% COMENTAR desde AQUí %%%%
+    % COMENTAR desde AQUí %%%%
     clc; clear all; close all %%% Cuidado con correr el código principal y que esta línea esté descomentada
-    %% Datos del elemento a dañar
+    % Datos del elemento a dañar
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         ed = 5; % ed = elemento a dañar                                     %
         porcent = 44; % Porcen_de_prof_de_abolld_con_respecto_al_diam;      %
@@ -58,7 +58,7 @@ function [ke_d] = funcion_abulladura_longitudinal_210623(ed, porcent, Long, D, t
     G = E/(2*(1+mu));               % Cortante (MPa)
     J = pi/4 * ((0.5*D)^4 - (R)^4); % Polar de inercia en mm^4
     
-    %% Criterio de que detener el programa si la abolladura rebasa el 50%
+    % Criterio de que detener el programa si la abolladura rebasa el 50%
     if (z_s*100)/(R*2) > 50
         fprintf('\n********************************************************** \n')
         fprintf('***La abolladura no puede ser más del 50%% del diámetro**** \n')
@@ -180,13 +180,13 @@ function [ke_d] = funcion_abulladura_longitudinal_210623(ed, porcent, Long, D, t
     
 	    %% Gráficas finales
 	    for i = 1 : Nseg+1          % Se le suma +1, para que se cierre la figura
-		    %% Círculo sin daño
+		    % Círculo sin daño
 		    Yi = R*cosd(Alpha(i));    % Altura de circunferencia
 		    Zi = R*sind(Alpha(i));    % Anchura de circunferencia
 		    Circ(i,1,1) = Yi;                       % Almacenamiento de valores de la altura de circunferencia
 		    Circ(i,1,2) = Zi;                       % Almacenamiento de valores de la anchura de circunferencia
 		    
-		    %% Círculo con daño
+		    % Círculo con daño
 	       if Alpha(i)>90 && Alpha(i)<270       % Operador para ir distribuyendo en los cuadrantes negativos al rededor de la circunferencia        
 		       Sig = -1;
 	       else
@@ -849,4 +849,4 @@ function [ke_d] = funcion_abulladura_longitudinal_210623(ed, porcent, Long, D, t
     %         end
     %         
     %         K_ug
-end
+% end
