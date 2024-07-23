@@ -1,4 +1,4 @@
-function [ke_d_total, ke_d, elem_con_dano_long_NE] = corrosionlocal(no_elemento_a_danar, dano_porcentaje, archivo_excel, NE, prop_geom, E, G, J)
+function [ke_d, elem_con_dano_long_NE, f_AA_d] = corrosionlocal(no_elemento_a_danar, dano_porcentaje, archivo_excel, NE, prop_geom, E, G, J, f_AA_d)
     % Ajustar las propiedades
     prop_geom(:,8:9)    = [];                           % eliminacion de 'circular' y 'wo', si no se eliminan la conversion a matriz numerica no es posible
     prop_geom           = cell2mat(prop_geom);          % Conversion de prop_geo que era un cell, en esta seccion se extraen los valores del espesor
@@ -82,12 +82,13 @@ function [ke_d_total, ke_d, elem_con_dano_long_NE] = corrosionlocal(no_elemento_
         % SUBLOQUE: Matriz de flexibilidades y usop de matriz de transformación T para convertirla a la matriz de rigidez local completa sin necesidad de
         % invertirla.
         % Elemento tubular dañado
-        f_AA_d(:,:,i) = [L/(E(i)*A_d(i))    0                       0                       0                 0                     0;...
-                        0                   L^3/(3*E(i)*I_d(i))     0                       0                 0                     L^2/(2*E(i)*I_d(i));...
-                        0                   0                       L^3/(3*E(i)*I_d(i))     0                 -L^2/(2*E(i)*I_d(i))  0;...
-                        0                   0                       0                       L/(G(i)*J(i))     0                     0;...
-                        0                   0                       -L^2/(2*E(i)*I_d(i))    0                 L/(E(i)*I_d(i))       0;...
-                        0                   L^2/(2*E(i)*I_d(i))     0                       0                 0                     L/(E(i)*I_d(i))];
+        
+        f_AA_d(:,:,i) = [L/(E*A_d(i))       0                       0                       0                   0                   0;...
+                        0                   L^3/(3*E*I_d(i))        0                       0                   0                   L^2/(2*E*I_d(i));...
+                        0                   0                       L^3/(3*E*I_d(i))        0                   -L^2/(2*E*I_d(i))   0;...
+                        0                   0                       0                       L/(G*J)             0                   0;...
+                        0                   0                       -L^2/(2*E*I_d(i))       0                   L/(E*I_d(i))        0;...
+                        0                   L^2/(2*E*I_d(i))        0                       0                   0                   L/(E*I_d(i))];
         % Matriz de transformación para evitar invertir la matriz de flexibilidades
         T   = [-1    0      0       0   0   0
                 0    -1     0       0   0   0 
@@ -105,12 +106,12 @@ function [ke_d_total, ke_d, elem_con_dano_long_NE] = corrosionlocal(no_elemento_
         clear L                                      % Se borra la variable L ya que en el ensamblaje de matriz de rigidez se vuelve a usar esta variable
     end
 
-    %% SECCION: Matriz de rigidez total con corrosion cuya 3ra dimension equivale a NE, los elementos con dano estan ubicados en su lugar correspondientes (ke_d_total)
-    % Generar una matriz de longitud NE con los ke_d en los indices correspondientes de no_elemento_a_danar para posterior
-    ke_d_total  = zeros(12, 12, NE);                            % Matriz de ceros con NE longitud en su tercera dimension. NE es el num. de elementos
-    for i = 1:length(no_elemento_a_danar)
-        ke_d_total(:,:,no_elemento_a_danar(i)) = ke_d(:,:,i);   % matriz vacia de 12 por 12 por NE, pero con las matrices locales de ke_d posicionadas en su lugar para correspondientes
-    end
-    %% IMPORTANTE: LA MATRIZ ke_d_total CONTIENE EN SU MAYORIA CEROS PERO LOS ELEMENTOS DIFERENTES A CEROS CONTIENE LA MATRICES LOCALES CON DANO
-                %% QUE SERA USADA EN EL ENSAMBLAJE GLOBAL PARA REEMPLAZAR LAS MATRICES LOCALES INTACTAS POR LAS QUE TIENEN DANO
+    % %% SECCION: Matriz de rigidez total con corrosion cuya 3ra dimension equivale a NE, los elementos con dano estan ubicados en su lugar correspondientes (ke_d_total)
+    % % Generar una matriz de longitud NE con los ke_d en los indices correspondientes de no_elemento_a_danar para posterior
+    % ke_d_total  = zeros(12, 12, NE);                            % Matriz de ceros con NE longitud en su tercera dimension. NE es el num. de elementos
+    % for i = 1:length(no_elemento_a_danar)
+    %     ke_d_total(:,:,no_elemento_a_danar(i)) = ke_d(:,:,i);   % matriz vacia de 12 por 12 por NE, pero con las matrices locales de ke_d posicionadas en su lugar para correspondientes
+    % end
+    % %% IMPORTANTE: LA MATRIZ ke_d_total CONTIENE EN SU MAYORIA CEROS PERO LOS ELEMENTOS DIFERENTES A CEROS CONTIENE LA MATRICES LOCALES CON DANO
+    %             %% QUE SERA USADA EN EL ENSAMBLAJE GLOBAL PARA REEMPLAZAR LAS MATRICES LOCALES INTACTAS POR LAS QUE TIENEN DANO
 end
