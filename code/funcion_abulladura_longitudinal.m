@@ -6,26 +6,17 @@
     format short G
     % COMENTAR desde AQUí %%%%
     clc; clear all; close all %%% Cuidado con correr el código principal y que esta línea esté descomentada
+    warning off
     % Datos del elemento a dañar
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        ed = 5; % ed = elemento a dañar                                     %
-        porcent = 44; % Porcen_de_prof_de_abolld_con_respecto_al_diam;      %
-        % Unidades en milímetros                                            %
-        % Longitud_total_del_elemento_en_mm;                                %
-            switch ed                                                       %
-                case {5,6,9,7}                                              %
-                    Long = 5000;                                            %
-                case {1,3}                                                  %
-                    Long = 4000;                                            %
-                case {2, 4}                                                 %
-                    Long = 3000;                                            %
-            end                                                             %                  
-        D       = 600;      % Diametro_de_elemento_tubular_en_mm;           %
-        t       = 25.4;     % Espesor_en_mm;                                %
-        L_D     = Long;     % longitud dañada_en_mm;                        %
+        porcent = 30; % Porcen_de_prof_de_abolld_con_respecto_al_diam;                                                           %                  
+        D       = 2184.4;      % Diametro_de_elemento_tubular_en_mm;           %
+        t       = 38.1;     % Espesor_en_mm;                                %
+        L_D     = 23430.1;     % longitud dañada_en_mm;                        %
+        Long    = L_D;
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%% COMENTAR hasta ACÁ %%%%
-    L = Long;
+    L = L_D;
     Ubicacion_de_abolladura_en_m  = Long*0.5;
     z_s     = porcent * D / 100;
 
@@ -41,7 +32,7 @@
     lim  = 0.003;
     
     fprintf('Abolladura máxima     = %7.0f  mm\n',z_s) % Se le suma el t para considerar la abolladura total, desde la cara exterior del elemento
-    fprintf('Elemento dañado       = %7.0f  \n',ed) % Se le suma el t para considerar la abolladura total, desde la cara exterior del elemento
+    % fprintf('Elemento dañado       = %7.0f  \n',ed) % Se le suma el t para considerar la abolladura total, desde la cara exterior del elemento
 
     R = 0.5*D;       % Radio
     R = R-0.5*t;     % Radio sin la mitad del espesor
@@ -81,7 +72,7 @@
     % for p = 1
 	    % Datos de abolladura
 	    P = 2*pi*R;                     % Perímetro del círculo sin daño
-	    z_i = R-Vz_s(p);                    % Distancia entre el centro del círculo sin daño y la profundidad de la abolladura
+	    z_i = R-Vz_s(p);                % Distancia entre el centro del círculo sin daño y la profundidad de la abolladura
 	    z_dent = z_i+R;                 % Distancia desde el punto más bajo hasta la ubicación de la abolladura. (Ver Fig)
 	    theta = acosd(z_i/R);           % Ángulo entre radio y centro de círculo sin daño
 	    theta = 2*theta;                % Ángulo completo
@@ -461,13 +452,13 @@
 		    end
 			    
 		    % Parte achatada
-			    L_ach = cuerda + 2*delta;	% Longitud de parte achatada
-			    Iy_ach= 1/12 * L_ach * t^3;	% Momento de inercia paralelo al eje y
-			    Iz_ach= 1/12 * L_ach^3 * t;	% Momento de inercia paralelo al eje z
-			    A_ach = L_ach*t;			% Área parte achatada
-			    d_acha = z_i + (c_z*-1);
-			    Iy_achatada_centro = Iy_ach + (A_ach * d_acha^2);
-			    Iz_achatada_centro = Iz_ach;
+		    L_ach = cuerda + 2*delta;	% Longitud de parte achatada
+		    Iy_ach= 1/12 * L_ach * t^3;	% Momento de inercia paralelo al eje y
+		    Iz_ach= 1/12 * L_ach^3 * t;	% Momento de inercia paralelo al eje z
+		    A_ach = L_ach*t;			% Área parte achatada
+		    d_acha = z_i + (c_z*-1);
+		    Iy_achatada_centro = Iy_ach + (A_ach * d_acha^2);
+		    Iz_achatada_centro = Iz_ach;
 		    
 		    % Momento de inercia dañado
 		    Iy_t_damaged = sum(Iy_t) + Iy_achatada_centro; 	% prefijo _t es de total
@@ -524,6 +515,7 @@
     end
     
     %% Polinomio del momento de inercia de la sección
+    VIy
     VIy = horzcat(I_undamaged,VIy,I_undamaged); % en mm^4
     VIz = horzcat(I_undamaged,VIz,I_undamaged); % en mm^4
     x_f = 0 : L_D/Slong : L_D;          % Distancia longitudinal acumulada de L_D
