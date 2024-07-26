@@ -1,6 +1,7 @@
-%% SAPMIAdenthboth.m
+%% SAPMIAdenthboth2.m
 
-% Main
+% main
+
 clc; clear all; close all, warning off
 tic
 format shortG
@@ -20,13 +21,13 @@ format shortG
     
     % Danos a elementos tubulares, caso de dano y su respectivo porcentaje
     % Nota: los siguientes 3 vectores deben tener la misma longitud siempre
-    % no_elemento_a_danar = [2];
-    % caso_dano           = {'abolladura'};
-    % dano_porcentaje     = [30];
+    no_elemento_a_danar = [2];
+    caso_dano           = {'abolladura'};
+    dano_porcentaje     = [30];
     
-    no_elemento_a_danar = [2, 74];
-    caso_dano           = {'abolladura','abolladura'};
-    dano_porcentaje     = [30 30];
+    % no_elemento_a_danar = [2, 74, 102];
+    % caso_dano           = {'abolladura', 'corrosion', 'abolladura'};
+    % dano_porcentaje     = [50 50 50];
 
 
 %% Corregir de formato los números en la tabla importada de ETABS: En todo este bloque de código, se realizó el cambio de formato de los números, debido a que ETABS importa sus tablas en formato de texto en algunas columnas.
@@ -165,7 +166,8 @@ for i = 1:length(no_elemento_a_danar) % Inicio del primer for
         % Código de abolladura
         index = find(num_de_ele_long(:,1) == i);
         long_elem_a_danar = num_de_ele_long(index,2);
-        prop_geom_mat = cell2mat(prop_geom); espesor_elem_a_danar = prop_geom_mat(no_elemento_a_danar(i),10);
+        prop_geom_mat = cell2mat(prop_geom);
+        espesor_elem_a_danar = prop_geom_mat(no_elemento_a_danar(i),10);
         D(i) = prop_geom_mat(no_elemento_a_danar(i),8);
         L_D(i) = long_elem_a_danar;
         z_s(i) = dano_porcentaje(i) * D(i) / 100;
@@ -567,6 +569,5 @@ for i = 1:length(no_elemento_a_danar) % Inicio del primer for
         ke_d(:,:,i) = T * (f_AA_d(:,:,i))^(-1) * T';
         clearvars VIy VIz
     end % Fin del bucle for de abolladura
-
 end % Fin del ciclo for que itera sobre cada elemento a dañar
 ke_d = real(ke_d)
