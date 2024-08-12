@@ -26,7 +26,7 @@ format shortG
     
     no_elemento_a_danar = [1, 74];
     caso_dano           = {'abolladura','abolladura'};
-    dano_porcentaje     = [30 30];
+    dano_porcentaje     = [50 50];
 
 
 %% Corregir de formato los números en la tabla importada de ETABS: En todo este bloque de código, se realizó el cambio de formato de los números, debido a que ETABS importa sus tablas en formato de texto en algunas columnas.
@@ -572,5 +572,22 @@ end % Fin del ciclo for que itera sobre cada elemento a dañar
 ke_d_total = real(ke_d);
 %%
 clc
-[KG_damaged, KG_undamaged] = ensamblaje_matriz_rigidez_global_ambos_modelos(ID, NE, ke_d_total,elements, nodes, IDmax, NEn, damele, eledent,   A, Iy, Iz, J, E, G,  vxz, elem_con_dano_long_NE)
- 
+[KG_damaged, KG_undamaged] = ensamblaje_matriz_rigidez_global_ambos_modelos(ID, NE, ke_d_total,elements, nodes, IDmax, NEn, damele, eledent,   A, Iy, Iz, J, E, G,  vxz, elem_con_dano_long_NE);
+%%
+% Función Condensación estática    
+    KG_damaged_cond   = condensacion_estatica(KG_damaged);
+    KG_undamaged_cond = condensacion_estatica(KG_undamaged);
+
+% Modos y frecuencias de estructura condensados y globales
+    [modos_cond_u,frec_cond_u] = modos_frecuencias(KG_undamaged_cond,M_cond);
+    [modos_cond_d,frec_cond_d] = modos_frecuencias(KG_damaged_cond,M_cond);
+
+% Cálculo del Root Mean Square Error (RMSE)
+    rmse_frec = sqrt(mean((frec_cond_u - frec_cond_d).^2));
+    disp(['El RMSE entre las frecuencias del modelo intacto y con daño es: ', num2str(rmse_frec)])
+
+% Cálculo de RMSE para las formas modales
+    RMSEs = calcularRMSEModalesPorModo(modos_cond_u, modos_cond_d);
+    disp('Los RMSE calculados para cada modo de vibrar son:');
+    disp(RMSEs);
+
