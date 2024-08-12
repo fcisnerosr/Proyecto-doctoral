@@ -24,7 +24,7 @@ function [KG_damaged, KG_undamaged] = ensamblaje_matriz_rigidez_global_ambos_mod
          if isempty(locdam) && isempty(locdent)
              % local stiffness matrix of the elements
              if i == elem_con_dano_long_NE(i)
-                 % Asignacion de dano local a la matriz de 
+                 % Asignacion de dano local a la matrices locales con danos asignadas previamente
                  ke(:,:,i) = ke_d_total(:,:,cont);
                  cont = cont + 1;
              else
@@ -67,7 +67,7 @@ function [KG_damaged, KG_undamaged] = ensamblaje_matriz_rigidez_global_ambos_mod
     end
     KG_damaged = KG;
     
-    
+    clear KG    
      %% KG intacta
     KG=zeros(IDmax,IDmax);
     KGtu=zeros(IDmax,NEn);
@@ -124,7 +124,7 @@ function [KG_damaged, KG_undamaged] = ensamblaje_matriz_rigidez_global_ambos_mod
        clear KGf;
        clear KGtuf;
     end
-    KG_undamage = KG;
+    KG_undamaged = KG;
 end
 
 
