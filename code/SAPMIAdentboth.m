@@ -570,24 +570,64 @@ for i = 1:length(no_elemento_a_danar)
 
 end % Fin del ciclo for que itera sobre cada elemento a dañar
 ke_d_total = real(ke_d);
-%%
 clc
 [KG_damaged, KG_undamaged] = ensamblaje_matriz_rigidez_global_ambos_modelos(ID, NE, ke_d_total,elements, nodes, IDmax, NEn, damele, eledent,   A, Iy, Iz, J, E, G,  vxz, elem_con_dano_long_NE);
-%%
+
 % Función Condensación estática    
     KG_damaged_cond   = condensacion_estatica(KG_damaged);
     KG_undamaged_cond = condensacion_estatica(KG_undamaged);
-
+%%
 % Modos y frecuencias de estructura condensados y globales
-    [modos_cond_u,frec_cond_u] = modos_frecuencias(KG_undamaged_cond,M_cond);
-    [modos_cond_d,frec_cond_d] = modos_frecuencias(KG_damaged_cond,M_cond);
+     [modos_cond_u,frec_cond_u] = modos_frecuencias(KG_undamaged_cond,M_cond);
+     [modos_cond_d,frec_cond_d] = modos_frecuencias(KG_damaged_cond,M_cond);
 
-% Cálculo del Root Mean Square Error (RMSE)
-    rmse_frec = sqrt(mean((frec_cond_u - frec_cond_d).^2));
-    disp(['El RMSE entre las frecuencias del modelo intacto y con daño es: ', num2str(rmse_frec)])
+% Normalizacion de modos (normalización por el máximo componente)
+    % Se debe escoger el mayor valor de cada dirección de cada gdl de cada modo
+    [n, m] = size(modos_cond_u);
+    num_gdl = 3; % Número de grados de libertad por nodo
+    for j = 1:m % Para cada modo
+        for i = 1:num_gdl:num_gdl*round(n/num_gdl) % Para cada gdl
+            max_val = max(abs(modos_cond_u(i:i+num_gdl-1, j))); % Encuentra el valor máximo
+            modos_cond_u(i:i+num_gdl-1, j) = modos_cond_u(i:i+num_gdl-1, j) / max_val; % Normaliza
+        end
+    end
 
-% Cálculo de RMSE para las formas modales
-    RMSEs = calcularRMSEModalesPorModo(modos_cond_u, modos_cond_d);
-    disp('Los RMSE calculados para cada modo de vibrar son:');
-    disp(RMSEs);
+    [n, m] = size(modos_cond_d);
+    num_gdl = 3; % Número de grados de libertad por nodo
+    for j = 1:m % Para cada modo
+        for i = 1:num_gdl:num_gdl*round(n/num_gdl) % Para cada gdl
+            max_val = max(abs(modos_cond_d(i:i+num_gdl-1, j))); % Encuentra el valor máximo
+            modos_cond_d(i:i+num_gdl-1, j) = modos_cond_d(i:i+num_gdl-1, j) / max_val; % Normaliza
+        end
+    end
 
+% RMSE para las formas modales normalizadas
+    % Supongamos que n es el número total de filas, m es el número total de columnas (modos)
+    [n, m] = size(modos_cond_u);
+    num_gdl = 3;  % Número de grados de libertad por nodo
+
+    % Inicializar matriz de RMSE
+    rmse_matrix = zeros(n/num_gdl, m);  % Una fila por cada nodo, una columna por cada modo
+
+    for j = 1:m  % Para cada modo
+        for i = 1:num_gdl:n  % Para cada nodo
+            % Extraer las filas correspondientes a los 3 grados de libertad del nodo actual
+            u_node = modos_cond_u(i:i+num_gdl-1, j);
+            d_node = modos_cond_d(i:i+num_gdl-1, j);
+            
+            % Calcular el RMSE para este nodo y modo
+            rmse_matrix((i-1)/num_gdl + 1, j) = sqrt(mean((u_node - d_node).^2));
+        end
+    end
+ 
+
+
+% % Cálculo del Root Mean Square Error (RMSE)
+%     rmse_frec = sqrt(mean((frec_cond_u - frec_cond_d).^2));
+%     disp(['El RMSE entre las frecuencias del modelo intacto y con daño es: ', num2str(rmse_frec)])
+% 
+% % Cálculo de RMSE para las formas modales
+%     RMSEs = calcularRMSEModalesPorModo(modos_cond_u, modos_cond_d);
+%     disp('Los RMSE calculados para cada modo de vibrar son:');
+%     disp(RMSEs);
+% 
