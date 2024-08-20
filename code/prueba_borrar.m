@@ -232,6 +232,37 @@ close all
 % % Opcional: Cambiar la vista de la gráfica para mejor visualización
 % view(3);  % Vista en 3D
 
-for i = 1:76
-    fprintf("text(X(%d), Y(%d), Z(%d), num2str(%d), 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'right');\n", i, i, i, i);
+% for i = 1:76
+ %   fprintf("text(X(%d), Y(%d), Z(%d), num2str(%d), 'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'right');\n", i, i, i, i);
+%end
+
+
+% Crear el vector de 1 a 135
+no_elemento_a_danar_todos_modelos = 1:135;
+
+% Ciclo de 1 a 27
+for i = 1:27
+    % Calcular el índice inicial para cada rango de 5 elementos
+    inicio = 5 * (i - 1) + 1;
+    
+    % Evitar exceder el límite del vector
+    if inicio > length(no_elemento_a_danar_todos_modelos)
+        break;
+    end
+    
+    % Calcular el índice final, limitado por la longitud del vector
+    fin = min(inicio + 4, length(no_elemento_a_danar_todos_modelos));
+    
+    % Seleccionar el segmento actual de 5 elementos
+    segmento_actual = no_elemento_a_danar_todos_modelos(inicio:fin);
+    
+    % Procesar el segmento actual
+    % Aquí podrías agregar el código para procesar cada segmento
+    disp(['Procesando elementos desde ', num2str(inicio), ' hasta ', num2str(fin)]);
+    disp(segmento_actual);
 end
+
+
+
+
+
