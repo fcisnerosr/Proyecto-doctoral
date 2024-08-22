@@ -24,9 +24,9 @@ format shortG
     % caso_dano           = {'abolladura'};
     % dano_porcentaje     = [30];
     
-    no_elemento_a_danar = [1, 74];
-    caso_dano           = {'abolladura','abolladura'};
-    dano_porcentaje     = [50 50];
+    no_elemento_a_danar = [1, 2, 5, 18, 19];
+    caso_dano           = repmat({'corrosion'}, 1, 5);
+    dano_porcentaje     = [60 40 40 40 40 ];
 
 
 %% Corregir de formato los números en la tabla importada de ETABS: En todo este bloque de código, se realizó el cambio de formato de los números, debido a que ETABS importa sus tablas en formato de texto en algunas columnas.
