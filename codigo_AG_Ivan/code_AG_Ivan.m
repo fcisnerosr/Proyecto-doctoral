@@ -66,7 +66,7 @@ Kd
 [Vd,Dd]=eig(Kd,Md)
 
 % Algoritmo Genetico
-% la siguiente línea es para  indica que las configuraciones son específicamente para la función ga, que es la implementación del Algoritmo Genético en MATLAB.
+% la siguiente línea es para indica que las configuraciones son específicamente para la función ga, que es la implementación del Algoritmo Genético en MATLAB.
 % Las opciones y variables que configuras con gaoptimset y asignas a la estructura options no se utilizan directamente en otras partes del código; en su lugar, son utilizadas internamente por la función ga (el Algoritmo Genético) durante su ejecución.
 options = gaoptimset(@ga);          % gaoptimset es para crear las configuraciones específicas para el AG
 options.PopulationSize= Samples;
@@ -108,7 +108,7 @@ parpool('Processes', 6)     %  configura MATLAB para ejecutar la optimización d
     % Variables de Optimización: Nvar define el número de variables que se optimizan.
     % Límites: LB y UB+ son los límites inferiores y superiores para las variables de optimización, definidos previamente.
     % Opciones: options incluye todas las configuraciones del AG como el tamaño de la población, número de generaciones, funciones de selección, etc.
-delete(gcp('nocreate'));
+delete(gcp('nocreate'));    % Cierra el procesamiento paralelo
 diary off;                  %  Cierra el archivo de salida, deteniendo el registro de las salidas en la consola.
 
 x
