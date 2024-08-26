@@ -1,5 +1,13 @@
 %% Condensación estática
 function [KG_cond] = condensacion_estatica(KG)
+    
+    % Prueba con matriz aleatorea de 24 x 24
+    % Generar una matriz aleatoria de 24x24 con valores enteros entre 1 y 5
+    KG = randi([1, 5], 24, 24)
+
+    % Hacer que la matriz sea simétrica
+    KG = triu(KG, 1) + triu(KG, 1).' + diag(diag(KG))
+
     n = length(KG);
     vector = 1:n;
     [order1, order2] = reorganizar_vector(vector);
@@ -26,7 +34,6 @@ function [KG_cond] = condensacion_estatica(KG)
         % Esta matriz tiene los grados traslacionales (X y Y) de cada nodo del marco 
         % y los grados rotacionales alrededor de Z, también de cada nodo en los primeros 12 filas y 12 columnas de la matriz.
 
-
     % Discretización de la matriz global con los grados a conservar al inicio de los primeros 12 filas y columnas de la matriz
     lim1 = 'length(order1)';
     lim1 = eval(lim1);
@@ -46,8 +53,8 @@ function [KG_cond] = condensacion_estatica(KG)
 
     % Prueba con matriz de marco 3d
         KG_cond = K_tt - (K_tr' * (K_rr^-1) * K_tr) % Matriz condensada
-    % Aplicación de la fórmula de condensación estática:
-    % Discretización de la matriz global con los grados a conservar al inicio de los primeros 12 filas y columnas de la matriz
+    % % Aplicación de la fórmula de condensación estática:
+    % % Discretización de la matriz global con los grados a conservar al inicio de los primeros 12 filas y columnas de la matriz
         K_tt = KG_reordered(1:12,1:12);     % Grados traslacionales X y Y y rotacional Z de cada nodo
         K_rr = KG_reordered(13:24,13:24);   % Grados restantes a condensar
         K_tr = KG_reordered(13:24,1:12);    % Grados acoplados restantes también por condesar
