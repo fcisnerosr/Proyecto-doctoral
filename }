@@ -1,0 +1,28 @@
+ 2 % Idea general de cómo integrar dentro
+   de la función objetivo
+ 1 % Recorre cada elemento para aplicar el
+    daño
+3  for i = 1:num_elements
+ 1     % Recupera la matriz de flexibilida
+   d local del elemento i
+ 2     f_local = f_local_matrices{i};
+ 3
+ 4     % Aplicar daño por corrosión
+ 5     A_damaged = A_original(i) * (1 - x(
+   i));  % El área se reduce debido a la c
+   orrosión
+ 6     Iy_damaged = Iy_original(i) * (1 -
+   x(i));  % Inercia en Y se reduce debido
+    a la corrosión
+ 7     Iz_damaged = Iz_original(i) * (1 -
+   x(i));  % Inercia en Z se reduce debido
+    a la corrosión
+ 8
+ 9     % Modifica los términos afectados e
+   n la matriz de flexibilidad local
+10     f_local(1, 1) = L / (E * A_damaged)
+   ;  % Modifica el término afectado por e
+   l área
+11     f_local(1, 7) = -L / (E * A_dama@@@
+idea_corrosion_GA.txt   3,22           Top
+

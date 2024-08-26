@@ -1,0 +1,3416 @@
+Starting parallel pool (parpool) using the 'Processes' profile ...
+Connected to parallel pool with 6 workers.
+ans = 
+ <a href="matlab: helpPopup parallel.ProcessPool" style="font-weight:bold">ProcessPool</a> with properties: 
+
+            Connected: true
+           NumWorkers: 6
+                 Busy: false
+              Cluster: <a href="matlab: parallel.internal.display.Displayer.displayObject('789CD555CD6E133110769664CB4A50950BCA91074051552E15171A822A5A65294A83CA61A5E06CDDD6E0D88BBD91E8ADC73E0AC73E068FC0058923C73E021ED9DB4CBDDB06547160A44FBB3399F9E6C7933569EDA4C4CAAAC5578BD8E2BEC523E2A475F56C9374B0B70FFA538B826A2A04133D2E4BA62515BD436E0A414F7BDB732106626EAC396533264B55F1BF46FC0F3D6FC7EBB1CF55E503BDEB5E7F44E8B70AC0F7335EF025011FF85CC40BBEC8EB04F5BB86E2A386785C4FC7F6DFF13A3C611615CFB7CE9FCD0D7ADEE6821D685A144C4F263EFE1CC52FF2397D25A803FC9FB46EEEFB32F08FBCADEDF1C1E2CCE3C2E2BBC52F0FF01B9F168CBCA225250DE778E3A1939A40AE7B75734D5A0D3AB645A4DE4FE8D324ABE889F7AEEDEDF89C1F23BE35AF5FB59ABB11F4862AA7C2F16D467FB7375DAF7FB178ABD5915D815ABDBB6ABA5F2A4D8F19242AB992CEFE663E3B50FA13D3E6BAFF887D9E73CDCC9E145CB221CF99345C1E83FFF844337A18F843DD5B4BE6900473485CBD39338619C473B6846727E0017DF03C7B676C17D951CE8DCCFA45014B968D149DD9B2B3949627D0A7C9D2FE78D87F990918F7C40F7FF2514D4D36DA58DF783645756CA23AE225E79078BB93EE16C4AFA3F824BA3D3EF26F77CB7BF922FCCE86FFF770BFC37C4DFB46C8F57DFB97F10F96D45BD9098AFFDFFA3D27B7DF2BEF09DE0BA7E37B057F6FEE72AF80FC0694739014')">Processes</a> (Local Cluster)
+        AttachedFiles: {}
+    AutoAddClientPath: true
+            FileStore: [1x1 parallel.FileStore]
+           ValueStore: [1x1 parallel.ValueStore]
+          IdleTimeout: 30 minutes (30 minutes remaining)
+          SpmdEnabled: true
+
+Single objective optimization:
+10 Variables
+
+Options:
+CreationFcn:       @gacreationlinearfeasible
+CrossoverFcn:      @crossoverscattered
+SelectionFcn:      @selectionroulette
+MutationFcn:       @mutationadaptfeasible
+
+                                  Best           Mean      Stall
+Generation      Func-count        f(x)           f(x)    Generations
+    1             2000       1.097e+06       3.179e+07        0
+    2             2950       9.598e+05       2.561e+07        0
+    3             3900       9.598e+05       1.957e+07        1
+    4             4850       5.575e+05       1.602e+07        0
+    5             5800       4.387e+05       1.279e+07        0
+    6             6750       3.337e+05       1.028e+07        0
+    7             7700       3.337e+05       8.791e+06        1
+    8             8650       3.337e+05       7.446e+06        2
+    9             9600       1.982e+05        8.79e+06        0
+   10            10550       1.982e+05       8.056e+06        1
+   11            11500       1.982e+05       8.925e+06        2
+   12            12450       1.982e+05       1.026e+07        3
+   13            13400       1.982e+05       8.973e+06        4
+   14            14350       1.982e+05       7.534e+06        5
+   15            15300       1.982e+05       6.586e+06        6
+   16            16250       1.982e+05       6.067e+06        7
+   17            17200       1.982e+05       5.327e+06        8
+   18            18150       1.982e+05       4.954e+06        9
+   19            19100       1.889e+05       4.846e+06        0
+   20            20050       1.889e+05       4.723e+06        1
+   21            21000       1.889e+05       4.589e+06        2
+   22            21950       1.889e+05       4.727e+06        3
+   23            22900       1.889e+05       4.472e+06        4
+   24            23850       1.889e+05        4.22e+06        5
+   25            24800       1.883e+05       3.993e+06        0
+   26            25750       1.882e+05       3.706e+06        0
+   27            26700       1.813e+05       3.442e+06        0
+   28            27650       1.731e+05       3.463e+06        0
+   29            28600       1.655e+05       3.435e+06        0
+   30            29550       1.655e+05       3.365e+06        1
+
+                                  Best           Mean      Stall
+Generation      Func-count        f(x)           f(x)    Generations
+   31            30500       1.655e+05       3.262e+06        2
+   32            31450       1.655e+05       3.191e+06        3
+   33            32400       1.655e+05       2.993e+06        4
+   34            33350       1.655e+05       2.853e+06        5
+   35            34300       1.655e+05       2.777e+06        6
+   36            35250       1.655e+05       2.613e+06        7
+   37            36200       1.655e+05       2.557e+06        8
+   38            37150       1.655e+05       2.513e+06        9
+   39            38100       1.642e+05       2.398e+06        0
+   40            39050       1.538e+05       2.332e+06        0
+   41            40000       1.302e+05       2.194e+06        0
+   42            40950       1.302e+05       2.185e+06        1
+   43            41900       1.302e+05       2.162e+06        2
+   44            42850       1.302e+05       2.051e+06        3
+   45            43800       1.302e+05       1.893e+06        4
+   46            44750       1.302e+05       1.925e+06        5
+   47            45700       1.302e+05       1.841e+06        6
+   48            46650       1.302e+05       1.775e+06        7
+   49            47600       1.302e+05       1.875e+06        8
+   50            48550       1.302e+05       1.982e+06        9
+   51            49500       1.302e+05        2.07e+06       10
+   52            50450       1.302e+05       2.168e+06       11
+   53            51400       1.302e+05       2.155e+06       12
+   54            52350       1.302e+05       2.332e+06       13
+   55            53300       1.302e+05       2.383e+06       14
+   56            54250       1.248e+05       2.469e+06        0
+   57            55200       1.248e+05       2.366e+06        1
+   58            56150       1.248e+05        2.46e+06        2
+   59            57100       1.248e+05       2.562e+06        3
+   60            58050       1.031e+05       2.669e+06        0
+
+                                  Best           Mean      Stall
+Generation      Func-count        f(x)           f(x)    Generations
+   61            59000       1.031e+05       2.567e+06        1
+   62            59950       1.031e+05       2.542e+06        2
+   63            60900       1.031e+05       2.506e+06        3
+   64            61850       1.031e+05       2.471e+06        4
+   65            62800       1.031e+05       2.452e+06        5
+   66            63750       1.031e+05       2.324e+06        6
+   67            64700       1.031e+05        2.15e+06        7
+   68            65650       1.031e+05       1.935e+06        8
+   69            66600       1.021e+05       1.948e+06        0
+   70            67550       1.019e+05        1.91e+06        0
+   71            68500       1.019e+05       1.742e+06        1
+   72            69450       9.989e+04       1.526e+06        0
+   73            70400       9.828e+04       1.373e+06        0
+   74            71350       9.828e+04        1.15e+06        1
+   75            72300       9.634e+04       9.832e+05        0
+   76            73250       9.518e+04       7.673e+05        0
+   77            74200       9.518e+04       5.956e+05        1
+   78            75150       9.518e+04       5.736e+05        2
+   79            76100       9.518e+04       4.968e+05        3
+   80            77050       9.234e+04       4.336e+05        0
+   81            78000       9.148e+04         3.8e+05        0
+   82            78950       9.148e+04       3.479e+05        1
+   83            79900       9.148e+04       3.017e+05        2
+   84            80850       9.148e+04       2.648e+05        3
+   85            81800       9.129e+04        2.38e+05        0
+   86            82750       9.119e+04         2.2e+05        0
+   87            83700       9.119e+04       1.956e+05        1
+   88            84650       9.088e+04       1.821e+05        0
+   89            85600       8.883e+04       1.671e+05        0
+   90            86550       8.829e+04       1.648e+05        0
+
+                                  Best           Mean      Stall
+Generation      Func-count        f(x)           f(x)    Generations
+   91            87500       8.829e+04       1.844e+05        1
+   92            88450       8.829e+04       1.736e+05        2
+   93            89400       8.829e+04       1.674e+05        3
+   94            90350       8.797e+04       1.505e+05        0
+   95            91300       8.714e+04       1.492e+05        0
+   96            92250       8.675e+04       1.523e+05        0
+   97            93200       8.675e+04       1.732e+05        1
+   98            94150       8.675e+04        1.69e+05        2
+   99            95100       8.646e+04       1.657e+05        0
+  100            96050       8.596e+04       1.613e+05        0
+  101            97000       8.486e+04       1.749e+05        0
+  102            97950       8.193e+04       2.209e+05        0
+  103            98900       8.193e+04       3.222e+05        1
+  104            99850       8.193e+04       3.082e+05        2
+  105           100800       8.193e+04         2.8e+05        3
+  106           101750       8.193e+04       2.562e+05        4
+  107           102700       8.193e+04       2.343e+05        5
+  108           103650        8.18e+04       2.136e+05        0
+  109           104600       8.066e+04       1.986e+05        0
+  110           105550       8.066e+04       1.901e+05        1
+  111           106500       8.066e+04       1.776e+05        2
+  112           107450       8.066e+04       1.689e+05        3
+  113           108400       8.066e+04        1.63e+05        4
+  114           109350       8.066e+04       1.573e+05        5
+  115           110300       8.066e+04       1.524e+05        6
+  116           111250       8.059e+04       1.535e+05        0
+  117           112200       8.059e+04       1.526e+05        1
+  118           113150       7.772e+04       1.536e+05        0
+  119           114100       7.772e+04       1.491e+05        1
+  120           115050       7.772e+04       1.481e+05        2
+
+                                  Best           Mean      Stall
+Generation      Func-count        f(x)           f(x)    Generations
+  121           116000       7.772e+04       1.444e+05        3
+  122           116950       7.772e+04       1.415e+05        4
+  123           117900       7.772e+04       1.419e+05        5
+  124           118850       7.772e+04       1.396e+05        6
+  125           119800       7.772e+04       1.378e+05        7
+  126           120750       7.772e+04       1.353e+05        8
+  127           121700       7.677e+04       1.355e+05        0
+  128           122650       7.677e+04       1.381e+05        1
+  129           123600       7.556e+04       1.412e+05        0
+  130           124550       7.498e+04       1.374e+05        0
+  131           125500       7.498e+04       1.349e+05        1
+  132           126450       7.288e+04       1.372e+05        0
+  133           127400       7.288e+04       1.377e+05        1
+  134           128350       7.288e+04        1.38e+05        2
+  135           129300       7.288e+04       1.411e+05        3
+  136           130250       7.288e+04       1.411e+05        4
+  137           131200       7.288e+04       1.415e+05        5
+  138           132150       7.264e+04       1.372e+05        0
+  139           133100       7.264e+04       1.364e+05        1
+  140           134050       7.264e+04       1.343e+05        2
+  141           135000       7.264e+04       1.346e+05        3
+  142           135950       7.264e+04       1.326e+05        4
+  143           136900       7.264e+04       1.306e+05        5
+  144           137850       7.264e+04       1.309e+05        6
+  145           138800       7.049e+04       1.318e+05        0
+  146           139750       7.029e+04       1.305e+05        0
+  147           140700       7.029e+04       1.314e+05        1
+  148           141650       7.029e+04       1.335e+05        2
+  149           142600       6.958e+04       1.304e+05        0
+  150           143550       6.958e+04        1.33e+05        1
+
+                                  Best           Mean      Stall
+Generation      Func-count        f(x)           f(x)    Generations
+  151           144500       6.958e+04       1.315e+05        2
+  152           145450       6.958e+04       1.301e+05        3
+  153           146400       6.958e+04       1.301e+05        4
+  154           147350       6.958e+04       1.302e+05        5
+  155           148300       6.958e+04       1.291e+05        6
+  156           149250       6.958e+04        1.27e+05        7
+  157           150200       6.958e+04       1.259e+05        8
+  158           151150       6.958e+04       1.276e+05        9
+  159           152100       6.946e+04       1.278e+05        0
+  160           153050       6.946e+04        1.28e+05        1
+  161           154000       6.946e+04       1.301e+05        2
+  162           154950       6.868e+04       1.316e+05        0
+  163           155900       6.839e+04       1.284e+05        0
+  164           156850       6.839e+04         1.3e+05        1
+  165           157800       6.839e+04       1.276e+05        2
+  166           158750       6.839e+04       1.281e+05        3
+  167           159700       6.792e+04       1.255e+05        0
+  168           160650       6.792e+04       1.228e+05        1
+  169           161600       6.792e+04       1.189e+05        2
+  170           162550       6.792e+04       1.236e+05        3
+  171           163500       6.792e+04       1.213e+05        4
+  172           164450       6.792e+04        1.19e+05        5
+  173           165400       6.786e+04       1.186e+05        0
+  174           166350       6.786e+04       1.188e+05        1
+  175           167300       6.771e+04       1.137e+05        0
+  176           168250       6.762e+04       1.139e+05        0
+  177           169200       6.762e+04       1.151e+05        1
+  178           170150       6.741e+04       1.112e+05        0
+  179           171100       6.736e+04       1.063e+05        0
+  180           172050       6.736e+04       1.142e+05        1
+
+                                  Best           Mean      Stall
+Generation      Func-count        f(x)           f(x)    Generations
+  181           173000       6.716e+04       1.096e+05        0
+  182           173950        6.71e+04       1.166e+05        0
+  183           174900        6.71e+04       1.396e+05        1
+  184           175850       6.703e+04       1.318e+05        0
+  185           176800       6.703e+04       1.483e+05        1
+  186           177750        6.67e+04       1.423e+05        0
+  187           178700        6.67e+04       1.549e+05        1
+  188           179650       6.608e+04       1.489e+05        0
+  189           180600       6.608e+04        1.66e+05        1
+  190           181550       6.582e+04       1.582e+05        0
+  191           182500       6.582e+04       1.742e+05        1
+  192           183450       6.582e+04       1.581e+05        2
+  193           184400       6.514e+04       1.437e+05        0
+  194           185350       6.414e+04       1.434e+05        0
+  195           186300       6.414e+04       1.588e+05        1
+  196           187250       6.414e+04       1.509e+05        2
+  197           188200       6.414e+04       1.444e+05        3
+  198           189150       6.414e+04       1.308e+05        0
+  199           190100       6.414e+04       1.254e+05        1
+  200           191050       6.414e+04       1.215e+05        2
+  201           192000       6.414e+04       1.188e+05        3
+  202           192950       6.385e+04       1.137e+05        0
+  203           193900       6.385e+04       1.125e+05        1
+  204           194850       6.385e+04       1.077e+05        2
+  205           195800       6.385e+04       1.049e+05        3
+  206           196750       6.303e+04       1.034e+05        0
+  207           197700       6.303e+04       1.051e+05        1
+  208           198650       6.303e+04       1.059e+05        2
+  209           199600       6.283e+04       1.061e+05        0
+  210           200550       6.283e+04       1.087e+05        1
+
+                                  Best           Mean      Stall
+Generation      Func-count        f(x)           f(x)    Generations
+  211           201500       6.283e+04       1.065e+05        2
+  212           202450       6.283e+04       1.049e+05        3
+  213           203400       6.283e+04       1.049e+05        4
+  214           204350       6.283e+04        1.02e+05        5
+  215           205300       6.283e+04       1.017e+05        6
+  216           206250       6.283e+04       1.016e+05        7
+  217           207200       6.143e+04       1.023e+05        0
+  218           208150       6.143e+04       1.036e+05        1
+  219           209100       6.143e+04       1.062e+05        2
+  220           210050       6.143e+04       1.019e+05        3
+  221           211000       6.143e+04       1.043e+05        4
+  222           211950       6.143e+04       1.034e+05        5
+  223           212900       6.143e+04       1.001e+05        6
+  224           213850       6.143e+04       9.998e+04        7
+  225           214800       6.143e+04       9.891e+04        8
+  226           215750       6.143e+04       9.784e+04        9
+  227           216700       6.136e+04       9.842e+04        0
+  228           217650       6.136e+04       9.804e+04        1
+  229           218600       6.136e+04       9.992e+04        2
+  230           219550       6.106e+04       9.999e+04        0
+  231           220500       6.106e+04       9.888e+04        1
+  232           221450       6.106e+04       9.605e+04        2
+  233           222400       6.106e+04       9.658e+04        3
+  234           223350       6.106e+04       9.562e+04        4
+  235           224300       6.106e+04       9.547e+04        5
+  236           225250       6.106e+04       9.664e+04        6
+  237           226200       6.103e+04       9.439e+04        0
+  238           227150       6.075e+04       9.519e+04        0
+  239           228100       6.075e+04       9.501e+04        1
+  240           229050       6.075e+04       9.413e+04        2
+
+                                  Best           Mean      Stall
+Generation      Func-count        f(x)           f(x)    Generations
+  241           230000       6.075e+04       9.148e+04        3
+  242           230950       6.075e+04       9.144e+04        4
+  243           231900       6.066e+04       9.099e+04        0
+  244           232850       6.066e+04       9.178e+04        1
+  245           233800       6.064e+04       9.063e+04        0
+  246           234750       6.064e+04       8.862e+04        1
+  247           235700       6.064e+04       8.887e+04        2
+  248           236650       6.064e+04        8.62e+04        3
+  249           237600       6.011e+04       8.365e+04        0
+  250           238550       6.011e+04       8.347e+04        1
+  251           239500       6.011e+04        8.24e+04        2
+  252           240450       6.011e+04       8.161e+04        3
+  253           241400       6.011e+04        7.91e+04        4
+  254           242350       6.011e+04       8.074e+04        5
+  255           243300       6.011e+04       8.177e+04        6
+  256           244250       6.001e+04       7.928e+04        0
+  257           245200       6.001e+04       7.879e+04        1
+  258           246150       6.001e+04        7.92e+04        2
+  259           247100       6.001e+04       7.815e+04        3
+  260           248050       6.001e+04       7.671e+04        4
+  261           249000       6.001e+04       7.638e+04        5
+  262           249950       6.001e+04       7.493e+04        6
+  263           250900       6.001e+04       7.492e+04        7
+  264           251850       6.001e+04       7.516e+04        8
+  265           252800       6.001e+04       7.481e+04        9
+  266           253750       6.001e+04       7.492e+04       10
+  267           254700        5.96e+04       7.322e+04        0
+  268           255650        5.96e+04        7.32e+04        1
+  269           256600        5.96e+04       7.323e+04        2
+  270           257550        5.96e+04       7.203e+04        3
+
+                                  Best           Mean      Stall
+Generation      Func-count        f(x)           f(x)    Generations
+  271           258500        5.96e+04       7.149e+04        4
+  272           259450        5.96e+04       7.124e+04        5
+  273           260400        5.96e+04       7.109e+04        6
+  274           261350        5.96e+04       7.194e+04        7
+  275           262300        5.96e+04       7.045e+04        8
+  276           263250        5.96e+04       7.017e+04        9
+  277           264200        5.96e+04       6.936e+04       10
+  278           265150        5.96e+04       6.904e+04       11
+  279           266100       5.957e+04       6.911e+04        0
+  280           267050       5.957e+04        7.01e+04        1
+  281           268000       5.957e+04       6.935e+04        2
+  282           268950       5.947e+04       6.814e+04        0
+  283           269900       5.947e+04       6.847e+04        1
+  284           270850       5.947e+04       6.772e+04        2
+  285           271800       5.947e+04       6.726e+04        3
+  286           272750       5.947e+04       6.739e+04        4
+  287           273700       5.947e+04       6.741e+04        5
+  288           274650        5.94e+04       6.708e+04        0
+  289           275600        5.94e+04       6.847e+04        1
+  290           276550        5.94e+04       6.786e+04        2
+  291           277500        5.94e+04       6.734e+04        3
+  292           278450        5.94e+04       6.674e+04        4
+  293           279400        5.94e+04       6.662e+04        5
+  294           280350        5.94e+04       6.672e+04        6
+  295           281300       5.931e+04       6.691e+04        0
+  296           282250       5.931e+04       6.758e+04        1
+  297           283200       5.931e+04       6.611e+04        2
+  298           284150       5.931e+04        6.58e+04        3
+{Operation terminated by user during <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parallel.internal.parfor.ParforEngine/getCompleteIntervals')" style="font-weight:bold">parallel.internal.parfor.ParforEngine/getCompleteIntervals</a>
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parallel_function>distributed_execution', 'C:\Program Files\MATLAB\R2023b\toolbox\matlab\lang\parallel_function.m', 746)" style="font-weight:bold">parallel_function>distributed_execution</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\matlab\lang\parallel_function.m',746,0)">line 746</a>)
+        [tags, out] = P.getCompleteIntervals(chunkSize);
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parallel_function', 'C:\Program Files\MATLAB\R2023b\toolbox\matlab\lang\parallel_function.m', 578)" style="font-weight:bold">parallel_function</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\matlab\lang\parallel_function.m',578,0)">line 578</a>)
+    R = distributed_execution(...
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('fcnvectorizer', 'C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\fcnvectorizer.m', 22)" style="font-weight:bold">fcnvectorizer</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\fcnvectorizer.m',22,0)">line 22</a>)
+        parfor (i = 1:popSize)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('stepGA', 'C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\stepGA.m', 61)" style="font-weight:bold">stepGA</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\stepGA.m',61,0)">line 61</a>)
+    nextScore = fcnvectorizer(pop,FitnessFcn,1,options.SerialUserFcn,options.ProblemdefOptions.FunOnWorkers);
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('galincon', 'C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\galincon.m', 86)" style="font-weight:bold">galincon</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\galincon.m',86,0)">line 86</a>)
+        [score,population,state] = stepGA(score,population,options,state,GenomeLength,FitnessFcn);
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ga', 'C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\ga.m', 420)" style="font-weight:bold">ga</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\ga.m',420,0)">line 420</a>)
+            [x,fval,exitFlag,output,population,scores] = galincon(FitnessFcn,nvars, ...
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('code_AG_Ivan', 'E:\Archivos_Jaret\Proyecto-doctoral\codigo_AG_Ivan\code_AG_Ivan.m', 107)" style="font-weight:bold">code_AG_Ivan</a> (<a href="matlab: opentoline('E:\Archivos_Jaret\Proyecto-doctoral\codigo_AG_Ivan\code_AG_Ivan.m',107,0)">line 107</a>)
+[x,fval,exitflag,output,population,scores] =ga(@(x)RMSEfunction(x,k1,m1,Vd,Dd),Nvar,[],[],[],[],LB,UB,[],options);
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('run', 'C:\Program Files\MATLAB\R2023b\toolbox\matlab\lang\run.m', 99)" style="font-weight:bold">run</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\matlab\lang\run.m',99,0)">line 99</a>)
+evalin('caller', strcat(script, ';'));} 
+run code_AG_Ivan.m
+Mo =
+   250     0     0     0     0     0     0     0     0     0
+     0   375     0     0     0     0     0     0     0     0
+     0     0   225     0     0     0     0     0     0     0
+     0     0     0   254     0     0     0     0     0     0
+     0     0     0     0   400     0     0     0     0     0
+     0     0     0     0     0   350     0     0     0     0
+     0     0     0     0     0     0   225     0     0     0
+     0     0     0     0     0     0     0   235     0     0
+     0     0     0     0     0     0     0     0   190     0
+     0     0     0     0     0     0     0     0     0   260
+Ko =
+  Columns 1 through 8
+        2110       -1110           0           0           0           0           0           0
+       -1110        2560       -1450           0           0           0           0           0
+           0       -1450        2330        -880           0           0           0           0
+           0           0        -880        1578        -698           0           0           0
+           0           0           0        -698        2243       -1545           0           0
+           0           0           0           0       -1545        2815       -1270           0
+           0           0           0           0           0       -1270        2720       -1450
+           0           0           0           0           0           0       -1450        2430
+           0           0           0           0           0           0           0        -980
+           0           0           0           0           0           0           0           0
+  Columns 9 through 10
+           0           0
+           0           0
+           0           0
+           0           0
+           0           0
+           0           0
+           0           0
+        -980           0
+        2170       -1190
+       -1190        1190
+Vo =
+  Columns 1 through 7
+   -0.0043299    -0.013714     0.016698     0.016119    -0.022442     0.043563    -0.023513
+   -0.0081439     -0.02343     0.025145     0.015049    -0.011856     -0.01205      0.01197
+    -0.010876    -0.025692     0.020204    -0.002485     0.014934    -0.024493    0.0060074
+     -0.01513    -0.023808    0.0030019    -0.028648     0.035807      0.01555    -0.020253
+    -0.020002    -0.014033    -0.020602    -0.016861    -0.017287     0.011327     0.025502
+    -0.021742    -0.006513     -0.02191    0.0072119    -0.013998    -0.018933    -0.024475
+    -0.023325    0.0041682    -0.012909     0.027962     0.013513   -0.0052996    -0.013098
+    -0.024388     0.012971   -0.0015126     0.027501      0.02483     0.014592     0.018615
+    -0.025441     0.023339     0.015986   -0.0015019    0.0052881     0.010194     0.017774
+    -0.025946     0.028694      0.02592    -0.024357    -0.015951    -0.009164    -0.013285
+  Columns 8 through 10
+    0.0038595     0.016894  -5.4258e-05
+   -0.0055687    -0.027065   0.00014198
+     0.008595     0.048152  -0.00044429
+  -0.00069305    -0.019396   0.00086823
+   -0.0086588     0.005221   -0.0038143
+     0.021024   -0.0046812     0.013878
+    -0.028885    0.0033377    -0.041313
+   -0.0060552    0.0023058     0.038932
+     0.049281   -0.0078207    -0.029595
+    -0.021964    0.0032611    0.0087495
+Do =
+  Columns 1 through 7
+       0.0891            0            0            0            0            0            0
+            0      0.85419            0            0            0            0            0
+            0            0       1.7541            0            0            0            0
+            0            0            0       4.2947            0            0            0
+            0            0            0            0       6.0943            0            0
+            0            0            0            0            0       9.6681            0
+            0            0            0            0            0            0         10.7
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+  Columns 8 through 10
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+       14.846            0            0
+            0       15.553            0
+            0            0       20.058
+Md =
+   250     0     0     0     0     0     0     0     0     0
+     0   375     0     0     0     0     0     0     0     0
+     0     0   225     0     0     0     0     0     0     0
+     0     0     0   254     0     0     0     0     0     0
+     0     0     0     0   400     0     0     0     0     0
+     0     0     0     0     0   350     0     0     0     0
+     0     0     0     0     0     0   225     0     0     0
+     0     0     0     0     0     0     0   235     0     0
+     0     0     0     0     0     0     0     0   190     0
+     0     0     0     0     0     0     0     0     0   260
+Kd =
+  Columns 1 through 7
+       2024.5      -1054.5            0            0            0            0            0
+      -1054.5       2388.5        -1334            0            0            0            0
+            0        -1334       2108.4       -774.4            0            0            0
+            0            0       -774.4       1402.6       -628.2            0            0
+            0            0            0       -628.2       1956.9      -1328.7            0
+            0            0            0            0      -1328.7         2586      -1257.3
+            0            0            0            0            0      -1257.3       2605.8
+            0            0            0            0            0            0      -1348.5
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+  Columns 8 through 10
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+      -1348.5            0            0
+       2181.5         -833            0
+         -833         1785         -952
+            0         -952          952
+Vd =
+  Columns 1 through 7
+   -0.0040973    -0.013156     0.016439     0.015142    -0.021152     0.032099    -0.037925
+   -0.0077864    -0.022798     0.025401       0.0155    -0.012796   -0.0053039      0.01356
+    -0.010523    -0.025368     0.021198  -0.00068869     0.013759    -0.021757      0.01764
+    -0.014986    -0.023982    0.0042239     -0.02782     0.037332    0.0054973    -0.024566
+     -0.01999    -0.014628    -0.019401    -0.018743    -0.017325     0.019546      0.01882
+    -0.021861   -0.0067337    -0.021338     0.006879     -0.01424    -0.025564    -0.015094
+     -0.02334    0.0030871    -0.013997     0.026717     0.011006    -0.010648    -0.010572
+    -0.024398     0.011838   -0.0034611     0.028361      0.02436     0.018884     0.010589
+    -0.025546      0.02337     0.015139   0.00077676    0.0078625     0.019837     0.016148
+    -0.026132     0.029784     0.026638    -0.023946    -0.015275    -0.014149   -0.0099465
+  Columns 8 through 10
+    0.0026494     0.019686  -5.8519e-05
+   -0.0029261    -0.028574   0.00014301
+    0.0031596     0.047501  -0.00043761
+    0.0019323    -0.017708   0.00090243
+   -0.0095472    0.0037245   -0.0041616
+      0.02169   -0.0020865     0.016503
+    -0.022322   3.2051e-05    -0.046216
+    -0.015846    0.0019313     0.037238
+     0.051664   -0.0027419     -0.02102
+    -0.020799   0.00095083    0.0052201
+Dd =
+  Columns 1 through 7
+     0.082117            0            0            0            0            0            0
+            0      0.78846            0            0            0            0            0
+            0            0       1.5806            0            0            0            0
+            0            0            0       3.7803            0            0            0
+            0            0            0            0       5.5462            0            0
+            0            0            0            0            0        8.795            0
+            0            0            0            0            0            0       9.6062
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+  Columns 8 through 10
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+       12.757            0            0
+            0        14.22            0
+            0            0       18.406
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parpool')" style="font-weight:bold">parpool</a>
+Unable to create parallel pool because creating concurrent parallel pools in the same MATLAB session is
+not supported. To delete the existing pool, use <a href="matlab:delete(gcp('nocreate'))">delete(gcp('nocreate'))</a>.
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('code_AG_Ivan', 'E:\Archivos_Jaret\Proyecto-doctoral\codigo_AG_Ivan\code_AG_Ivan.m', 102)" style="font-weight:bold">code_AG_Ivan</a> (<a href="matlab: opentoline('E:\Archivos_Jaret\Proyecto-doctoral\codigo_AG_Ivan\code_AG_Ivan.m',102,0)">line 102</a>)
+parpool('Processes', 6)     %  configura MATLAB para ejecutar la optimización del Algoritmo Genético utilizando 6 núcleos de CPU en paralelo, lo que puede acelerar significativamente el proceso al permitir la evaluación simultánea de múltiples individuos en cada generación
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('run', 'C:\Program Files\MATLAB\R2023b\toolbox\matlab\lang\run.m', 99)" style="font-weight:bold">run</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\matlab\lang\run.m',99,0)">line 99</a>)
+evalin('caller', strcat(script, ';'));} 
+run code_AG_Ivan.m
+Mo =
+   250     0     0     0     0     0     0     0     0     0
+     0   375     0     0     0     0     0     0     0     0
+     0     0   225     0     0     0     0     0     0     0
+     0     0     0   254     0     0     0     0     0     0
+     0     0     0     0   400     0     0     0     0     0
+     0     0     0     0     0   350     0     0     0     0
+     0     0     0     0     0     0   225     0     0     0
+     0     0     0     0     0     0     0   235     0     0
+     0     0     0     0     0     0     0     0   190     0
+     0     0     0     0     0     0     0     0     0   260
+Ko =
+  Columns 1 through 8
+        2110       -1110           0           0           0           0           0           0
+       -1110        2560       -1450           0           0           0           0           0
+           0       -1450        2330        -880           0           0           0           0
+           0           0        -880        1578        -698           0           0           0
+           0           0           0        -698        2243       -1545           0           0
+           0           0           0           0       -1545        2815       -1270           0
+           0           0           0           0           0       -1270        2720       -1450
+           0           0           0           0           0           0       -1450        2430
+           0           0           0           0           0           0           0        -980
+           0           0           0           0           0           0           0           0
+  Columns 9 through 10
+           0           0
+           0           0
+           0           0
+           0           0
+           0           0
+           0           0
+           0           0
+        -980           0
+        2170       -1190
+       -1190        1190
+Vo =
+  Columns 1 through 7
+   -0.0043299    -0.013714     0.016698     0.016119    -0.022442     0.043563    -0.023513
+   -0.0081439     -0.02343     0.025145     0.015049    -0.011856     -0.01205      0.01197
+    -0.010876    -0.025692     0.020204    -0.002485     0.014934    -0.024493    0.0060074
+     -0.01513    -0.023808    0.0030019    -0.028648     0.035807      0.01555    -0.020253
+    -0.020002    -0.014033    -0.020602    -0.016861    -0.017287     0.011327     0.025502
+    -0.021742    -0.006513     -0.02191    0.0072119    -0.013998    -0.018933    -0.024475
+    -0.023325    0.0041682    -0.012909     0.027962     0.013513   -0.0052996    -0.013098
+    -0.024388     0.012971   -0.0015126     0.027501      0.02483     0.014592     0.018615
+    -0.025441     0.023339     0.015986   -0.0015019    0.0052881     0.010194     0.017774
+    -0.025946     0.028694      0.02592    -0.024357    -0.015951    -0.009164    -0.013285
+  Columns 8 through 10
+    0.0038595     0.016894  -5.4258e-05
+   -0.0055687    -0.027065   0.00014198
+     0.008595     0.048152  -0.00044429
+  -0.00069305    -0.019396   0.00086823
+   -0.0086588     0.005221   -0.0038143
+     0.021024   -0.0046812     0.013878
+    -0.028885    0.0033377    -0.041313
+   -0.0060552    0.0023058     0.038932
+     0.049281   -0.0078207    -0.029595
+    -0.021964    0.0032611    0.0087495
+Do =
+  Columns 1 through 7
+       0.0891            0            0            0            0            0            0
+            0      0.85419            0            0            0            0            0
+            0            0       1.7541            0            0            0            0
+            0            0            0       4.2947            0            0            0
+            0            0            0            0       6.0943            0            0
+            0            0            0            0            0       9.6681            0
+            0            0            0            0            0            0         10.7
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+  Columns 8 through 10
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+       14.846            0            0
+            0       15.553            0
+            0            0       20.058
+Md =
+   250     0     0     0     0     0     0     0     0     0
+     0   375     0     0     0     0     0     0     0     0
+     0     0   225     0     0     0     0     0     0     0
+     0     0     0   254     0     0     0     0     0     0
+     0     0     0     0   400     0     0     0     0     0
+     0     0     0     0     0   350     0     0     0     0
+     0     0     0     0     0     0   225     0     0     0
+     0     0     0     0     0     0     0   235     0     0
+     0     0     0     0     0     0     0     0   190     0
+     0     0     0     0     0     0     0     0     0   260
+Kd =
+  Columns 1 through 7
+       2024.5      -1054.5            0            0            0            0            0
+      -1054.5       2388.5        -1334            0            0            0            0
+            0        -1334       2108.4       -774.4            0            0            0
+            0            0       -774.4       1402.6       -628.2            0            0
+            0            0            0       -628.2       1956.9      -1328.7            0
+            0            0            0            0      -1328.7         2586      -1257.3
+            0            0            0            0            0      -1257.3       2605.8
+            0            0            0            0            0            0      -1348.5
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+  Columns 8 through 10
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+      -1348.5            0            0
+       2181.5         -833            0
+         -833         1785         -952
+            0         -952          952
+Vd =
+  Columns 1 through 7
+   -0.0040973    -0.013156     0.016439     0.015142    -0.021152     0.032099    -0.037925
+   -0.0077864    -0.022798     0.025401       0.0155    -0.012796   -0.0053039      0.01356
+    -0.010523    -0.025368     0.021198  -0.00068869     0.013759    -0.021757      0.01764
+    -0.014986    -0.023982    0.0042239     -0.02782     0.037332    0.0054973    -0.024566
+     -0.01999    -0.014628    -0.019401    -0.018743    -0.017325     0.019546      0.01882
+    -0.021861   -0.0067337    -0.021338     0.006879     -0.01424    -0.025564    -0.015094
+     -0.02334    0.0030871    -0.013997     0.026717     0.011006    -0.010648    -0.010572
+    -0.024398     0.011838   -0.0034611     0.028361      0.02436     0.018884     0.010589
+    -0.025546      0.02337     0.015139   0.00077676    0.0078625     0.019837     0.016148
+    -0.026132     0.029784     0.026638    -0.023946    -0.015275    -0.014149   -0.0099465
+  Columns 8 through 10
+    0.0026494     0.019686  -5.8519e-05
+   -0.0029261    -0.028574   0.00014301
+    0.0031596     0.047501  -0.00043761
+    0.0019323    -0.017708   0.00090243
+   -0.0095472    0.0037245   -0.0041616
+      0.02169   -0.0020865     0.016503
+    -0.022322   3.2051e-05    -0.046216
+    -0.015846    0.0019313     0.037238
+     0.051664   -0.0027419     -0.02102
+    -0.020799   0.00095083    0.0052201
+Dd =
+  Columns 1 through 7
+     0.082117            0            0            0            0            0            0
+            0      0.78846            0            0            0            0            0
+            0            0       1.5806            0            0            0            0
+            0            0            0       3.7803            0            0            0
+            0            0            0            0       5.5462            0            0
+            0            0            0            0            0        8.795            0
+            0            0            0            0            0            0       9.6062
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+  Columns 8 through 10
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+       12.757            0            0
+            0        14.22            0
+            0            0       18.406
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parpool')" style="font-weight:bold">parpool</a>
+Unable to create parallel pool because creating concurrent parallel pools in the same MATLAB session is
+not supported. To delete the existing pool, use <a href="matlab:delete(gcp('nocreate'))">delete(gcp('nocreate'))</a>.
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('code_AG_Ivan', 'E:\Archivos_Jaret\Proyecto-doctoral\codigo_AG_Ivan\code_AG_Ivan.m', 102)" style="font-weight:bold">code_AG_Ivan</a> (<a href="matlab: opentoline('E:\Archivos_Jaret\Proyecto-doctoral\codigo_AG_Ivan\code_AG_Ivan.m',102,0)">line 102</a>)
+parpool('Processes', 6)     %  configura MATLAB para ejecutar la optimización del Algoritmo Genético utilizando 6 núcleos de CPU en paralelo, lo que puede acelerar significativamente el proceso al permitir la evaluación simultánea de múltiples individuos en cada generación
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('run', 'C:\Program Files\MATLAB\R2023b\toolbox\matlab\lang\run.m', 99)" style="font-weight:bold">run</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\matlab\lang\run.m',99,0)">line 99</a>)
+evalin('caller', strcat(script, ';'));} 
+run code_AG_Ivan.m
+Mo =
+   250     0     0     0     0     0     0     0     0     0
+     0   375     0     0     0     0     0     0     0     0
+     0     0   225     0     0     0     0     0     0     0
+     0     0     0   254     0     0     0     0     0     0
+     0     0     0     0   400     0     0     0     0     0
+     0     0     0     0     0   350     0     0     0     0
+     0     0     0     0     0     0   225     0     0     0
+     0     0     0     0     0     0     0   235     0     0
+     0     0     0     0     0     0     0     0   190     0
+     0     0     0     0     0     0     0     0     0   260
+Ko =
+  Columns 1 through 8
+        2110       -1110           0           0           0           0           0           0
+       -1110        2560       -1450           0           0           0           0           0
+           0       -1450        2330        -880           0           0           0           0
+           0           0        -880        1578        -698           0           0           0
+           0           0           0        -698        2243       -1545           0           0
+           0           0           0           0       -1545        2815       -1270           0
+           0           0           0           0           0       -1270        2720       -1450
+           0           0           0           0           0           0       -1450        2430
+           0           0           0           0           0           0           0        -980
+           0           0           0           0           0           0           0           0
+  Columns 9 through 10
+           0           0
+           0           0
+           0           0
+           0           0
+           0           0
+           0           0
+           0           0
+        -980           0
+        2170       -1190
+       -1190        1190
+Vo =
+  Columns 1 through 7
+   -0.0043299    -0.013714     0.016698     0.016119    -0.022442     0.043563    -0.023513
+   -0.0081439     -0.02343     0.025145     0.015049    -0.011856     -0.01205      0.01197
+    -0.010876    -0.025692     0.020204    -0.002485     0.014934    -0.024493    0.0060074
+     -0.01513    -0.023808    0.0030019    -0.028648     0.035807      0.01555    -0.020253
+    -0.020002    -0.014033    -0.020602    -0.016861    -0.017287     0.011327     0.025502
+    -0.021742    -0.006513     -0.02191    0.0072119    -0.013998    -0.018933    -0.024475
+    -0.023325    0.0041682    -0.012909     0.027962     0.013513   -0.0052996    -0.013098
+    -0.024388     0.012971   -0.0015126     0.027501      0.02483     0.014592     0.018615
+    -0.025441     0.023339     0.015986   -0.0015019    0.0052881     0.010194     0.017774
+    -0.025946     0.028694      0.02592    -0.024357    -0.015951    -0.009164    -0.013285
+  Columns 8 through 10
+    0.0038595     0.016894  -5.4258e-05
+   -0.0055687    -0.027065   0.00014198
+     0.008595     0.048152  -0.00044429
+  -0.00069305    -0.019396   0.00086823
+   -0.0086588     0.005221   -0.0038143
+     0.021024   -0.0046812     0.013878
+    -0.028885    0.0033377    -0.041313
+   -0.0060552    0.0023058     0.038932
+     0.049281   -0.0078207    -0.029595
+    -0.021964    0.0032611    0.0087495
+Do =
+  Columns 1 through 7
+       0.0891            0            0            0            0            0            0
+            0      0.85419            0            0            0            0            0
+            0            0       1.7541            0            0            0            0
+            0            0            0       4.2947            0            0            0
+            0            0            0            0       6.0943            0            0
+            0            0            0            0            0       9.6681            0
+            0            0            0            0            0            0         10.7
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+  Columns 8 through 10
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+       14.846            0            0
+            0       15.553            0
+            0            0       20.058
+Md =
+   250     0     0     0     0     0     0     0     0     0
+     0   375     0     0     0     0     0     0     0     0
+     0     0   225     0     0     0     0     0     0     0
+     0     0     0   254     0     0     0     0     0     0
+     0     0     0     0   400     0     0     0     0     0
+     0     0     0     0     0   350     0     0     0     0
+     0     0     0     0     0     0   225     0     0     0
+     0     0     0     0     0     0     0   235     0     0
+     0     0     0     0     0     0     0     0   190     0
+     0     0     0     0     0     0     0     0     0   260
+Kd =
+  Columns 1 through 7
+       2024.5      -1054.5            0            0            0            0            0
+      -1054.5       2388.5        -1334            0            0            0            0
+            0        -1334       2108.4       -774.4            0            0            0
+            0            0       -774.4       1402.6       -628.2            0            0
+            0            0            0       -628.2       1956.9      -1328.7            0
+            0            0            0            0      -1328.7         2586      -1257.3
+            0            0            0            0            0      -1257.3       2605.8
+            0            0            0            0            0            0      -1348.5
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+  Columns 8 through 10
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+      -1348.5            0            0
+       2181.5         -833            0
+         -833         1785         -952
+            0         -952          952
+Vd =
+  Columns 1 through 7
+   -0.0040973    -0.013156     0.016439     0.015142    -0.021152     0.032099    -0.037925
+   -0.0077864    -0.022798     0.025401       0.0155    -0.012796   -0.0053039      0.01356
+    -0.010523    -0.025368     0.021198  -0.00068869     0.013759    -0.021757      0.01764
+    -0.014986    -0.023982    0.0042239     -0.02782     0.037332    0.0054973    -0.024566
+     -0.01999    -0.014628    -0.019401    -0.018743    -0.017325     0.019546      0.01882
+    -0.021861   -0.0067337    -0.021338     0.006879     -0.01424    -0.025564    -0.015094
+     -0.02334    0.0030871    -0.013997     0.026717     0.011006    -0.010648    -0.010572
+    -0.024398     0.011838   -0.0034611     0.028361      0.02436     0.018884     0.010589
+    -0.025546      0.02337     0.015139   0.00077676    0.0078625     0.019837     0.016148
+    -0.026132     0.029784     0.026638    -0.023946    -0.015275    -0.014149   -0.0099465
+  Columns 8 through 10
+    0.0026494     0.019686  -5.8519e-05
+   -0.0029261    -0.028574   0.00014301
+    0.0031596     0.047501  -0.00043761
+    0.0019323    -0.017708   0.00090243
+   -0.0095472    0.0037245   -0.0041616
+      0.02169   -0.0020865     0.016503
+    -0.022322   3.2051e-05    -0.046216
+    -0.015846    0.0019313     0.037238
+     0.051664   -0.0027419     -0.02102
+    -0.020799   0.00095083    0.0052201
+Dd =
+  Columns 1 through 7
+     0.082117            0            0            0            0            0            0
+            0      0.78846            0            0            0            0            0
+            0            0       1.5806            0            0            0            0
+            0            0            0       3.7803            0            0            0
+            0            0            0            0       5.5462            0            0
+            0            0            0            0            0        8.795            0
+            0            0            0            0            0            0       9.6062
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+  Columns 8 through 10
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+       12.757            0            0
+            0        14.22            0
+            0            0       18.406
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parpool')" style="font-weight:bold">parpool</a>
+Unable to create parallel pool because creating concurrent parallel pools in the same MATLAB session is
+not supported. To delete the existing pool, use <a href="matlab:delete(gcp('nocreate'))">delete(gcp('nocreate'))</a>.
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('code_AG_Ivan', 'E:\Archivos_Jaret\Proyecto-doctoral\codigo_AG_Ivan\code_AG_Ivan.m', 102)" style="font-weight:bold">code_AG_Ivan</a> (<a href="matlab: opentoline('E:\Archivos_Jaret\Proyecto-doctoral\codigo_AG_Ivan\code_AG_Ivan.m',102,0)">line 102</a>)
+parpool('Processes', 6)     %  configura MATLAB para ejecutar la optimización del Algoritmo Genético utilizando 6 núcleos de CPU en paralelo, lo que puede acelerar significativamente el proceso al permitir la evaluación simultánea de múltiples individuos en cada generación
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('run', 'C:\Program Files\MATLAB\R2023b\toolbox\matlab\lang\run.m', 99)" style="font-weight:bold">run</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\matlab\lang\run.m',99,0)">line 99</a>)
+evalin('caller', strcat(script, ';'));} 
+run code_AG_Ivan.m
+Mo =
+   250     0     0     0     0     0     0     0     0     0
+     0   375     0     0     0     0     0     0     0     0
+     0     0   225     0     0     0     0     0     0     0
+     0     0     0   254     0     0     0     0     0     0
+     0     0     0     0   400     0     0     0     0     0
+     0     0     0     0     0   350     0     0     0     0
+     0     0     0     0     0     0   225     0     0     0
+     0     0     0     0     0     0     0   235     0     0
+     0     0     0     0     0     0     0     0   190     0
+     0     0     0     0     0     0     0     0     0   260
+Ko =
+  Columns 1 through 8
+        2110       -1110           0           0           0           0           0           0
+       -1110        2560       -1450           0           0           0           0           0
+           0       -1450        2330        -880           0           0           0           0
+           0           0        -880        1578        -698           0           0           0
+           0           0           0        -698        2243       -1545           0           0
+           0           0           0           0       -1545        2815       -1270           0
+           0           0           0           0           0       -1270        2720       -1450
+           0           0           0           0           0           0       -1450        2430
+           0           0           0           0           0           0           0        -980
+           0           0           0           0           0           0           0           0
+  Columns 9 through 10
+           0           0
+           0           0
+           0           0
+           0           0
+           0           0
+           0           0
+           0           0
+        -980           0
+        2170       -1190
+       -1190        1190
+Vo =
+  Columns 1 through 7
+   -0.0043299    -0.013714     0.016698     0.016119    -0.022442     0.043563    -0.023513
+   -0.0081439     -0.02343     0.025145     0.015049    -0.011856     -0.01205      0.01197
+    -0.010876    -0.025692     0.020204    -0.002485     0.014934    -0.024493    0.0060074
+     -0.01513    -0.023808    0.0030019    -0.028648     0.035807      0.01555    -0.020253
+    -0.020002    -0.014033    -0.020602    -0.016861    -0.017287     0.011327     0.025502
+    -0.021742    -0.006513     -0.02191    0.0072119    -0.013998    -0.018933    -0.024475
+    -0.023325    0.0041682    -0.012909     0.027962     0.013513   -0.0052996    -0.013098
+    -0.024388     0.012971   -0.0015126     0.027501      0.02483     0.014592     0.018615
+    -0.025441     0.023339     0.015986   -0.0015019    0.0052881     0.010194     0.017774
+    -0.025946     0.028694      0.02592    -0.024357    -0.015951    -0.009164    -0.013285
+  Columns 8 through 10
+    0.0038595     0.016894  -5.4258e-05
+   -0.0055687    -0.027065   0.00014198
+     0.008595     0.048152  -0.00044429
+  -0.00069305    -0.019396   0.00086823
+   -0.0086588     0.005221   -0.0038143
+     0.021024   -0.0046812     0.013878
+    -0.028885    0.0033377    -0.041313
+   -0.0060552    0.0023058     0.038932
+     0.049281   -0.0078207    -0.029595
+    -0.021964    0.0032611    0.0087495
+Do =
+  Columns 1 through 7
+       0.0891            0            0            0            0            0            0
+            0      0.85419            0            0            0            0            0
+            0            0       1.7541            0            0            0            0
+            0            0            0       4.2947            0            0            0
+            0            0            0            0       6.0943            0            0
+            0            0            0            0            0       9.6681            0
+            0            0            0            0            0            0         10.7
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+  Columns 8 through 10
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+       14.846            0            0
+            0       15.553            0
+            0            0       20.058
+Md =
+   250     0     0     0     0     0     0     0     0     0
+     0   375     0     0     0     0     0     0     0     0
+     0     0   225     0     0     0     0     0     0     0
+     0     0     0   254     0     0     0     0     0     0
+     0     0     0     0   400     0     0     0     0     0
+     0     0     0     0     0   350     0     0     0     0
+     0     0     0     0     0     0   225     0     0     0
+     0     0     0     0     0     0     0   235     0     0
+     0     0     0     0     0     0     0     0   190     0
+     0     0     0     0     0     0     0     0     0   260
+Kd =
+  Columns 1 through 7
+       2024.5      -1054.5            0            0            0            0            0
+      -1054.5       2388.5        -1334            0            0            0            0
+            0        -1334       2108.4       -774.4            0            0            0
+            0            0       -774.4       1402.6       -628.2            0            0
+            0            0            0       -628.2       1956.9      -1328.7            0
+            0            0            0            0      -1328.7         2586      -1257.3
+            0            0            0            0            0      -1257.3       2605.8
+            0            0            0            0            0            0      -1348.5
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+  Columns 8 through 10
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+      -1348.5            0            0
+       2181.5         -833            0
+         -833         1785         -952
+            0         -952          952
+Vd =
+  Columns 1 through 7
+   -0.0040973    -0.013156     0.016439     0.015142    -0.021152     0.032099    -0.037925
+   -0.0077864    -0.022798     0.025401       0.0155    -0.012796   -0.0053039      0.01356
+    -0.010523    -0.025368     0.021198  -0.00068869     0.013759    -0.021757      0.01764
+    -0.014986    -0.023982    0.0042239     -0.02782     0.037332    0.0054973    -0.024566
+     -0.01999    -0.014628    -0.019401    -0.018743    -0.017325     0.019546      0.01882
+    -0.021861   -0.0067337    -0.021338     0.006879     -0.01424    -0.025564    -0.015094
+     -0.02334    0.0030871    -0.013997     0.026717     0.011006    -0.010648    -0.010572
+    -0.024398     0.011838   -0.0034611     0.028361      0.02436     0.018884     0.010589
+    -0.025546      0.02337     0.015139   0.00077676    0.0078625     0.019837     0.016148
+    -0.026132     0.029784     0.026638    -0.023946    -0.015275    -0.014149   -0.0099465
+  Columns 8 through 10
+    0.0026494     0.019686  -5.8519e-05
+   -0.0029261    -0.028574   0.00014301
+    0.0031596     0.047501  -0.00043761
+    0.0019323    -0.017708   0.00090243
+   -0.0095472    0.0037245   -0.0041616
+      0.02169   -0.0020865     0.016503
+    -0.022322   3.2051e-05    -0.046216
+    -0.015846    0.0019313     0.037238
+     0.051664   -0.0027419     -0.02102
+    -0.020799   0.00095083    0.0052201
+Dd =
+  Columns 1 through 7
+     0.082117            0            0            0            0            0            0
+            0      0.78846            0            0            0            0            0
+            0            0       1.5806            0            0            0            0
+            0            0            0       3.7803            0            0            0
+            0            0            0            0       5.5462            0            0
+            0            0            0            0            0        8.795            0
+            0            0            0            0            0            0       9.6062
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+  Columns 8 through 10
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+       12.757            0            0
+            0        14.22            0
+            0            0       18.406
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parpool')" style="font-weight:bold">parpool</a>
+Unable to create parallel pool because creating concurrent parallel pools in the same MATLAB session is
+not supported. To delete the existing pool, use <a href="matlab:delete(gcp('nocreate'))">delete(gcp('nocreate'))</a>.
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('code_AG_Ivan', 'E:\Archivos_Jaret\Proyecto-doctoral\codigo_AG_Ivan\code_AG_Ivan.m', 102)" style="font-weight:bold">code_AG_Ivan</a> (<a href="matlab: opentoline('E:\Archivos_Jaret\Proyecto-doctoral\codigo_AG_Ivan\code_AG_Ivan.m',102,0)">line 102</a>)
+parpool('Processes', 6)     %  configura MATLAB para ejecutar la optimización del Algoritmo Genético utilizando 6 núcleos de CPU en paralelo, lo que puede acelerar significativamente el proceso al permitir la evaluación simultánea de múltiples individuos en cada generación
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('run', 'C:\Program Files\MATLAB\R2023b\toolbox\matlab\lang\run.m', 99)" style="font-weight:bold">run</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\matlab\lang\run.m',99,0)">line 99</a>)
+evalin('caller', strcat(script, ';'));} 
+opentoline('E:\Archivos_Jaret\Proyecto-doctoral\codigo_AG_Ivan\code_AG_Ivan.m',102,0)
+code_AG_Ivan
+Mo =
+   250     0     0     0     0     0     0     0     0     0
+     0   375     0     0     0     0     0     0     0     0
+     0     0   225     0     0     0     0     0     0     0
+     0     0     0   254     0     0     0     0     0     0
+     0     0     0     0   400     0     0     0     0     0
+     0     0     0     0     0   350     0     0     0     0
+     0     0     0     0     0     0   225     0     0     0
+     0     0     0     0     0     0     0   235     0     0
+     0     0     0     0     0     0     0     0   190     0
+     0     0     0     0     0     0     0     0     0   260
+Ko =
+  Columns 1 through 8
+        2110       -1110           0           0           0           0           0           0
+       -1110        2560       -1450           0           0           0           0           0
+           0       -1450        2330        -880           0           0           0           0
+           0           0        -880        1578        -698           0           0           0
+           0           0           0        -698        2243       -1545           0           0
+           0           0           0           0       -1545        2815       -1270           0
+           0           0           0           0           0       -1270        2720       -1450
+           0           0           0           0           0           0       -1450        2430
+           0           0           0           0           0           0           0        -980
+           0           0           0           0           0           0           0           0
+  Columns 9 through 10
+           0           0
+           0           0
+           0           0
+           0           0
+           0           0
+           0           0
+           0           0
+        -980           0
+        2170       -1190
+       -1190        1190
+Vo =
+  Columns 1 through 7
+   -0.0043299    -0.013714     0.016698     0.016119    -0.022442     0.043563    -0.023513
+   -0.0081439     -0.02343     0.025145     0.015049    -0.011856     -0.01205      0.01197
+    -0.010876    -0.025692     0.020204    -0.002485     0.014934    -0.024493    0.0060074
+     -0.01513    -0.023808    0.0030019    -0.028648     0.035807      0.01555    -0.020253
+    -0.020002    -0.014033    -0.020602    -0.016861    -0.017287     0.011327     0.025502
+    -0.021742    -0.006513     -0.02191    0.0072119    -0.013998    -0.018933    -0.024475
+    -0.023325    0.0041682    -0.012909     0.027962     0.013513   -0.0052996    -0.013098
+    -0.024388     0.012971   -0.0015126     0.027501      0.02483     0.014592     0.018615
+    -0.025441     0.023339     0.015986   -0.0015019    0.0052881     0.010194     0.017774
+    -0.025946     0.028694      0.02592    -0.024357    -0.015951    -0.009164    -0.013285
+  Columns 8 through 10
+    0.0038595     0.016894  -5.4258e-05
+   -0.0055687    -0.027065   0.00014198
+     0.008595     0.048152  -0.00044429
+  -0.00069305    -0.019396   0.00086823
+   -0.0086588     0.005221   -0.0038143
+     0.021024   -0.0046812     0.013878
+    -0.028885    0.0033377    -0.041313
+   -0.0060552    0.0023058     0.038932
+     0.049281   -0.0078207    -0.029595
+    -0.021964    0.0032611    0.0087495
+Do =
+  Columns 1 through 7
+       0.0891            0            0            0            0            0            0
+            0      0.85419            0            0            0            0            0
+            0            0       1.7541            0            0            0            0
+            0            0            0       4.2947            0            0            0
+            0            0            0            0       6.0943            0            0
+            0            0            0            0            0       9.6681            0
+            0            0            0            0            0            0         10.7
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+  Columns 8 through 10
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+       14.846            0            0
+            0       15.553            0
+            0            0       20.058
+Md =
+   250     0     0     0     0     0     0     0     0     0
+     0   375     0     0     0     0     0     0     0     0
+     0     0   225     0     0     0     0     0     0     0
+     0     0     0   254     0     0     0     0     0     0
+     0     0     0     0   400     0     0     0     0     0
+     0     0     0     0     0   350     0     0     0     0
+     0     0     0     0     0     0   225     0     0     0
+     0     0     0     0     0     0     0   235     0     0
+     0     0     0     0     0     0     0     0   190     0
+     0     0     0     0     0     0     0     0     0   260
+Kd =
+  Columns 1 through 7
+       2024.5      -1054.5            0            0            0            0            0
+      -1054.5       2388.5        -1334            0            0            0            0
+            0        -1334       2108.4       -774.4            0            0            0
+            0            0       -774.4       1402.6       -628.2            0            0
+            0            0            0       -628.2       1956.9      -1328.7            0
+            0            0            0            0      -1328.7         2586      -1257.3
+            0            0            0            0            0      -1257.3       2605.8
+            0            0            0            0            0            0      -1348.5
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+  Columns 8 through 10
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+      -1348.5            0            0
+       2181.5         -833            0
+         -833         1785         -952
+            0         -952          952
+Vd =
+  Columns 1 through 7
+   -0.0040973    -0.013156     0.016439     0.015142    -0.021152     0.032099    -0.037925
+   -0.0077864    -0.022798     0.025401       0.0155    -0.012796   -0.0053039      0.01356
+    -0.010523    -0.025368     0.021198  -0.00068869     0.013759    -0.021757      0.01764
+    -0.014986    -0.023982    0.0042239     -0.02782     0.037332    0.0054973    -0.024566
+     -0.01999    -0.014628    -0.019401    -0.018743    -0.017325     0.019546      0.01882
+    -0.021861   -0.0067337    -0.021338     0.006879     -0.01424    -0.025564    -0.015094
+     -0.02334    0.0030871    -0.013997     0.026717     0.011006    -0.010648    -0.010572
+    -0.024398     0.011838   -0.0034611     0.028361      0.02436     0.018884     0.010589
+    -0.025546      0.02337     0.015139   0.00077676    0.0078625     0.019837     0.016148
+    -0.026132     0.029784     0.026638    -0.023946    -0.015275    -0.014149   -0.0099465
+  Columns 8 through 10
+    0.0026494     0.019686  -5.8519e-05
+   -0.0029261    -0.028574   0.00014301
+    0.0031596     0.047501  -0.00043761
+    0.0019323    -0.017708   0.00090243
+   -0.0095472    0.0037245   -0.0041616
+      0.02169   -0.0020865     0.016503
+    -0.022322   3.2051e-05    -0.046216
+    -0.015846    0.0019313     0.037238
+     0.051664   -0.0027419     -0.02102
+    -0.020799   0.00095083    0.0052201
+Dd =
+  Columns 1 through 7
+     0.082117            0            0            0            0            0            0
+            0      0.78846            0            0            0            0            0
+            0            0       1.5806            0            0            0            0
+            0            0            0       3.7803            0            0            0
+            0            0            0            0       5.5462            0            0
+            0            0            0            0            0        8.795            0
+            0            0            0            0            0            0       9.6062
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+  Columns 8 through 10
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+       12.757            0            0
+            0        14.22            0
+            0            0       18.406
+ga stopped by the output or plot function. The reason for stopping: 
+Stop requested from plot function.
+ga stopped by the output or plot function. The reason for stopping: 
+Stop requested from plot function.
+ga stopped by the output or plot function. The reason for stopping: 
+Stop requested from plot function.
+
+Single objective optimization:
+10 Variables
+
+Options:
+CreationFcn:       @gacreationlinearfeasible
+CrossoverFcn:      @crossoverscattered
+SelectionFcn:      @selectionroulette
+MutationFcn:       @mutationadaptfeasible
+Starting parallel pool (parpool) using the 'Processes' profile ...
+Connected to parallel pool with 6 workers.
+
+                                  Best           Mean      Stall
+Generation      Func-count        f(x)           f(x)    Generations
+    1             2000       8.167e+05       3.024e+07        0
+    2             2950       8.167e+05       2.458e+07        1
+    3             3900       4.165e+05       1.864e+07        0
+    4             4850       4.165e+05       1.454e+07        1
+    5             5800       4.165e+05       1.178e+07        2
+    6             6750       3.486e+05        1.16e+07        0
+    7             7700       3.486e+05        9.28e+06        1
+    8             8650       3.486e+05        9.84e+06        2
+    9             9600       3.486e+05       1.023e+07        3
+   10            10550       3.357e+05       9.302e+06        0
+   11            11500       3.357e+05       1.017e+07        1
+   12            12450       3.357e+05       8.892e+06        2
+   13            13400       3.075e+05       7.642e+06        0
+   14            14350       2.975e+05       7.359e+06        0
+   15            15300       2.975e+05        8.27e+06        1
+   16            16250       2.384e+05       7.834e+06        0
+   17            17200       2.384e+05       9.117e+06        1
+   18            18150       2.384e+05       8.407e+06        2
+   19            19100       2.384e+05       7.821e+06        3
+   20            20050       2.384e+05       6.604e+06        4
+   21            21000       2.384e+05       5.971e+06        5
+   22            21950        1.62e+05       5.659e+06        0
+   23            22900        1.62e+05       5.181e+06        1
+   24            23850        1.62e+05       4.969e+06        2
+   25            24800        1.62e+05       4.724e+06        3
+   26            25750        1.62e+05       4.569e+06        4
+   27            26700        1.62e+05       4.545e+06        5
+   28            27650        1.62e+05       4.332e+06        6
+   29            28600        1.62e+05       4.195e+06        7
+   30            29550        1.62e+05        4.17e+06        8
+
+                                  Best           Mean      Stall
+Generation      Func-count        f(x)           f(x)    Generations
+   31            30500       1.566e+05       4.101e+06        0
+   32            31450       1.566e+05       3.896e+06        1
+   33            32400       1.566e+05       3.724e+06        2
+   34            33350       1.255e+05       3.733e+06        0
+   35            34300       1.255e+05       3.368e+06        1
+   36            35250       1.255e+05        3.25e+06        2
+   37            36200       1.255e+05        3.21e+06        3
+   38            37150       1.075e+05       3.062e+06        0
+   39            38100       1.075e+05        2.96e+06        1
+   40            39050       1.075e+05       2.746e+06        2
+   41            40000       1.075e+05       2.705e+06        3
+   42            40950       1.075e+05       2.554e+06        4
+   43            41900       1.075e+05       2.628e+06        5
+   44            42850       1.075e+05       2.678e+06        6
+   45            43800       1.075e+05       2.525e+06        7
+   46            44750       1.031e+05        2.54e+06        0
+   47            45700       1.031e+05       2.554e+06        1
+   48            46650       1.031e+05       2.536e+06        2
+   49            47600       9.956e+04       2.576e+06        0
+   50            48550        8.26e+04       2.476e+06        0
+   51            49500        8.26e+04       2.267e+06        1
+   52            50450       6.605e+04       2.106e+06        0
+   53            51400       6.605e+04        2.15e+06        1
+   54            52350       6.605e+04       2.047e+06        2
+   55            53300       6.403e+04       1.916e+06        0
+   56            54250       6.403e+04       1.881e+06        1
+   57            55200       5.282e+04       1.801e+06        0
+   58            56150       5.282e+04       1.671e+06        1
+   59            57100       5.282e+04       1.563e+06        2
+   60            58050       5.282e+04       1.507e+06        3
+
+                                  Best           Mean      Stall
+Generation      Func-count        f(x)           f(x)    Generations
+   61            59000       5.282e+04       1.407e+06        4
+   62            59950       5.282e+04       1.338e+06        5
+   63            60900       5.282e+04        1.19e+06        6
+   64            61850       5.237e+04       1.201e+06        0
+   65            62800       5.237e+04       1.158e+06        1
+   66            63750       5.237e+04       1.102e+06        2
+   67            64700       5.194e+04       1.069e+06        0
+   68            65650       5.194e+04       9.905e+05        1
+   69            66600       5.194e+04        8.93e+05        2
+   70            67550       5.189e+04       8.411e+05        0
+   71            68500       5.175e+04       8.137e+05        0
+   72            69450       5.175e+04       7.661e+05        1
+   73            70400       5.175e+04       7.532e+05        2
+   74            71350       5.175e+04       6.604e+05        3
+   75            72300       5.175e+04       5.594e+05        4
+   76            73250       5.175e+04        5.08e+05        5
+   77            74200       5.175e+04       4.437e+05        6
+   78            75150       5.175e+04       4.016e+05        7
+   79            76100       5.172e+04       3.561e+05        0
+   80            77050       5.172e+04       2.905e+05        1
+   81            78000       5.159e+04       2.297e+05        0
+   82            78950       5.159e+04       1.863e+05        1
+   83            79900       5.149e+04       1.513e+05        0
+   84            80850       5.149e+04       1.296e+05        1
+   85            81800       5.119e+04       1.186e+05        0
+   86            82750       5.119e+04       9.927e+04        1
+   87            83700       5.119e+04       8.619e+04        2
+   88            84650       5.119e+04       7.735e+04        3
+   89            85600       5.119e+04       7.418e+04        4
+   90            86550       5.106e+04       7.294e+04        0
+
+                                  Best           Mean      Stall
+Generation      Func-count        f(x)           f(x)    Generations
+   91            87500       5.088e+04       7.073e+04        0
+   92            88450       5.088e+04       7.318e+04        1
+   93            89400       5.081e+04       6.929e+04        0
+   94            90350       5.081e+04       7.241e+04        1
+   95            91300       5.075e+04       6.966e+04        0
+   96            92250       5.075e+04       7.118e+04        1
+   97            93200       5.066e+04       6.927e+04        0
+   98            94150       5.066e+04       7.076e+04        1
+   99            95100       5.066e+04        6.84e+04        2
+  100            96050       5.032e+04       6.659e+04        0
+  101            97000       5.032e+04       6.593e+04        1
+  102            97950       5.032e+04       6.374e+04        2
+  103            98900       5.032e+04       6.333e+04        3
+  104            99850       5.032e+04       6.238e+04        4
+  105           100800       5.032e+04       6.233e+04        5
+  106           101750       5.032e+04       6.166e+04        6
+  107           102700        5.01e+04       6.075e+04        0
+  108           103650        5.01e+04       6.118e+04        1
+  109           104600        5.01e+04        6.04e+04        2
+  110           105550        5.01e+04       5.947e+04        3
+  111           106500        5.01e+04       5.918e+04        4
+  112           107450        5.01e+04        5.83e+04        5
+  113           108400       4.987e+04       5.848e+04        0
+  114           109350       4.987e+04       5.941e+04        1
+  115           110300       4.987e+04       5.857e+04        2
+  116           111250       4.987e+04       5.817e+04        3
+  117           112200       4.984e+04       5.781e+04        0
+  118           113150       4.984e+04       5.945e+04        1
+  119           114100       4.971e+04       5.833e+04        0
+  120           115050       4.971e+04       5.859e+04        1
+
+                                  Best           Mean      Stall
+Generation      Func-count        f(x)           f(x)    Generations
+  121           116000       4.971e+04       5.779e+04        2
+  122           116950        4.97e+04        5.73e+04        0
+  123           117900       4.966e+04       5.814e+04        0
+  124           118850       4.966e+04       6.162e+04        1
+  125           119800       4.966e+04        6.13e+04        2
+  126           120750       4.962e+04       6.038e+04        0
+  127           121700       4.962e+04       6.017e+04        1
+  128           122650       4.955e+04       5.877e+04        0
+  129           123600       4.955e+04       5.993e+04        1
+  130           124550       4.955e+04       5.884e+04        0
+  131           125500       4.951e+04       5.959e+04        0
+  132           126450       4.943e+04       6.391e+04        0
+  133           127400       4.943e+04       7.515e+04        1
+  134           128350       4.937e+04       7.162e+04        0
+  135           129300       4.916e+04       8.062e+04        0
+  136           130250       4.916e+04       1.062e+05        1
+  137           131200       4.896e+04       1.021e+05        0
+  138           132150       4.896e+04       1.257e+05        1
+  139           133100       4.896e+04       1.215e+05        2
+  140           134050       4.896e+04       1.125e+05        3
+  141           135000       4.863e+04       1.031e+05        0
+  142           135950       4.863e+04       9.473e+04        1
+  143           136900       4.863e+04       8.793e+04        2
+  144           137850       4.863e+04       8.397e+04        3
+  145           138800       4.863e+04       7.807e+04        4
+  146           139750       4.863e+04       7.512e+04        5
+  147           140700       4.842e+04       7.131e+04        0
+{Operation terminated by user during <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parallel.internal.parfor.ParforEngine/getCompleteIntervals')" style="font-weight:bold">parallel.internal.parfor.ParforEngine/getCompleteIntervals</a>
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parallel_function>distributed_execution', 'C:\Program Files\MATLAB\R2023b\toolbox\matlab\lang\parallel_function.m', 746)" style="font-weight:bold">parallel_function>distributed_execution</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\matlab\lang\parallel_function.m',746,0)">line 746</a>)
+        [tags, out] = P.getCompleteIntervals(chunkSize);
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('parallel_function', 'C:\Program Files\MATLAB\R2023b\toolbox\matlab\lang\parallel_function.m', 578)" style="font-weight:bold">parallel_function</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\matlab\lang\parallel_function.m',578,0)">line 578</a>)
+    R = distributed_execution(...
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('fcnvectorizer', 'C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\fcnvectorizer.m', 22)" style="font-weight:bold">fcnvectorizer</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\fcnvectorizer.m',22,0)">line 22</a>)
+        parfor (i = 1:popSize)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('stepGA', 'C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\stepGA.m', 61)" style="font-weight:bold">stepGA</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\stepGA.m',61,0)">line 61</a>)
+    nextScore = fcnvectorizer(pop,FitnessFcn,1,options.SerialUserFcn,options.ProblemdefOptions.FunOnWorkers);
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('galincon', 'C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\galincon.m', 86)" style="font-weight:bold">galincon</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\galincon.m',86,0)">line 86</a>)
+        [score,population,state] = stepGA(score,population,options,state,GenomeLength,FitnessFcn);
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ga', 'C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\ga.m', 420)" style="font-weight:bold">ga</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\ga.m',420,0)">line 420</a>)
+            [x,fval,exitFlag,output,population,scores] = galincon(FitnessFcn,nvars, ...
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('code_AG_Ivan', 'E:\Archivos_Jaret\Proyecto-doctoral\codigo_AG_Ivan\code_AG_Ivan.m', 108)" style="font-weight:bold">code_AG_Ivan</a> (<a href="matlab: opentoline('E:\Archivos_Jaret\Proyecto-doctoral\codigo_AG_Ivan\code_AG_Ivan.m',108,0)">line 108</a>)
+[x,fval,exitflag,output,population,scores] =ga(@(x)RMSEfunction(x,k1,m1,Vd,Dd),Nvar,[],[],[],[],LB,UB,[],options);} 
+code_AG_Ivan
+Mo =
+   250     0     0     0     0     0     0     0     0     0
+     0   375     0     0     0     0     0     0     0     0
+     0     0   225     0     0     0     0     0     0     0
+     0     0     0   254     0     0     0     0     0     0
+     0     0     0     0   400     0     0     0     0     0
+     0     0     0     0     0   350     0     0     0     0
+     0     0     0     0     0     0   225     0     0     0
+     0     0     0     0     0     0     0   235     0     0
+     0     0     0     0     0     0     0     0   190     0
+     0     0     0     0     0     0     0     0     0   260
+Ko =
+  Columns 1 through 8
+        2110       -1110           0           0           0           0           0           0
+       -1110        2560       -1450           0           0           0           0           0
+           0       -1450        2330        -880           0           0           0           0
+           0           0        -880        1578        -698           0           0           0
+           0           0           0        -698        2243       -1545           0           0
+           0           0           0           0       -1545        2815       -1270           0
+           0           0           0           0           0       -1270        2720       -1450
+           0           0           0           0           0           0       -1450        2430
+           0           0           0           0           0           0           0        -980
+           0           0           0           0           0           0           0           0
+  Columns 9 through 10
+           0           0
+           0           0
+           0           0
+           0           0
+           0           0
+           0           0
+           0           0
+        -980           0
+        2170       -1190
+       -1190        1190
+Vo =
+  Columns 1 through 7
+   -0.0043299    -0.013714     0.016698     0.016119    -0.022442     0.043563    -0.023513
+   -0.0081439     -0.02343     0.025145     0.015049    -0.011856     -0.01205      0.01197
+    -0.010876    -0.025692     0.020204    -0.002485     0.014934    -0.024493    0.0060074
+     -0.01513    -0.023808    0.0030019    -0.028648     0.035807      0.01555    -0.020253
+    -0.020002    -0.014033    -0.020602    -0.016861    -0.017287     0.011327     0.025502
+    -0.021742    -0.006513     -0.02191    0.0072119    -0.013998    -0.018933    -0.024475
+    -0.023325    0.0041682    -0.012909     0.027962     0.013513   -0.0052996    -0.013098
+    -0.024388     0.012971   -0.0015126     0.027501      0.02483     0.014592     0.018615
+    -0.025441     0.023339     0.015986   -0.0015019    0.0052881     0.010194     0.017774
+    -0.025946     0.028694      0.02592    -0.024357    -0.015951    -0.009164    -0.013285
+  Columns 8 through 10
+    0.0038595     0.016894  -5.4258e-05
+   -0.0055687    -0.027065   0.00014198
+     0.008595     0.048152  -0.00044429
+  -0.00069305    -0.019396   0.00086823
+   -0.0086588     0.005221   -0.0038143
+     0.021024   -0.0046812     0.013878
+    -0.028885    0.0033377    -0.041313
+   -0.0060552    0.0023058     0.038932
+     0.049281   -0.0078207    -0.029595
+    -0.021964    0.0032611    0.0087495
+Do =
+  Columns 1 through 7
+       0.0891            0            0            0            0            0            0
+            0      0.85419            0            0            0            0            0
+            0            0       1.7541            0            0            0            0
+            0            0            0       4.2947            0            0            0
+            0            0            0            0       6.0943            0            0
+            0            0            0            0            0       9.6681            0
+            0            0            0            0            0            0         10.7
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+  Columns 8 through 10
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+       14.846            0            0
+            0       15.553            0
+            0            0       20.058
+Md =
+   250     0     0     0     0     0     0     0     0     0
+     0   375     0     0     0     0     0     0     0     0
+     0     0   225     0     0     0     0     0     0     0
+     0     0     0   254     0     0     0     0     0     0
+     0     0     0     0   400     0     0     0     0     0
+     0     0     0     0     0   350     0     0     0     0
+     0     0     0     0     0     0   225     0     0     0
+     0     0     0     0     0     0     0   235     0     0
+     0     0     0     0     0     0     0     0   190     0
+     0     0     0     0     0     0     0     0     0   260
+Kd =
+  Columns 1 through 7
+       2024.5      -1054.5            0            0            0            0            0
+      -1054.5       2388.5        -1334            0            0            0            0
+            0        -1334       2108.4       -774.4            0            0            0
+            0            0       -774.4       1402.6       -628.2            0            0
+            0            0            0       -628.2       1956.9      -1328.7            0
+            0            0            0            0      -1328.7         2586      -1257.3
+            0            0            0            0            0      -1257.3       2605.8
+            0            0            0            0            0            0      -1348.5
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+  Columns 8 through 10
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+      -1348.5            0            0
+       2181.5         -833            0
+         -833         1785         -952
+            0         -952          952
+Vd =
+  Columns 1 through 7
+   -0.0040973    -0.013156     0.016439     0.015142    -0.021152     0.032099    -0.037925
+   -0.0077864    -0.022798     0.025401       0.0155    -0.012796   -0.0053039      0.01356
+    -0.010523    -0.025368     0.021198  -0.00068869     0.013759    -0.021757      0.01764
+    -0.014986    -0.023982    0.0042239     -0.02782     0.037332    0.0054973    -0.024566
+     -0.01999    -0.014628    -0.019401    -0.018743    -0.017325     0.019546      0.01882
+    -0.021861   -0.0067337    -0.021338     0.006879     -0.01424    -0.025564    -0.015094
+     -0.02334    0.0030871    -0.013997     0.026717     0.011006    -0.010648    -0.010572
+    -0.024398     0.011838   -0.0034611     0.028361      0.02436     0.018884     0.010589
+    -0.025546      0.02337     0.015139   0.00077676    0.0078625     0.019837     0.016148
+    -0.026132     0.029784     0.026638    -0.023946    -0.015275    -0.014149   -0.0099465
+  Columns 8 through 10
+    0.0026494     0.019686  -5.8519e-05
+   -0.0029261    -0.028574   0.00014301
+    0.0031596     0.047501  -0.00043761
+    0.0019323    -0.017708   0.00090243
+   -0.0095472    0.0037245   -0.0041616
+      0.02169   -0.0020865     0.016503
+    -0.022322   3.2051e-05    -0.046216
+    -0.015846    0.0019313     0.037238
+     0.051664   -0.0027419     -0.02102
+    -0.020799   0.00095083    0.0052201
+Dd =
+  Columns 1 through 7
+     0.082117            0            0            0            0            0            0
+            0      0.78846            0            0            0            0            0
+            0            0       1.5806            0            0            0            0
+            0            0            0       3.7803            0            0            0
+            0            0            0            0       5.5462            0            0
+            0            0            0            0            0        8.795            0
+            0            0            0            0            0            0       9.6062
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+  Columns 8 through 10
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+       12.757            0            0
+            0        14.22            0
+            0            0       18.406
+ga stopped because it exceeded options.MaxGenerations.
+
+Single objective optimization:
+10 Variables
+
+Options:
+CreationFcn:       @gacreationlinearfeasible
+CrossoverFcn:      @crossoverscattered
+SelectionFcn:      @selectionroulette
+MutationFcn:       @mutationadaptfeasible
+Starting parallel pool (parpool) using the 'Processes' profile ...
+Connected to parallel pool with 6 workers.
+
+                                  Best           Mean      Stall
+Generation      Func-count        f(x)           f(x)    Generations
+    1             2000       7.143e+05       3.147e+07        0
+    2             2950       6.226e+05       2.491e+07        0
+    3             3900       4.022e+05       2.045e+07        0
+    4             4850       4.022e+05       1.656e+07        1
+    5             5800       4.022e+05       1.258e+07        2
+    6             6750       4.022e+05       1.183e+07        3
+    7             7700       4.022e+05       1.167e+07        4
+    8             8650       4.022e+05       1.036e+07        5
+    9             9600        3.54e+05       8.905e+06        0
+   10            10550       3.487e+05       8.612e+06        0
+   11            11500       3.232e+05        9.91e+06        0
+   12            12450       3.232e+05       9.861e+06        1
+   13            13400       3.232e+05       1.015e+07        2
+   14            14350       3.232e+05       9.359e+06        3
+   15            15300       3.232e+05       8.388e+06        4
+   16            16250       3.232e+05       7.728e+06        5
+   17            17200       3.232e+05       7.022e+06        6
+   18            18150       3.187e+05       6.741e+06        0
+   19            19100       3.187e+05       6.081e+06        1
+   20            20050        2.61e+05       5.921e+06        0
+   21            21000        2.61e+05       5.869e+06        1
+   22            21950       2.122e+05         5.4e+06        0
+   23            22900        1.89e+05        5.19e+06        0
+   24            23850        1.89e+05       5.145e+06        1
+   25            24800        1.89e+05       4.894e+06        2
+   26            25750       1.472e+05       4.966e+06        0
+   27            26700       1.472e+05       4.699e+06        1
+   28            27650       1.472e+05       4.703e+06        2
+   29            28600       1.472e+05       4.752e+06        3
+   30            29550       1.436e+05       4.717e+06        0
+
+                                  Best           Mean      Stall
+Generation      Func-count        f(x)           f(x)    Generations
+   31            30500         1.4e+05       4.682e+06        0
+   32            31450         1.4e+05       4.677e+06        1
+   33            32400         1.4e+05       4.555e+06        2
+   34            33350       1.385e+05       4.649e+06        0
+   35            34300       1.385e+05        4.27e+06        1
+   36            35250       1.281e+05       4.458e+06        0
+   37            36200       1.281e+05       4.018e+06        1
+   38            37150       1.281e+05       4.134e+06        2
+   39            38100       1.281e+05       4.248e+06        3
+   40            39050       1.281e+05       4.339e+06        4
+   41            40000       1.281e+05       4.219e+06        5
+   42            40950       1.276e+05       4.292e+06        0
+   43            41900       1.276e+05       4.388e+06        1
+   44            42850       1.276e+05       4.482e+06        2
+   45            43800       1.276e+05       4.683e+06        3
+   46            44750       1.276e+05       4.432e+06        4
+   47            45700       1.276e+05       4.425e+06        5
+   48            46650       1.276e+05       4.185e+06        6
+   49            47600       1.276e+05       4.137e+06        7
+   50            48550       1.276e+05       4.191e+06        8
+   51            49500       1.276e+05       4.089e+06        9
+   52            50450       1.261e+05        3.95e+06        0
+   53            51400       1.199e+05       4.074e+06        0
+   54            52350       1.199e+05       3.652e+06        1
+   55            53300       1.199e+05       3.404e+06        2
+   56            54250       1.199e+05       3.505e+06        3
+   57            55200       1.091e+05       3.311e+06        0
+   58            56150       1.091e+05       3.096e+06        1
+   59            57100       1.015e+05        2.85e+06        0
+   60            58050       1.015e+05       2.746e+06        1
+
+                                  Best           Mean      Stall
+Generation      Func-count        f(x)           f(x)    Generations
+   61            59000       1.015e+05       2.471e+06        2
+   62            59950       1.015e+05       2.358e+06        3
+   63            60900       1.015e+05       2.199e+06        4
+   64            61850       1.015e+05       2.019e+06        0
+   65            62800       1.015e+05       1.748e+06        1
+{Operation terminated by user during <a href="matlab:matlab.internal.language.introspective.errorDocCallback('crossoverscattered')" style="font-weight:bold">crossoverscattered</a>
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('stepGA', 'C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\stepGA.m', 34)" style="font-weight:bold">stepGA</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\stepGA.m',34,0)">line 34</a>)
+xoverKids  = feval(options.CrossoverFcn, parents(1:(2 * nXoverKids)), ...
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('galincon', 'C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\galincon.m', 86)" style="font-weight:bold">galincon</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\galincon.m',86,0)">line 86</a>)
+        [score,population,state] = stepGA(score,population,options,state,GenomeLength,FitnessFcn);
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ga', 'C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\ga.m', 420)" style="font-weight:bold">ga</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\ga.m',420,0)">line 420</a>)
+            [x,fval,exitFlag,output,population,scores] = galincon(FitnessFcn,nvars, ...
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('code_AG_Ivan', 'E:\Archivos_Jaret\Proyecto-doctoral\codigo_AG_Ivan\code_AG_Ivan.m', 108)" style="font-weight:bold">code_AG_Ivan</a> (<a href="matlab: opentoline('E:\Archivos_Jaret\Proyecto-doctoral\codigo_AG_Ivan\code_AG_Ivan.m',108,0)">line 108</a>)
+[x,fval,exitflag,output,population,scores] =ga(@(x)RMSEfunction(x,k1,m1,Vd,Dd),Nvar,[],[],[],[],LB,UB,[],options);} 
+code_AG_Ivan
+Mo =
+   250     0     0     0     0     0     0     0     0     0
+     0   375     0     0     0     0     0     0     0     0
+     0     0   225     0     0     0     0     0     0     0
+     0     0     0   254     0     0     0     0     0     0
+     0     0     0     0   400     0     0     0     0     0
+     0     0     0     0     0   350     0     0     0     0
+     0     0     0     0     0     0   225     0     0     0
+     0     0     0     0     0     0     0   235     0     0
+     0     0     0     0     0     0     0     0   190     0
+     0     0     0     0     0     0     0     0     0   260
+Ko =
+  Columns 1 through 8
+        2110       -1110           0           0           0           0           0           0
+       -1110        2560       -1450           0           0           0           0           0
+           0       -1450        2330        -880           0           0           0           0
+           0           0        -880        1578        -698           0           0           0
+           0           0           0        -698        2243       -1545           0           0
+           0           0           0           0       -1545        2815       -1270           0
+           0           0           0           0           0       -1270        2720       -1450
+           0           0           0           0           0           0       -1450        2430
+           0           0           0           0           0           0           0        -980
+           0           0           0           0           0           0           0           0
+  Columns 9 through 10
+           0           0
+           0           0
+           0           0
+           0           0
+           0           0
+           0           0
+           0           0
+        -980           0
+        2170       -1190
+       -1190        1190
+Vo =
+  Columns 1 through 7
+   -0.0043299    -0.013714     0.016698     0.016119    -0.022442     0.043563    -0.023513
+   -0.0081439     -0.02343     0.025145     0.015049    -0.011856     -0.01205      0.01197
+    -0.010876    -0.025692     0.020204    -0.002485     0.014934    -0.024493    0.0060074
+     -0.01513    -0.023808    0.0030019    -0.028648     0.035807      0.01555    -0.020253
+    -0.020002    -0.014033    -0.020602    -0.016861    -0.017287     0.011327     0.025502
+    -0.021742    -0.006513     -0.02191    0.0072119    -0.013998    -0.018933    -0.024475
+    -0.023325    0.0041682    -0.012909     0.027962     0.013513   -0.0052996    -0.013098
+    -0.024388     0.012971   -0.0015126     0.027501      0.02483     0.014592     0.018615
+    -0.025441     0.023339     0.015986   -0.0015019    0.0052881     0.010194     0.017774
+    -0.025946     0.028694      0.02592    -0.024357    -0.015951    -0.009164    -0.013285
+  Columns 8 through 10
+    0.0038595     0.016894  -5.4258e-05
+   -0.0055687    -0.027065   0.00014198
+     0.008595     0.048152  -0.00044429
+  -0.00069305    -0.019396   0.00086823
+   -0.0086588     0.005221   -0.0038143
+     0.021024   -0.0046812     0.013878
+    -0.028885    0.0033377    -0.041313
+   -0.0060552    0.0023058     0.038932
+     0.049281   -0.0078207    -0.029595
+    -0.021964    0.0032611    0.0087495
+Do =
+  Columns 1 through 7
+       0.0891            0            0            0            0            0            0
+            0      0.85419            0            0            0            0            0
+            0            0       1.7541            0            0            0            0
+            0            0            0       4.2947            0            0            0
+            0            0            0            0       6.0943            0            0
+            0            0            0            0            0       9.6681            0
+            0            0            0            0            0            0         10.7
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+  Columns 8 through 10
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+       14.846            0            0
+            0       15.553            0
+            0            0       20.058
+Md =
+   250     0     0     0     0     0     0     0     0     0
+     0   375     0     0     0     0     0     0     0     0
+     0     0   225     0     0     0     0     0     0     0
+     0     0     0   254     0     0     0     0     0     0
+     0     0     0     0   400     0     0     0     0     0
+     0     0     0     0     0   350     0     0     0     0
+     0     0     0     0     0     0   225     0     0     0
+     0     0     0     0     0     0     0   235     0     0
+     0     0     0     0     0     0     0     0   190     0
+     0     0     0     0     0     0     0     0     0   260
+Kd =
+  Columns 1 through 7
+       2024.5      -1054.5            0            0            0            0            0
+      -1054.5       2388.5        -1334            0            0            0            0
+            0        -1334       2108.4       -774.4            0            0            0
+            0            0       -774.4       1402.6       -628.2            0            0
+            0            0            0       -628.2       1956.9      -1328.7            0
+            0            0            0            0      -1328.7         2586      -1257.3
+            0            0            0            0            0      -1257.3       2605.8
+            0            0            0            0            0            0      -1348.5
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+  Columns 8 through 10
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+      -1348.5            0            0
+       2181.5         -833            0
+         -833         1785         -952
+            0         -952          952
+Vd =
+  Columns 1 through 7
+   -0.0040973    -0.013156     0.016439     0.015142    -0.021152     0.032099    -0.037925
+   -0.0077864    -0.022798     0.025401       0.0155    -0.012796   -0.0053039      0.01356
+    -0.010523    -0.025368     0.021198  -0.00068869     0.013759    -0.021757      0.01764
+    -0.014986    -0.023982    0.0042239     -0.02782     0.037332    0.0054973    -0.024566
+     -0.01999    -0.014628    -0.019401    -0.018743    -0.017325     0.019546      0.01882
+    -0.021861   -0.0067337    -0.021338     0.006879     -0.01424    -0.025564    -0.015094
+     -0.02334    0.0030871    -0.013997     0.026717     0.011006    -0.010648    -0.010572
+    -0.024398     0.011838   -0.0034611     0.028361      0.02436     0.018884     0.010589
+    -0.025546      0.02337     0.015139   0.00077676    0.0078625     0.019837     0.016148
+    -0.026132     0.029784     0.026638    -0.023946    -0.015275    -0.014149   -0.0099465
+  Columns 8 through 10
+    0.0026494     0.019686  -5.8519e-05
+   -0.0029261    -0.028574   0.00014301
+    0.0031596     0.047501  -0.00043761
+    0.0019323    -0.017708   0.00090243
+   -0.0095472    0.0037245   -0.0041616
+      0.02169   -0.0020865     0.016503
+    -0.022322   3.2051e-05    -0.046216
+    -0.015846    0.0019313     0.037238
+     0.051664   -0.0027419     -0.02102
+    -0.020799   0.00095083    0.0052201
+Dd =
+  Columns 1 through 7
+     0.082117            0            0            0            0            0            0
+            0      0.78846            0            0            0            0            0
+            0            0       1.5806            0            0            0            0
+            0            0            0       3.7803            0            0            0
+            0            0            0            0       5.5462            0            0
+            0            0            0            0            0        8.795            0
+            0            0            0            0            0            0       9.6062
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+  Columns 8 through 10
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+       12.757            0            0
+            0        14.22            0
+            0            0       18.406
+{Unrecognized function or variable 'gaplotbestx'.
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('gadsplot>callOnePlotFcn', 'C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\gadsplot.m', 228)" style="font-weight:bold">gadsplot>callOnePlotFcn</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\gadsplot.m',228,0)">line 228</a>)
+        optimValues = plotfcn(varargin{1:end});
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('gadsplot', 'C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\gadsplot.m', 158)" style="font-weight:bold">gadsplot</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\gadsplot.m',158,0)">line 158</a>)
+        [state,optimValues] = callOnePlotFcn(fname,plotNames{i},state,options.OutputPlotFcnOptions,optimValues,'init',args{i}{:});
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('galincon', 'C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\galincon.m', 54)" style="font-weight:bold">galincon</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\galincon.m',54,0)">line 54</a>)
+state = gadsplot(options,state,currentState,gaPlotTitle);
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ga', 'C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\ga.m', 420)" style="font-weight:bold">ga</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\ga.m',420,0)">line 420</a>)
+            [x,fval,exitFlag,output,population,scores] = galincon(FitnessFcn,nvars, ...
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('code_AG_Ivan', 'E:\Archivos_Jaret\Proyecto-doctoral\codigo_AG_Ivan\code_AG_Ivan.m', 108)" style="font-weight:bold">code_AG_Ivan</a> (<a href="matlab: opentoline('E:\Archivos_Jaret\Proyecto-doctoral\codigo_AG_Ivan\code_AG_Ivan.m',108,0)">line 108</a>)
+[x,fval,exitflag,output,population,scores] =ga(@(x)RMSEfunction(x,k1,m1,Vd,Dd),Nvar,[],[],[],[],LB,UB,[],options);} 
+code_AG_Ivan
+Mo =
+  Columns 1 through 6
+   250     0     0     0     0     0
+     0   375     0     0     0     0
+     0     0   225     0     0     0
+     0     0     0   254     0     0
+     0     0     0     0   400     0
+     0     0     0     0     0   350
+     0     0     0     0     0     0
+     0     0     0     0     0     0
+     0     0     0     0     0     0
+     0     0     0     0     0     0
+  Columns 7 through 10
+     0     0     0     0
+     0     0     0     0
+     0     0     0     0
+     0     0     0     0
+     0     0     0     0
+     0     0     0     0
+   225     0     0     0
+     0   235     0     0
+     0     0   190     0
+     0     0     0   260
+Ko =
+  Columns 1 through 3
+        2110       -1110           0
+       -1110        2560       -1450
+           0       -1450        2330
+           0           0        -880
+           0           0           0
+           0           0           0
+           0           0           0
+           0           0           0
+           0           0           0
+           0           0           0
+  Columns 4 through 6
+           0           0           0
+           0           0           0
+        -880           0           0
+        1578        -698           0
+        -698        2243       -1545
+           0       -1545        2815
+           0           0       -1270
+           0           0           0
+           0           0           0
+           0           0           0
+  Columns 7 through 9
+           0           0           0
+           0           0           0
+           0           0           0
+           0           0           0
+           0           0           0
+       -1270           0           0
+        2720       -1450           0
+       -1450        2430        -980
+           0        -980        2170
+           0           0       -1190
+  Column 10
+           0
+           0
+           0
+           0
+           0
+           0
+           0
+           0
+       -1190
+        1190
+Vo =
+  Columns 1 through 2
+   -0.0043299    -0.013714
+   -0.0081439     -0.02343
+    -0.010876    -0.025692
+     -0.01513    -0.023808
+    -0.020002    -0.014033
+    -0.021742    -0.006513
+    -0.023325    0.0041682
+    -0.024388     0.012971
+    -0.025441     0.023339
+    -0.025946     0.028694
+  Columns 3 through 4
+     0.016698     0.016119
+     0.025145     0.015049
+     0.020204    -0.002485
+    0.0030019    -0.028648
+    -0.020602    -0.016861
+     -0.02191    0.0072119
+    -0.012909     0.027962
+   -0.0015126     0.027501
+     0.015986   -0.0015019
+      0.02592    -0.024357
+  Columns 5 through 6
+    -0.022442     0.043563
+    -0.011856     -0.01205
+     0.014934    -0.024493
+     0.035807      0.01555
+    -0.017287     0.011327
+    -0.013998    -0.018933
+     0.013513   -0.0052996
+      0.02483     0.014592
+    0.0052881     0.010194
+    -0.015951    -0.009164
+  Columns 7 through 8
+    -0.023513    0.0038595
+      0.01197   -0.0055687
+    0.0060074     0.008595
+    -0.020253  -0.00069305
+     0.025502   -0.0086588
+    -0.024475     0.021024
+    -0.013098    -0.028885
+     0.018615   -0.0060552
+     0.017774     0.049281
+    -0.013285    -0.021964
+  Columns 9 through 10
+     0.016894  -5.4258e-05
+    -0.027065   0.00014198
+     0.048152  -0.00044429
+    -0.019396   0.00086823
+     0.005221   -0.0038143
+   -0.0046812     0.013878
+    0.0033377    -0.041313
+    0.0023058     0.038932
+   -0.0078207    -0.029595
+    0.0032611    0.0087495
+Do =
+  Columns 1 through 2
+       0.0891            0
+            0      0.85419
+            0            0
+            0            0
+            0            0
+            0            0
+            0            0
+            0            0
+            0            0
+            0            0
+  Columns 3 through 4
+            0            0
+            0            0
+       1.7541            0
+            0       4.2947
+            0            0
+            0            0
+            0            0
+            0            0
+            0            0
+            0            0
+  Columns 5 through 6
+            0            0
+            0            0
+            0            0
+            0            0
+       6.0943            0
+            0       9.6681
+            0            0
+            0            0
+            0            0
+            0            0
+  Columns 7 through 8
+            0            0
+            0            0
+            0            0
+            0            0
+            0            0
+            0            0
+         10.7            0
+            0       14.846
+            0            0
+            0            0
+  Columns 9 through 10
+            0            0
+            0            0
+            0            0
+            0            0
+            0            0
+            0            0
+            0            0
+            0            0
+       15.553            0
+            0       20.058
+Md =
+  Columns 1 through 6
+   250     0     0     0     0     0
+     0   375     0     0     0     0
+     0     0   225     0     0     0
+     0     0     0   254     0     0
+     0     0     0     0   400     0
+     0     0     0     0     0   350
+     0     0     0     0     0     0
+     0     0     0     0     0     0
+     0     0     0     0     0     0
+     0     0     0     0     0     0
+  Columns 7 through 10
+     0     0     0     0
+     0     0     0     0
+     0     0     0     0
+     0     0     0     0
+     0     0     0     0
+     0     0     0     0
+   225     0     0     0
+     0   235     0     0
+     0     0   190     0
+     0     0     0   260
+Kd =
+  Columns 1 through 2
+       2024.5      -1054.5
+      -1054.5       2388.5
+            0        -1334
+            0            0
+            0            0
+            0            0
+            0            0
+            0            0
+            0            0
+            0            0
+  Columns 3 through 4
+            0            0
+        -1334            0
+       2108.4       -774.4
+       -774.4       1402.6
+            0       -628.2
+            0            0
+            0            0
+            0            0
+            0            0
+            0            0
+  Columns 5 through 6
+            0            0
+            0            0
+            0            0
+       -628.2            0
+       1956.9      -1328.7
+      -1328.7         2586
+            0      -1257.3
+            0            0
+            0            0
+            0            0
+  Columns 7 through 8
+            0            0
+            0            0
+            0            0
+            0            0
+            0            0
+      -1257.3            0
+       2605.8      -1348.5
+      -1348.5       2181.5
+            0         -833
+            0            0
+  Columns 9 through 10
+            0            0
+            0            0
+            0            0
+            0            0
+            0            0
+            0            0
+            0            0
+         -833            0
+         1785         -952
+         -952          952
+Vd =
+  Columns 1 through 2
+   -0.0040973    -0.013156
+   -0.0077864    -0.022798
+    -0.010523    -0.025368
+    -0.014986    -0.023982
+     -0.01999    -0.014628
+    -0.021861   -0.0067337
+     -0.02334    0.0030871
+    -0.024398     0.011838
+    -0.025546      0.02337
+    -0.026132     0.029784
+  Columns 3 through 4
+     0.016439     0.015142
+     0.025401       0.0155
+     0.021198  -0.00068869
+    0.0042239     -0.02782
+    -0.019401    -0.018743
+    -0.021338     0.006879
+    -0.013997     0.026717
+   -0.0034611     0.028361
+     0.015139   0.00077676
+     0.026638    -0.023946
+  Columns 5 through 6
+    -0.021152     0.032099
+    -0.012796   -0.0053039
+     0.013759    -0.021757
+     0.037332    0.0054973
+    -0.017325     0.019546
+     -0.01424    -0.025564
+     0.011006    -0.010648
+      0.02436     0.018884
+    0.0078625     0.019837
+    -0.015275    -0.014149
+  Columns 7 through 8
+    -0.037925    0.0026494
+      0.01356   -0.0029261
+      0.01764    0.0031596
+    -0.024566    0.0019323
+      0.01882   -0.0095472
+    -0.015094      0.02169
+    -0.010572    -0.022322
+     0.010589    -0.015846
+     0.016148     0.051664
+   -0.0099465    -0.020799
+  Columns 9 through 10
+     0.019686  -5.8519e-05
+    -0.028574   0.00014301
+     0.047501  -0.00043761
+    -0.017708   0.00090243
+    0.0037245   -0.0041616
+   -0.0020865     0.016503
+   3.2051e-05    -0.046216
+    0.0019313     0.037238
+   -0.0027419     -0.02102
+   0.00095083    0.0052201
+Dd =
+  Columns 1 through 2
+     0.082117            0
+            0      0.78846
+            0            0
+            0            0
+            0            0
+            0            0
+            0            0
+            0            0
+            0            0
+            0            0
+  Columns 3 through 4
+            0            0
+            0            0
+       1.5806            0
+            0       3.7803
+            0            0
+            0            0
+            0            0
+            0            0
+            0            0
+            0            0
+  Columns 5 through 6
+            0            0
+            0            0
+            0            0
+            0            0
+       5.5462            0
+            0        8.795
+            0            0
+            0            0
+            0            0
+            0            0
+  Columns 7 through 8
+            0            0
+            0            0
+            0            0
+            0            0
+            0            0
+            0            0
+       9.6062            0
+            0       12.757
+            0            0
+            0            0
+  Columns 9 through 10
+            0            0
+            0            0
+            0            0
+            0            0
+            0            0
+            0            0
+            0            0
+            0            0
+        14.22            0
+            0       18.406
+{Unrecognized function or variable
+'gaplotspatialspread'.
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('gadsplot>callOnePlotFcn', 'C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\gadsplot.m', 228)" style="font-weight:bold">gadsplot>callOnePlotFcn</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\gadsplot.m',228,0)">line 228</a>)
+        optimValues = plotfcn(varargin{1:end});
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('gadsplot', 'C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\gadsplot.m', 158)" style="font-weight:bold">gadsplot</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\gadsplot.m',158,0)">line 158</a>)
+        [state,optimValues] = callOnePlotFcn(fname,plotNames{i},state,options.OutputPlotFcnOptions,optimValues,'init',args{i}{:});
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('galincon', 'C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\galincon.m', 54)" style="font-weight:bold">galincon</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\galincon.m',54,0)">line 54</a>)
+state = gadsplot(options,state,currentState,gaPlotTitle);
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ga', 'C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\ga.m', 420)" style="font-weight:bold">ga</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\ga.m',420,0)">line 420</a>)
+            [x,fval,exitFlag,output,population,scores] = galincon(FitnessFcn,nvars, ...
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('code_AG_Ivan', 'E:\Archivos_Jaret\Proyecto-doctoral\codigo_AG_Ivan\code_AG_Ivan.m', 108)" style="font-weight:bold">code_AG_Ivan</a> (<a href="matlab: opentoline('E:\Archivos_Jaret\Proyecto-doctoral\codigo_AG_Ivan\code_AG_Ivan.m',108,0)">line 108</a>)
+[x,fval,exitflag,output,population,scores] =ga(@(x)RMSEfunction(x,k1,m1,Vd,Dd),Nvar,[],[],[],[],LB,UB,[],options);} 
+code_AG_Ivan
+Mo =
+  Columns 1 through 3
+   250     0     0
+     0   375     0
+     0     0   225
+     0     0     0
+     0     0     0
+     0     0     0
+     0     0     0
+     0     0     0
+     0     0     0
+     0     0     0
+  Columns 4 through 6
+     0     0     0
+     0     0     0
+     0     0     0
+   254     0     0
+     0   400     0
+     0     0   350
+     0     0     0
+     0     0     0
+     0     0     0
+     0     0     0
+  Columns 7 through 9
+     0     0     0
+     0     0     0
+     0     0     0
+     0     0     0
+     0     0     0
+     0     0     0
+   225     0     0
+     0   235     0
+     0     0   190
+     0     0     0
+  Column 10
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+   260
+Ko =
+  Column 1
+        2110
+       -1110
+           0
+           0
+           0
+           0
+           0
+           0
+           0
+           0
+  Column 2
+       -1110
+        2560
+       -1450
+           0
+           0
+           0
+           0
+           0
+           0
+           0
+  Column 3
+           0
+       -1450
+        2330
+        -880
+           0
+           0
+           0
+           0
+           0
+           0
+  Column 4
+           0
+           0
+        -880
+        1578
+        -698
+           0
+           0
+           0
+           0
+           0
+  Column 5
+           0
+           0
+           0
+        -698
+        2243
+       -1545
+           0
+           0
+           0
+           0
+  Column 6
+           0
+           0
+           0
+           0
+       -1545
+        2815
+       -1270
+           0
+           0
+           0
+  Column 7
+           0
+           0
+           0
+           0
+           0
+       -1270
+        2720
+       -1450
+           0
+           0
+  Column 8
+           0
+           0
+           0
+           0
+           0
+           0
+       -1450
+        2430
+        -980
+           0
+  Column 9
+           0
+           0
+           0
+           0
+           0
+           0
+           0
+        -980
+        2170
+       -1190
+  Column 10
+           0
+           0
+           0
+           0
+           0
+           0
+           0
+           0
+       -1190
+        1190
+Vo =
+  Column 1
+   -0.0043299
+   -0.0081439
+    -0.010876
+     -0.01513
+    -0.020002
+    -0.021742
+    -0.023325
+    -0.024388
+    -0.025441
+    -0.025946
+  Column 2
+    -0.013714
+     -0.02343
+    -0.025692
+    -0.023808
+    -0.014033
+    -0.006513
+    0.0041682
+     0.012971
+     0.023339
+     0.028694
+  Column 3
+     0.016698
+     0.025145
+     0.020204
+    0.0030019
+    -0.020602
+     -0.02191
+    -0.012909
+   -0.0015126
+     0.015986
+      0.02592
+  Column 4
+     0.016119
+     0.015049
+    -0.002485
+    -0.028648
+    -0.016861
+    0.0072119
+     0.027962
+     0.027501
+   -0.0015019
+    -0.024357
+  Column 5
+    -0.022442
+    -0.011856
+     0.014934
+     0.035807
+    -0.017287
+    -0.013998
+     0.013513
+      0.02483
+    0.0052881
+    -0.015951
+  Column 6
+     0.043563
+     -0.01205
+    -0.024493
+      0.01555
+     0.011327
+    -0.018933
+   -0.0052996
+     0.014592
+     0.010194
+    -0.009164
+  Column 7
+    -0.023513
+      0.01197
+    0.0060074
+    -0.020253
+     0.025502
+    -0.024475
+    -0.013098
+     0.018615
+     0.017774
+    -0.013285
+  Column 8
+    0.0038595
+   -0.0055687
+     0.008595
+  -0.00069305
+   -0.0086588
+     0.021024
+    -0.028885
+   -0.0060552
+     0.049281
+    -0.021964
+  Column 9
+     0.016894
+    -0.027065
+     0.048152
+    -0.019396
+     0.005221
+   -0.0046812
+    0.0033377
+    0.0023058
+   -0.0078207
+    0.0032611
+  Column 10
+  -5.4258e-05
+   0.00014198
+  -0.00044429
+   0.00086823
+   -0.0038143
+     0.013878
+    -0.041313
+     0.038932
+    -0.029595
+    0.0087495
+Do =
+  Column 1
+       0.0891
+            0
+            0
+            0
+            0
+            0
+            0
+            0
+            0
+            0
+  Column 2
+            0
+      0.85419
+            0
+            0
+            0
+            0
+            0
+            0
+            0
+            0
+  Column 3
+            0
+            0
+       1.7541
+            0
+            0
+            0
+            0
+            0
+            0
+            0
+  Column 4
+            0
+            0
+            0
+       4.2947
+            0
+            0
+            0
+            0
+            0
+            0
+  Column 5
+            0
+            0
+            0
+            0
+       6.0943
+            0
+            0
+            0
+            0
+            0
+  Column 6
+            0
+            0
+            0
+            0
+            0
+       9.6681
+            0
+            0
+            0
+            0
+  Column 7
+            0
+            0
+            0
+            0
+            0
+            0
+         10.7
+            0
+            0
+            0
+  Column 8
+            0
+            0
+            0
+            0
+            0
+            0
+            0
+       14.846
+            0
+            0
+  Column 9
+            0
+            0
+            0
+            0
+            0
+            0
+            0
+            0
+       15.553
+            0
+  Column 10
+            0
+            0
+            0
+            0
+            0
+            0
+            0
+            0
+            0
+       20.058
+Md =
+  Columns 1 through 3
+   250     0     0
+     0   375     0
+     0     0   225
+     0     0     0
+     0     0     0
+     0     0     0
+     0     0     0
+     0     0     0
+     0     0     0
+     0     0     0
+  Columns 4 through 6
+     0     0     0
+     0     0     0
+     0     0     0
+   254     0     0
+     0   400     0
+     0     0   350
+     0     0     0
+     0     0     0
+     0     0     0
+     0     0     0
+  Columns 7 through 9
+     0     0     0
+     0     0     0
+     0     0     0
+     0     0     0
+     0     0     0
+     0     0     0
+   225     0     0
+     0   235     0
+     0     0   190
+     0     0     0
+  Column 10
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+     0
+   260
+Kd =
+  Column 1
+       2024.5
+      -1054.5
+            0
+            0
+            0
+            0
+            0
+            0
+            0
+            0
+  Column 2
+      -1054.5
+       2388.5
+        -1334
+            0
+            0
+            0
+            0
+            0
+            0
+            0
+  Column 3
+            0
+        -1334
+       2108.4
+       -774.4
+            0
+            0
+            0
+            0
+            0
+            0
+  Column 4
+            0
+            0
+       -774.4
+       1402.6
+       -628.2
+            0
+            0
+            0
+            0
+            0
+  Column 5
+            0
+            0
+            0
+       -628.2
+       1956.9
+      -1328.7
+            0
+            0
+            0
+            0
+  Column 6
+            0
+            0
+            0
+            0
+      -1328.7
+         2586
+      -1257.3
+            0
+            0
+            0
+  Column 7
+            0
+            0
+            0
+            0
+            0
+      -1257.3
+       2605.8
+      -1348.5
+            0
+            0
+  Column 8
+            0
+            0
+            0
+            0
+            0
+            0
+      -1348.5
+       2181.5
+         -833
+            0
+  Column 9
+            0
+            0
+            0
+            0
+            0
+            0
+            0
+         -833
+         1785
+         -952
+  Column 10
+            0
+            0
+            0
+            0
+            0
+            0
+            0
+            0
+         -952
+          952
+Vd =
+  Column 1
+   -0.0040973
+   -0.0077864
+    -0.010523
+    -0.014986
+     -0.01999
+    -0.021861
+     -0.02334
+    -0.024398
+    -0.025546
+    -0.026132
+  Column 2
+    -0.013156
+    -0.022798
+    -0.025368
+    -0.023982
+    -0.014628
+   -0.0067337
+    0.0030871
+     0.011838
+      0.02337
+     0.029784
+  Column 3
+     0.016439
+     0.025401
+     0.021198
+    0.0042239
+    -0.019401
+    -0.021338
+    -0.013997
+   -0.0034611
+     0.015139
+     0.026638
+  Column 4
+     0.015142
+       0.0155
+  -0.00068869
+     -0.02782
+    -0.018743
+     0.006879
+     0.026717
+     0.028361
+   0.00077676
+    -0.023946
+  Column 5
+    -0.021152
+    -0.012796
+     0.013759
+     0.037332
+    -0.017325
+     -0.01424
+     0.011006
+      0.02436
+    0.0078625
+    -0.015275
+  Column 6
+     0.032099
+   -0.0053039
+    -0.021757
+    0.0054973
+     0.019546
+    -0.025564
+    -0.010648
+     0.018884
+     0.019837
+    -0.014149
+  Column 7
+    -0.037925
+      0.01356
+      0.01764
+    -0.024566
+      0.01882
+    -0.015094
+    -0.010572
+     0.010589
+     0.016148
+   -0.0099465
+  Column 8
+    0.0026494
+   -0.0029261
+    0.0031596
+    0.0019323
+   -0.0095472
+      0.02169
+    -0.022322
+    -0.015846
+     0.051664
+    -0.020799
+  Column 9
+     0.019686
+    -0.028574
+     0.047501
+    -0.017708
+    0.0037245
+   -0.0020865
+   3.2051e-05
+    0.0019313
+   -0.0027419
+   0.00095083
+  Column 10
+  -5.8519e-05
+   0.00014301
+  -0.00043761
+   0.00090243
+   -0.0041616
+     0.016503
+    -0.046216
+     0.037238
+     -0.02102
+    0.0052201
+Dd =
+  Column 1
+     0.082117
+            0
+            0
+            0
+            0
+            0
+            0
+            0
+            0
+            0
+  Column 2
+            0
+      0.78846
+            0
+            0
+            0
+            0
+            0
+            0
+            0
+            0
+  Column 3
+            0
+            0
+       1.5806
+            0
+            0
+            0
+            0
+            0
+            0
+            0
+  Column 4
+            0
+            0
+            0
+       3.7803
+            0
+            0
+            0
+            0
+            0
+            0
+  Column 5
+            0
+            0
+            0
+            0
+       5.5462
+            0
+            0
+            0
+            0
+            0
+  Column 6
+            0
+            0
+            0
+            0
+            0
+        8.795
+            0
+            0
+            0
+            0
+  Column 7
+            0
+            0
+            0
+            0
+            0
+            0
+       9.6062
+            0
+            0
+            0
+  Column 8
+            0
+            0
+            0
+            0
+            0
+            0
+            0
+       12.757
+            0
+            0
+  Column 9
+            0
+            0
+            0
+            0
+            0
+            0
+            0
+            0
+        14.22
+            0
+  Column 10
+            0
+            0
+            0
+            0
+            0
+            0
+            0
+            0
+            0
+       18.406
+ga stopped by the output or plot function. The reason for stopping: 
+Stop requested from plot function.
+ga stopped by the output or plot function. The reason for stopping: 
+Stop requested from plot function.
+ga stopped by the output or plot function. The reason for stopping: 
+Stop requested from plot function.
+ga stopped because it exceeded options.MaxGenerations.
+ga stopped because it exceeded options.MaxGenerations.
+{Operation terminated by user during <a href="matlab:matlab.internal.language.introspective.errorDocCallback('gaplotgenealogy>makeChart')" style="font-weight:bold">gaplotgenealogy>makeChart</a>
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('gaplotgenealogy', 'C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\gaplotgenealogy.m', 77)" style="font-weight:bold">gaplotgenealogy</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\gaplotgenealogy.m',77,0)">line 77</a>)
+        makeChart(data,options,state,purge)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('gadsplot>callOnePlotFcn', 'C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\gadsplot.m', 228)" style="font-weight:bold">gadsplot>callOnePlotFcn</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\gadsplot.m',228,0)">line 228</a>)
+        optimValues = plotfcn(varargin{1:end});
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('gadsplot', 'C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\gadsplot.m', 165)" style="font-weight:bold">gadsplot</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\gadsplot.m',165,0)">line 165</a>)
+        [state,optimValues] = callOnePlotFcn(fname,plotNames{i},state,options.OutputPlotFcnOptions,optimValues,flag,args{i}{:});
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('galincon', 'C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\galincon.m', 140)" style="font-weight:bold">galincon</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\galincon.m',140,0)">line 140</a>)
+gadsplot(options,state,currentState,gaPlotTitle);
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ga', 'C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\ga.m', 420)" style="font-weight:bold">ga</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\ga.m',420,0)">line 420</a>)
+            [x,fval,exitFlag,output,population,scores] = galincon(FitnessFcn,nvars, ...
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('code_AG_Ivan', 'E:\Archivos_Jaret\Proyecto-doctoral\codigo_AG_Ivan\code_AG_Ivan.m', 109)" style="font-weight:bold">code_AG_Ivan</a> (<a href="matlab: opentoline('E:\Archivos_Jaret\Proyecto-doctoral\codigo_AG_Ivan\code_AG_Ivan.m',109,0)">line 109</a>)
+[x,fval,exitflag,output,population,scores] =ga(@(x)RMSEfunction(x,k1,m1,Vd,Dd),Nvar,[],[],[],[],LB,UB,[],options);} 
+options.PopulationSize = 100;  
+% Define el tamaño de la población en cada generación. Un tamaño de población mayor permite una mayor diversidad genética, pero también aumenta el tiempo de cómputo.
+
+options.MaxGenerations = 200;  
+% Establece el número máximo de generaciones que el algoritmo puede ejecutar. Más generaciones pueden permitir una mejor convergencia, pero a costa de un mayor tiempo de ejecución.
+
+options.EliteCount = 2;  
+% Define el número de individuos de mayor aptitud que se transfieren sin cambios a la próxima generación. Esto ayuda a garantizar que las mejores soluciones encontradas hasta ahora no se pierdan.
+
+options.CrossoverFraction = 0.8;  
+% Determina la fracción de la siguiente generación que se producirá a través del cruce. El valor 0.8 indica que el 80% de la siguiente generación será el resultado de la combinación de padres seleccionados.
+
+options.CrossoverFcn = @crossoverarithmetic;  
+% Define la función de cruce (crossover) que se utilizará para combinar los padres. crossoverarithmetic realiza un cruce aritmético entre dos individuos.
+
+options.MigrationDirection = 'both';  
+% Configura la dirección de la migración en un AG que utiliza múltiples subpoblaciones. 'both' permite la migración en ambas direcciones (de una subpoblación a otra y viceversa).
+
+options.MigrationFraction = 0.2;  
+% Especifica la fracción de individuos que migrarán entre subpoblaciones en cada ciclo de migración. Un 20% de migración puede ayudar a compartir información valiosa entre subpoblaciones.
+
+options.MigrationInterval = 20;  
+% Define el número de generaciones que deben pasar antes de que ocurra la migración entre subpoblaciones.
+
+options.HybridFcn = @fmincon;  
+% Permite que un algoritmo híbrido (como fmincon) se ejecute después de que el AG haya terminado. Esto puede ser útil para refinar la solución final que el AG encuentra.
+
+options.StallGenLimit = 50;  
+% Define el número máximo de generaciones consecutivas que el AG puede ejecutar sin mejorar la mejor solución antes de detenerse. Si la mejor solución no mejora en 50 generaciones, el algoritmo se detendrá.
+
+options.StallTimeLimit = 60;  
+% Establece un límite de tiempo (en segundos) durante el cual el algoritmo puede estar estancado sin mejoras antes de detenerse. Esto es útil para evitar que el algoritmo siga ejecutándose innecesariamente cuando no está encontrando mejores soluciones.
+
+options.UseParallel = true;  
+% Habilita la ejecución en paralelo del AG. Esto puede acelerar significativamente el tiempo de cómputo al utilizar múltiples núcleos de la CPU.
+
+options.Display = 'iter';  
+% Configura la salida de información durante la ejecución del AG. 'iter' mostrará información sobre cada generación en la consola. Otras opciones incluyen 'final' y 'off' para mostrar solo el resultado final o desactivar la salida, respectivamente.
+
+options.OutputFcn = @myOutputFunction;  
+% Permite definir una función de salida personalizada que se ejecuta después de cada generación. Esto puede ser útil para monitorear el progreso del algoritmo o guardar resultados intermedios.
+
+options.PlotFcn = {@gaplotbestf, @gaplotstopping};  
+% Configura las funciones de gráficos que se utilizarán durante la ejecución del AG. gaplotbestf grafica la mejor función objetivo en cada generación, mientras que gaplotstopping muestra criterios de parada.
+code_AG_Ivan
+Mo =
+   250     0     0     0     0     0     0     0     0     0
+     0   375     0     0     0     0     0     0     0     0
+     0     0   225     0     0     0     0     0     0     0
+     0     0     0   254     0     0     0     0     0     0
+     0     0     0     0   400     0     0     0     0     0
+     0     0     0     0     0   350     0     0     0     0
+     0     0     0     0     0     0   225     0     0     0
+     0     0     0     0     0     0     0   235     0     0
+     0     0     0     0     0     0     0     0   190     0
+     0     0     0     0     0     0     0     0     0   260
+Ko =
+  Columns 1 through 8
+        2110       -1110           0           0           0           0           0           0
+       -1110        2560       -1450           0           0           0           0           0
+           0       -1450        2330        -880           0           0           0           0
+           0           0        -880        1578        -698           0           0           0
+           0           0           0        -698        2243       -1545           0           0
+           0           0           0           0       -1545        2815       -1270           0
+           0           0           0           0           0       -1270        2720       -1450
+           0           0           0           0           0           0       -1450        2430
+           0           0           0           0           0           0           0        -980
+           0           0           0           0           0           0           0           0
+  Columns 9 through 10
+           0           0
+           0           0
+           0           0
+           0           0
+           0           0
+           0           0
+           0           0
+        -980           0
+        2170       -1190
+       -1190        1190
+Vo =
+  Columns 1 through 7
+   -0.0043299    -0.013714     0.016698     0.016119    -0.022442     0.043563    -0.023513
+   -0.0081439     -0.02343     0.025145     0.015049    -0.011856     -0.01205      0.01197
+    -0.010876    -0.025692     0.020204    -0.002485     0.014934    -0.024493    0.0060074
+     -0.01513    -0.023808    0.0030019    -0.028648     0.035807      0.01555    -0.020253
+    -0.020002    -0.014033    -0.020602    -0.016861    -0.017287     0.011327     0.025502
+    -0.021742    -0.006513     -0.02191    0.0072119    -0.013998    -0.018933    -0.024475
+    -0.023325    0.0041682    -0.012909     0.027962     0.013513   -0.0052996    -0.013098
+    -0.024388     0.012971   -0.0015126     0.027501      0.02483     0.014592     0.018615
+    -0.025441     0.023339     0.015986   -0.0015019    0.0052881     0.010194     0.017774
+    -0.025946     0.028694      0.02592    -0.024357    -0.015951    -0.009164    -0.013285
+  Columns 8 through 10
+    0.0038595     0.016894  -5.4258e-05
+   -0.0055687    -0.027065   0.00014198
+     0.008595     0.048152  -0.00044429
+  -0.00069305    -0.019396   0.00086823
+   -0.0086588     0.005221   -0.0038143
+     0.021024   -0.0046812     0.013878
+    -0.028885    0.0033377    -0.041313
+   -0.0060552    0.0023058     0.038932
+     0.049281   -0.0078207    -0.029595
+    -0.021964    0.0032611    0.0087495
+Do =
+  Columns 1 through 7
+       0.0891            0            0            0            0            0            0
+            0      0.85419            0            0            0            0            0
+            0            0       1.7541            0            0            0            0
+            0            0            0       4.2947            0            0            0
+            0            0            0            0       6.0943            0            0
+            0            0            0            0            0       9.6681            0
+            0            0            0            0            0            0         10.7
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+  Columns 8 through 10
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+       14.846            0            0
+            0       15.553            0
+            0            0       20.058
+Md =
+   250     0     0     0     0     0     0     0     0     0
+     0   375     0     0     0     0     0     0     0     0
+     0     0   225     0     0     0     0     0     0     0
+     0     0     0   254     0     0     0     0     0     0
+     0     0     0     0   400     0     0     0     0     0
+     0     0     0     0     0   350     0     0     0     0
+     0     0     0     0     0     0   225     0     0     0
+     0     0     0     0     0     0     0   235     0     0
+     0     0     0     0     0     0     0     0   190     0
+     0     0     0     0     0     0     0     0     0   260
+Kd =
+  Columns 1 through 7
+       2024.5      -1054.5            0            0            0            0            0
+      -1054.5       2388.5        -1334            0            0            0            0
+            0        -1334       2108.4       -774.4            0            0            0
+            0            0       -774.4       1402.6       -628.2            0            0
+            0            0            0       -628.2       1956.9      -1328.7            0
+            0            0            0            0      -1328.7         2586      -1257.3
+            0            0            0            0            0      -1257.3       2605.8
+            0            0            0            0            0            0      -1348.5
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+  Columns 8 through 10
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+      -1348.5            0            0
+       2181.5         -833            0
+         -833         1785         -952
+            0         -952          952
+Vd =
+  Columns 1 through 7
+   -0.0040973    -0.013156     0.016439     0.015142    -0.021152     0.032099    -0.037925
+   -0.0077864    -0.022798     0.025401       0.0155    -0.012796   -0.0053039      0.01356
+    -0.010523    -0.025368     0.021198  -0.00068869     0.013759    -0.021757      0.01764
+    -0.014986    -0.023982    0.0042239     -0.02782     0.037332    0.0054973    -0.024566
+     -0.01999    -0.014628    -0.019401    -0.018743    -0.017325     0.019546      0.01882
+    -0.021861   -0.0067337    -0.021338     0.006879     -0.01424    -0.025564    -0.015094
+     -0.02334    0.0030871    -0.013997     0.026717     0.011006    -0.010648    -0.010572
+    -0.024398     0.011838   -0.0034611     0.028361      0.02436     0.018884     0.010589
+    -0.025546      0.02337     0.015139   0.00077676    0.0078625     0.019837     0.016148
+    -0.026132     0.029784     0.026638    -0.023946    -0.015275    -0.014149   -0.0099465
+  Columns 8 through 10
+    0.0026494     0.019686  -5.8519e-05
+   -0.0029261    -0.028574   0.00014301
+    0.0031596     0.047501  -0.00043761
+    0.0019323    -0.017708   0.00090243
+   -0.0095472    0.0037245   -0.0041616
+      0.02169   -0.0020865     0.016503
+    -0.022322   3.2051e-05    -0.046216
+    -0.015846    0.0019313     0.037238
+     0.051664   -0.0027419     -0.02102
+    -0.020799   0.00095083    0.0052201
+Dd =
+  Columns 1 through 7
+     0.082117            0            0            0            0            0            0
+            0      0.78846            0            0            0            0            0
+            0            0       1.5806            0            0            0            0
+            0            0            0       3.7803            0            0            0
+            0            0            0            0       5.5462            0            0
+            0            0            0            0            0        8.795            0
+            0            0            0            0            0            0       9.6062
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+  Columns 8 through 10
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+       12.757            0            0
+            0        14.22            0
+            0            0       18.406
+ga stopped by the output or plot function. The reason for stopping: 
+Stop requested from plot function.
+{Operation terminated by user during <a href="matlab:matlab.internal.language.introspective.errorDocCallback('gaplotgenealogy>makeChart')" style="font-weight:bold">gaplotgenealogy>makeChart</a>
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('gaplotgenealogy', 'C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\gaplotgenealogy.m', 77)" style="font-weight:bold">gaplotgenealogy</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\gaplotgenealogy.m',77,0)">line 77</a>)
+        makeChart(data,options,state,purge)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('gadsplot>callOnePlotFcn', 'C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\gadsplot.m', 228)" style="font-weight:bold">gadsplot>callOnePlotFcn</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\gadsplot.m',228,0)">line 228</a>)
+        optimValues = plotfcn(varargin{1:end});
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('gadsplot', 'C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\gadsplot.m', 165)" style="font-weight:bold">gadsplot</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\gadsplot.m',165,0)">line 165</a>)
+        [state,optimValues] = callOnePlotFcn(fname,plotNames{i},state,options.OutputPlotFcnOptions,optimValues,flag,args{i}{:});
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('galincon', 'C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\galincon.m', 140)" style="font-weight:bold">galincon</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\galincon.m',140,0)">line 140</a>)
+gadsplot(options,state,currentState,gaPlotTitle);
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ga', 'C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\ga.m', 420)" style="font-weight:bold">ga</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\ga.m',420,0)">line 420</a>)
+            [x,fval,exitFlag,output,population,scores] = galincon(FitnessFcn,nvars, ...
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('code_AG_Ivan', 'E:\Archivos_Jaret\Proyecto-doctoral\codigo_AG_Ivan\code_AG_Ivan.m', 109)" style="font-weight:bold">code_AG_Ivan</a> (<a href="matlab: opentoline('E:\Archivos_Jaret\Proyecto-doctoral\codigo_AG_Ivan\code_AG_Ivan.m',109,0)">line 109</a>)
+[x,fval,exitflag,output,population,scores] =ga(@(x)RMSEfunction(x,k1,m1,Vd,Dd),Nvar,[],[],[],[],LB,UB,[],options);} 
+{Operation terminated by user during matlab.graphics.interaction.uiaxes.DataTipsBase/createLinger
+
+In matlab.graphics.interaction.uiaxes.DataTipsBase/enable
+
+In matlab.graphics.interaction.interactioncontainers.BaseAxesInteractionContainer/createDefaultSetAxesInteractions
+
+In matlab.graphics.interaction.interactioncontainers.BaseAxesInteractionContainer/createDefaultAxesInteractions
+
+In matlab.graphics.interaction.interactioncontainers.BaseAxesInteractionContainer/setupInteractions
+
+In matlab.graphics.interaction.internal.UnifiedAxesInteractions.createDefaultInteractionsOnAxes
+
+In matlab.graphics.interaction.interactioncontainers.BaseAxesInteractionContainer/updateInteractions
+
+In matlab.graphics.interaction.internal.UnifiedAxesInteractions.processQueuedDefaultInteractionInitialization
+
+In matlab.graphics.controls.internal.PostUpdatePlugin.doProcessInteractions
+
+In matlab.graphics.controls.internal.PostUpdatePlugin>@()matlab.graphics.controls.internal.PostUpdatePlugin.doProcessInteractions(canvasParent)} 
+{Operation terminated by user during <a href="matlab:matlab.internal.language.introspective.errorDocCallback('gadsplot>beforeClose')" style="font-weight:bold">gadsplot>beforeClose</a>} 
+Interrupt while evaluating DestroyedObject CloseRequestFcn.
+
+code_AG_Ivan
+Mo =
+   250     0     0     0     0     0     0     0     0     0
+     0   375     0     0     0     0     0     0     0     0
+     0     0   225     0     0     0     0     0     0     0
+     0     0     0   254     0     0     0     0     0     0
+     0     0     0     0   400     0     0     0     0     0
+     0     0     0     0     0   350     0     0     0     0
+     0     0     0     0     0     0   225     0     0     0
+     0     0     0     0     0     0     0   235     0     0
+     0     0     0     0     0     0     0     0   190     0
+     0     0     0     0     0     0     0     0     0   260
+Ko =
+  Columns 1 through 8
+        2110       -1110           0           0           0           0           0           0
+       -1110        2560       -1450           0           0           0           0           0
+           0       -1450        2330        -880           0           0           0           0
+           0           0        -880        1578        -698           0           0           0
+           0           0           0        -698        2243       -1545           0           0
+           0           0           0           0       -1545        2815       -1270           0
+           0           0           0           0           0       -1270        2720       -1450
+           0           0           0           0           0           0       -1450        2430
+           0           0           0           0           0           0           0        -980
+           0           0           0           0           0           0           0           0
+  Columns 9 through 10
+           0           0
+           0           0
+           0           0
+           0           0
+           0           0
+           0           0
+           0           0
+        -980           0
+        2170       -1190
+       -1190        1190
+Vo =
+  Columns 1 through 7
+   -0.0043299    -0.013714     0.016698     0.016119    -0.022442     0.043563    -0.023513
+   -0.0081439     -0.02343     0.025145     0.015049    -0.011856     -0.01205      0.01197
+    -0.010876    -0.025692     0.020204    -0.002485     0.014934    -0.024493    0.0060074
+     -0.01513    -0.023808    0.0030019    -0.028648     0.035807      0.01555    -0.020253
+    -0.020002    -0.014033    -0.020602    -0.016861    -0.017287     0.011327     0.025502
+    -0.021742    -0.006513     -0.02191    0.0072119    -0.013998    -0.018933    -0.024475
+    -0.023325    0.0041682    -0.012909     0.027962     0.013513   -0.0052996    -0.013098
+    -0.024388     0.012971   -0.0015126     0.027501      0.02483     0.014592     0.018615
+    -0.025441     0.023339     0.015986   -0.0015019    0.0052881     0.010194     0.017774
+    -0.025946     0.028694      0.02592    -0.024357    -0.015951    -0.009164    -0.013285
+  Columns 8 through 10
+    0.0038595     0.016894  -5.4258e-05
+   -0.0055687    -0.027065   0.00014198
+     0.008595     0.048152  -0.00044429
+  -0.00069305    -0.019396   0.00086823
+   -0.0086588     0.005221   -0.0038143
+     0.021024   -0.0046812     0.013878
+    -0.028885    0.0033377    -0.041313
+   -0.0060552    0.0023058     0.038932
+     0.049281   -0.0078207    -0.029595
+    -0.021964    0.0032611    0.0087495
+Do =
+  Columns 1 through 7
+       0.0891            0            0            0            0            0            0
+            0      0.85419            0            0            0            0            0
+            0            0       1.7541            0            0            0            0
+            0            0            0       4.2947            0            0            0
+            0            0            0            0       6.0943            0            0
+            0            0            0            0            0       9.6681            0
+            0            0            0            0            0            0         10.7
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+  Columns 8 through 10
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+       14.846            0            0
+            0       15.553            0
+            0            0       20.058
+Md =
+   250     0     0     0     0     0     0     0     0     0
+     0   375     0     0     0     0     0     0     0     0
+     0     0   225     0     0     0     0     0     0     0
+     0     0     0   254     0     0     0     0     0     0
+     0     0     0     0   400     0     0     0     0     0
+     0     0     0     0     0   350     0     0     0     0
+     0     0     0     0     0     0   225     0     0     0
+     0     0     0     0     0     0     0   235     0     0
+     0     0     0     0     0     0     0     0   190     0
+     0     0     0     0     0     0     0     0     0   260
+Kd =
+  Columns 1 through 7
+       2024.5      -1054.5            0            0            0            0            0
+      -1054.5       2388.5        -1334            0            0            0            0
+            0        -1334       2108.4       -774.4            0            0            0
+            0            0       -774.4       1402.6       -628.2            0            0
+            0            0            0       -628.2       1956.9      -1328.7            0
+            0            0            0            0      -1328.7         2586      -1257.3
+            0            0            0            0            0      -1257.3       2605.8
+            0            0            0            0            0            0      -1348.5
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+  Columns 8 through 10
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+      -1348.5            0            0
+       2181.5         -833            0
+         -833         1785         -952
+            0         -952          952
+Vd =
+  Columns 1 through 7
+   -0.0040973    -0.013156     0.016439     0.015142    -0.021152     0.032099    -0.037925
+   -0.0077864    -0.022798     0.025401       0.0155    -0.012796   -0.0053039      0.01356
+    -0.010523    -0.025368     0.021198  -0.00068869     0.013759    -0.021757      0.01764
+    -0.014986    -0.023982    0.0042239     -0.02782     0.037332    0.0054973    -0.024566
+     -0.01999    -0.014628    -0.019401    -0.018743    -0.017325     0.019546      0.01882
+    -0.021861   -0.0067337    -0.021338     0.006879     -0.01424    -0.025564    -0.015094
+     -0.02334    0.0030871    -0.013997     0.026717     0.011006    -0.010648    -0.010572
+    -0.024398     0.011838   -0.0034611     0.028361      0.02436     0.018884     0.010589
+    -0.025546      0.02337     0.015139   0.00077676    0.0078625     0.019837     0.016148
+    -0.026132     0.029784     0.026638    -0.023946    -0.015275    -0.014149   -0.0099465
+  Columns 8 through 10
+    0.0026494     0.019686  -5.8519e-05
+   -0.0029261    -0.028574   0.00014301
+    0.0031596     0.047501  -0.00043761
+    0.0019323    -0.017708   0.00090243
+   -0.0095472    0.0037245   -0.0041616
+      0.02169   -0.0020865     0.016503
+    -0.022322   3.2051e-05    -0.046216
+    -0.015846    0.0019313     0.037238
+     0.051664   -0.0027419     -0.02102
+    -0.020799   0.00095083    0.0052201
+Dd =
+  Columns 1 through 7
+     0.082117            0            0            0            0            0            0
+            0      0.78846            0            0            0            0            0
+            0            0       1.5806            0            0            0            0
+            0            0            0       3.7803            0            0            0
+            0            0            0            0       5.5462            0            0
+            0            0            0            0            0        8.795            0
+            0            0            0            0            0            0       9.6062
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+            0            0            0            0            0            0            0
+  Columns 8 through 10
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+            0            0            0
+       12.757            0            0
+            0        14.22            0
+            0            0       18.406
+ga stopped by the output or plot function. The reason for stopping: 
+Stop requested from plot function.
+ga stopped by the output or plot function. The reason for stopping: 
+Stop requested from plot function.
+ga stopped by the output or plot function. The reason for stopping: 
+Stop requested from plot function.
+ga stopped by the output or plot function. The reason for stopping: 
+Stop requested from plot function.
+ga stopped because it exceeded options.MaxGenerations.
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('matlab.ui.Figure/get')" style="font-weight:bold">matlab.ui.Figure/get</a>
+Invalid or deleted object.
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('gadsplot', 'C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\gadsplot.m', 202)" style="font-weight:bold">gadsplot</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\gadsplot.m',202,0)">line 202</a>)
+    plotState.(solver).position = get(fig,'Position');
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('galincon', 'C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\galincon.m', 107)" style="font-weight:bold">galincon</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\galincon.m',107,0)">line 107</a>)
+    state = gadsplot(options,state,currentState,gaPlotTitle);
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ga', 'C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\ga.m', 420)" style="font-weight:bold">ga</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\ga.m',420,0)">line 420</a>)
+            [x,fval,exitFlag,output,population,scores] = galincon(FitnessFcn,nvars, ...
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('code_AG_Ivan', 'E:\Archivos_Jaret\Proyecto-doctoral\codigo_AG_Ivan\code_AG_Ivan.m', 109)" style="font-weight:bold">code_AG_Ivan</a> (<a href="matlab: opentoline('E:\Archivos_Jaret\Proyecto-doctoral\codigo_AG_Ivan\code_AG_Ivan.m',109,0)">line 109</a>)
+[x,fval,exitflag,output,population,scores] =ga(@(x)RMSEfunction(x,k1,m1,Vd,Dd),Nvar,[],[],[],[],LB,UB,[],options);
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('run', 'C:\Program Files\MATLAB\R2023b\toolbox\matlab\lang\run.m', 99)" style="font-weight:bold">run</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\matlab\lang\run.m',99,0)">line 99</a>)
+evalin('caller', strcat(script, ';'));} 

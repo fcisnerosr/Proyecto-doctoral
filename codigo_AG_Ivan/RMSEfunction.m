@@ -2,6 +2,7 @@ function [SumRMSE]=RMSEfunction(x,k1,m1,Vd,Dd)
   M=zeros(10,10);
   K=zeros(10,10);
   
+  
   for i=1:1:10
      M(i,i)=m1(i); 
      if i<10

@@ -2,9 +2,9 @@ close all;
 clear all;
 clc;
 tic
-Samples=1000;
-Generations=2000;
-Nvar=10;
+Samples = 10;
+Generations = 500;
+Nvar = 10;
 
 Mo=zeros(10,10);
 Ko=zeros(10,10);
@@ -68,21 +68,24 @@ Kd
 % Algoritmo Genetico
 % la siguiente línea es para indica que las configuraciones son específicamente para la función ga, que es la implementación del Algoritmo Genético en MATLAB.
 % Las opciones y variables que configuras con gaoptimset y asignas a la estructura options no se utilizan directamente en otras partes del código; en su lugar, son utilizadas internamente por la función ga (el Algoritmo Genético) durante su ejecución.
-options = gaoptimset(@ga);          % gaoptimset es para crear las configuraciones específicas para el AG
-options.PopulationSize= Samples;
-options.Generations=Generations;
-options.StallGenLimit= 50;          % límite de generaciones en donde los individuos no cumplen con la función objetivo
-options.Display='iter';                         % Muestra la información en cada iteración
+options                 = gaoptimset(@ga);          % gaoptimset es para crear las configuraciones específicas para el AG
+options.PopulationSize  = Samples;
+options.Generations     = Generations;
+options.StallGenLimit   = 50;          % límite de generaciones en donde los individuos no cumplen con la función objetivo
+options.Display         ='iter';                         % Muestra la información en cada iteración
 
 % Este bloque de código configura funciones específicas que controlan el comportamiento de varios procesos dentro del Algoritmo Genético (GA) en MATLAB. Cada opción define una función que el GA utilizará para diferentes aspectos del proceso de evolución, como la creación de la población inicial, la selección de individuos, la mutación, y si se debe usar o no procesamiento paralelo.
 % el @ le dice al campo de options que haga uso de la función después de @
-options.CreationFcn=@gacreationlinearfeasible;  % esta línea del dice al AG cómo debe crear la primera generación de los individuos. @gacreationlinearfeasible hace que la primera generación de individuos cumplan con cualquier restricción lineal que defina en el problema. Esto asegura que el AG comience desde un inicio con soluciones válidas y así poder aumentar las probabilidades de que devuelva una respuesta correcta cuando el AG finalice
-options.FitnessScalingFcn=@fitscalingprop;      % fitscalingprop: Esta técnica de escalamiento ajusta los valores de aptitud para que las diferencias entre ellos no sean tan extremas. Esto significa que incluso los individuos con una aptitud no tan alta todavía tienen una oportunidad razonable de ser seleccionados para la reproducción. Uno de los riesgos en los Algoritmos Genéticos (GA) es que si un individuo (o un pequeño grupo de individuos) tiene un valor de aptitud significativamente superior al de los demás en una población, el GA podría converger rápidamente hacia las características de esos individuos. Esto puede llevar a que el algoritmo se quede atrapado en un óptimo local en lugar de encontrar el óptimo global, que es la mejor solución posible en todo el espacio de búsqueda.
-options.SelectionFcn=@selectionroulette;        % En este método, la probabilidad de que un individuo sea seleccionado es proporcional a su aptitud. Los individuos con mejores valores de aptitud tienen más probabilidades de ser seleccionados, pero también hay una oportunidad para aquellos con menor aptitud, lo que ayuda a mantener la diversidad genética en la población.
-options.MutationFcn=@mutationadaptfeasible;     % Configura cómo se llevará a cabo la mutación. Función de Mutación Adaptativa Factible: mutationadaptfeasible es una función específica de MATLAB que realiza mutaciones de manera adaptativa. Aquí está lo que hace: Adaptativa: La mutación es adaptativa porque ajusta el grado de mutación dependiendo del progreso del GA. Si el algoritmo está haciendo buenos progresos, la mutación puede ser menos agresiva. Si no está haciendo mucho progreso, la mutación puede volverse más agresiva para explorar nuevas áreas del espacio de soluciones. Factibilidad: La mutación se realiza de tal manera que los individuos mutados aún cumplen con cualquier restricción del problema. Esto es crucial para asegurarse de que las soluciones mutadas sigan siendo válidas dentro del espacio de búsqueda permitido.
+options.CreationFcn         = @gacreationlinearfeasible;  % esta línea del dice al AG cómo debe crear la primera generación de los individuos. @gacreationlinearfeasible hace que la primera generación de individuos cumplan con cualquier restricción lineal que defina en el problema. Esto asegura que el AG comience desde un inicio con soluciones válidas y así poder aumentar las probabilidades de que devuelva una respuesta correcta cuando el AG finalice
+options.FitnessScalingFcn   = @fitscalingprop;      % fitscalingprop: Esta técnica de escalamiento ajusta los valores de aptitud para que las diferencias entre ellos no sean tan extremas. Esto significa que incluso los individuos con una aptitud no tan alta todavía tienen una oportunidad razonable de ser seleccionados para la reproducción. Uno de los riesgos en los Algoritmos Genéticos (GA) es que si un individuo (o un pequeño grupo de individuos) tiene un valor de aptitud significativamente superior al de los demás en una población, el GA podría converger rápidamente hacia las características de esos individuos. Esto puede llevar a que el algoritmo se quede atrapado en un óptimo local en lugar de encontrar el óptimo global, que es la mejor solución posible en todo el espacio de búsqueda.
+options.SelectionFcn        = @selectionroulette;        % En este método, la probabilidad de que un individuo sea seleccionado es proporcional a su aptitud. Los individuos con mejores valores de aptitud tienen más probabilidades de ser seleccionados, pero también hay una oportunidad para aquellos con menor aptitud, lo que ayuda a mantener la diversidad genética en la población.
+options.MutationFcn         = @mutationadaptfeasible;     % Configura cómo se llevará a cabo la mutación. Función de Mutación Adaptativa Factible: mutationadaptfeasible es una función específica de MATLAB que realiza mutaciones de manera adaptativa. Aquí está lo que hace: Adaptativa: La mutación es adaptativa porque ajusta el grado de mutación dependiendo del progreso del GA. Si el algoritmo está haciendo buenos progresos, la mutación puede ser menos agresiva. Si no está haciendo mucho progreso, la mutación puede volverse más agresiva para explorar nuevas áreas del espacio de soluciones. Factibilidad: La mutación se realiza de tal manera que los individuos mutados aún cumplen con cualquier restricción del problema. Esto es crucial para asegurarse de que las soluciones mutadas sigan siendo válidas dentro del espacio de búsqueda permitido.
 % Propósito de la Mutación: La mutación es una operación que introduce variación en los individuos de una población. Es esencial para mantener la diversidad genética, permitiendo que el algoritmo explore nuevas soluciones que no estaban presentes en la población original.
 % Cómo Funciona: Durante la mutación, una pequeña parte del código genético (representado por el vector x en tu caso) de un individuo se altera al azar. Esta alteración puede ser un cambio pequeño en el valor de una variable o un ajuste más significativo, dependiendo de cómo esté definida la función de mutación.
 options.UseParallel='always';
+options = gaoptimset('PlotFcn', {@gaplotbestf, @gaplotbestindiv, @gaplotdistance, @gaplotrange, @gaplotstopping});
+
+
 
 LB=zeros(10,1);
 UB=zeros(10,1);
@@ -98,7 +101,7 @@ for i=1:1:10    % va hasta 10 por los 10 grados de libertad del sistema
 end    
 CWFile='CWFOutput1.txt';    % Nombre del archivo donde irán registrándose los resultados del AG
 diary (CWFile);             % Abre el archivo de salida para que todas las salidas en la consola de MATLAB se registren en este archivo
-parpool('Processes', 6)     %  configura MATLAB para ejecutar la optimización del Algoritmo Genético utilizando 6 núcleos de CPU en paralelo, lo que puede acelerar significativamente el proceso al permitir la evaluación simultánea de múltiples individuos en cada generación
+% parpool('Processes', 6)     %  configura MATLAB para ejecutar la optimización del Algoritmo Genético utilizando 6 núcleos de CPU en paralelo, lo que puede acelerar significativamente el proceso al permitir la evaluación simultánea de múltiples individuos en cada generación
 % En mi CPU se pueden 6 como máximo, para saber cuántos puede cada usaurio ejecutar en el command window lo siguiente:
 % numCores = feature('numcores');
 % disp(['Número de núcleos: ', num2str(numCores)]);
@@ -108,7 +111,7 @@ parpool('Processes', 6)     %  configura MATLAB para ejecutar la optimización d
     % Variables de Optimización: Nvar define el número de variables que se optimizan.
     % Límites: LB y UB+ son los límites inferiores y superiores para las variables de optimización, definidos previamente.
     % Opciones: options incluye todas las configuraciones del AG como el tamaño de la población, número de generaciones, funciones de selección, etc.
-delete(gcp('nocreate'));    % Cierra el procesamiento paralelo
+% delete(gcp('nocreate'));    % Cierra el procesamiento paralelo
 diary off;                  %  Cierra el archivo de salida, deteniendo el registro de las salidas en la consola.
 
 x
