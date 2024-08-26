@@ -58,8 +58,6 @@ escritura_datos_hoja_excel_del_dr_Rolando(coordenadas, vxz, conectividad, prop_g
 no_frec_nat = 28;
 vector_rmse_frec = zeros(1,no_frec_nat);
 
-
-
 % % Danos locales
 % % [ke_d_total, ke_d, elem_con_dano_long_NE] = switch_case_danos(no_elemento_a_danar, caso_dano, dano_porcentaje, archivo_excel, NE, prop_geom, E, G, J);
 % prop_geom(:,8:9)    = [];                          % eliminacion de 'circular' y 'wo', si no se eliminan la conversion a matriz numerica no es posible
