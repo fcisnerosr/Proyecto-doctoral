@@ -85,8 +85,6 @@ options.MutationFcn         = @mutationadaptfeasible;     % Configura cómo se l
 options.UseParallel='always';
 options = gaoptimset('PlotFcn', {@gaplotbestf, @gaplotbestindiv, @gaplotdistance, @gaplotrange, @gaplotstopping});
 
-
-
 LB=zeros(10,1);
 UB=zeros(10,1);
 
