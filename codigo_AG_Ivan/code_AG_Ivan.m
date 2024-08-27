@@ -83,13 +83,19 @@ options.MutationFcn         = @mutationadaptfeasible;     % Configura cómo se l
 % Propósito de la Mutación: La mutación es una operación que introduce variación en los individuos de una población. Es esencial para mantener la diversidad genética, permitiendo que el algoritmo explore nuevas soluciones que no estaban presentes en la población original.
 % Cómo Funciona: Durante la mutación, una pequeña parte del código genético (representado por el vector x en tu caso) de un individuo se altera al azar. Esta alteración puede ser un cambio pequeño en el valor de una variable o un ajuste más significativo, dependiendo de cómo esté definida la función de mutación.
 options.UseParallel='always';
+% Graficas de monitoreo para ver el estado del AG durante todo su proceso
 options = gaoptimset('PlotFcn', {@gaplotbestf, @gaplotbestindiv, @gaplotdistance, @gaplotrange, @gaplotstopping});
+% @gaplotbestf: Mejores valores de función
+% @gaplotbestindiv: Valores del mejor individuo por generación
+% @gaplotdistance: Distancia entre individuos en las soluciones de busqueda
+% @gaplotrange: Rango de valores de la población
+% @gaplotstopping: Criterios de parada del algoritmo
 
-LB=zeros(10,1);
-UB=zeros(10,1);
+LB = zeros(10,1);
+UB = zeros(10,1);
 
-LowerLim=0.0;       % Variable que define que cualquier dano minimo permitido en cualqueir elemento es 0%
-UpperLim=0.30;      % Variable que define que cualquier dano maximo permitido en cualqueir elemento es del 30%. Este valores es importante en los tipos de danos que estemos trabajando porque para la abolladura será el 50% mientras que para la corrosión es del 100%
+LowerLim = 0.0;       % Variable qu define que cualquier dano minimo permitido en cualqueir elemento es 0%
+UpperLim = 0.30;      % Variable que define que cualquier dano maximo permitido en cualqueir elemento es del 30%. Este valores es importante en los tipos de danos que estemos trabajando porque para la abolladura será el 50% mientras que para la corrosión es del 100%
 
 for i=1:1:10    % va hasta 10 por los 10 grados de libertad del sistema
     % Configurar los límites inferiores y superiores para todas las variables de daño en el AG. Esto significa que cada variable de daño puede variar entre 0% (ningún daño) y 30% (máximo daño)
