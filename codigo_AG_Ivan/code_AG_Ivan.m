@@ -2,7 +2,7 @@ close all;
 clear all;
 clc;
 tic
-Samples = 10;
+Samples = 1000;
 Generations = 500;
 Nvar = 10;
 

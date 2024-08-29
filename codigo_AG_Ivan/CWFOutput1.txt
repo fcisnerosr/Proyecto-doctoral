@@ -3426,3 +3426,81 @@ Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback
 Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('code_AG_Ivan', 'E:\Archivos_Jaret\Proyecto-doctoral\codigo_AG_Ivan\code_AG_Ivan.m', 107)" style="font-weight:bold">code_AG_Ivan</a> (<a href="matlab: opentoline('E:\Archivos_Jaret\Proyecto-doctoral\codigo_AG_Ivan\code_AG_Ivan.m',107,0)">line 107</a>)
 [x,fval,exitflag,output,population,scores] =ga(@(x)RMSEfunction(x,k1,m1,Vd,Dd),Nvar,[],[],[],[],LB,UB,[],options);} 
 exit
+{Operation terminated by user during <a href="matlab:matlab.internal.language.introspective.errorDocCallback('gadsplot>buttonPauseContinue')" style="font-weight:bold">gadsplot>buttonPauseContinue</a>} 
+Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('gadsplot')" style="font-weight:bold">gadsplot</a>
+Interrupt while evaluating UIControl Callback.
+
+{Operation terminated by user during <a href="matlab:matlab.internal.language.introspective.errorDocCallback('gadsplot')" style="font-weight:bold">gadsplot</a>
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('galincon', 'C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\galincon.m', 107)" style="font-weight:bold">galincon</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\private\galincon.m',107,0)">line 107</a>)
+    state = gadsplot(options,state,currentState,gaPlotTitle);
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ga', 'C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\ga.m', 420)" style="font-weight:bold">ga</a> (<a href="matlab: opentoline('C:\Program Files\MATLAB\R2023b\toolbox\globaloptim\globaloptim\ga.m',420,0)">line 420</a>)
+            [x,fval,exitFlag,output,population,scores] = galincon(FitnessFcn,nvars, ...
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('code_AG_Ivan', 'E:\Archivos_Jaret\Proyecto-doctoral\codigo_AG_Ivan\code_AG_Ivan.m', 113)" style="font-weight:bold">code_AG_Ivan</a> (<a href="matlab: opentoline('E:\Archivos_Jaret\Proyecto-doctoral\codigo_AG_Ivan\code_AG_Ivan.m',113,0)">line 113</a>)
+[x,fval,exitflag,output,population,scores] =ga(@(x)RMSEfunction(x,k1,m1,Vd,Dd),Nvar,[],[],[],[],LB,UB,[],options);} 
+l
+{Unrecognized function or variable 'l'.} 
+ls
+
+.               CWFOutput1.txt  code_AG_Ivan.m  
+..              RMSEfunction.m  results.txt     
+
+cd ..
+ls
+
+.                     Resultados            excels_de_ing_Jaret   pruebas_excel         
+..                    code                  fig                   smie-code_comparar.m  
+.git                  codigo_AG_Ivan        jpgs                  svg                   
+README.md             corrosionlocal.m      mat                   
+
+cd code
+ls
+
+.                                                 
+..                                                
+Matriz_M_completa_y_condensada.m                  
+RMSEfunction.m                                    
+SAPMIAdentboth.m                                  
+TransfM3Dframe.m                                  
+abolladura2.m                                     
+abolladuralocal.m                                 
+area_y_momento_polar_con_dano.m                   
+asignar_tipos_danos_a_elementos_seleccionados.m   
+borrar_elementos_en_hoja.m                        
+calcularRMSEModales.m                             
+calcularRMSEModalesPorModo.m                      
+calculo_longitudes_con_dano.m                     
+codigo_abolladura.txt                             
+comparacion                                       
+comparacion_entre_intactoy_con_dano.m             
+condensacion_estatica.m                           
+correccion_format_TablaETABS.m                    
+corrosionlocal.m                                  
+ejelocal.m                                        
+ensamblaje_matriz_rigidez_global.asv              
+ensamblaje_matriz_rigidez_global_AG.m             
+ensamblaje_matriz_rigidez_global_ambos_modelos.m  
+ensamblaje_matriz_rigidez_global_con_dano.m       
+ensamblaje_matriz_rigidez_global_intacta.m        
+escritura_datos_hoja_excel_del_dr_Rolando.m       
+funcion_abulladura_longitudinal.m                 
+funcion_corrosion_completa_longitudinal.m         
+funciones_aisladas                                
+graf_formas_modales.m                             
+graficas_líneas_formas_modales                    
+lectura_datos_modelo_ETABS.m                      
+lectura_hoja_excel.m                              
+localkeframe3D.m                                  
+localkeframe3D_AG.m                               
+matriz_de_masas.m                                 
+modificacion_matriz_masas.m                       
+modos_frecuencias.m                               
+momento_inercia_abolladura.m                      
+otros                                             
+preparacion_datos_danos_locales.m                 
+prueba_borrar.m                                   
+reorganizar_vector.m                              
+switch_case_danos.m                               
+
+
+exit
