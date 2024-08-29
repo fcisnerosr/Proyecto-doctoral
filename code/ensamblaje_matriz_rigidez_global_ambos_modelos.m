@@ -1,4 +1,5 @@
-function [KG_damaged, KG_undamaged] = ensamblaje_matriz_rigidez_global_ambos_modelos(ID, NE, ke_d_total,elements, nodes, IDmax, NEn, damele, eledent,   A, Iy, Iz, J, E, G,  vxz, elem_con_dano_long_NE)
+function [KG_damaged, KG_undamaged] = ensamblaje_matriz_rigidez_global_ambos_modelos(ID, NE, ke_d_total,elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G,  vxz, elem_con_dano_long_NE)
+    % KG con daño
     KG_damaged = [];  % Inicializa con un valor vacío o cero
     KG_undamaged = [];  % Inicializa con un valor vacío o cero
     % Armado de la matriz de rigidez global
@@ -67,8 +68,9 @@ function [KG_damaged, KG_undamaged] = ensamblaje_matriz_rigidez_global_ambos_mod
     end
     KG_damaged = KG;
     
-    clear KG    
-     %% KG intacta
+    clear KG
+
+    % KG intacta
     KG=zeros(IDmax,IDmax);
     KGtu=zeros(IDmax,NEn);
     for i = 1:NE

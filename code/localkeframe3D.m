@@ -1,8 +1,4 @@
-% local stiffness matrix for 2D elements
-% Done by Rolando Salgado Estradalocalkeframe3D
-% Assistant Professor at Faculty of Engineering of Construction and
-% Habitat of Universidad Veracruzana Campus Veracruz
-% 1st version 21st October 2020
+% local stiffness matrix for 3D elements
 
 function ke = localkeframe3D(A,Iy,Iz,J,E,G,L)
     % dano = 'corrosion'
