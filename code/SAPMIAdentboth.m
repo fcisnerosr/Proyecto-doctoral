@@ -173,8 +173,10 @@ KG_damaged_cond   = condensacion_estatica(KG_damaged);
 % Implementación del Algoritmo Genetico (AG)
 % Inicializar los vectores LB y UB con el tamaño adecuado para long_x daños
 % Por ahora solo se está considerando la corrosión
-num_elements = 116;
-long_x = 3 * num_elements; % = 348
+% Cerrar cualquier parallel pool existente
+delete(gcp('nocreate'));
+num_element_sub = 116;
+long_x = 3 * num_element_sub; % = 348
 % 3 porque solamente se aplica dano al área y ambas inercias en x y en y
 % 116 porque se le aplica dano a los primeros 116 elementos de la subestructura % Configuraciones básicas del AG
 Samples     = 1000;
@@ -220,7 +222,7 @@ parpool('Processes', 6)     %  configura MATLAB para ejecutar la optimización d
 % numCores = feature('numcores');
 % disp(['Número de núcleos: ', num2str(numCores)]);
 % La siguiente linea se a cabo el proceso del ga
-[x,fval,exitflag,output,population,scores] = ga(@(x)RMSEfunction(x, num_elements, M_cond, frec_cond_d,...
+[x,fval,exitflag,output,population,scores] = ga(@(x)RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
         L, ID, NE, elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G, ...
         vxz, elem_con_dano_long_NE,...
         modos_cond_d),Nvar,[],[],[],[],LB,UB,[],options);

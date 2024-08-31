@@ -1,7 +1,8 @@
-function [KG_AG] = ensamblaje_matriz_rigidez_global_AG(ID, NE, elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G, vxz, elem_con_dano_long_NE)
-% KG intacta
+function [KG_AG] = ensamblaje_matriz_rigidez_global_AG(num_element_sub,ke_AG,ID, NE, elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G, vxz, elem_con_dano_long_NE)
+% KG del AG
     KG   = zeros(IDmax,IDmax);
     KGtu = zeros(IDmax,NEn);
+
     for i = 1:NE
        KGf     = zeros(IDmax,IDmax);
        KGtuf   = zeros(IDmax,NEn);
@@ -16,33 +17,21 @@ function [KG_AG] = ensamblaje_matriz_rigidez_global_AG(ID, NE, elements, nodes, 
        CXY(i)= sqrt(CX(i)^2 + CY(i)^2);
        locdam  = find(damele == i,1);
        locdent = find(eledent==i,1);
-       if isempty(locdam) && isempty(locdent)
+        if isempty(locdam) && isempty(locdent) && (i > num_element_sub)
             % local stiffness matrix of the elements
-           ke_AG(:,:,i) = localkeframe3D_AG(A(i),Iy(i),Iz(i),J(i),E(i),G(i),L(i));
-       elseif isempty(locdent)
-           xdc = xdcr(locdam) * L(i);
-           if strcmp(tipo(i),'circular')
-              depthr1 = depthr(locdam) * radio(i);
-               ke(:,:,i) = ZhengcircT(L(i),xdc,A(i),Iz(i),Iy(i),J(i),E(i),locdam,depthr1,G(i));
-           elseif  strcmp(tipo(i),'rectangular')
-               depthr1 = depthr(locdam) * h(i);
-               ke(:,:,i) = Zhengrectub(L(i),xdc,A(i),Iz(i),Iy(i),J(i),E(i),locdam,depthr1,G(i),h(i),b(i),trec(i));  
-           end             
-        elseif isempty(locdam)
-          ident = eledent(locdent);
-           x1dent = x1dentr * L(ident);
-            x2dent = x2dentr * L(ident);
-          ke(:,:,i) = FEMdent(L(ident),Adent(locdent),Izdent(locdent),...
-                       Iydent(locdent),Jdent(locdent),A(ident),Iz(ident),Iy(ident),...
-                       J(ident),x1dent,x2dent,E(ident),G(ident));                
+           ke_AG(:,:,i) = localkeframe3D(A(i),Iy(i),Iz(i),J(i),E(i),G(i),L(i));
+            
        end
        vxzl(:,i) = vxz(i,2:end);
        [cosalpha,sinalpha] = ejelocal(CX(i),CY(i),CZ(i),CXY(i),vxzl(:,i));
         %alpha = pi/4;
         % Transformation matrix 3D
         LT(:,:,i) = TransfM3Dframe(CX(i),CY(i),CZ(i),CXY(i),cosalpha,sinalpha);
-        % global stiffnes matrix of the elements  
-       kg(:,:,i) = LT(:,:,i)' * ke(:,:,i) * LT(:,:,i);
+        disp(size(LT));
+        disp(size(ke_AG));
+        % global stiffnes matrix of the elements
+       kg(:,:,i) = LT(:,:,i)' * ke_AG(:,:,i) * LT(:,:,i);
+        disp(size(kg));
         LV(:,i) = [ID(:,elements(i,2)); ID(:,elements(i,3))];
         indxLV = find(LV(:,i)>0);
         indxLVn = find(LV(:,i)<0);
