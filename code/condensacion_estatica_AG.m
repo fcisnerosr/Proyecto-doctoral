@@ -1,6 +1,6 @@
 %% Condensación estática
-function [KG_damaged_cond] = condensacion_estatica(KG_damaged)
-    n = length(KG_damaged);
+function [KG_AG_cond] = condensacion_estatica_AG(KG_AG,M_cond)
+    n = length(KG_AG);
     vector = 1:n;
     [order1, order2] = reorganizar_vector(vector);
     order2 = setdiff(order2, order1);
@@ -22,7 +22,7 @@ function [KG_damaged_cond] = condensacion_estatica(KG_damaged)
     P = P(order,:);
 
     % Reorganizar la matriz de rigidez
-    KG_reordered = P * KG_damaged * P';
+    KG_reordered = P * KG_AG * P';
         % Esta matriz tiene los grados traslacionales (X y Y) de cada nodo del marco 
         % y los grados rotacionales alrededor de Z, también de cada nodo en los primeros 12 filas y 12 columnas de la matriz.
 
@@ -36,5 +36,5 @@ function [KG_damaged_cond] = condensacion_estatica(KG_damaged)
     K_tr = KG_reordered(lim1+1:lim2*2,1:lim1);
     K_tt = KG_reordered(1:lim1,1:lim1);
 
-    KG_damaged_cond = K_tt - (K_tr' * (K_rr^-1) * K_tr); % Matriz condensada
+    KG_AG_cond = K_tt - (K_tr' * (K_rr^-1) * K_tr); % Matriz condensada
 end

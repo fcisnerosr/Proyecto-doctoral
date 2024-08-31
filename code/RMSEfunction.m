@@ -1,10 +1,14 @@
-function [SumRMSE] = RMSEfunction(x, k, M_global, frec_mod, modos_mod,...
+function [SumRMSE] = RMSEfunction(x, num_elements, M_cond, frec_cond_d,...
         L, ID, NE, elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G, ...
-        vxz, elem_con_dano_long_NE)
+        vxz, elem_con_dano_long_NE,...
+        modos_cond_d)
     % x: Vector de daños (longitud 348 = 3 propiedades * 116 elementos)
     % k: Matrices de rigidez originales
-    % M_global: Matriz de masa global
-    % frec_mod, modos_mod: Frecuencias y modos modales del modelo intacto
+    % M_cond: Matriz de masa global
+    % frec_cond_d, modos_mod: Frecuencias y modos modales del modelo intacto
+
+    w1 = 0.6;  % Peso al RMSE
+    w2 = 0.4;  % Peso al MACN
 
     % Recorre cada uno de los 116 elementos para aplicar el daño
     for i = 1:num_elements
@@ -54,23 +58,31 @@ function [SumRMSE] = RMSEfunction(x, k, M_global, frec_mod, modos_mod,...
         [KG_AG] = ensamblaje_matriz_rigidez_global_AG(ID, NE, ke_d_total,elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G, vxz, elem_con_dano_long_NE)
 
         % Condensación estática de matrices globales
-        [K_cond, M_cond] = condensacion_estatica(K_global, M_global);
-        [frec_ga, modos_ga] = eig(K_cond, M_cond);
+        [KG_AG_cond]                    = condensacion_estatica_AG(KG_AG, M_cond);
+        [frec_AG_cond, modos_AG_cond]   = eig(KG_AG_cond,M_cond);
     end
+    
+    % Funcion objetivo  
+    SumRMSEVal = 0;    
+    for i = 1:length(frec_AG)
+        SumRMSEVal = SumRMSEVal + (frec_AG(i,i) - frec_cond_d(i,i))^2;
+    end
+    RMSE = sqrt(SumRMSEVal / length(frec_AG));
 
-    % Calcular RMSE para comparar con los modos originales
-    SumRMSEVec = 0;
-    SumRMSEVal = 0;
+    % Calcular el MACN para formas modales
+     macn_value = 0;
+    for i = 1:size(modos_cond_d, 2)
+        num = (modos_cond_d(:,i)' * M * modos_AG_cond(:,i))^2;
+        den = (modos_cond_d(:,i)' * M * modos_cond_d(:,i)) * (modos_AG_cond(:,i)' * M * modos_AG_cond(:,i));
+        MAC_value = num / den;
+        macn_value = macn_value + sqrt((1 - MAC_value) / MAC_value);
+    end
+    macn_value = macn_value / size(modos_cond_d, 2);  % Promedio de MACN 
+   
+    % Combinar en una función objetivo ponderada
+    Objective = w1 * RMSE + w2 * (1 - macn_value);
 
-    for i = 1:num_elements
-        SumRMSEVal = SumRMSEVal + (1/frec_mod(i,i) - 1/frec_ga(i,i))^2;
-        for j = 1:num_elements
-            SumRMSEVec = SumRMSEVec + (modos_mod(i,j) - modos_ga(i,j))^2;
-        end
-    end    
-
-    % Combina los errores de frecuencia y modos
-    SumRMSE = 1e8 * (SumRMSEVal / num_elements)^0.5;
 end
 
 
+   
