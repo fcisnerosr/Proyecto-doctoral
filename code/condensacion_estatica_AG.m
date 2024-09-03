@@ -1,40 +1,102 @@
-%% Condensación estática
-function [KG_AG_cond] = condensacion_estatica_AG(KG_AG,M_cond)
-    n = length(KG_AG);
-    vector = 1:n;
-    [order1, order2] = reorganizar_vector(vector);
-    order2 = setdiff(order2, order1);
-    order  = horzcat(order1,order2);
-    % en el vector order se elige cómo irán organizados 
-    % las columnas para la reorganización de la matriz de rigidez
-    % el espacio en el vector "order" separa los grados que se van
-    % a condensar primero y después los GDL a considerar
-    % NOTA: Se conservan los grados traslacionales en X, Y y Z local y se condensan las rotaciones al rededor de cada eje local
-          % El resto de los GDL se van a condensar en la aplicación de la fórmula
+function [KG_AG_cond] = condensacion_estatica_AG(KG_AG)
+    % Este código asume que tienes una matriz de rigidez global KG_AG con 6 grados de libertad por nodo.
+    % Condensa los grados de libertad rotacionales (los últimos 3 por nodo) y conserva los traslacionales (los primeros 3).
+    
+    % Obtener el tamaño de la matriz de rigidez global
+    n = size(KG_AG, 1);
 
-    % Formula:
-    %     K_tt = K_tt - K_tr' * K_rr^-1 * K_rt
-    %                 t = traslación
-    %                 r = rotación
+    % Determinar la cantidad de nodos (cada nodo tiene 6 GDL)
+    num_nodos = n / 6;
 
-    % Matriz de permutación 
-    P = eye(length(order));
-    P = P(order,:);
+    % Crear los índices para los grados de libertad traslacionales y rotacionales
+    traslacionales = [];
+    rotacionales = [];
 
-    % Reorganizar la matriz de rigidez
-    KG_reordered = P * KG_AG * P';
-        % Esta matriz tiene los grados traslacionales (X y Y) de cada nodo del marco 
-        % y los grados rotacionales alrededor de Z, también de cada nodo en los primeros 12 filas y 12 columnas de la matriz.
+    for i = 1:num_nodos
+        % Grados de libertad traslacionales (1, 2, 3 para cada nodo)
+        traslacionales = [traslacionales, (i-1)*6 + (1:3)];
+        % Grados de libertad rotacionales (4, 5, 6 para cada nodo)
+        rotacionales = [rotacionales, (i-1)*6 + (4:6)];
+    end
 
-    % Discretización de la matriz global con los grados a conservar al inicio de los primeros 12 filas y columnas de la matriz
-    lim1 = 'length(order1)';
-    lim1 = eval(lim1);
-    lim2 = 'length(order2)';
-    lim2 = eval(lim2);
-    K_tt = KG_reordered(1:lim1,1:lim1);
-    K_rr = KG_reordered(lim1+1:lim2*2,lim1+1:lim2*2);
-    K_tr = KG_reordered(lim1+1:lim2*2,1:lim1);
-    K_tt = KG_reordered(1:lim1,1:lim1);
+    % Reorganizar la matriz de rigidez para separar traslacionales y rotacionales
+    order = [traslacionales, rotacionales];
+    KG_reordered = KG_AG(order, order);
 
-    KG_AG_cond = K_tt - (K_tr' * (K_rr^-1) * K_tr); % Matriz condensada
+    % Extraer submatrices correspondientes
+    K_tt = KG_reordered(1:length(traslacionales), 1:length(traslacionales));
+    K_rr = KG_reordered(length(traslacionales)+1:end, length(traslacionales)+1:end);
+    K_tr = KG_reordered(length(traslacionales)+1:end, 1:length(traslacionales));
+
+    % Verificar si la submatriz K_rr es invertible
+    if rcond(K_rr) < 1e-15
+        error('K_rr no es invertible, lo que podría estar causando valores NaN.');
+    end
+
+    % Realizar la condensación estática
+    KG_AG_cond = K_tt - K_tr' * (K_rr \ K_tr); % Matriz condensada
 end
+
+
+% %% Condensación estática
+% function [KG_AG_cond] = condensacion_estatica_AG(KG_AG)
+%     n = length(KG_AG);
+%     vector = 1:n;
+%     % Calcula la longitud del vector
+%     n = length(vector);
+% 
+%     % Calcula la cantidad de grupos de 6
+%     num_grupos = n / 6;
+% 
+%     % Inicializa los vectores order1 y order2
+%     order1 = [];
+%     order2 = [];
+% 
+%     % Recorre cada grupo de 6 elementos
+%     for i = 1:num_grupos
+%         % Agrega el primer, segundo, y tercer valor del grupo a order1
+%         order1 = [order1, vector((i-1)*6+1), vector((i-1)*6+2), vector((i-1)*6+3)];
+% 
+%         % Agrega los valores restantes del grupo a order2
+%         for j = 4:6
+%             order2 = [order2, vector((i-1)*6+j)];
+%         end
+%     end
+% 
+%     % Ordena los valores en order2 de menor a mayor
+%     order2 = sort(order2);
+%     order2 = setdiff(order2, order1);
+%     order  = horzcat(order1,order2);
+%     % en el vector order se elige cómo irán organizados 
+%     % las columnas para la reorganización de la matriz de rigidez
+%     % el espacio en el vector "order" separa los grados que se van
+%     % a condensar primero y después los GDL a considerar
+%     % NOTA: Se conservan los grados traslacionales en X, Y y Z local y se condensan las rotaciones al rededor de cada eje local
+%           % El resto de los GDL se van a condensar en la aplicación de la fórmula
+% 
+%     % Formula:
+%     %     K_tt = K_tt - K_tr' * K_rr^-1 * K_rt
+%     %                 t = traslación
+%     %                 r  rotación
+% 
+%     % Matriz de permutación 
+%     P = eye(length(order));
+%     P = P(order,:);
+% 
+%     % Reorganizar la matriz de rigidez
+%     KG_reordered = P * KG_AG * P';
+%         % Esta matriz tiene los grados traslacionales (X y Y) de cada nodo del marco 
+%         % y los grados rotacionales alrededor de Z, también de cada nodo en los primeros 12 filas y 12 columnas de la matriz.
+% 
+%     % Discretización de la matriz global con los grados a conservar al inicio de los primeros 12 filas y columnas de la matriz
+%     lim1 = 'length(order1)';
+%     lim1 = eval(lim1);
+%     lim2 = 'length(order2)';
+%     lim2 = eval(lim2);
+%     K_tt = KG_reordered(1:lim1,1:lim1);
+%     K_rr = KG_reordered(lim1+1:lim2*2,lim1+1:lim2*2);
+%     K_tr = KG_reordered(lim1+1:lim2*2,1:lim1);
+%     K_tt = KG_reordered(1:lim1,1:lim1);
+% 
+%     KG_AG_cond = K_tt - (K_tr' * (K_rr^-1) * K_tr); % Matriz condensada
+% end

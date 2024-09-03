@@ -179,14 +179,16 @@ num_element_sub = 116;
 long_x = 3 * num_element_sub; % = 348
 % 3 porque solamente se aplica dano al área y ambas inercias en x y en y
 % 116 porque se le aplica dano a los primeros 116 elementos de la subestructura % Configuraciones básicas del AG
-Samples     = 1000;
-Generations = 500;
+Samples     = 150;
+Generations = 75;
 Nvar        = long_x;        % numero de variables que va a tener la variable de dano x. Son 116 elementos de la subestructura * 3 variables de dano de la corrosion = long_x
 options                 = gaoptimset(@ga);          % gaoptimset es para crear las configuraciones específicas para el AG
 options.PopulationSize  = Samples;
 options.Generations     = Generations;
 options.StallGenLimit   = 50;          % límite de generaciones en donde los individuos no cumplen con la función objetivo
 options.Display         = 'iter';                         % Muestra la información en cada iteración
+options.OutputFcn       = @gaoutfun;  % Añade la función de salida para mostrar el tiempo transcurrido
+
 % Configuraciones específicas del AG
 % Este bloque de código configura funciones específicas que controlan el comportamiento de varios procesos dentro del Algoritmo Genético (GA) en MATLAB. Cada opción define una función que el GA utilizará para diferentes aspectos del proceso de evolución, como la creación de la población inicial, la selección de individuos, la mutación, y si se debe usar o no procesamiento paralelo.
 % el @ le dice al campo de options que haga uso de la función después de @
@@ -198,7 +200,7 @@ options.MutationFcn         = @mutationadaptfeasible;     % Configura cómo se l
 % Cómo Funciona: Durante la mutación, una pequena parte del código genético (representado por el vector x en tu caso) de un individuo se altera al azar. Esta alteración puede ser un cambio pequeno en el valor de una variable o un ajuste más significativo, dependiendo de cómo esté definida la función de mutación.
 options.UseParallel = 'always';
 % Graficas de monitoreo para ver el estado del AG durante todo su proceso
-options = gaoptimset('PlotFcn', {@gaplotbestf, @gaplotbestindiv, @gaplotdistance, @gaplotrange, @gaplotstopping});
+% options = gaoptimset('PlotFcn', {@gaplotbestf, @gaplotbestindiv, @gaplotdistance, @gaplotrange, @gaplotstopping});
 % @gaplotbestf: Mejores valores de función
 % @gaplotbestindiv: Valores del mejor individuo por generación
 % @gaplotdistance: Distancia entre individuos en las soluciones de busqueda
@@ -207,7 +209,7 @@ options = gaoptimset('PlotFcn', {@gaplotbestf, @gaplotbestindiv, @gaplotdistance
 
 % Definir los límites de daño
 LowerLim = 0.0;       % Daño mínimo permitido: 0%
-UpperLim = 0.50;      % Daño máximo permitido: 50%
+UpperLim = 0.60;      % Daño máximo permitido: 50%
 
 LB = zeros(long_x, 1);   % Todos los valores se inicializan con 0 (sin daño mínimo)
 UB = UpperLim * ones(long_x, 1);   % Todos los valores se inicializan con 0.50 (daño máximo permitido)
@@ -217,15 +219,29 @@ CWFile='CWFOutput1.txt';    % Nombre del archivo donde irán registrándose los 
 diary (CWFile);             % Abre el archivo de salida para que todas las salidas en la consola de MATLAB se registren en este archivo
 
 % Proceso en paralelo
-parpool('Processes', 6)     %  configura MATLAB para ejecutar la optimización del Algoritmo Genético utilizando 6 núcleos de CPU en paralelo, lo que puede acelerar significativamente el proceso al permitir la evaluación simultánea de múltiples individuos en cada generación
+parpool('Processes', 6, 'IdleTimeout', 240);  % Configura 240 minutos (4hrs) de inactividad antes de apagarse
 % En mi CPU se pueden 6 como máximo, para saber cuántos puede cada usaurio ejecutar en el command window lo siguiente:
 % numCores = feature('numcores');
 % disp(['Número de núcleos: ', num2str(numCores)]);
 % La siguiente linea se a cabo el proceso del ga
+tic;
 [x,fval,exitflag,output,population,scores] = ga(@(x)RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
         L, ID, NE, elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G, ...
         vxz, elem_con_dano_long_NE,...
         modos_cond_d),Nvar,[],[],[],[],LB,UB,[],options);
+toc;
+
+function [state,options,optchanged] = gaoutfun(options,state,flag)
+    optchanged = false;
+
+    switch flag
+        case 'iter'
+            elapsedTime = toc; % Calcula el tiempo transcurrido desde el inicio del AG
+            fprintf('Tiempo transcurrido: %.2f segundos\n', elapsedTime);
+            tic; % Reinicia el temporizador para la próxima iteración
+    end
+end
+
 
 % Datos de salida de la funcion ga (Algoritmo Genético de MATLAB):
 % fval: Valor mínimo de la función objetivo (RMSE) alcanzado durante la optimización.
@@ -238,7 +254,7 @@ parpool('Processes', 6)     %  configura MATLAB para ejecutar la optimización d
 %     Variables de Optimización: Nvar define el número de variables que se optimizan.
 %     Límites: LB y UB+ son los límites inferiores y superiores para las variables de optimización, definidos previamente.
     % Opciones: options incluye todas las configuraciones del AG como el tamaño de la población, número de generaciones, funciones de selección, etc.
-delete(gcp('nocreate'));    % Cierra el procesamiento paralelo
+% delete(gcp('nocreate'));    % Cierra el procesamiento paralelo
 %
 % % Función Condensación estática
     % KG_damaged_cond   = condensacion_estatica(KG_damaged);
