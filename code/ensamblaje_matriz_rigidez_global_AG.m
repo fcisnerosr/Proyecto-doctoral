@@ -1,9 +1,8 @@
 function [KG_AG] = ensamblaje_matriz_rigidez_global_AG(num_element_sub,ke_AG,ID, NE, elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G, vxz, elem_con_dano_long_NE)
 % KG del AG
-    KG   = zeros(IDmax,IDmax);
-    KGtu = zeros(IDmax,NEn);
-    ke_AG = zeros(12, 12, NE); 
-
+    KG      = zeros(IDmax,IDmax);
+    KGtu    = zeros(IDmax,NEn);
+    ke      = zeros(12, 12, NE); % matriz local en ceros de todos los elementos tubulares (incluyendo superestructura)
     for i = 1:NE
         KGf     = zeros(IDmax,IDmax);
         KGtuf   = zeros(IDmax,NEn);
@@ -18,16 +17,19 @@ function [KG_AG] = ensamblaje_matriz_rigidez_global_AG(num_element_sub,ke_AG,ID,
         CXY(i)= sqrt(CX(i)^2 + CY(i)^2);
         locdam  = find(damele == i,1);
         locdent = find(eledent==i,1);
-        if isempty(locdam) && isempty(locdent)
-            % local stiffness matrix of the elements
-            ke_AG(:,:,i) = localkeframe3D(A(i),Iy(i),Iz(i),J(i),E(i),G(i),L(i));
+        if i > num_element_sub
+            ke(:,:,i) = localkeframe3D(A(i),Iy(i),Iz(i),J(i),E(i),G(i),L(i)); % matriz de rigidez 
+            fprintf('numero de elemento %d, en super-estructura\n',i)
+        else
+            ke(:,:,i) = ke_AG
+            fprintf('numero de elemento %d, en sub-estructura\n',i)
         end
         vxzl(:,i) = vxz(i,2:end);
         [cosalpha,sinalpha] = ejelocal(CX(i),CY(i),CZ(i),CXY(i),vxzl(:,i));
         % Transformation matrix 3D
         LT(:,:,i) = TransfM3Dframe(CX(i),CY(i),CZ(i),CXY(i),cosalpha,sinalpha);
         % global stiffnes matrix of the elements
-        kg(:,:,i) = LT(:,:,i)' * ke_AG(:,:,i) * LT(:,:,i);
+        kg(:,:,i) = LT(:,:,i)' * ke(:,:,i) * LT(:,:,i);
         LV(:,i) = [ID(:,elements(i,2)); ID(:,elements(i,3))];
         indxLV = find(LV(:,i)>0);
         indxLVn = find(LV(:,i)<0);

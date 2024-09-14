@@ -35,8 +35,7 @@ function ke = localkeframe3D(A,Iy,Iz,J,E,G,L)
     ke(8,6)     = (-6*E*Iz)/L^2;
     ke(12,6)    = (2*E*Iz)/L;
     ke(12,8)    = (-6*E*Iz)/L^2;
-    ke(11,9)    = (6*E*Iy)/L^2;
-    
+    ke(11,9)    = (6*E*Iy)/L^2;    
     
     keT = ke';
     kediag = diag(diag(ke));

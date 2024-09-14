@@ -2,6 +2,7 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
     L, ID, NE, elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G, ...
     vxz, elem_con_dano_long_NE,...
     modos_cond_d)
+    x
     % Inicializa la variable objetivo
     Objetivo  = 0;
     
@@ -26,7 +27,7 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
         % Aplica daño por corrosión
         A_damaged  = A_sub(i)  * (1 - x(3*i - 2));  
         Iy_damaged = Iy_sub(i) * (1 - x(3*i - 1));  
-        Iz_damaged = Iz_sub(i) * (1 - x(3*i));  
+        Iz_damaged = Iz_sub(i) * (1 - x(3*i)); 
         
         % Modifica los términos afectados en la matriz de rigidez local
         ke_AG(1, 1) =  E_sub(i) * A_damaged / L_sub(i);  
@@ -76,7 +77,7 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
     KG_AG_cond              = condensacion_estatica_AG(KG_AG);
     [modos_AG_cond,frec_AG] = modos_frecuencias_AG(KG_AG_cond,M_cond);
     
-    % Funcion objetivo
+    % RMSE y MACN (MAC Normalizado)
     SumRMSEVal = 0;
     for i = 1:length(frec_AG)
         SumRMSEVal = SumRMSEVal + (frec_AG(i) - frec_cond_d(i))^2;
@@ -86,8 +87,8 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
     % Calcular el MACN para formas modales
     macn_value = 0;
     for i = 1:size(modos_cond_d, 2)
-        num = (modos_cond_d(:,i)' * M_cond * modos_AG_cond(:,i))^2;
-        den = (modos_cond_d(:,i)' * M_cond * modos_cond_d(:,i)) * (modos_AG_cond(:,i)' * M_cond * modos_AG_cond(:,i));
+        num = (modos_cond_d(:,i)' * modos_AG_cond(:,i))^2;
+        den = (modos_cond_d(:,i)' * modos_cond_d(:,i)) * (modos_AG_cond(:,i)' * modos_AG_cond(:,i));
         MAC_value = num / den;
         macn_value = macn_value + sqrt((1 - MAC_value) / MAC_value);
     end
