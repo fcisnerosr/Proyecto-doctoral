@@ -30,48 +30,61 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
         Iz_damaged = Iz_sub(i) * (1 - x(3*i)); 
         
         % Modifica los términos afectados en la matriz de rigidez local
-        ke_AG(1, 1) =  E_sub(i) * A_damaged / L_sub(i);  
-        ke_AG(1, 7) = -E_sub(i) * A_damaged / L_sub(i);  
-        ke_AG(7, 1) = -E_sub(i) * A_damaged / L_sub(i);  
-        ke_AG(7, 7) =  E_sub(i) * A_damaged / L_sub(i);  
+        ke_AG(1, 1) =  E_sub(i) * A_damaged / L_sub(i);
+        ke_AG(1, 7) = -E_sub(i) * A_damaged / L_sub(i);
+        ke_AG(7, 1) = -E_sub(i) * A_damaged / L_sub(i);
+        ke_AG(7, 7) =  E_sub(i) * A_damaged / L_sub(i);
         
         % Modificar los términos relacionados con la inercia Iy
-        ke_AG(2, 2) =  12 * E_sub(i) * Iy_damaged / L_sub(i)^3;  
-        ke_AG(8, 8) =  12 * E_sub(i) * Iy_damaged / L_sub(i)^3;  
-        ke_AG(2, 8) = -12 * E_sub(i) * Iy_damaged / L_sub(i)^3;
-        ke_AG(8, 2) = -12 * E_sub(i) * Iy_damaged / L_sub(i)^3;
-        
-        ke_AG(5, 5)   = 4 * E_sub(i) * Iy_damaged / L_sub(i);   
+        ke_AG(2, 2) =  12 * E_sub(i) * Iy_damaged / L_sub(i)^3;
+        ke_AG(8, 8) =  12 * E_sub(i) * Iy_damaged / L_sub(i)^3;
+        ke_AG(2, 8) = -12 * E_sub(i) * Iy_damaged / L_sub(i)^3; % revisar
+        ke_AG(8, 2) = -12 * E_sub(i) * Iy_damaged / L_sub(i)^3; % revisar
+        ke_AG(5, 5)   = 4 * E_sub(i) * Iy_damaged / L_sub(i);
         ke_AG(11, 11) = 4 * E_sub(i) * Iy_damaged / L_sub(i);
-        
-        ke_AG(5, 3)  = -6 * E_sub(i) * Iy_damaged / L_sub(i)^2;  
-        ke_AG(9, 3)  =  6 * E_sub(i) * Iy_damaged / L_sub(i)^2;   
+        ke_AG(5, 3)  = -6 * E_sub(i) * Iy_damaged / L_sub(i)^2;
         ke_AG(11, 3) = -6 * E_sub(i) * Iy_damaged / L_sub(i)^2;
-        ke_AG(5, 9)  =  6 * E_sub(i) * Iy_damaged / L_sub(i)^2;
-        
+        ke_AG(5, 9)  =  6 * E_sub(i) * Iy_damaged / L_sub(i)^2; % revisar
+        ke_AG(3, 5)  = -6 * E_sub(i) * Iy_damaged / L_sub(i)^2;
+        ke_AG(5, 9)  =  6 * E_sub(i) * Iy_damaged / L_sub(i)^2; % revisar
+        ke_AG(9, 5)  = -6 * E_sub(i) * Iy_damaged / L_sub(i)^2;
+        ke_AG(5, 9)  =  6 * E_sub(i) * Iy_damaged / L_sub(i)^2; % revisar
+        ke_AG(11,5)  =  2 * E_sub(i) * Iy_damaged / L_sub(i); % revisar
+        ke_AG(2, 6)  =  6 * E_sub(i) * Iy_damaged / L_sub(i)^2; % revisar
+        ke_AG(5, 9)  =  6 * E_sub(i) * Iy_damaged / L_sub(i)^2; % revisar
+
         % Modificar los términos relacionados con la inercia Iz
-        ke_AG(3, 3) =  12 * E_sub(i) * Iz_damaged / L_sub(i)^3;  
-        ke_AG(9, 9) =  12 * E_sub(i) * Iz_damaged / L_sub(i)^3;  
-        ke_AG(3, 9) = -12 * E_sub(i) * Iz_damaged / L_sub(i)^3;
-        ke_AG(9, 3) = -12 * E_sub(i) * Iz_damaged / L_sub(i)^3;
-        
-        ke_AG(6, 6)   = 4 * E_sub(i) * Iz_damaged / L_sub(i);   
+        ke_AG(3, 3) =  12 * E_sub(i) * Iz_damaged / L_sub(i)^3;
+        ke_AG(9, 9) =  12 * E_sub(i) * Iz_damaged / L_sub(i)^3;
+        ke_AG(3, 9) = -12 * E_sub(i) * Iz_damaged / L_sub(i)^3; % revisar
+        ke_AG(9, 3) = -12 * E_sub(i) * Iz_damaged / L_sub(i)^3; % revisar
+        ke_AG(6, 6)   = 4 * E_sub(i) * Iz_damaged / L_sub(i);
         ke_AG(12, 12) = 4 * E_sub(i) * Iz_damaged / L_sub(i);
-        
         ke_AG(6, 2)  =  6 * E_sub(i) * Iz_damaged / L_sub(i)^2;
-        ke_AG(12, 2) = -6 * E_sub(i) * Iz_damaged / L_sub(i)^2;
-        ke_AG(6, 8)  =  6 * E_sub(i) * Iz_damaged / L_sub(i)^2;
+        ke_AG(12, 2) = -6 * E_sub(i) * Iz_damaged / L_sub(i)^2; % revisar
+        ke_AG(6, 8)  =  6 * E_sub(i) * Iz_damaged / L_sub(i)^2; % revisar
         ke_AG(12, 8) = -6 * E_sub(i) * Iz_damaged / L_sub(i)^2;
-        
+        ke_AG(12, 8) = -6 * E_sub(i) * Iz_damaged / L_sub(i)^2;
+        ke_AG(12, 8) = -6 * E_sub(i) * Iz_damaged / L_sub(i)^2;
+        ke_AG(12, 8) = -6 * E_sub(i) * Iz_damaged / L_sub(i)^2;
+        ke_AG(12, 8) = -6 * E_sub(i) * Iz_damaged / L_sub(i)^2;
+        ke_AG(12, 8) = -6 * E_sub(i) * Iz_damaged / L_sub(i)^2;
+        ke_AG(12, 8) = -6 * E_sub(i) * Iz_damaged / L_sub(i)^2;
+
         % Valores de torsion que no se alteran
         ke_AG(4,4)     = (G_sub(i)*J_sub(i))/L_sub(i);
         ke_AG(10,10)   = (G_sub(i)*J_sub(i))/L_sub(i);
         ke_AG(10,4)    = (-G_sub(i)*J_sub(i))/L_sub(i);
         ke_AG(4,10)    = (-G_sub(i)*J_sub(i))/L_sub(i);
+
+        
+
+
+
         
         % Reensamblar la matriz global de rigidez
         [KG_AG] = ensamblaje_matriz_rigidez_global_AG(num_element_sub,ke_AG,ID, NE, elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G, vxz, elem_con_dano_long_NE);
-    end
+   end
     
     % Condensación estática de matrices globales
     KG_AG_cond              = condensacion_estatica_AG(KG_AG);
