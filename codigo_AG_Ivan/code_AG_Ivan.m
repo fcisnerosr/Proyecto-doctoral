@@ -84,7 +84,7 @@ options.MutationFcn         = @mutationadaptfeasible;     % Configura cómo se l
 % Cómo Funciona: Durante la mutación, una pequeña parte del código genético (representado por el vector x en tu caso) de un individuo se altera al azar. Esta alteración puede ser un cambio pequeño en el valor de una variable o un ajuste más significativo, dependiendo de cómo esté definida la función de mutación.
 options.UseParallel='always';
 % Graficas de monitoreo para ver el estado del AG durante todo su proceso
-options = gaoptimset('PlotFcn', {@gaplotbestf, @gaplotbestindiv, @gaplotdistance, @gaplotrange, @gaplotstopping});
+% options = gaoptimset('PlotFcn', {@gaplotbestf, @gaplotbestindiv, @gaplotdistance, @gaplotrange, @gaplotstopping});
 % @gaplotbestf: Mejores valores de función
 % @gaplotbestindiv: Valores del mejor individuo por generación
 % @gaplotdistance: Distancia entre individuos en las soluciones de busqueda
