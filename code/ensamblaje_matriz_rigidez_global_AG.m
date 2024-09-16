@@ -3,39 +3,41 @@ function [KG_AG] = ensamblaje_matriz_rigidez_global_AG(num_element_sub,ke_AG,ID,
     KG      = zeros(IDmax,IDmax);
     KGtu    = zeros(IDmax,NEn);
     ke      = zeros(12, 12, NE); % matriz local en ceros de todos los elementos tubulares (incluyendo superestructura)
-    for i = 1:NE
+    for j = 1:NE
         KGf     = zeros(IDmax,IDmax);
         KGtuf   = zeros(IDmax,NEn);
         % Length of the elements
-        L(i) = sqrt((nodes(elements(i,2),2)-nodes(elements(i,3),2))^2 + ...
-               (nodes(elements(i,2),3)-nodes(elements(i,3),3))^2 + ...
-               (nodes(elements(i,2),4)-nodes(elements(i,3),4))^2);
+        L(j) = sqrt((nodes(elements(j,2),2)-nodes(elements(j,3),2))^2 + ...
+               (nodes(elements(j,2),3)-nodes(elements(j,3),3))^2 + ...
+               (nodes(elements(j,2),4)-nodes(elements(j,3),4))^2);
         
-        CZ(i) = (nodes(elements(i,3),4)-nodes(elements(i,2),4))/L(i);
-        CY(i) = (nodes(elements(i,3),3)-nodes(elements(i,2),3))/L(i);
-        CX(i) = (nodes(elements(i,3),2)-nodes(elements(i,2),2))/L(i);
-        CXY(i)= sqrt(CX(i)^2 + CY(i)^2);
-        locdam  = find(damele == i,1);
-        locdent = find(eledent==i,1);
-        if i > num_element_sub
-            ke(:,:,i) = localkeframe3D(A(i),Iy(i),Iz(i),J(i),E(i),G(i),L(i)); % matriz de rigidez 
-            fprintf('numero de elemento %d, en super-estructura\n',i)
+        CZ(j) = (nodes(elements(j,3),4)-nodes(elements(j,2),4))/L(j);
+        CY(j) = (nodes(elements(j,3),3)-nodes(elements(j,2),3))/L(j);
+        CX(j) = (nodes(elements(j,3),2)-nodes(elements(j,2),2))/L(j);
+        CXY(j)= sqrt(CX(j)^2 + CY(j)^2);
+        locdam  = find(damele == j,1);
+        locdent = find(eledent==j,1);
+        if j > num_element_sub
+            j
+            ke(:,:,j) = localkeframe3D(A(j),Iy(j),Iz(j),J(j),E(j),G(j),L(j)); % matriz de rigidez 
+            fprintf('numero de elemento %d, en super-estructura\n',j)
         else
-            ke(:,:,i) = ke_AG
-            fprintf('numero de elemento %d, en sub-estructura\n',i)
+            j
+            ke(:,:,j) = ke_AG
+            fprintf('numero de elemento %d, en sub-estructura\n',j)
         end
-        vxzl(:,i) = vxz(i,2:end);
-        [cosalpha,sinalpha] = ejelocal(CX(i),CY(i),CZ(i),CXY(i),vxzl(:,i));
+        vxzl(:,j) = vxz(j,2:end);
+        [cosalpha,sinalpha] = ejelocal(CX(j),CY(j),CZ(j),CXY(j),vxzl(:,j));
         % Transformation matrix 3D
-        LT(:,:,i) = TransfM3Dframe(CX(i),CY(i),CZ(i),CXY(i),cosalpha,sinalpha);
+        LT(:,:,j) = TransfM3Dframe(CX(j),CY(j),CZ(j),CXY(j),cosalpha,sinalpha);
         % global stiffnes matrix of the elements
-        kg(:,:,i) = LT(:,:,i)' * ke(:,:,i) * LT(:,:,i);
-        LV(:,i) = [ID(:,elements(i,2)); ID(:,elements(i,3))];
-        indxLV = find(LV(:,i)>0);
-        indxLVn = find(LV(:,i)<0);
+        kg(:,:,j) = LT(:,:,j)' * ke(:,:,j) * LT(:,:,j);
+        LV(:,j) = [ID(:,elements(j,2)); ID(:,elements(j,3))];
+        indxLV = find(LV(:,j)>0);
+        indxLVn = find(LV(:,j)<0);
         % assamblage general stiffness matrix
-        KGf(LV(indxLV,i),LV(indxLV,i)) = kg(indxLV,indxLV,i); 
-        KGtuf(LV(indxLV,i),LV(indxLVn,i) * (-1)-IDmax) = kg(indxLV,indxLVn,i);
+        KGf(LV(indxLV,j),LV(indxLV,j)) = kg(indxLV,indxLV,j); 
+        KGtuf(LV(indxLV,j),LV(indxLVn,j) * (-1)-IDmax) = kg(indxLV,indxLVn,j);
         KG = KGf + KG;
         % stiffness matrix for reactions
         KGtu = KGtuf + KGtu;
