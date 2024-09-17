@@ -220,8 +220,8 @@ LB = zeros(long_x, 1);   % Todos los valores se inicializan con 0 (sin daño mí
 UB = UpperLim * ones(long_x, 1);   % Todos los valores se inicializan con 0.50 (daño máximo permitido)
 
 % Escritura de registros del AG
-CWFile='CWFOutput1.txt';    % Nombre del archivo donde irán registrándose los resultados del AG
-diary (CWFile);             % Abre el archivo de salida para que todas las salidas en la consola de MATLAB se registren en este archivo
+% CWFile='CWFOutput1.txt';    % Nombre del archivo donde irán registrándose los resultados del AG
+% diary (CWFile);             % Abre el archivo de salida para que todas las salidas en la consola de MATLAB se registren en este archivo
 
 % Proceso en paralelo
 parpool('Processes', 6, 'IdleTimeout', 6000);  % Configura n minutos de inactividad antes de apagarse
