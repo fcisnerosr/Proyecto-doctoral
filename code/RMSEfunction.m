@@ -28,7 +28,7 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
         A_damaged  = A_sub(i)  * (1 - x(3*i - 2));  
         Iy_damaged = Iy_sub(i) * (1 - x(3*i - 1));  
         Iz_damaged = Iz_sub(i) * (1 - x(3*i)); 
-        
+
         % Modifica los términos afectados en la matriz de rigidez local
         % Elementos de la diagonal principal
         ke_AG(1, 1)  =  E_sub(i) * A_damaged / L_sub(i);
@@ -61,13 +61,18 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
         ke_AG(11, 9) = (6 * E_sub(i) * Iy_damaged) / L_sub(i)^2;
         
         % Las siguientes lineas acompleta el resto de la matriz de rigidez a fin de que quede simetrica
+        
         keT = ke_AG';
         kediag = diag(diag(ke_AG));
         ke_AG = ke_AG + keT - kediag;
+       
         ke_AG_tensor(:,:,i) = ke_AG;
+        
    end
-    
-   % Reensamblar la matriz global de rigidez con daño del AG
+
+
+    % [KG_AG] = ensamblaje_matriz_rigidez_global_AG(num_element_sub,ke_AG,ID, NE, elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G, vxz, elem_con_dano_long_NE)
+       % Reensamblar la matriz global de rigidez con daño del AG
     KG   = zeros(IDmax,IDmax);
     KGtu = zeros(IDmax,NEn);
      for j = 1:NE
@@ -87,8 +92,7 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
         if isempty(locdam) && isempty(locdent)   
             if j < num_element_sub
                 ke(:,:,j) = ke_AG_tensor(:,:,j);
-                % fprintf('numero de elemento %d, en sub-estructura\n',j);
-                
+                % fprintf('numero de elemento %d, en sub-estructura\n',j);                
             else
                 ke(:,:,j) = localkeframe3D(A(j),Iy(j),Iz(j),J(j),E(j),G(j),L(j)); % matriz de rigidez
                 % fprintf('numero de elemento %d, en super-estructura\n',j);
@@ -100,6 +104,15 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
         LT(:,:,j) = TransfM3Dframe(CX(j),CY(j),CZ(j),CXY(j),cosalpha,sinalpha);
         % global stiffnes matrix of the elements
         kg(:,:,j) = LT(:,:,j)' * ke(:,:,j) * LT(:,:,j);
+        if issymmetric(kg(:,:,j))
+            j
+            kg(:,:,j)
+            disp('La matriz es simétrica.');            
+        else
+            j
+            kg(:,:,j)
+            disp('La matriz no es simétrica.');
+        end
         LV(:,j) = [ID(:,elements(j,2)); ID(:,elements(j,3))];
         indxLV = find(LV(:,j)>0);
         indxLVn = find(LV(:,j)<0);
@@ -111,17 +124,14 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
         KGtu = KGtuf + KGtu;
         clear KGf;
         clear KGtuf;
-    end
-
+        
     KG_AG = KG;
+    end   
 
     % Condensación estática de matrices globales
     KG_AG_cond              = condensacion_estatica_AG(KG_AG);
     [modos_AG_cond,frec_AG] = modos_frecuencias_AG(KG_AG_cond,M_cond);
-    % Extraer la parte real de los modos y frecuencias
-    modos_AG_cond = real(modos_AG_cond);
-    frec_AG = real(frec_AG);
-    % RMSE y MACN (MAC Normalizado)
+    
     SumRMSEVal = 0;
     for i = 1:length(frec_AG)
         SumRMSEVal = SumRMSEVal + (frec_AG(i) - frec_cond_d(i))^2;

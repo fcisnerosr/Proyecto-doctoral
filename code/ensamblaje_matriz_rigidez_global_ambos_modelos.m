@@ -8,6 +8,7 @@ function [KG_damaged, KG_undamaged,L] = ensamblaje_matriz_rigidez_global_ambos_m
     KGtu=zeros(IDmax,NEn);
     cont = 1;   % contador para iterar sobre ke_d_total
     for i = 1:NE
+        i
          KGf     = zeros(IDmax,IDmax);
          KGtuf   = zeros(IDmax,NEn);
          % Length of the elements
@@ -54,6 +55,13 @@ function [KG_damaged, KG_undamaged,L] = ensamblaje_matriz_rigidez_global_ambos_m
          LT(:,:,i) = TransfM3Dframe(CX(i),CY(i),CZ(i),CXY(i),cosalpha,sinalpha);
          % global stiffnes matrix of the elements  
          kg(:,:,i) = LT(:,:,i)' * ke(:,:,i) * LT(:,:,i);
+        if issymmetric(kg(:,:,i))
+            i
+            disp('La matriz es simétrica.');            
+        else
+            i
+            disp('La matriz no es simétrica.');
+        end
          LV(:,i) = [ID(:,elements(i,2)); ID(:,elements(i,3))];
          indxLV = find(LV(:,i)>0);
          indxLVn = find(LV(:,i)<0);
