@@ -30,9 +30,11 @@ function [KG_AG] = ensamblaje_matriz_rigidez_global_AG(num_element_sub,ke_AG,ID,
         vxzl(:,j) = vxz(j,2:end);
         [cosalpha,sinalpha] = ejelocal(CX(j),CY(j),CZ(j),CXY(j),vxzl(:,j));
         % Transformation matrix 3D
-        LT(:,:,j) = TransfM3Dframe(CX(j),CY(j),CZ(j),CXY(j),cosalpha,sinalpha);
+        [T_gamma, T_beta] = TransfM3Dframe(CX, CY, CZ, CXY, cosalpha, sinalpha);
         % global stiffnes matrix of the elements
-        kg(:,:,j) = LT(:,:,j)' * ke(:,:,j) * LT(:,:,j);
+        Gamma = T_gamma * T_beta;   
+        kg(:,:,j) = Gamma' * ke(:,:,j) * Gamma;
+
         LV(:,j) = [ID(:,elements(j,2)); ID(:,elements(j,3))];
         indxLV = find(LV(:,j)>0);
         indxLVn = find(LV(:,j)<0);

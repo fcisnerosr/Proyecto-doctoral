@@ -1,0 +1,102 @@
+% local axes orientation
+% Done by Rolando Salgado Estrada
+% Assistant Professor at Faculty of Engineering of Construction and
+% Habitat of Universidad Veracruzana Campus Veracruz
+% 1st version 30th October 2020
+
+function [cosalpha, sinalpha] = ejelocal(CX, CY, CZ, CXY, vxz_user)
+
+    % Definimos el eje X local del elemento a partir de los cosenos directores
+    local_x = [CX, CY, CZ];
+
+    % Si el elemento es diagonal, calculamos vxz_user dinámicamente
+    if abs(CX) > 0.1 && abs(CY) > 0.1 && abs(CZ) > 0.1  % Condición para detectar un elemento diagonal
+        % Calculamos vxz_user dinámicamente para los elementos diagonales
+        % Creamos un vector que sea ortogonal a local_x
+        temp_vz = [1, 0, 0];  % Vector auxiliar inicial (lo ajustamos más adelante)
+        if dot(temp_vz, local_x) == 1  % Si están alineados, cambiamos el vector
+            temp_vz = [0, 1, 0];
+        end
+        vxz_user_temp = cross(temp_vz, local_x);  % Producto cruzado para obtener un vector ortogonal
+        vxz_user = vxz_user_temp / norm(vxz_user_temp);  % Normalizamos el vector
+
+    end
+
+    % Determinamos la orientación predeterminada para el eje Z local
+    % Si el elemento es casi vertical (CXY muy pequeño), usamos una orientación por defecto
+    if CXY < 1e-3
+        default_z = [-1, 0, 0];  % Eje Z local predeterminado para elementos verticales
+    else
+        default_z = [0, 0, 1];   % Eje Z local predeterminado para elementos horizontales o inclinados
+    end
+
+    % Cálculo del eje Y local provisional usando la orientación predeterminada
+    default_y_temp = cross(default_z, local_x);  % Producto cruzado entre el eje Z predeterminado y el eje X local
+    default_y = default_y_temp / norm(default_y_temp);  % Normalización para obtener un vector unitario
+
+    % Cálculo del eje Z local provisional usando la orientación predeterminada
+    default_z_temp = cross(local_x, default_y);  % Producto cruzado entre el eje X local y el eje Y local
+    default_z = default_z_temp / norm(default_z_temp);  % Normalización para obtener un vector unitario
+
+    % Parte del "usuario" (orientación proporcionada por el usuario)
+    % Cálculo del eje Y local basado en la orientación del usuario
+    user_y_temp = cross(vxz_user, local_x);  % Producto cruzado entre el vector proporcionado por el usuario y el eje X local
+    user_y = user_y_temp / norm(user_y_temp);  % Normalización para obtener un vector unitario
+
+    % Cálculo del eje Z local basado en la orientación del usuario
+    user_z_temp = cross(local_x, user_y);  % Producto cruzado entre el eje X local y el eje Y definido por el usuario
+    user_z = user_z_temp / norm(user_z_temp);  % Normalización para obtener un vector unitario
+
+    % Cálculo del ángulo entre el eje Y predeterminado y el eje Y proporcionado por el usuario
+    cosalpha = round(dot(user_y, default_y));  % Producto punto entre los ejes Y para obtener el coseno del ángulo alpha
+    alpha = acos(cosalpha);  % Cálculo del ángulo alpha a partir del coseno
+
+    % Cálculo del seno del ángulo alpha
+    if cosalpha == 0
+        sinalpha = sum(cross(user_y, default_y));  % Producto cruzado si el coseno es cero (ángulo de 90 grados)
+    else
+        sinalpha = sin(alpha);  % Usamos el valor de sin(alpha) directamente
+    end
+    vxz_user
+    user_y
+    user_z
+    alpha
+    cosalpha
+    sinalpha
+
+end
+
+
+% function [cosalpha,sinalpha] = ejelocal(CX,CY,CZ,CXY,vxzuser)
+%     vxzuser
+%     % default orientation
+%     if CXY < 1e-3
+%         vxzdef = [-1,0,0];
+%     else
+%         vxzdef = [0,0,1];
+%     end
+% 
+%     vxl     = [CX,CY,CZ]
+%     vydef1  = cross(vxzdef,vxl);
+%     vydef   = vydef1/norm(vydef1);
+%     vzdef1  = cross(vxl,vydef);
+%     vzdef   = vzdef1/norm(vzdef1);
+%     %user orientation
+%     vyuser1 = cross(vxzuser,vxl);
+%     vyuser  = vyuser1/norm(vyuser1);
+% 
+%     vzuser1 = cross(vxl,vyuser);
+%     vzuser  = vzuser1/norm(vzuser1),
+% 
+%     % cosalpha = round(dot(vyuser,vydef),5);
+%     cosalpha = round(dot(vyuser,vydef));
+%     alpha    = acos(cosalpha);
+%     if cosalpha == 0
+%         sinalpha = sum(cross(vyuser,vydef));
+%     else
+%        sinalpha = sin(alpha);
+%     end
+% 
+% end
+% 
+% 
