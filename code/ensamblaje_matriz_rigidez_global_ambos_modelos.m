@@ -11,24 +11,37 @@ function [KG_damaged, KG_undamaged,L] = ensamblaje_matriz_rigidez_global_ambos_m
     % for i = 1:1
         KGf     = zeros(IDmax,IDmax);
         KGtuf   = zeros(IDmax,NEn);
-        % Length of the elements
-        L(i) = sqrt((nodes(elements(i,2),2)-nodes(elements(i,3),2))^2 + ...
-               (nodes(elements(i,2),3)-nodes(elements(i,3),3))^2 + ...
-               (nodes(elements(i,2),4)-nodes(elements(i,3),4))^2);
-    
-        % Definir las variables como simbólicas
-        CZ_sym = sym((nodes(elements(i,3),4) - nodes(elements(i,2),4)) / L(i));
-        CY_sym = sym((nodes(elements(i,3),3) - nodes(elements(i,2),3)) / L(i));
-        CX_sym = sym((nodes(elements(i,3),2) - nodes(elements(i,2),2)) / L(i));
+        % % Length of the elements
+        % L(i) = sqrt((nodes(elements(i,2),2)-nodes(elements(i,3),2))^2 + ...
+        %        (nodes(elements(i,2),3)-nodes(elements(i,3),3))^2 + ...
+        %        (nodes(elements(i,2),4)-nodes(elements(i,3),4))^2);
+        % 
+        %  dir_cosines = double((nodes(elements(i,3),2:4) - nodes(elements(i,2),2:4)) / L(i))
+        % 
+        % 
+        % % Definir las variables como simbólicas
+        % CZ_sym = sym((nodes(elements(i,3),4) - nodes(elements(i,2),4)) / L(i));
+        % CY_sym = sym((nodes(elements(i,3),3) - nodes(elements(i,2),3)) / L(i));
+        % CX_sym = sym((nodes(elements(i,3),2) - nodes(elements(i,2),2)) / L(i));
+        % 
+        % % Calcular CXY manteniendo la exactitud simbólica
+        % CXY_sym = sqrt(CX_sym^2 + CY_sym^2);
+        % 
+        % % Almacenar resultados en formato simbólico para conservar precisión
+        % CZ(i)  = CZ_sym;
+        % CY(i)  = CY_sym;
+        % CX(i)  = CX_sym;
+        % CXY(i) = CXY_sym;
+
+        % Solo convierte a simbólico lo estrictamente necesario
+        L(i) = norm(nodes(elements(i,3),2:4) - nodes(elements(i,2),2:4));
+        dir_cosines = double((nodes(elements(i,3),2:4) - nodes(elements(i,2),2:4)) / L(i));
         
-        % Calcular CXY manteniendo la exactitud simbólica
-        CXY_sym = sqrt(CX_sym^2 + CY_sym^2);
-        
-        % Almacenar resultados en formato simbólico para conservar precisión
-        CZ(i)  = CZ_sym;
-        CY(i)  = CY_sym;
-        CX(i)  = CX_sym;
-        CXY(i) = CXY_sym;
+        % Realiza cálculos que no requieren precisión simbólica en doble precisión
+        CX = dir_cosines(1);
+        CY = dir_cosines(2);
+        CZ = dir_cosines(3);
+        CXY = sqrt(CX^2 + CY^2);
 
         locdam  = find(damele == i,1);
         locdent = find(eledent==i,1);
@@ -58,31 +71,38 @@ function [KG_damaged, KG_undamaged,L] = ensamblaje_matriz_rigidez_global_ambos_m
         %                 Iydent(locdent),Jdent(locdent),A(ident),Iz(ident),Iy(ident),...
         %                 J(ident),x1dent,x2dent,E(ident),G(ident));                
         end
-        vxzl(:,i) = vxz(i,2:end);
-        [cosalpha,sinalpha] = ejelocal(CX(i),CY(i),CZ(i),CXY(i),vxzl(:,i));
+        % vxzl(:,i) = vxz(i,2:end);
+        % [cosalpha,sinalpha] = ejelocal(CX(i),CY(i),CZ(i),CXY(i),vxzl(:,i));
         % Transformation matrix 3D
         % LT(:,:,i) = TransfM3Dframe(CX(i),CY(i),CZ(i),CXY(i),cosalpha,sinalpha);
-        [T_gamma, T_beta] = TransfM3Dframe(CX(i), CY(i), CZ(i), CXY(i), cosalpha, sinalpha);
         
-        % Usar precisión extendida con vpa para cada coseno director
-        CZ(i) = vpa((nodes(elements(i,3),4) - nodes(elements(i,2),4)) / L(i), 2);
-        CY(i) = vpa((nodes(elements(i,3),3) - nodes(elements(i,2),3)) / L(i), 2);
-        CX(i) = vpa((nodes(elements(i,3),2) - nodes(elements(i,2),2)) / L(i), 2);
+        % [T_gamma, T_beta] = TransfM3Dframe(CX(i), CY(i), CZ(i), CXY(i));
+        % CX_sym = sym(CX);
+        % CY_sym = sym(CY);
+        % CZ_sym = sym(CZ);
+        % CXY_sym = sym(CXY);
+        % [T_gamma, T_beta] = TransfM3Dframe(CX_sym, CY_sym, CZ_sym, CXY_sym);
+        [T_gamma, T_beta] = TransfM3Dframe(CX, CY, CZ, CXY);
         
-        % Calcular CXY con precisión extendida
-        CXY(i) = vpa(sqrt(CX(i)^2 + CY(i)^2), 2);
+        % % Usar precisión extendida con vpa para cada coseno director
+        % CZ(i) = vpa((nodes(elements(i,3),4) - nodes(elements(i,2),4)) / L(i), 2);
+        % CY(i) = vpa((nodes(elements(i,3),3) - nodes(elements(i,2),3)) / L(i), 2);
+        % CX(i) = vpa((nodes(elements(i,3),2) - nodes(elements(i,2),2)) / L(i), 2);
+        % 
+        % % Calcular CXY con precisión extendida
+        % CXY(i) = vpa(sqrt(CX(i)^2 + CY(i)^2), 2);
         % global stiffnes matrix of the elements 
         Gamma = T_gamma * T_beta;
         % Gamma = T_gamma * T_beta;
         kg(:,:,i) = Gamma' * ke(:,:,i) * Gamma;
         kg(:,:,i) = double(kg(:,:,i));
-        kg_numerica = double(kg(:,:,i));
-        % i
-        % if issymmetric(kg_numerica)
-        %    disp('La matriz es simétrica.');            
-        % else
-        %    disp('La matriz no es simétrica.')
-        % end
+        kg_numerica = double(kg(:,:,i))
+
+        if issymmetric(kg_numerica)
+           disp('La matriz es simétrica.');            
+        else
+           disp('La matriz no es simétrica.')
+        end
 
         LV(:,i) = [ID(:,elements(i,2)); ID(:,elements(i,3))];
         indxLV = find(LV(:,i)>0);
