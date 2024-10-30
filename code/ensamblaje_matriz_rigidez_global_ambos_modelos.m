@@ -63,7 +63,7 @@ function [KG_damaged, KG_undamaged,L] = ensamblaje_matriz_rigidez_global_ambos_m
         % Transformation matrix 3D
         % LT(:,:,i) = TransfM3Dframe(CX(i),CY(i),CZ(i),CXY(i),cosalpha,sinalpha);
         [T_gamma, T_beta] = TransfM3Dframe(CX(i), CY(i), CZ(i), CXY(i), cosalpha, sinalpha);
-                % Matriz de transformación para gamma de elementos alrededor del eje global Z
+        
         % Usar precisión extendida con vpa para cada coseno director
         CZ(i) = vpa((nodes(elements(i,3),4) - nodes(elements(i,2),4)) / L(i), 2);
         CY(i) = vpa((nodes(elements(i,3),3) - nodes(elements(i,2),3)) / L(i), 2);

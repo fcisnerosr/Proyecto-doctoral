@@ -1,4 +1,4 @@
-function [KG_AG] = ensamblaje_matriz_rigidez_global_AG(num_element_sub,ke_AG,ID, NE, elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G, vxz, elem_con_dano_long_NE)
+function [KG_AG] = ensamblaje_matriz_rigidez_global_AG(num_element_sub,ke_AG_tensor,ID, NE, elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G, vxz, elem_con_dano_long_NE);
 % KG del AG
    % Reensamblar la matriz global de rigidez con daño del AG
     KG   = zeros(IDmax,IDmax);
@@ -11,10 +11,20 @@ function [KG_AG] = ensamblaje_matriz_rigidez_global_AG(num_element_sub,ke_AG,ID,
                (nodes(elements(j,2),3)-nodes(elements(j,3),3))^2 + ...
                (nodes(elements(j,2),4)-nodes(elements(j,3),4))^2);
         
-        CZ(j) = (nodes(elements(j,3),4)-nodes(elements(j,2),4))/L(j);
-        CY(j) = (nodes(elements(j,3),3)-nodes(elements(j,2),3))/L(j);
-        CX(j) = (nodes(elements(j,3),2)-nodes(elements(j,2),2))/L(j);
-        CXY(j)= sqrt(CX(j)^2 + CY(j)^2);
+        % Definir las variables como simbólicas
+        CZ_sym = sym((nodes(elements(j,3),4) - nodes(elements(j,2),4)) / L(j));
+        CY_sym = sym((nodes(elements(j,3),3) - nodes(elements(j,2),3)) / L(j));
+        CX_sym = sym((nodes(elements(j,3),2) - nodes(elements(j,2),2)) / L(j));
+        
+        % Calcular CXY manteniendo la exactitud simbólica
+        CXY_sym = sqrt(CX_sym^2 + CY_sym^2);
+        
+        % Almacenar resultados en formato simbólico para conservar precisión
+        CZ(j)  = CZ_sym;
+        CY(j)  = CY_sym;
+        CX(j)  = CX_sym;
+        CXY(j) = CXY_sym;
+        
         locdam  = find(damele == j,1);
         locdent = find(eledent==j,1);
         if isempty(locdam) && isempty(locdent)   
@@ -27,13 +37,24 @@ function [KG_AG] = ensamblaje_matriz_rigidez_global_AG(num_element_sub,ke_AG,ID,
                 % fprintf('numero de elemento %d, en super-estructura\n',j);
             end
         end
-        vxzl(:,j) = vxz(j,2:end);
-        [cosalpha,sinalpha] = ejelocal(CX(j),CY(j),CZ(j),CXY(j),vxzl(:,j));
+
+        % vxzl(:,j) = vxz(j,2:end);
+        % [cosalpha,sinalpha] = ejelocal(CX(j),CY(j),CZ(j),CXY(j),vxzl(:,j));
         % Transformation matrix 3D
-        [T_gamma, T_beta] = TransfM3Dframe(CX, CY, CZ, CXY, cosalpha, sinalpha);
+        [T_gamma, T_beta] = TransfM3Dframe_AG(j, elements, nodes, L, CX, CY, CZ, CXY);
         % global stiffnes matrix of the elements
-        Gamma = T_gamma * T_beta;   
+        
+        % global stiffnes matrix of the elements 
+        Gamma = T_gamma * T_beta;
+        % Gamma = T_gamma * T_beta;
         kg(:,:,j) = Gamma' * ke(:,:,j) * Gamma;
+        kg(:,:,j) = double(kg(:,:,j));
+        % kg_numerica = double(kg(:,:,j));
+        % if issymmetric(kg_numerica)
+        %    disp('La matriz es simétrica.');            
+        % else
+        %    disp('La matriz no es simétrica.')
+        % end
 
         LV(:,j) = [ID(:,elements(j,2)); ID(:,elements(j,3))];
         indxLV = find(LV(:,j)>0);

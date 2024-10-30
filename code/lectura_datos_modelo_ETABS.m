@@ -1,4 +1,4 @@
-function [coordenadas, vxz, conectividad, prop_geom, matriz_restriccion, matriz_cell_secciones] = lectura_datos_modelo_ETABS(archivo_excel)
+function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_secciones] = lectura_datos_modelo_ETABS(archivo_excel)
     %% SECCIÓN: pestaña "nudos"
     %% BLOQUE: Nodos y sus coordenadas (coordenadas)
     hoja_excel = 'Point Object Connectivity';
@@ -301,6 +301,6 @@ function [coordenadas, vxz, conectividad, prop_geom, matriz_restriccion, matriz_
     % vec_brac = horzcat(bracers, vec_brac_xy, vec_brac_xy, vec_brac_z);
     % vxz = vertcat(vec_brac, vec_cols, vec_vigas);
     % vxz = sortrows(vxz, 1);
-   [vxz] = vxz_func;
+   % [vxz] = vxz_func;
 
 end

@@ -71,7 +71,7 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
    end
 
     % Reensamblar la matriz global de rigidez con daño del AG
-    [KG_AG] = ensamblaje_matriz_rigidez_global_AG(num_element_sub,ke_AG,ID, NE, elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G, vxz, elem_con_dano_long_NE)
+    [KG_AG] = ensamblaje_matriz_rigidez_global_AG(num_element_sub,ke_AG_tensor,ID, NE, elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G, vxz, elem_con_dano_long_NE);
     
     
 

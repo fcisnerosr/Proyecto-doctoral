@@ -1,4 +1,4 @@
-function [T_gamma, T_beta] = TransfM3Dframe(CX, CY, CZ, CXY, cosalpha, sinalpha)
+function [T_gamma, T_beta] = TransfM3Dframe_AG(j, elements, nodes, L, CX, CY, CZ, CXY)
     % % Gamma para elementos horizontales (vigas)
     % gammavigas = [  0               0           CZ; 
     %                 CZ*sinalpha     cosalpha    0;
@@ -6,26 +6,37 @@ function [T_gamma, T_beta] = TransfM3Dframe(CX, CY, CZ, CXY, cosalpha, sinalpha)
 
     % Gamma para elementos inclinados
     % Gamma para elementos inclinados alrededor del eje global Y (eje horizontal)
-   
-    cosB = CX/CXY;
-    sinB = CY/CXY;
+    % Usar precisión extendida con vpa para cada coseno director
+    CZ(j) = vpa((nodes(elements(j,3),4) - nodes(elements(j,2),4)) / L(j), 2);
+    cz = CZ(j);
+    CY(j) = vpa((nodes(elements(j,3),3) - nodes(elements(j,2),3)) / L(j), 2);
+    cy = CY(j);
+    CX(j) = vpa((nodes(elements(j,3),2) - nodes(elements(j,2),2)) / L(j), 2);
+    cx = CX(j);
+    
+    % Calcular CXY con precisión extendida
+    CXY(j) = vpa(sqrt(CX(j)^2 + CY(j)^2), 2);
+    cxy = CXY(j);
+
+    cosB = cx/cxy;
+    sinB = cy/cxy;
     R_beta = [  cosB    0       sinB;
                 0       1       0;
                 -sinB   0       cosB];
 
     % Gamma para elementos inclinados alrededor del eje global Z (eje horizontal)
-    cosG = CXY;
-    sinG = CZ;
+    cosG = cxy;
+    sinG = cz;
     R_gamma = [ cosG    sinG    0;
                 -sinG   cosG    0;
                 0       0       1];
     
     % Determinamos si el elemento es una columna (vertical)
-    if abs(CX) <= 1e-3 && abs(CY) <= 1e-3 && abs(CZ) >= 0.99
+    if abs(cx) <= 1e-3 && abs(cy) <= 1e-3 && abs(cz) >= 0.99
         % Criterio para elementos tipo columna
         % Construimos la matriz gamma para columna
-        gammaColumna = [0   CZ  0 ;
-                        -CZ 0   0;
+        gammaColumna = [0   cz  0 ;
+                        -cz 0   0;
                         0   0   1];
         
         % Ensamblar la matriz LT para columna
@@ -38,10 +49,10 @@ function [T_gamma, T_beta] = TransfM3Dframe(CX, CY, CZ, CXY, cosalpha, sinalpha)
         T_gamma = LT;
         T_beta  = LT;
 
-    elseif CXY <= 1e-3
+    elseif cxy <= 1e-3
         % Criterio para elementos horizontales (vigas)
-        gamma = [0   CZ  0 ;
-                -CZ 0   0;
+        gamma = [0   cz  0 ;
+                -cz 0   0;
                 0   0   1];
         LT = [gamma zeros(3,9);
               zeros(3,3) gamma zeros(3,6);
