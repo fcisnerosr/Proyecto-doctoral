@@ -83,8 +83,8 @@ L_d = long_elem_con_dano;
 [ke_d_total, ke_d] = switch_case_danos(no_elemento_a_danar, num_de_ele_long, L_d, caso_dano, dano_porcentaje, prop_geom, E, G);
 
 %%
-
-[KG_damaged, KG_undamaged, L] = ensamblaje_matriz_rigidez_global_ambos_modelos(ID, NE, ke_d_total, elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G, vxz, elem_con_dano_long_NE);
+clc
+[KG_damaged, KG_undamaged, L, kg_numerica_exacta] = ensamblaje_matriz_rigidez_global_ambos_modelos(ID, NE, ke_d_total, elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G, vxz, elem_con_dano_long_NE);
 
 % % Función Condensación estática
 % KG_damaged_cond   = condensacion_estatica(KG_damaged);

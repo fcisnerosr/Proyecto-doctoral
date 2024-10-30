@@ -44,7 +44,8 @@ function [KG_damaged, KG_undamaged,L, kg_numerica_exacta] = ensamblaje_matriz_ri
                 cont = cont + 1;
             else
                 ke(:,:,i) = localkeframe3D(A(i),Iy(i),Iz(i),J(i),E(i),G(i),L(i));
-            end            
+            end
+                    
         end
         % vxzl(:,i) = vxz(i,2:end);
         % [cosalpha,sinalpha] = ejelocal(CX(i),CY(i),CZ(i),CXY(i),vxzl(:,i));

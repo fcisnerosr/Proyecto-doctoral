@@ -1,14 +1,6 @@
-% function [T_gamma, T_beta] = TransfM3Dframe(CX, CY, CZ, CXY, cosalpha, sinalpha)
+function [T_gamma, T_beta] = TransfM3Dframe_sym(CX, CY, CZ, CXY)
 % function [T_gamma, T_beta] = TransfM3Dframe(CX_sym, CY_sym, CZ_sym, CXY_sym)
-function [T_gamma, T_beta] = TransfM3Dframe(CX, CY, CZ, CXY)
-    % % Gamma para elementos horizontales (vigas)
-    % gammavigas = [  0               0           CZ; 
-    %                 CZ*sinalpha     cosalpha    0;
-    %                 -CZ*cosalpha    sinalpha    0];
-    % CX = CX_sym;
-    % CY = CY_sym;
-    % CZ = CZ_sym;
-    % CXY = CXY_sym;
+
     
 
     % Gamma para elementos inclinados
