@@ -1,30 +1,30 @@
-function [T_gamma, T_beta] = TransfM3Dframe_nosym(CX, CY, CZ, CXY)
+function [T_gamma, T_beta] = TransfM3Dframe(CX, CY, CZ, CXY, i)
 % function [T_gamma, T_beta] = TransfM3Dframe(CX_sym, CY_sym, CZ_sym, CXY_sym)
     
 
     % Gamma para elementos inclinados
     % Gamma para elementos inclinados alrededor del eje global Y (eje horizontal)
    
-    cosB = CX/CXY;
-    sinB = CY/CXY;
+    cosB = CX(i)/CXY(i);
+    sinB = CY(i)/CXY(i);
     R_beta = [  cosB    0       sinB;
                 0       1       0;
                 -sinB   0       cosB];
 
     % Gamma para elementos inclinados alrededor del eje global Z (eje horizontal)
-    cosG = CXY;
-    sinG = CZ;
+    cosG = CXY(i);
+    sinG = CZ(i);
     R_gamma = [ cosG    sinG    0;
                 -sinG   cosG    0;
                 0       0       1];
     
     % Determinamos si el elemento es una columna (vertical)
-    if abs(CX) <= 1e-3 && abs(CY) <= 1e-3 && abs(CZ) >= 0.99
+    if abs(CX(i)) <= 1e-3 && abs(CY(i)) <= 1e-3 && abs(CZ(i)) >= 0.99
         % Criterio para elementos tipo columna
         % Construimos la matriz gamma para columna
-        gammaColumna = [0   CZ  0 ;
-                        -CZ 0   0;
-                        0   0   1];
+        gammaColumna = [0       CZ(i)   0 ;
+                        -CZ(i)  0       0;
+                        0       0       1];
         
         % Ensamblar la matriz LT para columna
         LT = [gammaColumna zeros(3,9);
@@ -38,9 +38,9 @@ function [T_gamma, T_beta] = TransfM3Dframe_nosym(CX, CY, CZ, CXY)
 
     elseif CXY <= 1e-3
         % Criterio para elementos horizontales (vigas)
-        gamma = [0   CZ  0 ;
-                -CZ 0   0;
-                0   0   1];
+        gamma = [0      CZ(i)   0 ;
+                -CZ(i)  0       0;
+                0       0       1];
         LT = [gamma zeros(3,9);
               zeros(3,3) gamma zeros(3,6);
               zeros(3,6) gamma zeros(3,3);

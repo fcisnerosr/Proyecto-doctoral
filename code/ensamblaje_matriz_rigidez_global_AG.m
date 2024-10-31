@@ -3,65 +3,52 @@ function [KG_AG] = ensamblaje_matriz_rigidez_global_AG(num_element_sub,ke_AG_ten
    % Reensamblar la matriz global de rigidez con daño del AG
     KG   = zeros(IDmax,IDmax);
     KGtu = zeros(IDmax,NEn);
-     for j = 1:NE
+     for i = 1:NE
         KGf     = zeros(IDmax,IDmax);
         KGtuf   = zeros(IDmax,NEn);
         % Length of the elements
-        L(j) = sqrt((nodes(elements(j,2),2)-nodes(elements(j,3),2))^2 + ...
-               (nodes(elements(j,2),3)-nodes(elements(j,3),3))^2 + ...
-               (nodes(elements(j,2),4)-nodes(elements(j,3),4))^2);
+        L(i) = norm(nodes(elements(i,3),2:4) - nodes(elements(i,2),2:4));
         
         % Definir las variables como simbólicas
-        CZ_sym = sym((nodes(elements(j,3),4) - nodes(elements(j,2),4)) / L(j));
-        CY_sym = sym((nodes(elements(j,3),3) - nodes(elements(j,2),3)) / L(j));
-        CX_sym = sym((nodes(elements(j,3),2) - nodes(elements(j,2),2)) / L(j));
+        CZ(i) = (nodes(elements(i,3),4) - nodes(elements(i,2),4)) / L(i);
+        CY(i) = (nodes(elements(i,3),3) - nodes(elements(i,2),3)) / L(i);
+        CX(i) = (nodes(elements(i,3),2) - nodes(elements(i,2),2)) / L(i);
+        CXY(i) = sqrt(CX(i)^2 + CY(i)^2);
         
-        % Calcular CXY manteniendo la exactitud simbólica
-        CXY_sym = sqrt(CX_sym^2 + CY_sym^2);
-        
-        % Almacenar resultados en formato simbólico para conservar precisión
-        CZ(j)  = CZ_sym;
-        CY(j)  = CY_sym;
-        CX(j)  = CX_sym;
-        CXY(j) = CXY_sym;
-        
-        locdam  = find(damele == j,1);
-        locdent = find(eledent==j,1);
+        locdam  = find(damele == i,1);
+        locdent = find(eledent==i,1);
         if isempty(locdam) && isempty(locdent)   
-            if j < num_element_sub
-                ke(:,:,j) = ke_AG_tensor(:,:,j);
-                % fprintf('numero de elemento %d, en sub-estructura\n',j);
+            if i < num_element_sub
+                ke(:,:,i) = ke_AG_tensor(:,:,i);
+                % fprintf('numero de elemento %d, en sub-estructura\n',i);
                 
             else
-                ke(:,:,j) = localkeframe3D(A(j),Iy(j),Iz(j),J(j),E(j),G(j),L(j)); % matriz de rigidez
-                % fprintf('numero de elemento %d, en super-estructura\n',j);
+                ke(:,:,i) = localkeframe3D(A(i),Iy(i),Iz(i),J(i),E(i),G(i),L(i)); % matriz de rigidez
+                % fprintf('numero de elemento %d, en super-estructura\n',i);
             end
         end
 
-        % vxzl(:,j) = vxz(j,2:end);
-        % [cosalpha,sinalpha] = ejelocal(CX(j),CY(j),CZ(j),CXY(j),vxzl(:,j));
-        % Transformation matrix 3D
-        [T_gamma, T_beta] = TransfM3Dframe_AG(j, elements, nodes, L, CX, CY, CZ, CXY);
-        % global stiffnes matrix of the elements
+        [T_gamma, T_beta] = TransfM3Dframe(CX, CY, CZ, CXY, i);
         
         % global stiffnes matrix of the elements 
         Gamma = T_gamma * T_beta;
-        % Gamma = T_gamma * T_beta;
-        kg(:,:,j) = Gamma' * ke(:,:,j) * Gamma;
-        kg(:,:,j) = double(kg(:,:,j));
-        % kg_numerica = double(kg(:,:,j));
+        kg(:,:,i) = Gamma' * ke(:,:,i) * Gamma;
+        kg(:,:,i) = double(kg(:,:,i));
+        [kg] = simetria(kg,i);
+        kg_numerica_exacta = double(kg(:,:,i));
+        % kg_numerica = double(kg(:,:,i));
         % if issymmetric(kg_numerica)
         %    disp('La matriz es simétrica.');            
         % else
         %    disp('La matriz no es simétrica.')
         % end
 
-        LV(:,j) = [ID(:,elements(j,2)); ID(:,elements(j,3))];
-        indxLV = find(LV(:,j)>0);
-        indxLVn = find(LV(:,j)<0);
+        LV(:,i) = [ID(:,elements(i,2)); ID(:,elements(i,3))];
+        indxLV = find(LV(:,i)>0);
+        indxLVn = find(LV(:,i)<0);
         % assamblage general stiffness matrix
-        KGf(LV(indxLV,j),LV(indxLV,j)) = kg(indxLV,indxLV,j); 
-        KGtuf(LV(indxLV,j),LV(indxLVn,j) * (-1)-IDmax) = kg(indxLV,indxLVn,j);
+        KGf(LV(indxLV,i),LV(indxLV,i)) = kg(indxLV,indxLV,i); 
+        KGtuf(LV(indxLV,i),LV(indxLVn,i) * (-1)-IDmax) = kg(indxLV,indxLVn,i);
         % stiffness matrix for reactions
         KG = KGf + KG;
         KGtu = KGtuf + KGtu;

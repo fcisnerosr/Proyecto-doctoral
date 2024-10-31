@@ -73,8 +73,6 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
     % Reensamblar la matriz global de rigidez con daño del AG
     [KG_AG] = ensamblaje_matriz_rigidez_global_AG(num_element_sub,ke_AG_tensor,ID, NE, elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G, vxz, elem_con_dano_long_NE);
     
-    
-
     % Condensación estática de matrices globales
     KG_AG_cond              = condensacion_estatica_AG(KG_AG);
     [modos_AG_cond,frec_AG] = modos_frecuencias_AG(KG_AG_cond,M_cond);
