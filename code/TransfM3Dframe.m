@@ -1,67 +1,74 @@
-function [T_gamma, T_beta] = TransfM3Dframe(CX, CY, CZ, CXY, i)
-% function [T_gamma, T_beta] = TransfM3Dframe(CX_sym, CY_sym, CZ_sym, CXY_sym)
-    
+function [Gamma_gamma, Gamma_beta] = TransfM3Dframe(CX, CY, CZ , CXY, i, cosalpha, sinalpha)
+    % Ejes globales
+    % X = eje acostado 1
+    % Y = eje acostado 2, ortogonal a X
+    % Z = eje vertical
 
-    % Gamma para elementos inclinados
-    % Gamma para elementos inclinados alrededor del eje global Y (eje horizontal)
-   
-    cosB = CX(i)/CXY(i);
-    sinB = CY(i)/CXY(i);
-    R_beta = [  cosB    0       sinB;
-                0       1       0;
-                -sinB   0       cosB];
+    % No borrar lo siguiente para revisión:
+    % sinalpha_v = sinalpha
+    % cosalpha_v = cosalpha
+    % CX_v        = CX(i)
+    % CY_v        = CY(i)
+    % CZ_v        = CZ(i)
+    % CXY_v       = CXY(i)
 
-    % Gamma para elementos inclinados alrededor del eje global Z (eje horizontal)
-    cosG = CXY(i);
-    sinG = CZ(i);
-    R_gamma = [ cosG    sinG    0;
-                -sinG   cosG    0;
-                0       0       1];
-    
-    % Determinamos si el elemento es una columna (vertical)
-    if abs(CX(i)) <= 1e-3 && abs(CY(i)) <= 1e-3 && abs(CZ(i)) >= 0.99
-        % Criterio para elementos tipo columna
-        % Construimos la matriz gamma para columna
-        gammaColumna = [0       CZ(i)   0 ;
-                        -CZ(i)  0       0;
-                        0       0       1];
-        
-        % Ensamblar la matriz LT para columna
-        LT = [gammaColumna zeros(3,9);
-              zeros(3,3) gammaColumna zeros(3,6);
-              zeros(3,6) gammaColumna zeros(3,3);
-              zeros(3,9) gammaColumna];
-        
-        % Asignar las matrices de transformación
-        T_gamma = LT;
-        T_beta  = LT;
-
-    elseif CXY <= 1e-3
-        % Criterio para elementos horizontales (vigas)
-        gamma = [0      CZ(i)   0 ;
-                -CZ(i)  0       0;
-                0       0       1];
-        LT = [gamma zeros(3,9);
-              zeros(3,3) gamma zeros(3,6);
-              zeros(3,6) gamma zeros(3,3);
-              zeros(3,9) gamma];
-        
-        % Asignar las matrices de transformación
-        T_gamma = LT;
-        T_beta  = LT;
-        
+    if CXY(i) <= 1e-3 || CXY(i) == 1 && sinalpha ~= 0
+        %% Elementos ortogonales
+        % disp('Columna')
+        % Columnas
+        beta_M =[    0                  0           CZ(i); 
+                     CZ(i)*sinalpha     cosalpha    0;
+                    -CZ(i)*cosalpha     sinalpha    0];
+        Gamma_beta = blkdiag(beta_M, beta_M, beta_M, beta_M); % Crea bloques diagonales de R_beta
+        Gamma_gamma = eye(12,12);
+    elseif sinalpha == 0 && cosalpha == 1 && CY(i) == 1
+        % Vigas
+        % disp('Viga paralela a Y')
+        beta_M =[    0      1   0; 
+                     1      0   0;
+                     0      0   1];
+        Gamma_beta = blkdiag(beta_M, beta_M, beta_M, beta_M); % Crea bloques diagonales de R_beta
+        Gamma_gamma = eye(12,12);
+    elseif sinalpha == 0 && cosalpha == 1 && CY(i) == 0
+        % disp('Viga paralela a X')
+        Gamma_beta  = eye(12,12);
+        Gamma_gamma = eye(12,12);
+    % elseif sinalpha ~= 0 && cosalpha ~= 1
     else
-        % Matrices de transformación para elementos inclinados
-        T_gamma = [R_gamma zeros(3,9);
-                   zeros(3,3) R_gamma zeros(3,6);
-                   zeros(3,6) R_gamma zeros(3,3);
-                   zeros(3,9) R_gamma];
-                        
-        T_beta = [R_beta zeros(3,9);
-                  zeros(3,3) R_beta zeros(3,6);
-                  zeros(3,6) R_beta zeros(3,3);
-                  zeros(3,9) R_beta];
+        % disp('Elemento diagonal')
+        %% Elementos diagonales
+        %% Angulo Beta, angulo que gira alrededor de Y global
+        % Nota: No eliminar las siguientes líneas de código; son necesarias para verificar los ángulos correspondientes.
+        % nodes(2,4)
+        % beta = asin(nodes(2,4)/L)
+        % beta_grados = rad2deg(beta)
+        % beta_M = [ cos(beta)  0       sin(beta);
+        %            0          1       0;
+        %           -sin(beta)  0       cos(beta)];
+        % Recordatorio: 
+        % cos(beta) = CXY
+        % sin(beta) = CZ
+        beta_M = [ CXY(i)   0   CZ(i);
+                   0        1   0;
+                  -CZ(i)    0   CXY(i)];
+        Gamma_beta = blkdiag(beta_M, beta_M, beta_M, beta_M); % Crea bloques diagonales de R_beta
+
+        %% Angulo Gamma, angulo que gira alrededor de Z global
+        % Nota: No eliminar las siguientes líneas de código; son necesarias para verificar los ángulos correspondientes.
+        % Referencia: https://marcelopardo.com/coordenadas-globales-y-locales-portico-3d/
+        % cos(beta)=proy/L
+        % proy = L*cos(beta)
+        % gamma = acos(nodes(2,2)/proy);
+        % gamma_grados = rad2deg(gamma)
+        % gamma_M = [ cos(gamma)    sin(gamma)  0;
+        %            -sin(gamma)    cos(gamma)  0;
+        %             0             0           1];
+        % Recordatorio: 
+        % cos(gamma) = CX/CXY
+        % sin(gamma) = CY/CXY
+        gamma_M = [ CX(i)/CXY(i)    CY(i)/CXY(i)    0;
+                   -CY(i)/CXY(i)    CX(i)/CXY(i)    0;
+                    0               0               1];
+        Gamma_gamma = blkdiag(gamma_M, gamma_M, gamma_M, gamma_M); % Crea bloques diagonales de R_beta
     end
-end
-
-
+end 

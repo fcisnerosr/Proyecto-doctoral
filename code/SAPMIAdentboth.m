@@ -88,11 +88,11 @@ clc
 [KG_damaged, KG_undamaged,L, kg] = ensamblaje_matriz_rigidez_global_ambos_modelos(ID, NE, ke_d_total,elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G,  vxz, elem_con_dano_long_NE);
 
 
-% % Función Condensación estática
-% KG_damaged_cond   = condensacion_estatica(KG_damaged);
-% 
-% % % Modos y frecuencias de estructura condensados y globales
-% [modos_cond_d,frec_cond_d] = modos_frecuencias(KG_damaged_cond,M_cond);
+% Función Condensación estática
+KG_damaged_cond   = condensacion_estatica(KG_damaged);
+
+% % Modos y frecuencias de estructura condensados y globales
+[modos_cond_d,frec_cond_d] = modos_frecuencias(KG_damaged_cond,M_cond);
 
 % %%
 % clc

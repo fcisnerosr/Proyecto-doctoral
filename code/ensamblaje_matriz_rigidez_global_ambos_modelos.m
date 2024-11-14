@@ -8,6 +8,7 @@ function [KG_damaged, KG_undamaged,L, kg] = ensamblaje_matriz_rigidez_global_amb
     KGtu=zeros(IDmax,NEn);
     cont = 1;   % contador para iterar sobre ke_d_total
     for i = 1:NE
+        i
     % for i = 1:1
         KGf     = zeros(IDmax,IDmax);
         KGtuf   = zeros(IDmax,NEn);
@@ -32,21 +33,15 @@ function [KG_damaged, KG_undamaged,L, kg] = ensamblaje_matriz_rigidez_global_amb
                 ke(:,:,i) = localkeframe3D(A(i),Iy(i),Iz(i),J(i),E(i),G(i),L(i));
             end            
         end
+
+        % Matriz de transformaciones
+        vxzl(:,i) = vxz(i,2:end);       % VXZ para elementos ortogonales, no aplica para elementos diagonales
+        [cosalpha,sinalpha] = ejelocal(CX(i),CY(i),CZ(i),CXY(i),vxzl(:,i));     % Calculo de angulos de cada elemento (esto solo es util para discriminar los elementos ortogonales de los elementos inclinados)
+        [Gamma_gamma, Gamma_beta] = TransfM3Dframe(CX, CY, CZ , CXY, i, cosalpha, sinalpha);    % Matriz de transformaciones para cualquier dirección de elementos (vigas, columnas o elementos inclinados)
         
-        [T_gamma, T_beta] = TransfM3Dframe(CX, CY, CZ, CXY, i);
-        
-        % global stiffnes matrix of the elements 
-        Gamma = T_gamma * T_beta;
-        kg(:,:,i) = Gamma' * ke(:,:,i) * Gamma;
-        kg(:,:,i) = double(kg(:,:,i));
-        [kg] = simetria(kg,i);
-        kg_numerica_exacta = double(kg(:,:,i));
-        % i
-        % if issymmetric(kg_numerica_exacta)
-        %    disp('La matriz es simétrica.');            
-        % else
-        %    disp('La matriz no es simétrica.')
-        % end
+        % matriz global de cada elemento
+        kg(:,:,i) = Gamma_gamma' * Gamma_beta' * ke(:,:,i) * Gamma_beta * Gamma_gamma;
+        kg(:,:,i) = simetria(kg(:,:,i));    % Limpiado de elementos que no son completamente simetricos
 
         LV(:,i) = [ID(:,elements(i,2)); ID(:,elements(i,3))];
         indxLV = find(LV(:,i)>0);
