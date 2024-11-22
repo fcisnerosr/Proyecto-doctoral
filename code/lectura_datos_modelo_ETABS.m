@@ -276,6 +276,7 @@ function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_
     matriz_restriccion = horzcat(nodos_restringidos, matriz_restriccion);
 
     %% SECCION: pestaña "vxz"
+    %% SECCION: Creacion automatica de vectores VXZ para cada elemento del modelo
     % Reuso de variables de Nodos y sus coordenadas
     % Se concatenó cada columna en función a su dirección
     % Las columnas rectas están orientas de manera distinta a las vigas y a las diagonales. Las vigas y diagonales tienen la misma orientación de ejes locales
@@ -283,24 +284,7 @@ function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_
         % Z mirando hacia arriba
         % X mirando hasta adelante
         % Y mirando hasta atrás
-        % Mejor ver el eje global en el modelo de ETABS
-    % % Las vigas se orientaron como: 0 0 1, el eje y local está horizontal (paralelo al eje global Y pero opuesto) y el z es el vertical (paralelo al eje global Z)
-    % vigas = vigas_conectividad(:,1);
-    % vec_vigas_z = ones(length(vigas), 1);
-    % vec_vigas_xy = zeros(length(vigas), 1);
-    % vec_vigas = horzcat(vigas, vec_vigas_xy, vec_vigas_xy, vec_vigas_z);
-    % % Las columnas se orientaron como: 0 1 0, el eje y local es paralelo al eje X global, mientras que el eje z local es paralelo al eje global Y
-    % cols = col_conectividad(:,1);
-    % vec_cols_xz = zeros(length(cols),1);
-    % vec_cols_y = ones(length(cols),1);
-    % vec_cols = horzcat(cols, vec_cols_xz, vec_cols_y, vec_cols_xz);
-    % % Las diagonales se orientaron como: 0 0 1
-    % bracers = col_diag_conectividad(:,1);
-    % vec_brac_xy = zeros(length(bracers),1);
-    % vec_brac_z = ones (length(bracers),1);
-    % vec_brac = horzcat(bracers, vec_brac_xy, vec_brac_xy, vec_brac_z);
-    % vxz = vertcat(vec_brac, vec_cols, vec_vigas);
-    % vxz = sortrows(vxz, 1);
-   % [vxz] = vxz_func;
+        % Sugerencia: Mejor ver el eje global en el modelo de ETABS
+
 
 end

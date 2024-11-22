@@ -20,6 +20,7 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
     
     ke_AG_tensor = zeros(12,12,num_element_sub);
     % Recorre cada uno de los num_element_sub elementos para aplicar el daño
+    x
     for i = 1:num_element_sub
         % Matriz de rigidez local
         ke_AG = zeros(12,12);
@@ -76,6 +77,14 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
     % Condensación estática de matrices globales
     KG_AG_cond              = condensacion_estatica_AG(KG_AG);
     [modos_AG_cond,frec_AG] = modos_frecuencias_AG(KG_AG_cond,M_cond);
+
+    %%% Verificación de numeros reales en mis frecuencias y formas
+    % Verificar si las matrices contienen solo números reales
+    real_modos_cond_d = isreal(modos_AG_cond);  % Devuelve true
+    real_frec_cond_d  = isreal(frec_AG);  % Devuelve false
+    % Mostrar resultados
+    disp(['La matriz modos_cond_d es completamente real: ', num2str(real_modos_cond_d)]);
+    disp(['La matriz frec_cond_d es completamente real: ', num2str(real_frec_cond_d)]);
     
     SumRMSEVal = 0;
     for i = 1:length(frec_AG)

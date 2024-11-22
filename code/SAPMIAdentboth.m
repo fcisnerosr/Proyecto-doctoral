@@ -43,56 +43,65 @@ dano_porcentaje     = [60 40 40 40 40 ];
 escritura_datos_hoja_excel_del_dr_Rolando(coordenadas, conectividad, prop_geom, matriz_restriccion,masas_en_cada_nodo);
 
 % Matriz de masas completa y condensada
-[M_cond]                                                                                  = Matriz_M_completa_y_condensada(coordenadas, masas_en_cada_nodo);
-
-% Lectura de datos de la hoja de EXCEL del dr. Rolando para la función "Ensamblaje de matrices globales"
-[NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, E, G, vxz, ID, KG, KGtu] = lectura_hoja_excel(pathfile);
-% clearvars -except archivo_excel tirante tiempo d_agua densidad_crec pathfile no_elemento_a_danar caso_dano dano_porcentaje coordenadas vxz conectividad prop_geom matriz_restriccion matriz_cell_secciones masas_en_cada_nodo M_cond NE IDmax NEn elements nodes damele eledent A Iy Iz J E G ID KG KGtu hoja_excel vigas_long brac_long col_long num_de_ele_long
-
-% Danos locales
-% [ke_d_total, ke_d, elem_con_dano_long_NE] = switch_case_danos(no_elemento_a_danar, caso_dano, dano_porcentaje, archivo_excel, NE, prop_geom, E, G, J);
-prop_geom(:,8:9)    = [];                          % eliminacion de 'circular' y 'wo', si no se eliminan la conversion a matriz numerica no es posible
-% Tabla con no. de elemento y longitud de orden descendente
-hoja_excel = 'Beam Object Connectivity';
-vigas_long = xlsread (archivo_excel, hoja_excel, '');
-vigas_long(:,2:5) = [];
-% Extracción de datos de las columas (tanto en la subestructura como en al superestructura)
-hoja_excel = 'Brace Object Connectivity'; % pestaña con elementos diagonales (ubicados en la subestructura)
-brac_long = xlsread (archivo_excel, hoja_excel, '');
-brac_long(:,2:5) = [];
-hoja_excel = 'Column Object Connectivity'; % pestaña con columnas rectas (generalmente ubicados en la superestructura)
-col_long = xlsread (archivo_excel, hoja_excel, '');
-col_long(:,2:5) = [];
-% no_ele_long = sort(vertcat(vigas_long,brac_long,col_long),1)
-num_de_ele_long = sortrows(vertcat(vigas_long,brac_long,col_long),1);
-% SECCION: Longitudes de elementos a danar (long_elem_con_dano)
-hoja_excel              = 'Frame Assigns - Summary';
-datos_para_long         = xlsread(archivo_excel, hoja_excel, 'C:E');
-datos_para_long(:,2)    = [];
-elementos_y_long        = sortrows(datos_para_long, 1);
-for i = 1:length(no_elemento_a_danar)
-    long_elem_con_dano(i)  = elementos_y_long(no_elemento_a_danar(i),2);
-end
-L_d = long_elem_con_dano;
-
-% Vector que posiciona en un indice del elemento a danar
-[elem_con_dano_long_NE] = vector_asignacion_danos(no_elemento_a_danar, NE);
-
-%%
-clc
-% Matriz de rigidez local con dano aplicado
-[ke_d_total, ke_d] = switch_case_danos(no_elemento_a_danar, num_de_ele_long, L_d, caso_dano, dano_porcentaje, prop_geom, E, G);
-
-%%
-clc
-[KG_damaged, KG_undamaged,L, kg] = ensamblaje_matriz_rigidez_global_ambos_modelos(ID, NE, ke_d_total,elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G,  vxz, elem_con_dano_long_NE);
+% [M_cond]                                                                                  = Matriz_M_completa_y_condensada(coordenadas, masas_en_cada_nodo);
+% [M_cond]                                                                                  = Masa_cond_completa(coordenadas, masas_en_cada_nodo);
 
 
-% Función Condensación estática
-KG_damaged_cond   = condensacion_estatica(KG_damaged);
-
-% % Modos y frecuencias de estructura condensados y globales
-[modos_cond_d,frec_cond_d] = modos_frecuencias(KG_damaged_cond,M_cond);
+% % Lectura de datos de la hoja de EXCEL del dr. Rolando para la función "Ensamblaje de matrices globales"
+% [NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, E, G, vxz, ID, KG, KGtu] = lectura_hoja_excel(pathfile);
+% % clearvars -except archivo_excel tirante tiempo d_agua densidad_crec pathfile no_elemento_a_danar caso_dano dano_porcentaje coordenadas vxz conectividad prop_geom matriz_restriccion matriz_cell_secciones masas_en_cada_nodo M_cond NE IDmax NEn elements nodes damele eledent A Iy Iz J E G ID KG KGtu hoja_excel vigas_long brac_long col_long num_de_ele_long
+% 
+% % Danos locales
+% % [ke_d_total, ke_d, elem_con_dano_long_NE] = switch_case_danos(no_elemento_a_danar, caso_dano, dano_porcentaje, archivo_excel, NE, prop_geom, E, G, J);
+% prop_geom(:,8:9)    = [];                          % eliminacion de 'circular' y 'wo', si no se eliminan la conversion a matriz numerica no es posible
+% % Tabla con no. de elemento y longitud de orden descendente
+% hoja_excel = 'Beam Object Connectivity';
+% vigas_long = xlsread (archivo_excel, hoja_excel, '');
+% vigas_long(:,2:5) = [];
+% % Extracción de datos de las columas (tanto en la subestructura como en al superestructura)
+% hoja_excel = 'Brace Object Connectivity'; % pestaña con elementos diagonales (ubicados en la subestructura)
+% brac_long = xlsread (archivo_excel, hoja_excel, '');
+% brac_long(:,2:5) = [];
+% hoja_excel = 'Column Object Connectivity'; % pestaña con columnas rectas (generalmente ubicados en la superestructura)
+% col_long = xlsread (archivo_excel, hoja_excel, '');
+% col_long(:,2:5) = [];
+% % no_ele_long = sort(vertcat(vigas_long,brac_long,col_long),1)
+% num_de_ele_long = sortrows(vertcat(vigas_long,brac_long,col_long),1);
+% % SECCION: Longitudes de elementos a danar (long_elem_con_dano)
+% hoja_excel              = 'Frame Assigns - Summary';
+% datos_para_long         = xlsread(archivo_excel, hoja_excel, 'C:E');
+% datos_para_long(:,2)    = [];
+% elementos_y_long        = sortrows(datos_para_long, 1);
+% for i = 1:length(no_elemento_a_danar)
+%     long_elem_con_dano(i)  = elementos_y_long(no_elemento_a_danar(i),2);
+% end
+% L_d = long_elem_con_dano;
+% 
+% % Vector que posiciona en un indice del elemento a danar
+% [elem_con_dano_long_NE] = vector_asignacion_danos(no_elemento_a_danar, NE);
+% 
+% %%
+% clc
+% % Matriz de rigidez local con dano aplicado
+% [ke_d_total, ke_d] = switch_case_danos(no_elemento_a_danar, num_de_ele_long, L_d, caso_dano, dano_porcentaje, prop_geom, E, G);
+% 
+% %%
+% clc
+% [KG_damaged, KG_undamaged,L, kg] = ensamblaje_matriz_rigidez_global_ambos_modelos(ID, NE, ke_d_total,elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G,  vxz, elem_con_dano_long_NE);
+% 
+% % Función Condensación estática
+% KG_damaged_cond   = condensacion_estatica(KG_damaged);
+% 
+% % % Modos y frecuencias de estructura condensados y globales
+% [modos_cond_d,frec_cond_d] = modos_frecuencias(KG_damaged_cond,M_cond);
+% 
+% %%% Verificación de numeros reales en mis frecuencias y formas
+% % Verificar si las matrices contienen solo números reales
+% real_modos_cond_d = isreal(modos_cond_d);  % Devuelve true
+% real_frec_cond_d  = isreal(frec_cond_d);  % Devuelve false
+% % Mostrar resultados
+% disp(['La matriz modos_cond_d es completamente real: ', num2str(real_modos_cond_d)]);
+% disp(['La matriz frec_cond_d es completamente real: ', num2str(real_frec_cond_d)]);
 
 % %%
 % clc
@@ -105,7 +114,9 @@ KG_damaged_cond   = condensacion_estatica(KG_damaged);
 % long_x = 3 * num_element_sub; % = 348
 % % 3 porque solamente se aplica dano al área y ambas inercias en x y en y
 % % 116 porque se le aplica dano a los primeros 116 elementos de la subestructura % Configuraciones básicas del AG
-% Samples     = 2;
+% % Samples     = 100;
+% % Generations = 100;
+% Samples     = 5;
 % Generations = 1;
 % Nvar        = long_x;        % numero de variables que va a tener la variable de dano x. Son 116 elementos de la subestructura * 3 variables de dano de la corrosion = long_x
 % options                 = gaoptimset(@ga);          % gaoptimset es para crear las configuraciones específicas para el AG
@@ -165,15 +176,15 @@ KG_damaged_cond   = condensacion_estatica(KG_damaged);
 %         modos_cond_d),Nvar,[],[],[],[],LB,UB,[],options);
 % toc;
 % % 
-% % % Datos de salida de la funcion ga (Algoritmo Genético de MATLAB):
-% % % fval: Valor mínimo de la función objetivo (RMSE) alcanzado durante la optimización.
-% % % exitflag: Razón por la que el AG terminó (convergencia, límite Ade generaciones, error, etc.).
-% % % output: Estructura que contiene detalles del proceso de optimización, como el número de generaciones, evaluaciones de la función objetivo, y tiempo de ejecución.
-% % % population: Población de individuos en la última generación del AG.
-% % % scores: Valores de la función objetivo (RMSE) para cada individuo en la última generación.
-% % % Datos de entrada de la función ga:
-% % %     Función Objetivo: RMSEfunction es la función objetivo que el AG intenta minimizar.
-% % %     Variables de Optimización: Nvar define el número de variables que se optimizan.
-% % %     Límites: LB y UB+ son los límites inferiores y superiores para las variables de optimización, definidos previamente.
-% %     % Opciones: options incluye todas las configuraciones del AG como el tamaño de la población, número de generaciones, funciones de selección, etc.
-% % % delete(gcp('nocreate'));    % Cierra el procesamiento paralelo
+% % % % Datos de salida de la funcion ga (Algoritmo Genético de MATLAB):
+% % % % fval: Valor mínimo de la función objetivo (RMSE) alcanzado durante la optimización.
+% % % % exitflag: Razón por la que el AG terminó (convergencia, límite Ade generaciones, error, etc.).
+% % % % output: Estructura que contiene detalles del proceso de optimización, como el número de generaciones, evaluaciones de la función objetivo, y tiempo de ejecución.
+% % % % population: Población de individuos en la última generación del AG.
+% % % % scores: Valores de la función objetivo (RMSE) para cada individuo en la última generación.
+% % % % Datos de entrada de la función ga:
+% % % %     Función Objetivo: RMSEfunction es la función objetivo que el AG intenta minimizar.
+% % % %     Variables de Optimización: Nvar define el número de variables que se optimizan.
+% % % %     Límites: LB y UB+ son los límites inferiores y superiores para las variables de optimización, definidos previamente.
+% % %     % Opciones: options incluye todas las configuraciones del AG como el tamaño de la población, número de generaciones, funciones de selección, etc.
+% % % % delete(gcp('nocreate'));    % Cierra el procesamiento paralelo

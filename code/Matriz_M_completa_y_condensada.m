@@ -1,9 +1,10 @@
 % Matriz_M_completa_y_condensada.m
 function [M_condensada] = Matriz_M_completa_y_condensada(coordenadas, masas_en_cada_nodo)
+% function [M_condensada,M, masas_en_cada_nodo] = Matriz_M_completa_y_condensada(coordenadas, masas_en_cada_nodo)
 %% SECCION: Matriz de masas completa
     %% BLOQUE: longitudes de matriz de masa completa (n y m)
     n = length(coordenadas) - 4;        % se quitan los primeros cuatro nodos de la base
-    m = masas_en_cada_nodo(5:end,:);    % se selecciona a partir de la masa 5 porque las masas de la base (del nodo 1 al 4) no se tomand en cuenta en el analisis de condensacion estatica
+    m = masas_en_cada_nodo(5:end,:);    % se selecciona a partir de la masa 5 porque las masas de la base (del nodo 1 al 4) no se toman en cuenta en el analisis de condensacion estatica
     
     %% BLOQUE: Numero de GDL de la matriz de masas completa (longitudVector)
     % Matriz de masas 
@@ -56,12 +57,13 @@ function [M_condensada] = Matriz_M_completa_y_condensada(coordenadas, masas_en_c
     % SUBLOQUE: Ciclo de asignacion de cada masa nodal a la matriz global de masas con ceros
     for i = 1:n*6
         if v(i) == 4 | v(i) == 5 | v(i) == 6
-            M(i,i) = 8*10^-20;
+            % M(i,i) = 8*10^-20;
+            M(i,i) = m(y(i),2);
         else
             M(i,i) = m(y(i),2);
         end
     end
-
+    M
     %% SECCION: Matriz de masas condensada
     %% BLOQUE: Matriz de masas condensada de long = NGDL - 4 * 3 (M_condensada)
         % se contruye mediante la funcion blkdiag()

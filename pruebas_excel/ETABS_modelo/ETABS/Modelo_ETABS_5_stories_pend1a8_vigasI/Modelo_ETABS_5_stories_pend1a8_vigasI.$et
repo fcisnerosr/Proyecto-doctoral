@@ -1,4 +1,4 @@
-$ File E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\Modelo_ETABS_5_stories_pend1a8_vigasI\Modelo_ETABS_5_stories_pend1a8_vigasI.$et saved 31/10/2024 11:24:42
+$ File E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\Modelo_ETABS_5_stories_pend1a8_vigasI\Modelo_ETABS_5_stories_pend1a8_vigasI.$et saved 21/11/2024 13:46:40
  
 $ PROGRAM INFORMATION
   PROGRAM  "ETABS"  VERSION "19.1.0"  
@@ -323,10 +323,10 @@ $ LINE CONNECTIVITIES
   LINE  "D89"  BRACE  "44"  "37"  0
 
 $ POINT ASSIGNS
-  POINTASSIGN  "1"  "Base"  RESTRAINT "UX UY UZ"  
-  POINTASSIGN  "4"  "Base"  RESTRAINT "UX UY UZ"  
-  POINTASSIGN  "6"  "Base"  RESTRAINT "UX UY UZ"  
-  POINTASSIGN  "8"  "Base"  RESTRAINT "UX UY UZ"  
+  POINTASSIGN  "1"  "Base"  RESTRAINT "UX UY UZ RX RY RZ"  
+  POINTASSIGN  "4"  "Base"  RESTRAINT "UX UY UZ RX RY RZ"  
+  POINTASSIGN  "6"  "Base"  RESTRAINT "UX UY UZ RX RY RZ"  
+  POINTASSIGN  "8"  "Base"  RESTRAINT "UX UY UZ RX RY RZ"  
   POINTASSIGN  "37"  "Super2"  USERJOINT  "Yes"  
   POINTASSIGN  "38"  "Super2"  USERJOINT  "Yes"  
   POINTASSIGN  "39"  "Super2"  USERJOINT  "Yes"  
@@ -527,6 +527,10 @@ $ LOAD PATTERNS
   LOADPATTERN "Live"  TYPE  "Live"  SELFWEIGHT  0
 
 $ POINT OBJECT LOADS
+  POINTLOAD  "3"  "Story1"  TYPE "FORCE"  LC "Live"  FX 224.8089  FY 449.6179  FZ -786.8312  MX 0.8850745  MY 0.8850745  MZ -26.55223
+  POINTLOAD  "14"  "Story2"  TYPE "FORCE"  LC "Live"  FX 224.8089  FY 449.6179  FZ -786.8312  MX 0.8850745  MY 0.8850745  MZ -26.55223
+  POINTLOAD  "16"  "Story2"  TYPE "FORCE"  LC "Live"  FX 224.8089  FY 449.6179  FZ -786.8312  MX 0.8850745  MY 0.8850745  MZ -26.55223
+  POINTLOAD  "24"  "Story3"  TYPE "FORCE"  LC "Live"  FX 224.8089  FY 449.6179  FZ -786.8312  MX 0.8850745  MY 0.8850745  MZ -26.55223
   POINTLOAD  "37"  "Super1"  TYPE "FORCE"  LC "Live"    FZ -330806.3
   POINTLOAD  "38"  "Super1"  TYPE "FORCE"  LC "Live"    FZ -330806.3
   POINTLOAD  "39"  "Super1"  TYPE "FORCE"  LC "Live"    FZ -330806.3
@@ -1090,6 +1094,11 @@ ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas
 ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\Modelo_ETABS_5_stories_pend1a8_vigasI\Modelo_ETABS_5_stories_pend1a8_vigasI.EDB at 26/09/2024 12:58:16
 ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\Modelo_ETABS_5_stories_pend1a8_vigasI\Modelo_ETABS_5_stories_pend1a8_vigasI.EDB at 31/10/2024 11:24:40
 ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\Modelo_ETABS_5_stories_pend1a8_vigasI\Modelo_ETABS_5_stories_pend1a8_vigasI.EDB at 31/10/2024 11:24:42
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\Modelo_ETABS_5_stories_pend1a8_vigasI\Modelo_ETABS_5_stories_pend1a8_vigasI.EDB at 31/10/2024 11:24:45
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\Modelo_ETABS_5_stories_pend1a8_vigasI\Modelo_ETABS_5_stories_pend1a8_vigasI.EDB at 31/10/2024 11:24:45
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\Modelo_ETABS_5_stories_pend1a8_vigasI\Modelo_ETABS_5_stories_pend1a8_vigasI.EDB at 31/10/2024 11:24:48
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\Modelo_ETABS_5_stories_pend1a8_vigasI\Modelo_ETABS_5_stories_pend1a8_vigasI.EDB at 14/11/2024 20:01:48
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\Modelo_ETABS_5_stories_pend1a8_vigasI\Modelo_ETABS_5_stories_pend1a8_vigasI.EDB at 21/11/2024 13:46:40
   ENDCOMMENTS  
 
   END

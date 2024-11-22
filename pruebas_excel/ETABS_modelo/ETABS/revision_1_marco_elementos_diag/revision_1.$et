@@ -1,4 +1,4 @@
-$ File E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_1_marco_elementos_diag\revision_1.$et saved 13/11/2024 22:56:44
+$ File E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_1_marco_elementos_diag\revision_1.$et saved 21/11/2024 13:45:56
  
 $ PROGRAM INFORMATION
   PROGRAM  "ETABS"  VERSION "19.1.0"  
@@ -127,10 +127,10 @@ $ LOAD PATTERNS
   LOADPATTERN "Live"  TYPE  "Live"  SELFWEIGHT  0
 
 $ POINT OBJECT LOADS
-  POINTLOAD  "1"  "Story1"  TYPE "FORCE"  LC "Live"  FX 100  FY 200  FZ -350  MX 10  MY 20  MZ -300
-  POINTLOAD  "2"  "Story1"  TYPE "FORCE"  LC "Live"  FX 100  FY 200  FZ -350  MX 10  MY 20  MZ -300
-  POINTLOAD  "3"  "Story1"  TYPE "FORCE"  LC "Live"  FX 100  FY 200  FZ -350  MX 10  MY 20  MZ -300
-  POINTLOAD  "4"  "Story1"  TYPE "FORCE"  LC "Live"  FX 100  FY 200  FZ -350  MX 10  MY 20  MZ -300
+  POINTLOAD  "1"  "Story1"  TYPE "FORCE"  LC "Live"  FX 100  FY 200  FZ -350
+  POINTLOAD  "2"  "Story1"  TYPE "FORCE"  LC "Live"  FX 100  FY 200  FZ -350
+  POINTLOAD  "3"  "Story1"  TYPE "FORCE"  LC "Live"  FX 100  FY 200  FZ -350
+  POINTLOAD  "4"  "Story1"  TYPE "FORCE"  LC "Live"  FX 100  FY 200  FZ -350
 
 $ FRAME OBJECT LOADS
 
@@ -141,7 +141,7 @@ $ ANALYSIS OPTIONS
   AUTOMESHOPTIONS  MESHTYPE  "GENERAL"  FLOORMESHMAXSIZE  1250 WALLMESHMAXSIZE  1250 
 
 $ MASS SOURCE
-  MASSSOURCE  "MsSrc1"    INCLUDEELEMENTS "Yes"    INCLUDEADDEDMASS "Yes"    INCLUDELOADS "No"    INCLUDEMOVE "No"    INCLUDELATERALMASS "Yes"    INCLUDEVERTICALMASS "No"    LUMPATSTORIES "Yes"    ISDEFAULT "Yes"  
+  MASSSOURCE  "MsSrc1"    INCLUDEELEMENTS "Yes"    INCLUDEADDEDMASS "Yes"    INCLUDELOADS "No"    INCLUDEMOVE "No"    INCLUDELATERALMASS "Yes"    INCLUDEVERTICALMASS "Yes"    LUMPATSTORIES "Yes"    ISDEFAULT "Yes"  
 
 $ FUNCTIONS
   FUNCTION "RampTH"  FUNCTYPE "HISTORY"  HISTTYPE "USER"  
@@ -538,6 +538,23 @@ ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas
 ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_1_marco_elementos_diag\revision_1.EDB at 13/11/2024 22:45:16
 ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_1_marco_elementos_diag\revision_1.EDB at 13/11/2024 22:45:19
 ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_1_marco_elementos_diag\revision_1.EDB at 13/11/2024 22:56:43
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_1_marco_elementos_diag\revision_1.EDB at 13/11/2024 22:56:46
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_1_marco_elementos_diag\revision_1.EDB at 13/11/2024 22:56:46
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_1_marco_elementos_diag\revision_1.EDB at 13/11/2024 22:56:49
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_1_marco_elementos_diag\revision_1.EDB at 21/11/2024 11:01:43
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_1_marco_elementos_diag\revision_1.EDB at 21/11/2024 11:07:28
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_1_marco_elementos_diag\revision_1.EDB at 21/11/2024 11:07:32
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_1_marco_elementos_diag\revision_1.EDB at 21/11/2024 11:07:32
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_1_marco_elementos_diag\revision_1.EDB at 21/11/2024 11:07:37
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_1_marco_elementos_diag\revision_1.EDB at 21/11/2024 11:16:26
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_1_marco_elementos_diag\revision_1.EDB at 21/11/2024 11:16:28
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_1_marco_elementos_diag\revision_1.EDB at 21/11/2024 11:16:28
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_1_marco_elementos_diag\revision_1.EDB at 21/11/2024 11:16:31
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_1_marco_elementos_diag\revision_1.EDB at 21/11/2024 11:36:00
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_1_marco_elementos_diag\revision_1.EDB at 21/11/2024 11:36:02
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_1_marco_elementos_diag\revision_1.EDB at 21/11/2024 11:36:02
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_1_marco_elementos_diag\revision_1.EDB at 21/11/2024 11:36:05
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_1_marco_elementos_diag\revision_1.EDB at 21/11/2024 13:45:56
   ENDCOMMENTS  
 
   END

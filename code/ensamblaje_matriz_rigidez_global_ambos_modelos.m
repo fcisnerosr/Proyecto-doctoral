@@ -8,7 +8,6 @@ function [KG_damaged, KG_undamaged,L, kg] = ensamblaje_matriz_rigidez_global_amb
     KGtu=zeros(IDmax,NEn);
     cont = 1;   % contador para iterar sobre ke_d_total
     for i = 1:NE
-        i
     % for i = 1:1
         KGf     = zeros(IDmax,IDmax);
         KGtuf   = zeros(IDmax,NEn);
