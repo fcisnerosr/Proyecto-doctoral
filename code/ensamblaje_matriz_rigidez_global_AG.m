@@ -35,10 +35,9 @@ function [KG_AG] = ensamblaje_matriz_rigidez_global_AG(num_element_sub,ke_AG_ten
         kg(:,:,i) = Gamma_gamma' * Gamma_beta' * ke(:,:,i) * Gamma_beta * Gamma_gamma;
         kg(:,:,i) = simetria(kg(:,:,i));    % Limpiado de elementos que no son completamente simetricos
         kg(:,:,i) = double(kg(:,:,i));
-        kg(:,:,i) = simetria(kg(:,:,i));    % Limpiado de elementos que no son completamente simetricos
         % Comprobación de simetría
-        kg_numerica_exacta = double(kg(:,:,i));
-        kg_numerica = double(kg(:,:,i));
+        % kg_numerica_exacta = double(kg(:,:,i));
+        % kg_numerica = double(kg(:,:,i));
         % if issymmetric(kg_numerica)
         %    disp('La matriz es simétrica.');            
         % else
