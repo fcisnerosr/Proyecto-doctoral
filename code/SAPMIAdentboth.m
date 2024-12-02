@@ -19,9 +19,9 @@ pathfile        = 'E:\Archivos_Jaret\Mis_modificaciones\pruebas_excel\marco3Ddam
 % pathfile = '/home/francisco/Documents/Proyecto-doctoral/pruebas_excel/marco3Ddam0.xlsx';
 
 % Danos a elementos tubulares, caso de dano y su respectivo porcentaje
-no_elemento_a_danar = [1, 2, 5, 18, 19];
-caso_dano           = repmat({'corrosion'}, 1, 5);
-dano_porcentaje     = [40 30 30 30 30 ];
+no_elemento_a_danar = [1];
+caso_dano           = repmat({'corrosion'}, 1, 1);
+dano_porcentaje     = 80;
 
 % Corregir de formato los números en la tabla importada de ETABS: En todo este bloque de código, se realizó el cambio de formato de los números, debido a que ETABS importa sus tablas en formato de texto en algunas columnas.
 % % % % correccion_format_TablaETABS(archivo_excel);
@@ -81,7 +81,7 @@ L_d = long_elem_con_dano;
 %%
 % clc
 % Matriz de rigidez local con dano aplicado
-[ke_d_total, ke_d] = switch_case_danos(no_elemento_a_danar, num_de_ele_long, L_d, caso_dano, dano_porcentaje, prop_geom, E, G);
+[ke_d_total, ke_d, prop_geom_mat] = switch_case_danos(no_elemento_a_danar, num_de_ele_long, L_d, caso_dano, dano_porcentaje, prop_geom, E, G);
 
 %%
 % clc
@@ -109,12 +109,15 @@ clc
 % Cerrar cualquier parallel pool existente
 delete(gcp('nocreate'));
 num_element_sub = 116;
-long_x = 3 * num_element_sub; % = 348
+% long_x = 3 * num_element_sub; % = 348
 % 3 porque solamente se aplica dano al área y ambas inercias en x y en y
 % 116 porque se le aplica dano a los primeros 116 elementos de la subestructura % Configuraciones básicas del AG
-% Samples     = 100;
-% Generations = 100;
-Samples     = 1000;
+
+% Nuevo vector de danos %
+long_x = 1 * num_element_sub;
+% Nuevo vector de danos %
+
+Samples     = 400;
 Generations = 3000;
 Nvar        = long_x;        % numero de variables que va a tener la variable de dano x. Son 116 elementos de la subestructura * 3 variables de dano de la corrosion = long_x
 options                 = gaoptimset(@ga);          % gaoptimset es para crear las configuraciones específicas para el AG
@@ -140,7 +143,7 @@ options.MutationFcn         = @mutationadaptfeasible;     % Configura cómo se l
 % Cómo Funciona: Durante la mutación, una pequena parte del código genético (representado por el vector x en tu caso) de un individuo se altera al azar. Esta alteración puede ser un cambio pequeno en el valor de una variable o un ajuste más significativo, dependiendo de cómo esté definida la función de mutación.
 options.UseParallel = 'always';
 % Graficas de monitoreo para ver el estado del AG durante todo su proceso
-% options = gaoptimset('PlotFcn', {@gaplotbestf, @gaplotbestindiv, @gaplotdistance, @gaplotrange, @gaplotstopping});
+options = gaoptimset('PlotFcn', {@gaplotbestf, @gaplotbestindiv, @gaplotdistance, @gaplotrange, @gaplotstopping});
 % @gaplotbestf: Mejores valores de función
 % @gaplotbestindiv: Valores del mejor individuo por generación
 % @gaplotdistance: Distancia entre individuos en las soluciones de busqueda
@@ -149,7 +152,7 @@ options.UseParallel = 'always';
 
 % Definir los límites de daño
 LowerLim = 0.0;       % Daño mínimo permitido
-UpperLim = 0.40;      % Daño máximo permitido
+UpperLim = 0.80;      % Daño máximo permitido
 
 LB = zeros(long_x, 1);   % Todos los valores se inicializan con 0 (sin daño mínimo)
 UB = UpperLim * ones(long_x, 1);   % Todos los valores se inicializan con 0.50 (daño máximo permitido)
@@ -165,13 +168,13 @@ parpool('Processes', 6, 'IdleTimeout', 6000);  % Configura n minutos de inactivi
 % disp(['Número de núcleos: ', num2str(numCores)]);
 % La siguiente linea se a cabo el proceso del ga
 tic;
-
+%%
 clc
 
 [x,fval,exitflag,output,population,scores] = ga(@(x)RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
         L, ID, NE, elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G, ...
         vxz, elem_con_dano_long_NE,...
-        modos_cond_d),Nvar,[],[],[],[],LB,UB,[],options);
+        modos_cond_d, prop_geom_mat),Nvar,[],[],[],[],LB,UB,[],options);
 toc;
 % 
 % % % Datos de salida de la funcion ga (Algoritmo Genético de MATLAB):

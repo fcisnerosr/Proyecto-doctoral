@@ -1,4 +1,4 @@
-function [ke_d_total, ke_d] = switch_case_danos(no_elemento_a_danar, num_de_ele_long, L_d, caso_dano, dano_porcentaje, prop_geom, E, G)
+function [ke_d_total, ke_d, prop_geom_mat] = switch_case_danos(no_elemento_a_danar, num_de_ele_long, L_d, caso_dano, dano_porcentaje, prop_geom, E, G)
     % %% SECCION: Asignacion de propiedades con dano segun el caso de dano
     % for i = 1:length(no_elemento_a_danar)
     %     if  strcmp(caso_dano{i}, 'corrosion')
@@ -23,8 +23,8 @@ function [ke_d_total, ke_d] = switch_case_danos(no_elemento_a_danar, num_de_ele_
             % Bucle para cada elemento a dañar
             for i = 1:length(no_elemento_a_danar)
                 % Reducción de espesor por corrosión
-                index = find(num_de_ele_long(:,1) == i);
-                long_elem_a_danar = num_de_ele_long(index,2);
+                % index = find(num_de_ele_long(:,1) == i);
+                % long_elem_a_danar = num_de_ele_long(index,2);
                 prop_geom_mat = cell2mat(prop_geom);
                 t(i) = prop_geom_mat(no_elemento_a_danar(i),10); % Espesor extraido intacto
                 t_corro(i) = dano_porcentaje(i) * t(i) / 100; % Espesor que va a restar al espesor sin dano
@@ -33,14 +33,14 @@ function [ke_d_total, ke_d] = switch_case_danos(no_elemento_a_danar, num_de_ele_
                 D(i) = prop_geom_mat(no_elemento_a_danar(i),9);
                 D_d(i) = D(i) - (2*t_corro(i));
                 R_d(i) = 0.5 * D_d(i);
-                A1_d(i) = pi  * R_d(i)^2;
+                A1_d(i) = pi * R_d(i)^2;
                 R_interior_d(i) = 0.5 * (D_d(i) - (2*t_d(i)));
                 A2_d(i) = pi  * R_interior_d(i)^2;
                 A_d(i) = A1_d(i) - A2_d(i); % en mm^2
                 % Momento de inercia con daño
                 R_ext_d(i) = 0.5*D_d(i);
                 I_ext_d(i) = 1/4 * pi * R_ext_d(i)^4;
-                I_int_d(i) = 1/4 * pi *  R_interior_d(i)^4;
+                I_int_d(i) = 1/4 * pi * R_interior_d(i)^4;
                 I_d(i) = I_ext_d(i) - I_int_d(i);
                 % Momento polar del elemento con daño
                 j(i) = prop_geom_mat(no_elemento_a_danar(i),5);
@@ -67,4 +67,5 @@ function [ke_d_total, ke_d] = switch_case_danos(no_elemento_a_danar, num_de_ele_
         end
     end % Fin del ciclo for que itera sobre cada elemento a dañar
     ke_d_total = ke_d;
+    prop_geom_mat
 end

@@ -1,13 +1,19 @@
 function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
     L, ID, NE, elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G, ...
     vxz, elem_con_dano_long_NE,...
-    modos_cond_d)
+    modos_cond_d, prop_geom_mat)
     % Inicializa la variable objetivo
     Objetivo  = 0;
-    
     % Pesos para las funciones objetivo
-    w1 = 0.6;  % Peso al RMSE
-    w2 = 0.4;  % Peso al MACN
+    % w1 = 0.6;  % Peso al RMSE
+    % w2 = 0.4;  % Peso al MACN
+
+    % w1 = 1;  % Peso al RMSE
+    % w2 = 0;  % Peso al MACN
+
+    w1 = 0.5;  % Peso al RMSE
+    w2 = 0.5;  % Peso al MACN
+
     
     % Recorta las propiedades a la subestructura
     L_sub  = L(1:num_element_sub);   
@@ -26,10 +32,29 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
         % Matriz de rigidez local
         ke_AG = zeros(12,12);
         
-        % Aplica daño por corrosión
-        A_damaged  = A_sub(i)  * (1 - x(3*i - 2));  
-        Iy_damaged = Iy_sub(i) * (1 - x(3*i - 1)); 
-        Iz_damaged = Iz_sub(i) * (1 - x(3*i));
+        % % % Aplica daño por corrosión
+        % A_damaged  = A_sub(i)  * (1 - x(3*i - 2));  
+        % Iy_damaged = Iy_sub(i) * (1 - x(3*i - 1)); 
+        % Iz_damaged = Iz_sub(i) * (1 - x(3*i));
+
+        % % Aplica daño al espesor
+        t = prop_geom_mat(i,10);
+        t_corro = x(i) * t / 100; % Espesor que va a restar al espesor sin dano
+        t_d = t - t_corro; % Espesor ya reducido
+        % Área con corrosión
+        D = prop_geom_mat(i,9);
+        D_d = D - (2*t_corro);
+        R_d = 0.5 * D_d;
+        A1_d = pi * R_d^2;
+        R_interior_d = 0.5 * (D_d - (2*t_d));
+        A2_d = pi  * R_interior_d^2;
+        A_damaged = A1_d - A2_d; % en mm^2
+        % Momento de inercia con daño
+        R_ext_d = 0.5*D_d;
+        I_ext_d = 1/4 * pi * R_ext_d^4;
+        I_int_d = 1/4 * pi * R_interior_d^4;
+        Iy_damaged = I_ext_d - I_int_d;
+        Iz_damaged = Iy_damaged;        
 
         % Modifica los términos afectados en la matriz de rigidez local
         % Elementos de la diagonal principal
