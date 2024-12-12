@@ -11,9 +11,8 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
     % w1 = 1;  % Peso al RMSE
     % w2 = 0;  % Peso al MACN
 
-    w1 = 0.5;  % Peso al RMSE
-    w2 = 0.5;  % Peso al MACN
-
+    w1 = 5000;  % Peso al RMSE
+    w2 = 10;  % Peso al MACN
     
     % Recorta las propiedades a la subestructura
     L_sub  = L(1:num_element_sub);   
@@ -31,15 +30,10 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
     % for i = 1:1
         % Matriz de rigidez local
         ke_AG = zeros(12,12);
-        
-        % % % Aplica daño por corrosión
-        % A_damaged  = A_sub(i)  * (1 - x(3*i - 2));  
-        % Iy_damaged = Iy_sub(i) * (1 - x(3*i - 1)); 
-        % Iz_damaged = Iz_sub(i) * (1 - x(3*i));
 
         % % Aplica daño al espesor
         t = prop_geom_mat(i,10);
-        t_corro = x(i) * t / 100; % Espesor que va a restar al espesor sin dano
+        t_corro = x(i) * t; % Espesor que va a restar al espesor sin dano
         t_d = t - t_corro; % Espesor ya reducido
         % Área con corrosión
         D = prop_geom_mat(i,9);
@@ -50,8 +44,7 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
         A2_d = pi  * R_interior_d^2;
         A_damaged = A1_d - A2_d; % en mm^2
         % Momento de inercia con daño
-        R_ext_d = 0.5*D_d;
-        I_ext_d = 1/4 * pi * R_ext_d^4;
+        I_ext_d = 1/4 * pi * R_d^4;
         I_int_d = 1/4 * pi * R_interior_d^4;
         Iy_damaged = I_ext_d - I_int_d;
         Iz_damaged = Iy_damaged;        
@@ -109,16 +102,15 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
     real_modos_cond_d = isreal(modos_AG_cond);
     real_frec_cond_d  = isreal(frec_AG);
     if real_frec_cond_d == 0
-        frec_AG
-        i
-        x
+        print('Frecuencias con numeros imaginarios\n')
     end
 
     SumRMSEVal = 0;
     for i = 1:length(frec_AG)
-        SumRMSEVal = SumRMSEVal + (frec_AG(i) - frec_cond_d(i))^2;
+        % SumRMSEVal = SumRMSEVal + (frec_AG(i) - frec_cond_d(i))^2;
+        SumRMSEVal = SumRMSEVal + ((2*pi/frec_AG(i)) - (2*pi/frec_cond_d(i)))^2;
     end
-    RMSE = sqrt(SumRMSEVal / length(frec_AG));
+    RMSE = sqrt(SumRMSEVal / length(frec_AG));  
 
     % Calcular el MACN para formas modales
     macn_value = 0;
@@ -131,7 +123,7 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
     macn_value = macn_value / size(modos_cond_d, 2);  % Promedio de MACN
 
     % Combinar en una función objetivo ponderada
-    Objetivo = w1 * RMSE + w2 * (1 - macn_value);
+    Objetivo = w1 * RMSE + w2 * macn_value;
 end
 
 
