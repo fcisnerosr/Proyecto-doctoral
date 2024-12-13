@@ -19,9 +19,13 @@ pathfile        = 'E:\Archivos_Jaret\Mis_modificaciones\pruebas_excel\marco3Ddam
 % pathfile = '/home/francisco/Documents/Proyecto-doctoral/pruebas_excel/marco3Ddam0.xlsx';
 
 % Danos a elementos tubulares, caso de dano y su respectivo porcentaje
-no_elemento_a_danar = [35 36 37 38 39 40];
-caso_dano           = repmat({'corrosion'}, 1, 6);
-dano_porcentaje     = [30 30 30 30 30 30];
+% no_elemento_a_danar = [35 36 37 38 39 40];
+% caso_dano           = repmat({'corrosion'}, 1, 6);
+% dano_porcentaje     = [30 30 30 30 30 30];
+no_elemento_a_danar = 1;
+caso_dano           = repmat({'corrosion'}, 1, 1);
+dano_porcentaje     = 90;
+
 
 % Corregir de formato los números en la tabla importada de ETABS: En todo este bloque de código, se realizó el cambio de formato de los números, debido a que ETABS importa sus tablas en formato de texto en algunas columnas.
 % % % % correccion_format_TablaETABS(archivo_excel);
@@ -101,6 +105,8 @@ real_frec_cond_d  = isreal(frec_cond_d);  % Devuelve false
 disp(['La matriz modos_cond_d es completamente real: ', num2str(real_modos_cond_d)]);
 disp(['La matriz frec_cond_d es completamente real: ', num2str(real_frec_cond_d)]);
 
+
+
 %%
 clc
 % Implementación del Algoritmo Genetico (AG)
@@ -150,8 +156,8 @@ options.MutationFcn         = @mutationuniform;
 % Cómo Funciona: Durante la mutación, una pequena parte del código genético (representado por el vector x en tu caso) de un individuo se altera al azar. Esta alteración puede ser un cambio pequeno en el valor de una variable o un ajuste más significativo, dependiendo de cómo esté definida la función de mutación.
 options.UseParallel = 'always';
 % Graficas de monitoreo para ver el estado del AG durante todo su proceso
-% options = gaoptimset('PlotFcn', {@gaplotbestf, @gaplotbestindiv, @gaplotdistance, @gaplotrange, @gaplotstopping});
-options = gaoptimset('PlotFcn', {@gaplotbestindiv});
+options = gaoptimset('PlotFcn', {@gaplotbestf, @gaplotbestindiv, @gaplotdistance, @gaplotrange, @gaplotstopping});
+% options = gaoptimset('PlotFcn', {@gaplotbestindiv});
 % @gaplotbestf: Mejores valores de función
 % @gaplotbestindiv: Valores del mejor individuo por generación
 % @gaplotdistance: Distancia entre individuos en las soluciones de busqueda
@@ -160,7 +166,7 @@ options = gaoptimset('PlotFcn', {@gaplotbestindiv});
 
 % Definir los límites de daño
 LowerLim = 0.0;       % Daño mínimo permitido
-UpperLim = 0.30;      % Daño máximo permitido
+UpperLim = 0.9;      % Daño máximo permitido
 
 LB = zeros(long_x, 1);   % Todos los valores se inicializan con 0 (sin daño mínimo)
 UB = UpperLim * ones(long_x, 1);   % Todos los valores se inicializan con 0.50 (daño máximo permitido)

@@ -12,7 +12,7 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
     % w2 = 0;  % Peso al MACN
 
     w1 = 5000;  % Peso al RMSE
-    w2 = 10;  % Peso al MACN
+    w2 = 5000;  % Peso al COMAC
     
     % Recorta las propiedades a la subestructura
     L_sub  = L(1:num_element_sub);   
@@ -112,18 +112,44 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
     end
     RMSE = sqrt(SumRMSEVal / length(frec_AG));  
 
-    % Calcular el MACN para formas modales
-    macn_value = 0;
-    for i = 1:size(modos_cond_d, 2)
-        num = (modos_cond_d(:,i)' * modos_AG_cond(:,i))^2;
-        den = (modos_cond_d(:,i)' * modos_cond_d(:,i)) * (modos_AG_cond(:,i)' * modos_AG_cond(:,i));
-        MAC_value = num / den;
-        macn_value = macn_value + sqrt((1 - MAC_value) / MAC_value);
-    end
-    macn_value = macn_value / size(modos_cond_d, 2);  % Promedio de MACN
+    % % Calcular el MACN para formas modales
+    % macn_value = 0;
+    % for i = 1:size(modos_cond_d, 2)
+    %     num = (modos_cond_d(:,i)' * modos_AG_cond(:,i))^2;
+    %     den = (modos_cond_d(:,i)' * modos_cond_d(:,i)) * (modos_AG_cond(:,i)' * modos_AG_cond(:,i));
+    %     MAC_value = num / den;
+    %     macn_value = macn_value + sqrt((1 - MAC_value) / MAC_value);
+    % end
+    % macn_value = macn_value / size(modos_cond_d, 2);  % Promedio de MACN
 
-    % Combinar en una función objetivo ponderada
-    Objetivo = w1 * RMSE + w2 * macn_value;
+    % [num_nodos, num_modos] = size(modos_cond_d);
+    % 
+    % % Inicializar matriz COMAC
+    % comac = zeros(num_nodos, num_modos);
+    % 
+    % % Calcular el COMAC para cada nodo y cada modo
+    % for j = 1:num_modos
+    %     for i = 1:num_nodos
+    %         numerador = sum(modos_cond_d(i,j) * modos_AG_cond(i,j));
+    %         denominador = sqrt(sum(modos_cond_d(i,j)^2) * sum(modos_AG_cond(i,j)^2));
+    %         comac(i,j) = (numerador / denominador)^2
+    %     end
+    % end
+    % Calcular el CoMAC para cada nodo en cada modo
+    comac_values = zeros(size(modos_AG_cond, 1), size(modos_cond_d, 2));
+    for i = 1:size(modos_cond_d, 2)
+        for node = 1:size(modos_AG_cond, 1)
+            num = (modos_cond_d(node, i) * modos_AG_cond(node, i))^2;
+            den = (modos_cond_d(node, i)^2) * (modos_AG_cond(node, i)^2);
+            comac_values(node, i) = num / den;
+        end
+    end
+    
+    % Calcular una métrica escalar a partir del vector CoMAC
+    comac_metric = sum(sum((1 - comac_values).^2));
+
+    % Usar la métrica CoMAC en la función objetivo
+    Objetivo = (w1 * RMSE) + (w2 * comac_metric);
 end
 
 
