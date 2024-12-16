@@ -39,7 +39,7 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
 
         % % Aplica daño al espesor
         t = prop_geom_mat(i,10);
-        t_corro = x(i) * t / 100; % Espesor que va a restar al espesor sin dano
+        t_corro = x(i) * t; % Espesor que va a restar al espesor sin dano
         t_d = t - t_corro; % Espesor ya reducido
         % Área con corrosión
         D = prop_geom_mat(i,9);
