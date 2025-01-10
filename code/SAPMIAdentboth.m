@@ -6,6 +6,7 @@ tic
 format shortG
 
 % Datos iniciales de entrada
+% archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\Datos_nudos_elementos_secciones_masas_nuevo_pend1a8_vigasI.xlsx';
 archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\Datos_nudos_elementos_secciones_masas_nuevo_pend1a8_vigasI.xlsx';
 % archivo_excel = '/home/francisco/Documents/Proyecto-doctoral/pruebas_excel/Datos_nudos_elementos_secciones_masas_nuevo_pend1a8_vigasI.xlsx';
 tirante         = 87000;    % en mm
@@ -21,19 +22,9 @@ pathfile        = 'E:\Archivos_Jaret\Mis_modificaciones\pruebas_excel\marco3Ddam
 % pathfile = '/home/francisco/Documents/Proyecto-doctoral/pruebas_excel/marco3Ddam0.xlsx';
 
 % Danos a elementos tubulares, caso de dano y su respectivo porcentaje
-<<<<<<< HEAD
-% no_elemento_a_danar = [35 36 37 38 39 40];
-% caso_dano           = repmat({'corrosion'}, 1, 6);
-% dano_porcentaje     = [30 30 30 30 30 30];
 no_elemento_a_danar = 1;
-caso_dano           = repmat({'corrosion'}, 1, 1);
-dano_porcentaje     = 90;
-
-=======
-no_elemento_a_danar = 1:30;
 caso_dano           = repmat({'corrosion'}, 1, length(no_elemento_a_danar));
-dano_porcentaje     = ones(1,30) * 30;
->>>>>>> AG_experimentos_001
+dano_porcentaje     = ones(1,length(no_elemento_a_danar)) * length(no_elemento_a_danar);
 
 % Corregir de formato los números en la tabla importada de ETABS: En todo este bloque de código, se realizó el cambio de formato de los números, debido a que ETABS importa sus tablas en formato de texto en algunas columnas.
 % % % % correccion_format_TablaETABS(archivo_excel);
@@ -130,16 +121,8 @@ num_element_sub = 116;
 % vector de danos %
 long_x = 1 * num_element_sub;
 
-<<<<<<< HEAD
-
-% Samples     = 1;
-Samples     = 18000;
-% Generations = 1;
+Samples     = 100;
 Generations = 200;
-=======
-Samples     = 300;
-Generations = 150;
->>>>>>> AG_experimentos_001
 Nvar        = long_x;        % numero de variables que va a tener la variable de dano x. Son 116 elementos de la subestructura * 3 variables de dano de la corrosion = long_x
 options                 = gaoptimset(@ga);          % gaoptimset es para crear las configuraciones específicas para el AG
 options.PopulationSize  = Samples;
@@ -151,7 +134,6 @@ options.OutputFcn       = @gaoutfun;  % Añade la función de salida para mostra
 % Configuraciones específicas del AG
 % Este bloque de código configura funciones específicas que controlan el comportamiento de varios procesos dentro del Algoritmo Genético (GA) en MATLAB. Cada opción define una función que el GA utilizará para diferentes aspectos del proceso de evolución, como la creación de la población inicial, la selección de individuos, la mutación, y si se debe usar o no procesamiento paralelo.
 % el @ le dice al campo de options que haga uso de la función después de @
-<<<<<<< HEAD
 options.CreationFcn         = @gacreationlinearfeasible;  % esta línea del dice al AG cómo debe crear la primera generación de los individuos. @gacreationlinearfeasible hace que la primera generación de individuos cumplan con cualquier restricción lineal que defina en el problema. Esto asegura que el AG comience desde un inicio con soluciones válidas y así poder aumentar las probabilidades de que devuelva una respuesta correcta cuando el AG finalice
 
 % options.FitnessScalingFcn = @fitscalingrank;         % Asigna rangos a los individuos según su aptitud en lugar de escalar los valores directamente, reduciendo el impacto de las grandes diferencias de aptitud y evitando convergencia prematura.
@@ -167,7 +149,7 @@ options.CrossoverFcn = @crossovertwopoint; % Cruce de dos puntos
 
 options.MutationFcn         = @mutationadaptfeasible;     % Configura cómo se llevará a cabo la mutación. Función de Mutación Adaptativa Factible: mutationadaptfeasible es una función específica de MATLAB que realiza mutaciones de manera adaptativa. Aquí está lo que hace: Adaptativa: La mutación es adaptativa porque ajusta el grado de mutación dependiendo del progreso del GA. Si el algoritmo está haciendo buenos progresos, la mutación puede ser menos agresiva. Si no está haciendo mucho progreso, la mutación puede volverse más agresiva para explorar nuevas áreas del espacio de soluciones. Factibilidad: La mutación se realiza de tal manera que los individuos mutados aún cumplen con cualquier restricción del problema. Esto es crucial para asegurarse de que las soluciones mutadas sigan siendo válidas dentro del espacio de búsqueda permitido.
 % options.MutationFcn         = @mutationuniform;
-=======
+
 options.CreationFcn         = @gacreationlinearfeasible;    % Genera la población inicial asegurando que cumpla con restricciones lineales
 options.EliteCount          = 2;                            % Preserva los 2 mejores individuos en cada generación para evitar perder buenas soluciones
 options.FitnessScalingFcn = @fitscalingrank;         % Asigna rangos a los individuos según su aptitud en lugar de escalar los valores directamente, reduciendo el impacto de las grandes diferencias de aptitud y evitando convergencia prematura.
@@ -192,18 +174,15 @@ options.SelectionFcn = {@selectiontournament, 3}; % Torneo con 3 individuos para
 options.MutationFcn = {@mutationuniform, 0.0001}; % Solo el 0.01% de las variables mutará
 
 
->>>>>>> AG_experimentos_001
 % Propósito de la Mutación: La mutación es una operación que introduce variación en los individuos de una población. Es esencial para mantener la diversidad genética, permitiendo que el algoritmo explore nuevas soluciones que no estaban presentes en la población original.
 % Cómo Funciona: Durante la mutación, una pequena parte del código genético (representado por el vector x en tu caso) de un individuo se altera al azar. Esta alteración puede ser un cambio pequeno en el valor de una variable o un ajuste más significativo, dependiendo de cómo esté definida la función de mutación.
 options.UseParallel = 'always';
 % Graficas de monitoreo para ver el estado del AG durante todo su proceso
-<<<<<<< HEAD
 options = gaoptimset('PlotFcn', {@gaplotbestf, @gaplotbestindiv, @gaplotdistance, @gaplotrange, @gaplotstopping});
 options.OutputFcn = @gaoutfun;
 % options = gaoptimset('PlotFcn', {@gaplotbestindiv});
-=======
 % options = gaoptimset('PlotFcn', {@gaplotbestf, @gaplotbestindiv, @gaplotdistance, @gaplotrange, @gaplotstopping});
->>>>>>> AG_experimentos_001
+
 % @gaplotbestf: Mejores valores de función
 % @gaplotbestindiv: Valores del mejor individuo por generación
 % @gaplotdistance: Distancia entre individuos en las soluciones de busqueda
@@ -212,11 +191,7 @@ options.OutputFcn = @gaoutfun;
 
 % Definir los límites de daño
 LowerLim = 0.0;       % Daño mínimo permitido
-<<<<<<< HEAD
 UpperLim = 0.9;      % Daño máximo permitido
-=======
-UpperLim = 0.30;      % Daño máximo permitido
->>>>>>> AG_experimentos_001
 
 LB = LowerLim * ones(long_x, 1);  % Límite inferior
 UB = UpperLim * ones(long_x, 1);  % Límite superior
@@ -243,9 +218,6 @@ comac_ref = ones(nodos, modos);  % COMAC de referencia, asumimos valores ideales
 [x,fval,exitflag,output,population,scores] = ga(@(x)RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
         L, ID, NE, elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G, ...
         vxz, elem_con_dano_long_NE,...
-<<<<<<< HEAD
-        modos_cond_d, prop_geom_mat, comac_values, comac_ref, nodos, modos),Nvar,[],[],[],[],LB,UB,[],options);
-=======
         modos_cond_d, prop_geom_mat, no_elemento_a_danar),Nvar,[],[],[],[],LB,UB,[],options);
 
 % Crear la gráfica de barras
@@ -254,7 +226,6 @@ bar(x*100);   % Genera la gráfica de barras
 title('Mejor individuo');  % Título de la gráfica
 xlabel('Elemento con daño');                % Etiqueta del eje X
 ylabel('Porcentaje con daño');                        % Etiqueta del eje Y
->>>>>>> AG_experimentos_001
 toc;
 % 
 % % % Datos de salida de la funcion ga (Algoritmo Genético de MATLAB):
