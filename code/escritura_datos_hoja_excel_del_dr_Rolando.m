@@ -1,4 +1,5 @@
-function  [] = escritura_datos_hoja_excel_del_dr_Rolando(coordenadas, conectividad, prop_geom, matriz_restriccion,masas_en_cada_nodo)
+% function  [] = escritura_datos_hoja_excel_del_dr_Rolando(coordenadas, conectividad, prop_geom, matriz_restriccion,masas_en_cada_nodo)
+    function  [] = escritura_datos_hoja_excel_del_dr_Rolando(coordenadas, conectividad, prop_geom, matriz_restriccion)
 %% Armado de la matriz de masas completa, ya con las modificaciones de la m. atrapada, crec. marino y la m. adherida
     % Limpiar datos de las pestañas a actualizar del dr. Rolando
     % Nombre del archivo Excel y nombre de la hoja
@@ -21,5 +22,5 @@ function  [] = escritura_datos_hoja_excel_del_dr_Rolando(coordenadas, conectivid
     xlswrite(documento_excel_dr_Rolando, conectividad, 'conectividad');
     xlswrite(documento_excel_dr_Rolando, prop_geom, 'prop geom');
     xlswrite(documento_excel_dr_Rolando, matriz_restriccion, 'fix nodes');
-    xlswrite(documento_excel_dr_Rolando, masas_en_cada_nodo, 'masses');   
+    % xlswrite(documento_excel_dr_Rolando, masas_en_cada_nodo, 'masses');   
 end
