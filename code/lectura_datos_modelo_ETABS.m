@@ -3,29 +3,29 @@ function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_
     %% BLOQUE: Nodos y sus coordenadas (coordenadas)
     hoja_excel = 'Point Object Connectivity';
     coordenadas_crudo = xlsread(archivo_excel, hoja_excel, '');
-    coordenadas_crudo(:,2:5) = [];
+    % coordenadas_crudo(:,2:5) = [];                    % Se descartan los elementos que no son numeros
     coordenadas = sortrows(coordenadas_crudo, 1);     % Matriz con todos los nodos y sus coordenadas X, Y, Z
-    
+
     %% SECCIÓN: pestaña "conectividad"
     %% BLOQUE: extracción de qué nudos está cada viga y columna del modelo (conectividad)
     % Extracción de datos de las vigas
     hoja_excel = 'Beam Object Connectivity';
     vigas = xlsread (archivo_excel, hoja_excel, '');
-    vigas(:,2:3) = [];
+    % vigas(:,2:3) = [];
     vigas_conectividad = vigas;      % entre qué nodos están las vigas y su longitud
     % Extracción de datos de las columas (tanto en la subestructura como en al superestructura)
     hoja_excel = 'Brace Object Connectivity'; % pestaña con elementos diagonales (generalmente ubicados en la subestructura)
     col_diag = xlsread (archivo_excel, hoja_excel, '');
-    col_diag(:,2:3) = [];
+    % col_diag(:,2:3) = [];
     col_diag_conectividad = col_diag;      % entre qué nodos están las columnas diagonales y su longitud
     hoja_excel = 'Column Object Connectivity'; % pestaña con columnas rectas (generalmente ubicados en la superestructura)
     col = xlsread (archivo_excel, hoja_excel, '');
-    col(:,2:3) = [];
+    % col(:,2:3) = [];
     col_conectividad = col;      % entre qué nodos están las columnas diagonales y su longitud
     % Concatenación de las vigas y columnas
     conectividad = vertcat(vigas_conectividad, col_diag_conectividad,col_conectividad);   % Matriz con todos los elementos y entre qué y qué nodos está conectados
     conectividad = sortrows(conectividad, 1);                           % Matriz organizada con todos los elementos y entre qué nudos está cada elemento frame
-    conectividad = conectividad(:,1:3);
+    % conectividad = conectividad(:,1:3);
 
     %% SECCIÓN: pestaña "prop geom"
     %% BLOQUE: Estracción de módulos de elasticidad y cortante (E y G)
@@ -57,7 +57,7 @@ function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_
     num_filas = size(vector_organizado_con_propiedades, 1);
     E = E * ones(num_filas, 1);
     G = G * ones(num_filas, 1);
-    
+
     %% BLOQUE: Estracción de módulos de elasticidad y cortante (E y G)
     % Concatenación de la matriz "vector_organizado_con_propiedades" y los dos vectores columna E y G
     vector_organizado_con_propiedades = [cell2mat(vector_organizado_con_propiedades), E, G];
@@ -77,6 +77,7 @@ function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_
     secciones_cada_elemento = tabla_Frame_Assigns_Sect_Prop.SectionProperty;
     unique_name = num2cell(tabla_Frame_Assigns_Sect_Prop.UniqueName);               % Vector columna con todos los "unique name" de cada elemento frame
     matriz_cell_secciones = horzcat(unique_name, secciones_cada_elemento);
+    matriz_cell_secciones(:,1) = [];
     matriz_cell_secciones = sortrows(matriz_cell_secciones, 1);                     % Los elementos se extraen desorganizadamente, por lo que se ordena en esta línea
 
     %% BLOQUE: Áreas, inercia, mom. polar, elasticidades y corte (propiedades)
@@ -87,7 +88,8 @@ function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_
     % Proceso de iteración sobre cada fila de matriz_cell_secciones
     for i = 1:size(matriz_cell_secciones, 1)
         % Obtener el valor de la primera columna de la fila actual
-        seccion_actual = matriz_cell_secciones{i, 2};
+        % seccion_actual = matriz_cell_secciones{i, 2};   & ajustes por cambio de Jacket a marco
+        seccion_actual = matriz_cell_secciones{i, 1};
         % Buscar la fila correspondiente en cell_seccion
         idx = find(strcmp(seccion_actual, cell_seccion(:, 1)));
         % Asignar los valores de cell_seccion a la matriz de salida
@@ -96,12 +98,12 @@ function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_
             prop_geom{i, 2} = cell_seccion{idx, 3};
             prop_geom{i, 3} = cell_seccion{idx, 4};
             prop_geom{i, 4} = cell_seccion{idx, 5};
-            prop_geom{i, 5} = cell_seccion{idx, 6};
-            prop_geom{i, 6} = cell_seccion{idx, 7};
+            % prop_geom{i, 5} = cell_seccion{idx, 6};   & ajustes por cambio de Jacket a marco
+            % prop_geom{i, 6} = cell_seccion{idx, 7};   & ajustes por cambio de Jacket a marco
         end
     end
     propiedades = prop_geom;
-    
+
     %% BLOQUE: Columnas adicionales de tabla (wo_vector, gamma_beta_vector, tipo)
     % Creación de vector 'wo'
     wo_vector = cell(length(prop_geom),1);
@@ -207,72 +209,84 @@ function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_
     UniqueName = tabla_frame_assigns_summary_tube_super(:,1);
     diam_diam_thick_tube_super = horzcat(UniqueName, vector_diametros_tube_super, vector_diametros_tube_super, vector_thickness_tube_super);
 
-    % SUBLOQUE: Diámetros y espesores de los elementos IR de la superestructura (vector_diametros_I y vector_thickness_I)
-    hoja_excel = 'Frame Sec Def - Steel I';
-    tabla_diam_thick_I = readtable(archivo_excel, 'Sheet', hoja_excel);
-    tabla_diam_thick_I(1,:) = [];
-    tabla_diam_thick_I(:,1:4) = [];
-    tabla_diam_thick_I(:,3) = [];
-    tabla_diam_thick_I(:,3) = [];
-    tabla_diam_thick_I(:,4:end) = [];
-    hoja_excel = 'Frame Assigns - Summary';    
-    tabla_frame_assigns_summary_I = readtable(archivo_excel, 'Sheet', hoja_excel);
-    tabla_frame_assigns_summary_I(1,:) = [];
-    tabla_a_filtrar = readtable(archivo_excel, 'Sheet', hoja_excel);
-    indices = ~contains(tabla_a_filtrar.Story, 'Story');
-    tabla_filtrada = tabla_a_filtrar(indices, :);
-    tabla_filtrada(1,:) = [];
-    tabla_filtrada = sortrows(tabla_filtrada, {'DesignType', 'UniqueName'});
-    indices = ~contains(tabla_filtrada.Label, 'C');
-    tabla_filtrada = tabla_filtrada(indices, :);
-    tabla_frame_assigns_summary_I = tabla_filtrada;
-    tabla_frame_assigns_summary_I(:,1:2) = [];
-    tabla_frame_assigns_summary_I(:,2:4) = [];
-    tabla_frame_assigns_summary_I(:,3:end) = [];
-    tabla_frame_assigns_summary_I = sortrows(tabla_frame_assigns_summary_I);
-    vector_diametros_I = zeros(height(tabla_frame_assigns_summary_I), 1);
-    vector_thickness_I = zeros(height(tabla_frame_assigns_summary_I), 1);
-    % Recorrer cada fila de tabla_frame_assigns_summary_I
-    for i = 1:height(tabla_frame_assigns_summary_I)
-        % Obtener el DesignSection de la fila actual
-        design_section = tabla_frame_assigns_summary_I.DesignSection{i};
-        % Encontrar la fila correspondiente en tabla_diam_thick
-        indice = find(strcmp(tabla_diam_thick_I.SectionInFile, design_section));
-        % Extraer OutsideDiameter y WallThickness
-        if ~isempty(indice)
-            vector_diametros_I(i) = tabla_diam_thick_I.TotalDepth(indice);
-            vector_thickness_I(i) = tabla_diam_thick_I.WebThickness(indice);
-        else
-            % Si el DesignSection no se encuentra, puedes asignar un valor por defecto o manejarlo según sea necesario
-            vector_diametros_I(i) = NaN;
-            vector_thickness_I(i) = NaN;
-        end
-    end
-    vector_diametros_I = num2cell(vector_diametros_I);
-    vector_thickness_I = num2cell(vector_thickness_I);
-    UniqueName = tabla_frame_assigns_summary_I(:,1);
-    diam_diam_thick_I = horzcat(UniqueName, vector_diametros_I, vector_diametros_I, vector_thickness_I);
-    diam_diam_th = vertcat(diam_diam_thick_tube_sub, diam_diam_thick_tube_super, diam_diam_thick_I);
-    diam_diam_th = sortrows(diam_diam_th);
-    diam_diam_th = table2cell(diam_diam_th);
-    diam_diam_th(:,1) = [];
+    %%% Parte comentada - inicio: en el marco no hay vigas en I
+    % % SUBLOQUE: Diámetros y espesores de los elementos IR de la superestructura (vector_diametros_I y vector_thickness_I)
+    % hoja_excel = 'Frame Sec Def - Steel I';
+    % tabla_diam_thick_I = readtable(archivo_excel, 'Sheet', hoja_excel);
+    % tabla_diam_thick_I(1,:) = [];
+    % tabla_diam_thick_I(:,1:4) = [];
+    % tabla_diam_thick_I(:,3) = [];
+    % tabla_diam_thick_I(:,3) = [];
+    % tabla_diam_thick_I(:,4:end) = [];
+    % hoja_excel = 'Frame Assigns - Summary';    
+    % tabla_frame_assigns_summary_I = readtable(archivo_excel, 'Sheet', hoja_excel);
+    % tabla_frame_assigns_summary_I(1,:) = [];
+    % tabla_a_filtrar = readtable(archivo_excel, 'Sheet', hoja_excel);
+    % indices = ~contains(tabla_a_filtrar.Story, 'Story');
+    % tabla_filtrada = tabla_a_filtrar(indices, :);
+    % tabla_filtrada(1,:) = [];
+    % tabla_filtrada = sortrows(tabla_filtrada, {'DesignType', 'UniqueName'});
+    % indices = ~contains(tabla_filtrada.Label, 'C');
+    % tabla_filtrada = tabla_filtrada(indices, :);
+    % tabla_frame_assigns_summary_I = tabla_filtrada;
+    % tabla_frame_assigns_summary_I(:,1:2) = [];
+    % tabla_frame_assigns_summary_I(:,2:4) = [];
+    % tabla_frame_assigns_summary_I(:,3:end) = [];
+    % tabla_frame_assigns_summary_I = sortrows(tabla_frame_assigns_summary_I);
+    % vector_diametros_I = zeros(height(tabla_frame_assigns_summary_I), 1);
+    % vector_thickness_I = zeros(height(tabla_frame_assigns_summary_I), 1);
+    % % Recorrer cada fila de tabla_frame_assigns_summary_I
+    % for i = 1:height(tabla_frame_assigns_summary_I)
+    %     % Obtener el DesignSection de la fila actual
+    %     design_section = tabla_frame_assigns_summary_I.DesignSection{i};
+    %     % Encontrar la fila correspondiente en tabla_diam_thick
+    %     indice = find(strcmp(tabla_diam_thick_I.SectionInFile, design_section));
+    %     % Extraer OutsideDiameter y WallThickness
+    %     if ~isempty(indice)
+    %         vector_diametros_I(i) = tabla_diam_thick_I.TotalDepth(indice);
+    %         vector_thickness_I(i) = tabla_diam_thick_I.WebThickness(indice);
+    %     else
+    %         % Si el DesignSection no se encuentra, puedes asignar un valor por defecto o manejarlo según sea necesario
+    %         vector_diametros_I(i) = NaN;
+    %         vector_thickness_I(i) = NaN;
+    %     end
+    % end
+    % vector_diametros_I = num2cell(vector_diametros_I);
+    % vector_thickness_I = num2cell(vector_thickness_I);
+    % UniqueName = tabla_frame_assigns_summary_I(:,1);
+    % diam_diam_thick_I = horzcat(UniqueName, vector_diametros_I, vector_diametros_I, vector_thickness_I);
+    % diam_diam_th = vertcat(diam_diam_thick_tube_sub, diam_diam_thick_tube_super, diam_diam_thick_I);
+    % diam_diam_th = sortrows(diam_diam_th);
+    % diam_diam_th = table2cell(diam_diam_th);
+    % diam_diam_th(:,1) = [];
+    %%% Parte comentada - fin: en el marco no hay vigas en I
 
     % SUBLOQUE: Pasos finales (prop_geom)
     % Concatenación final y conversión final de los cell arrays en matrices
+        % Se realizan algunos ajustes finales para ahora que se cambio la estructura a un marco sencillo
     elementos = matriz_cell_secciones(:,1);
-    elementos = cell2mat(elementos);
-    prop_geom = cell2mat(prop_geom);
-    prop_geom = horzcat(elementos, prop_geom);
+    elementos = string(elementos);
+    prop_geom = cellfun(@num2str, prop_geom, 'UniformOutput', false);
+    prop_geom = string(prop_geom);
+    prop_geom =  [elementos, prop_geom];
+    prop_geom(1,:) = [];
     prop_geom = sortrows(prop_geom);            % Matriz organizada con cada elemento y sus propiedades extraídas del ETABS
-    prop_geom = num2cell(prop_geom);    
+    prop_geom = num2cell(prop_geom)
     % Concatenación final de la matriz de diámetros y espesores
-    prop_geom = horzcat(prop_geom, tipo, wo_vector, diam_diam_th, gamma_beta_vector);
+    % prop_geom = horzcat(prop_geom, tipo, wo_vector, diam_diam_th, gamma_beta_vector); % ajustes por cambio de Jacket a marco, se omitio diam_diam_th
+    % Algunos ajustes extras para realizar correctamente la concatenacion
+    tipo(1,:) = [];
+    wo_vector(1,:) = [];
+    gamma_beta_vector(1,:) = [];
+    prop_geom = horzcat(prop_geom, tipo, wo_vector, gamma_beta_vector);
 
     %% SECCION: pestaña "fix nodes"
     hoja_excel = 'Joint Assigns - Restraints';
-    nodos_restringidos = xlsread(archivo_excel, hoja_excel, 'C:C', 'C:C');
-    nodos_restringidos = nodos_restringidos(:,1);
-    matriz_restriccion = ones(length(nodos_restringidos),6);
+    nodos_restringidos = readmatrix(archivo_excel, 'Sheet', hoja_excel);
+    nodos_restringidos = nodos_restringidos(any(~isnan(nodos_restringidos), 2), :);
+    nodos_restringidos(:,1) = [];
+    nodos_restringidos = nodos_restringidos(:, 1:2);
+    matriz_restriccion = ones(length(nodos_restringidos),6);                % se les agrega numeros porque asi va la estructura de las hojas de excel del dr. Rolando Salgado
     matriz_restriccion = horzcat(nodos_restringidos, matriz_restriccion);
 
     %% SECCION: pestaña "vxz"

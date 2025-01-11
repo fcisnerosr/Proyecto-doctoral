@@ -6,9 +6,9 @@ tic
 format shortG
 
 % Datos iniciales de entrada
+archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\marco_elementos_inclinados.xlsx';
 % archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\Datos_nudos_elementos_secciones_masas_nuevo_pend1a8_vigasI.xlsx';
-archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\Datos_nudos_elementos_secciones_masas_nuevo_pend1a8_vigasI.xlsx';
-% archivo_excel = '/home/francisco/Documents/Proyecto-doctoral/pruebas_excel/Datos_nudos_elementos_secciones_masas_nuevo_pend1a8_vigasI.xlsx';
+% archivo_excel = '/home/francisco/Documents/Proyecto-doctoral/pruebas_excel/marco_elementos_inclinados.xlsx';
 tirante         = 87000;    % en mm
 tiempo          = 03;       % en anos
 d_agua          = 1.07487 * 10^-8; % unidades de la densidad del agua en N/mm^3
@@ -39,16 +39,19 @@ dano_porcentaje     = ones(1,length(no_elemento_a_danar)) * length(no_elemento_a
 % Lectura de datos del modelo de ETABS
 [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_secciones] = lectura_datos_modelo_ETABS(archivo_excel);
 
+
 % % Modificación de la matriz de masas
 % [masas_en_cada_nodo]                                                                      = modificacion_matriz_masas(archivo_excel, tirante, d_agua, matriz_cell_secciones, tiempo, densidad_crec);
-% 
-% Escritura de los datos hacia la hoja de excel del Dr. Rolando
+%%
+% masas_en_cada_nodo = modificacion_matriz_masas_estructura_sencilla(archivo_excel);
+
+% % Escritura de los datos hacia la hoja de excel del Dr. Rolando
 % escritura_datos_hoja_excel_del_dr_Rolando(coordenadas, conectividad, prop_geom, matriz_restriccion,masas_en_cada_nodo);
-escritura_datos_hoja_excel_del_dr_Rolando(coordenadas, conectividad, prop_geom, matriz_restriccion);
-%
+% escritura_datos_hoja_excel_del_dr_Rolando(coordenadas, conectividad, prop_geom, matriz_restriccion);
+
 % % Matriz de masas completa y condensada
 % [M_cond] = Matriz_M_completa_y_condensada(masas_en_cada_nodo);
-% 
+
 % % Lectura de datos de la hoja de EXCEL del dr. Rolando para la función "Ensamblaje de matrices globales"
 % [NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, E, G, vxz, ID, KG, KGtu] = lectura_hoja_excel(pathfile);
 % % clearvars -except archivo_excel tirante tiempo d_agua densidad_crec pathfile no_elemento_a_danar caso_dano dano_porcentaje coordenadas vxz conectividad prop_geom matriz_restriccion matriz_cell_secciones masas_en_cada_nodo M_cond NE IDmax NEn elements nodes damele eledent A Iy Iz J E G ID KG KGtu hoja_excel vigas_long brac_long col_long num_de_ele_long
