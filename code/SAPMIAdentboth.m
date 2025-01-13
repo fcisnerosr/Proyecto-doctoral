@@ -40,13 +40,12 @@ dano_porcentaje     = ones(1,length(no_elemento_a_danar)) * length(no_elemento_a
 [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_secciones] = lectura_datos_modelo_ETABS(archivo_excel);
 
 
-% % Modificación de la matriz de masas
-% [masas_en_cada_nodo]                                                                      = modificacion_matriz_masas(archivo_excel, tirante, d_agua, matriz_cell_secciones, tiempo, densidad_crec);
-%%
-% masas_en_cada_nodo = modificacion_matriz_masas_estructura_sencilla(archivo_excel);
+% Modificación de la matriz de masas
+% [masas_en_cada_nodo] = modificacion_matriz_masas(archivo_excel, tirante, d_agua, matriz_cell_secciones, tiempo, densidad_crec);
+[masas_en_cada_nodo] = modificacion_matriz_masas_estructura_sencilla(archivo_excel);
 
-% % Escritura de los datos hacia la hoja de excel del Dr. Rolando
-% escritura_datos_hoja_excel_del_dr_Rolando(coordenadas, conectividad, prop_geom, matriz_restriccion,masas_en_cada_nodo);
+% Escritura de los datos hacia la hoja de excel del Dr. Rolando
+escritura_datos_hoja_excel_del_dr_Rolando(coordenadas, conectividad, prop_geom, matriz_restriccion, masas_en_cada_nodo);
 % escritura_datos_hoja_excel_del_dr_Rolando(coordenadas, conectividad, prop_geom, matriz_restriccion);
 
 % % Matriz de masas completa y condensada

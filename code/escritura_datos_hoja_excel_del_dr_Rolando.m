@@ -1,5 +1,4 @@
-% function  [] = escritura_datos_hoja_excel_del_dr_Rolando(coordenadas, conectividad, prop_geom, matriz_restriccion,masas_en_cada_nodo)
-    function  [] = escritura_datos_hoja_excel_del_dr_Rolando(coordenadas, conectividad, prop_geom, matriz_restriccion)
+function  [] = escritura_datos_hoja_excel_del_dr_Rolando(coordenadas, conectividad, prop_geom, matriz_restriccion,masas_en_cada_nodo)
 %% Armado de la matriz de masas completa, ya con las modificaciones de la m. atrapada, crec. marino y la m. adherida
     % Limpiar datos de las pestañas a actualizar del dr. Rolando
     % Nombre del archivo Excel y nombre de la hoja

@@ -271,7 +271,7 @@ function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_
     prop_geom =  [elementos, prop_geom];
     prop_geom(1,:) = [];
     prop_geom = sortrows(prop_geom);            % Matriz organizada con cada elemento y sus propiedades extraídas del ETABS
-    prop_geom = num2cell(prop_geom)
+    prop_geom = num2cell(prop_geom);
     % Concatenación final de la matriz de diámetros y espesores
     % prop_geom = horzcat(prop_geom, tipo, wo_vector, diam_diam_th, gamma_beta_vector); % ajustes por cambio de Jacket a marco, se omitio diam_diam_th
     % Algunos ajustes extras para realizar correctamente la concatenacion
