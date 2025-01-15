@@ -7,10 +7,10 @@ function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_
     coordenadas = sortrows(coordenadas_crudo, 1);   % Extraccion de matriz de tabla de pestana de excel
     % proceso de limpieza de datos para armar correctamente la matriz para la hoja del dr Rolando
     primer_col = coordenadas(:,1);
-    primer_col = primer_col(~isnan(primer_col));
+    primer_col = primer_col(~isnan(primer_col))
     coordenadas_num = coordenadas(:, 6:8);
     coordenadas_num = coordenadas_num(~any(isnan(coordenadas_num), 2), :);
-    coordenadas = horzcat(primer_col, coordenadas_num);
+    coordenadas = horzcat(primer_col, coordenadas_num)
 
     %% SECCIÓN: pestaña "conectividad"
     %% BLOQUE: extracción de qué nudos está cada viga y columna del modelo (conectividad)
