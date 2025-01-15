@@ -224,43 +224,44 @@ dano_porcentaje     = ones(1,length(no_elemento_a_danar)) * length(no_elemento_a
     UniqueName = tabla_frame_assigns_summary(:,1);
     diam_diam_thick_tube_sub = horzcat(UniqueName, vector_diametros_sub, vector_diametros_sub, vector_thickness_sub);
 
-    % SUBLOQUE: Diámetros y espesores de los elementos elementos tubulares de la superestructura (vector_diametros_tube_super y vector_thickness__tube_super)
-    hoja_excel = 'Frame Assigns - Summary';
-    tabla_frame_assigns_summary = readtable(archivo_excel, 'Sheet', hoja_excel);
-    tabla_frame_assigns_summary(1,:) = [];
-    tabla_a_filtrar = readtable(archivo_excel, 'Sheet', hoja_excel);
-    tabla_a_filtrar(1,:) = [];
-    indices = ~contains(tabla_a_filtrar.Story, 'Story');
-    tabla_filtrada = tabla_a_filtrar(indices, :);
-    indices = ~contains(tabla_filtrada.DesignType, 'Beam');
-    tabla_filtrada = tabla_filtrada(indices, :);
-    tabla_frame_assigns_summary_tube_super = tabla_filtrada;
-    tabla_frame_assigns_summary_tube_super(:,1:2) = [];
-    tabla_frame_assigns_summary_tube_super(:,2:4) = [];
-    tabla_frame_assigns_summary_tube_super(:,3:end) = [];
-    % luego se realiza una asignación y de cada elemento y sección con su diámetro y su espesor
-    vector_diametros_tube_super = zeros(height(tabla_frame_assigns_summary_tube_super), 1);
-    vector_thickness_tube_super = zeros(height(tabla_frame_assigns_summary_tube_super), 1);
-    % Recorrer cada fila de tabla_frame_assigns_summary
-    for i = 1:height(tabla_frame_assigns_summary_tube_super)
-        % Obtener el DesignSection de la fila actual
-        design_section = tabla_frame_assigns_summary_tube_super.DesignSection{i};
-        % Encontrar la fila correspondiente en tabla_diam_thick
-        indice = find(strcmp(tabla_diam_thick.Name, design_section));
-        % Extraer OutsideDiameter y WallThickness
-        if ~isempty(indice)
-            vector_diametros_tube_super(i) = tabla_diam_thick.OutsideDiameter(indice);
-            vector_thickness_tube_super(i) = tabla_diam_thick.WallThickness(indice);
-        else
-            % Si el DesignSection no se encuentra, puedes asignar un valor por defecto o manejarlo según sea necesario
-            vector_diametros_tube_super(i) = NaN;
-            vector_thickness_tube_super(i) = NaN;
-        end
-    end
-    vector_diametros_tube_super = num2cell(vector_diametros_tube_super);
-    vector_thickness_tube_super = num2cell(vector_thickness_tube_super);
-    UniqueName = tabla_frame_assigns_summary_tube_super(:,1);
-    diam_diam_thick_tube_super = horzcat(UniqueName, vector_diametros_tube_super, vector_diametros_tube_super, vector_thickness_tube_super);
+    % Esta seccion se omite porque en el marco de estudio no existe superestructura 
+    % % SUBLOQUE: Diametros y espesores de los elementos elementos tubulares de la superestructura (vector_diametros_tube_super y vector_thickness__tube_super)
+    % hoja_excel = 'Frame Assigns - Summary';
+    % tabla_frame_assigns_summary = readtable(archivo_excel, 'Sheet', hoja_excel);
+    % tabla_frame_assigns_summary(1,:) = [];
+    % tabla_a_filtrar = readtable(archivo_excel, 'Sheet', hoja_excel);
+    % tabla_a_filtrar(1,:) = [];
+    % indices = ~contains(tabla_a_filtrar.Story, 'Story');
+    % tabla_filtrada = tabla_a_filtrar(indices, :)
+    % indices = ~contains(tabla_filtrada.DesignType, 'Beam');
+    % tabla_filtrada = tabla_filtrada(indices, :);
+    % tabla_frame_assigns_summary_tube_super = tabla_filtrada;
+    % tabla_frame_assigns_summary_tube_super(:,1:2) = [];
+    % tabla_frame_assigns_summary_tube_super(:,2:4) = [];
+    % tabla_frame_assigns_summary_tube_super(:,3:end) = [];
+    % % luego se realiza una asignación y de cada elemento y sección con su diámetro y su espesor
+    % vector_diametros_tube_super = zeros(height(tabla_frame_assigns_summary_tube_super), 1);
+    % vector_thickness_tube_super = zeros(height(tabla_frame_assigns_summary_tube_super), 1);
+    % % Recorrer cada fila de tabla_frame_assigns_summary
+    % for i = 1:height(tabla_frame_assigns_summary_tube_super)
+    %     % Obtener el DesignSection de la fila actual
+    %     design_section = tabla_frame_assigns_summary_tube_super.DesignSection{i};
+    %     % Encontrar la fila correspondiente en tabla_diam_thick
+    %     indice = find(strcmp(tabla_diam_thick.Name, design_section));
+    %     % Extraer OutsideDiameter y WallThickness
+    %     if ~isempty(indice)
+    %         vector_diametros_tube_super(i) = tabla_diam_thick.OutsideDiameter(indice);
+    %         vector_thickness_tube_super(i) = tabla_diam_thick.WallThickness(indice);
+    %     else
+    %         % Si el DesignSection no se encuentra, puedes asignar un valor por defecto o manejarlo según sea necesario
+    %         vector_diametros_tube_super(i) = NaN;
+    %         vector_thickness_tube_super(i) = NaN;
+    %     end
+    % end
+    % vector_diametros_tube_super = num2cell(vector_diametros_tube_super);
+    % vector_thickness_tube_super = num2cell(vector_thickness_tube_super);
+    % UniqueName = tabla_frame_assigns_summary_tube_super(:,1);
+    % diam_diam_thick_tube_super = horzcat(UniqueName, vector_diametros_tube_super, vector_diametros_tube_super, vector_thickness_tube_super)
 
     % %%% Parte comentada - inicio: en el marco no hay vigas en I
     % % % SUBLOQUE: Diámetros y espesores de los elementos IR de la superestructura (vector_diametros_I y vector_thickness_I)
@@ -320,32 +321,35 @@ dano_porcentaje     = ones(1,length(no_elemento_a_danar)) * length(no_elemento_a
     hoja_excel = 'Frame Assigns - Frame Auto Mesh';
     % Leer la columna "C" desde la fila 4 en adelante
     rango = 'C4:C20'; % Se asume un límite alto (ajusta si es necesario)
-    
     % Extraer los datos numéricos de la columna sin importar el número de filas
     numero_frame = readmatrix(archivo_excel, 'Sheet', hoja_excel, 'Range', rango);
     numero_frame = numero_frame(~isnan(numero_frame));
     E_columna = E * ones(length(numero_frame), 1);
-    G_columna = G * ones(length(numero_frame), 1);    
-    elementos = matriz_cell_secciones(:,1);
+    G_columna = G * ones(length(numero_frame), 1);
+    elementos = num2cell(numero_frame);
     elementos = string(elementos);
-    elementos(1,:) = [];
     prop_geom = cellfun(@num2str, prop_geom, 'UniformOutput', false);
     prop_geom = string(prop_geom);
     prop_geom =  [elementos, prop_geom];
     prop_geom = sortrows(prop_geom);            % Matriz organizada con cada elemento y sus propiedades extraídas del ETABS
-    prop_geom = num2cell(prop_geom);
+
+    % Convertir la tabla a celda
+    diam_diam_thick_tube_sub_cell = table2cell(diam_diam_thick_tube_sub);
+
+% Convertir la matriz de cadenas a celda
+    prop_geom_cell = cellstr(prop_geom);
+
     % Concatenación final de la matriz de diámetros y espesores
-    % prop_geom = horzcat(prop_geom, tipo, wo_vector, diam_diam_th, gamma_beta_vector); % ajustes por cambio de Jacket a marco, se omitio diam_diam_th
+    % prop_geom = horzcat(prop_geom, tipo, wo_vector, diam_diam_th, gamma_beta_vector) % ajustes por cambio de Jacket a marco, se omitio diam_diam_th
+    % prop_geom = horzcat(prop_geom, tipo, wo_vector, diam_diam_thick_tube_sub, gamma_beta_vector) % ajustes por cambio de Jacket a marco, se omitio diam_diam_th
+    prop_geom = [prop_geom, tipo, wo_vector, diam_diam_thick_tube_sub, gamma_beta_vector] % ajustes por cambio de Jacket a marco, se omitio diam_diam_th
     % Algunos ajustes extras para realizar correctamente la concatenacion
-    % tipo(1,:) = [];
-    wo_vector(1,:) = [];
-    gamma_beta_vector(1,:) = [];
-    E_columna = num2cell(E_columna);
-    G_columna = num2cell(G_columna);
-    prop_geom = horzcat(prop_geom, E_columna, G_columna, tipo, wo_vector, gamma_beta_vector);
-    prop_geom(:,1) = [];
-    numero_frame_cell = num2cell(numero_frame);
-    prop_geom = horzcat(numero_frame_cell, prop_geom)
+    % E_columna = num2cell(E_columna);
+    % G_columna = num2cell(G_columna);
+    % prop_geom = horzcat(prop_geom, E_columna, G_columna, tipo, wo_vector, gamma_beta_vector);
+    % prop_geom(:,1) = [];
+    % numero_frame_cell = num2cell(numero_frame);
+    % prop_geom = horzcat(numero_frame_cell, prop_geom)
 
     % %% SECCION: pestaña "fix nodes"
     % hoja_excel = 'Joint Assigns - Restraints';

@@ -24,9 +24,9 @@ function [NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, E, G, 
     fixt=zeros(nnodes,6);
     % adding non fix nodes
     for l=1:length(fixnodes(:,1))
-    indxfix=find(fixnodes(l,1)==nodes(:,1));
-    indxfixo=find(indxfix==fixnodes(:,1));
-    fixt(indxfix,:)=fixn(:,indxfixo)';
+        indxfix=find(fixnodes(l,1)==nodes(:,1));
+        indxfixo=find(indxfix==fixnodes(:,1));
+        fixt(indxfix,:)=fixn(:,indxfixo)';
     end
     
     fixn=fixt';
