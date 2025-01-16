@@ -1,23 +1,25 @@
 function [ke_d_total, ke_d, prop_geom_mat] = switch_case_danos(no_elemento_a_danar, num_de_ele_long, L_d, caso_dano, dano_porcentaje, prop_geom, E, G)
-    % %% SECCION: Asignacion de propiedades con dano segun el caso de dano
-    % for i = 1:length(no_elemento_a_danar)
-    %     if  strcmp(caso_dano{i}, 'corrosion')
-    %         [ke_d_total, ke_d, elem_con_dano_long_NE] = corrosionlocal(no_elemento_a_danar, dano_porcentaje, archivo_excel, NE, prop_geom, E, G, J);
-    %     elseif strcmp(caso_dano{i}, 'abolladura')
-    %         [ke_d_total, ke_d, elem_con_dano_long_NE] = abolladuralocal(no_elemento_a_danar, dano_porcentaje, archivo_excel, NE, prop_geom, E, G, J);
-    %     elseif strcmp(caso_dano{i}, 'efecto P-delta')
-    % 
-    %     elseif strcmp(caso_dano{i}, 'fatiga')
-    % 
-    %     else
-    %         error('Error: The option "%s" in cell %d is incorrectly written or not recognized.', caso_dano{i}, i);
-    %     end
-    % end
+    %  % SECCION: Asignacion de propiedades con dano segun el caso de dano
+    %     % for i = 1:length(no_elemento_a_danar)
+    %     %     if  strcmp(caso_dano{i}, 'corrosion')
+    %     %         [ke_d_total, ke_d, elem_con_dano_long_NE] = corrosionlocal(no_elemento_a_danar, dano_porcentaje, archivo_excel, NE, prop_geom, E, G, J);
+    %     %     elseif strcmp(caso_dano{i}, 'abolladura')
+    %     %         [ke_d_total, ke_d, elem_con_dano_long_NE] = abolladuralocal(no_elemento_a_danar, dano_porcentaje, archivo_excel, NE, prop_geom, E, G, J);
+    %     %     elseif strcmp(caso_dano{i}, 'efecto P-delta')
+    %     % 
+    %     %     elseif strcmp(caso_dano{i}, 'fatiga')
+    %     % 
+    %     %     else
+    %     %         error('Error: The option "%s" in cell %d is incorrectly written or not recognized.', caso_dano{i}, i);
+    %     %     end
+    %     % end
     % Matrices de flexibilidades y de rigidez local llenas de ceros
     f_AA_d = zeros(6, 6, length(no_elemento_a_danar));
     ke_d = zeros(12, 12, length(no_elemento_a_danar));
-    
+
+
     for i = 1:length(no_elemento_a_danar)
+    % for i = 1
         if strcmp(caso_dano{i}, 'corrosion')
             % Código de la corrosión local
             % Bucle para cada elemento a dañar
@@ -25,7 +27,8 @@ function [ke_d_total, ke_d, prop_geom_mat] = switch_case_danos(no_elemento_a_dan
                 % Reducción de espesor por corrosión
                 % index = find(num_de_ele_long(:,1) == i);
                 % long_elem_a_danar = num_de_ele_long(index,2);
-                prop_geom_mat = cell2mat(prop_geom);
+                prop_geom_mat = cellfun(@(x) convert_to_number(x), prop_geom, 'UniformOutput', false);  % Recorre cada elemento de prop_geom y lo convierte a número si es string
+                prop_geom_mat = cell2mat(prop_geom_mat);        % Convierte el cell array a matriz numérica
                 t(i) = prop_geom_mat(no_elemento_a_danar(i),10); % Espesor extraido intacto
                 t_corro(i) = dano_porcentaje(i) * t(i) / 100; % Espesor que va a restar al espesor sin dano
                 t_d(i) = t(i) - t_corro(i); % Espesor ya reducido
@@ -61,11 +64,11 @@ function [ke_d_total, ke_d, prop_geom_mat] = switch_case_danos(no_elemento_a_dan
                 ];
                 ke_d(:,:,i) = T * f_AA_d(:,:,i)^(-1) * T'; % Matriz de rigidez local del elemento tubular
             end % Fin del bucle for de corrosión
-    
+
         elseif strcmp(caso_dano{i}, 'abolladura')
             % El código de la aboladura está en codigo_abolladura.txt en esta misma carpeta
         end
     end % Fin del ciclo for que itera sobre cada elemento a dañar
     ke_d_total = ke_d;
-    prop_geom_mat
+
 end

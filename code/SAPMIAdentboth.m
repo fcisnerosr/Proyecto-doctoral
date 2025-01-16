@@ -18,7 +18,7 @@ densidad_crec   = 1.3506*10^-7;    % en N/mm^3
 % Valor de la dessidad del crecimiento marino
 % Valor de encontrado en internet = 1325 kg/m^3
 % Conversión: 1325 kg/m^3 * (1 N / 9.81 kg) * (1 m^3/1000^3 m^3) = 1.3506*10^-7 en N/mm^3
-pathfile        = 'E:\Archivos_Jaret\Mis_modificaciones\pruebas_excel\marco3Ddam0.xlsx';
+pathfile        = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\marco3Ddam0.xlsx';
 % pathfile = '/home/francisco/Documents/Proyecto-doctoral/pruebas_excel/marco3Ddam0.xlsx';
 
 % Danos a elementos tubulares, caso de dano y su respectivo porcentaje
@@ -49,7 +49,7 @@ escritura_datos_hoja_excel_del_dr_Rolando(coordenadas, conectividad, prop_geom, 
 % % % % Matriz de masas completa y condensada
 % % % [M_cond] = Matriz_M_completa_y_condensada(masas_en_cada_nodo);
 
-% Lectura de datos de la hoja de EXCEL del dr. Rolando para la función "Ensamblaje de matrices globales"
+% % Lectura de datos de la hoja de EXCEL del dr. Rolando para la función "Ensamblaje de matrices globales"
 [NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, E, G, vxz, ID, KG, KGtu] = lectura_hoja_excel(pathfile, coordenadas);
 % clearvars -except archivo_excel tirante tiempo d_agua densidad_crec pathfile no_elemento_a_danar caso_dano dano_porcentaje coordenadas vxz conectividad prop_geom matriz_restriccion matriz_cell_secciones masas_en_cada_nodo M_cond NE IDmax NEn elements nodes damele eledent A Iy Iz J E G ID KG KGtu hoja_excel vigas_long brac_long col_long num_de_ele_long
 
@@ -82,26 +82,22 @@ clc
 hoja_excel              = 'Frame Assigns - Summary';
 datos_tabla = readtable(archivo_excel, 'Sheet', hoja_excel);
 datos_tabla(1,:) = [];
-uniqueName = datos_tabla.UniqueName             % Columna C. % Extraer las columnas C (UniqueName) y E (Length mm)
+uniqueName = datos_tabla.UniqueName;            % Columna C. % Extraer las columnas C (UniqueName) y E (Length mm)
 uniqueName = cellfun(@str2double, uniqueName);  % Conversión a matriz      
 length_mm = datos_tabla.Length;                 % Columna E
-datos_para_long = horzcat(uniqueName, length_mm)
+datos_para_long = horzcat(uniqueName, length_mm);
 elementos_y_long        = sortrows(datos_para_long, 1);
 for i = 1:length(no_elemento_a_danar)
     long_elem_con_dano(i)  = elementos_y_long(no_elemento_a_danar(i),2);
 end
-L_d = long_elem_con_dano
+L_d = long_elem_con_dano;
 
-% % Vector que posiciona en un indice del elemento a danar
-% [elem_con_dano_long_NE] = vector_asignacion_danos(no_elemento_a_danar, NE);
+% Vector que posiciona en un indice del elemento a danar
+[elem_con_dano_long_NE] = vector_asignacion_danos(no_elemento_a_danar, NE);
 
-%%
-% % clc
 % % Matriz de rigidez local con dano aplicado
-% [ke_d_total, ke_d, prop_geom_mat] = switch_case_danos(no_elemento_a_danar, num_de_ele_long, L_d, caso_dano, dano_porcentaje, prop_geom, E, G);
-% 
-% %%
-% % clc
+[ke_d_total, ke_d, prop_geom_mat] = switch_case_danos(no_elemento_a_danar, num_de_ele_long, L_d, caso_dano, dano_porcentaje, prop_geom, E, G);
+
 % [KG_damaged, KG_undamaged,L, kg] = ensamblaje_matriz_rigidez_global_ambos_modelos(ID, NE, ke_d_total,elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G,  vxz, elem_con_dano_long_NE);
 % 
 % % Función Condensación estática
@@ -109,7 +105,7 @@ L_d = long_elem_con_dano
 % 
 % % Modos y frecuencias de estructura condensados y globales
 % [modos_cond_d,frec_cond_d] = modos_frecuencias(KG_damaged_cond,M_cond);
-% 
+
 % %%% Verificación de numeros reales en mis frecuencias y formas
 % % Verificar si las matrices contienen solo números reales
 % real_modos_cond_d = isreal(modos_cond_d);  % Devuelve true
