@@ -1,4 +1,4 @@
-function masas_en_cada_nodo = modificacion_matriz_masas_estructura_sencilla(archivo_excel)
+ddddfunction masas_en_cada_nodo = modificacion_matriz_masas_estructura_sencilla(archivo_excel)
     % Creación de la matriz de masas diagonal condensada de la estructura
     % Proceso de extracion de masas de la penstana de excel
     tabla_excel_masas = readmatrix(archivo_excel);  % Extracción de la pestana excel de masas del modelo
