@@ -45,158 +45,37 @@ dano_porcentaje     = ones(1,length(no_elemento_a_danar)) * length(no_elemento_a
 
 % Escritura de los datos hacia la hoja de excel del Dr. Rolando
 escritura_datos_hoja_excel_del_dr_Rolando(coordenadas, conectividad, prop_geom, matriz_restriccion, masas_en_cada_nodo);
-% escritura_datos_hoja_excel_del_dr_Rolando(coordenadas, conectividad, prop_geom, matriz_restriccion);
 
-% % Matriz de masas completa y condensada
-% [M_cond] = Matriz_M_completa_y_condensada(masas_en_cada_nodo);
+% % % % Matriz de masas completa y condensada
+% % % [M_cond] = Matriz_M_completa_y_condensada(masas_en_cada_nodo);
 
 % Lectura de datos de la hoja de EXCEL del dr. Rolando para la función "Ensamblaje de matrices globales"
-%%
-% [NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, E, G, vxz, ID, KG, KGtu] = lectura_hoja_excel(pathfile);
-    %% Lectura de datos de entrada desde el archivo Excel
-    nodes            = coordenadas;
-    elements         = xlsread(pathfile, 'conectividad');
-    [propgeom, txtpg] = xlsread(pathfile, 'prop geom');
-    fixnodes         = xlsread(pathfile, 'fix nodes');
-    nodeforces       = xlsread(pathfile, 'node forces');
-    uniformload      = xlsread(pathfile, 'uniform load');
-    pload            = xlsread(pathfile, 'puntual load');
-    vxz              = xlsread(pathfile, 'vxz');
-    masses           = xlsread(pathfile, 'masses');
-    modespar         = xlsread(pathfile, 'modes');
-    dynload          = xlsread(pathfile, 'dynload');
-    damage           = xlsread(pathfile, 'damage');
-    propdent         = xlsread(pathfile, 'prop dent');
-    
-    %% Eliminación de números de nodo en restricciones
-    fixn = fixnodes(:, 2:end)';
-
-    %% Número total de nodos
-    nnodes = length(nodes(:, 1));
-
-    %% Inicialización de la matriz de restricciones
-    fixt = zeros(nnodes, 6);
-
-    % Incorporación de nodos fijos
-    for l = 1:length(fixnodes(:, 1))
-        indxfix = find(fixnodes(l, 1) == nodes(:, 1));
-        indxfixo = find(indxfix == fixnodes(:, 1));
-        fixt(indxfix, :) = fixn(:, indxfixo)';
-    end
-
-    fixn = fixt';
-
-    % %% Índices de nodos fijos y no fijos
-    % indx0 = find(fixn == 0); % Nodos no fijos
-    % indx1 = find(fixn == 1); % Nodos fijos
-    % 
-    % %% Creación de la matriz de identificadores (ID)
-    % k = 0;
-    % [m, n] = size(fixn);
-    % ID = zeros(m, n);
-    % 
-    % % Ordenamiento de elementos
-    % [B, IN] = sort(elements(:, 1));
-    % 
-    % % Asignación de identificadores a los nodos
-    % for i = 1:length(indx0)
-    %     ID(indx0(i)) = k + 1;
-    %     k = k + 1;
-    % end
-    % 
-    % for i = 1:length(indx1)
-    %     ID(indx1(i)) = (k + 1) * (-1);
-    %     k = k + 1;
-    % end
-    % 
-    % %% Propiedades geométricas
-    % NE = length(elements(:, 1));
-    % A  = propgeom(:, 2);
-    % Iy = propgeom(:, 3);
-    % Iz = propgeom(:, 4);
-    % J  = propgeom(:, 5);
-    % E  = propgeom(:, 6);
-    % G  = propgeom(:, 7);
-    % tipo = txtpg;
-    % 
-    % % Inicialización de parámetros geométricos
-    % radio = zeros(size(propgeom(:, 10)));
-    % b     = zeros(size(propgeom(:, 10)));
-    % h     = zeros(size(propgeom(:, 10)));
-    % trec  = zeros(size(propgeom(:, 10)));
-    % 
-    % % Clasificación de secciones
-    % for i = 1:length(propgeom(:, 10))
-    %     if strcmp(tipo(i), 'circular')
-    %         radio(i) = propgeom(i, 9);
-    %     elseif strcmp(tipo(i), 'rectangular')
-    %         b(i)    = propgeom(i, 9);
-    %         h(i)    = propgeom(i, 10);
-    %         trec(i) = propgeom(i, 11);
-    %     end
-    % end
-    % 
-    % %% Propiedades de abolladuras (dent)
-    % if isempty(propdent)
-    %     eledent = [];
-    %     Adent   = [];
-    %     Iydent  = [];
-    %     Izdent  = [];
-    %     Jdent   = [];
-    %     x1dentr = [];
-    %     x2dentr = [];
-    % else
-    %     eledent = propdent(:, 1);
-    %     Adent   = propdent(:, 2);
-    %     Iydent  = propdent(:, 3);
-    %     Izdent  = propdent(:, 4);
-    %     Jdent   = propdent(:, 5);
-    %     x1dentr = propdent(:, 6);
-    %     x2dentr = propdent(:, 7);
-    % end
-    % 
-    % %% Propiedades de daño
-    % if isempty(damage)
-    %     damele  = [];
-    %     xdcr    = [];
-    %     depthr  = [];
-    % else
-    %     damele  = damage(:, 1);
-    %     xdcr    = damage(:, 2);
-    %     depthr  = damage(:, 3);
-    % end
-    % 
-    % %% Identificación de nodos con restricciones
-    % IDmax  = max(max(ID));
-    % IDmin  = abs(min(min(ID)));
-    % indxdp = find(ID > 0);
-    % indxdn = find(ID < 0);
-    % NEn    = length(find(ID < 0));
-    % 
-    % %% Inicialización de matrices globales
-    % KG   = zeros(IDmax, IDmax);
-    % KGtu = zeros(IDmax, NEn);
-
-
-    
+[NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, E, G, vxz, ID, KG, KGtu] = lectura_hoja_excel(pathfile, coordenadas);
 % clearvars -except archivo_excel tirante tiempo d_agua densidad_crec pathfile no_elemento_a_danar caso_dano dano_porcentaje coordenadas vxz conectividad prop_geom matriz_restriccion matriz_cell_secciones masas_en_cada_nodo M_cond NE IDmax NEn elements nodes damele eledent A Iy Iz J E G ID KG KGtu hoja_excel vigas_long brac_long col_long num_de_ele_long
 
-% % Danos locales
+% Danos locales
 % % [ke_d_total, ke_d, elem_con_dano_long_NE] = switch_case_danos(no_elemento_a_danar, caso_dano, dano_porcentaje, archivo_excel, NE, prop_geom, E, G, J);
-% prop_geom(:,8:9)    = [];                          % eliminacion de 'circular' y 'wo', si no se eliminan la conversion a matriz numerica no es posible
-% % Tabla con no. de elemento y longitud de orden descendente
-% hoja_excel = 'Beam Object Connectivity';
-% vigas_long = xlsread (archivo_excel, hoja_excel, '');
-% vigas_long(:,2:5) = [];
-% % Extracción de datos de las columas (tanto en la subestructura como en al superestructura)
-% hoja_excel = 'Brace Object Connectivity'; % pestaña con elementos diagonales (ubicados en la subestructura)
-% brac_long = xlsread (archivo_excel, hoja_excel, '');
-% brac_long(:,2:5) = [];
+prop_geom(:,8:9)    = [];                          % eliminacion de 'circular' y 'wo', si no se eliminan la conversion a matriz numerica no es posible
+%%
+clc
+% Tabla con no. de elemento y longitud de orden descendente
+hoja_excel = 'Beam Object Connectivity';
+% vigas_long = readmatrix(archivo_excel, hoja_excel, '')
+vigas_long = readmatrix(archivo_excel, 'Sheet', hoja_excel);
+vigas_long(:,2:5) = [];
+vigas_long(:,3) = []
+
+% Extracción de datos de las columas (tanto en la subestructura como en al superestructura)
+hoja_excel = 'Brace Object Connectivity'; % pestaña con elementos diagonales (ubicados en la subestructura)
+brac_long = readmatrix(archivo_excel, 'Sheet', hoja_excel);
+brac_long(:,2:5) = [];
+brac_long(:,3) = []
 % hoja_excel = 'Column Object Connectivity'; % pestaña con columnas rectas (generalmente ubicados en la superestructura)
-% col_long = xlsread (archivo_excel, hoja_excel, '');
-% col_long(:,2:5) = [];
-% % no_ele_long = sort(vertcat(vigas_long,brac_long,col_long),1)
-% num_de_ele_long = sortrows(vertcat(vigas_long,brac_long,col_long),1);
+col_long = readmatrix(archivo_excel, 'Sheet', hoja_excel);
+col_long(:,2:5) = [];
+col_long(:,3) = []
+% no_ele_long = sort(vertcat(vigas_long,brac_long,col_long),1)
+num_de_ele_long = sortrows(vertcat(vigas_long,brac_long,col_long),1)
 % % SECCION: Longitudes de elementos a danar (long_elem_con_dano)
 % hoja_excel              = 'Frame Assigns - Summary';
 % datos_para_long         = xlsread(archivo_excel, hoja_excel, 'C:E');
@@ -209,8 +88,8 @@ escritura_datos_hoja_excel_del_dr_Rolando(coordenadas, conectividad, prop_geom, 
 % 
 % % Vector que posiciona en un indice del elemento a danar
 % [elem_con_dano_long_NE] = vector_asignacion_danos(no_elemento_a_danar, NE);
-% 
-% %%
+
+%%
 % % clc
 % % Matriz de rigidez local con dano aplicado
 % [ke_d_total, ke_d, prop_geom_mat] = switch_case_danos(no_elemento_a_danar, num_de_ele_long, L_d, caso_dano, dano_porcentaje, prop_geom, E, G);

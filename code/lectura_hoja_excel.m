@@ -1,6 +1,6 @@
-function [NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, E, G, vxz, ID, KG, KGtu] = lectura_hoja_excel(pathfile)
-    %% Lectura de datos de entrada desde el archivo Excel
-    nodes            = xlsread(pathfile, 'nudos');
+function [NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, E, G, vxz, ID, KG, KGtu] = lectura_hoja_excel(pathfile, coordenadas)
+   % Lectura de datos de entrada desde el archivo Excel
+    nodes            = coordenadas;
     elements         = xlsread(pathfile, 'conectividad');
     [propgeom, txtpg] = xlsread(pathfile, 'prop geom');
     fixnodes         = xlsread(pathfile, 'fix nodes');
@@ -14,47 +14,47 @@ function [NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, E, G, 
     damage           = xlsread(pathfile, 'damage');
     propdent         = xlsread(pathfile, 'prop dent');
     
-    %% Eliminación de números de nodo en restricciones
+    % Eliminación de números de nodo en restricciones
     fixn = fixnodes(:, 2:end)';
-    
-    %% Número total de nodos
+
+    % Número total de nodos
     nnodes = length(nodes(:, 1));
-    
-    %% Inicialización de la matriz de restricciones
+
+    % Inicialización de la matriz de restricciones
     fixt = zeros(nnodes, 6);
-    
+
     % Incorporación de nodos fijos
     for l = 1:length(fixnodes(:, 1))
         indxfix = find(fixnodes(l, 1) == nodes(:, 1));
         indxfixo = find(indxfix == fixnodes(:, 1));
         fixt(indxfix, :) = fixn(:, indxfixo)';
     end
-    
+
     fixn = fixt';
-    
+
     %% Índices de nodos fijos y no fijos
     indx0 = find(fixn == 0); % Nodos no fijos
     indx1 = find(fixn == 1); % Nodos fijos
-    
+
     %% Creación de la matriz de identificadores (ID)
     k = 0;
     [m, n] = size(fixn);
     ID = zeros(m, n);
-    
+
     % Ordenamiento de elementos
     [B, IN] = sort(elements(:, 1));
-    
+
     % Asignación de identificadores a los nodos
     for i = 1:length(indx0)
         ID(indx0(i)) = k + 1;
         k = k + 1;
     end
-    
+
     for i = 1:length(indx1)
         ID(indx1(i)) = (k + 1) * (-1);
         k = k + 1;
     end
-    
+
     %% Propiedades geométricas
     NE = length(elements(:, 1));
     A  = propgeom(:, 2);
@@ -64,13 +64,13 @@ function [NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, E, G, 
     E  = propgeom(:, 6);
     G  = propgeom(:, 7);
     tipo = txtpg;
-    
+
     % Inicialización de parámetros geométricos
     radio = zeros(size(propgeom(:, 10)));
     b     = zeros(size(propgeom(:, 10)));
     h     = zeros(size(propgeom(:, 10)));
     trec  = zeros(size(propgeom(:, 10)));
-    
+
     % Clasificación de secciones
     for i = 1:length(propgeom(:, 10))
         if strcmp(tipo(i), 'circular')
@@ -81,7 +81,7 @@ function [NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, E, G, 
             trec(i) = propgeom(i, 11);
         end
     end
-    
+
     %% Propiedades de abolladuras (dent)
     if isempty(propdent)
         eledent = [];
@@ -100,7 +100,7 @@ function [NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, E, G, 
         x1dentr = propdent(:, 6);
         x2dentr = propdent(:, 7);
     end
-    
+
     %% Propiedades de daño
     if isempty(damage)
         damele  = [];
@@ -111,14 +111,14 @@ function [NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, E, G, 
         xdcr    = damage(:, 2);
         depthr  = damage(:, 3);
     end
-    
+
     %% Identificación de nodos con restricciones
     IDmax  = max(max(ID));
     IDmin  = abs(min(min(ID)));
     indxdp = find(ID > 0);
     indxdn = find(ID < 0);
     NEn    = length(find(ID < 0));
-    
+
     %% Inicialización de matrices globales
     KG   = zeros(IDmax, IDmax);
     KGtu = zeros(IDmax, NEn);

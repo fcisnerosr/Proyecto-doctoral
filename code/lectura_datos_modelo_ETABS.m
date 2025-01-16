@@ -7,10 +7,10 @@ function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_
     coordenadas = sortrows(coordenadas_crudo, 1);   % Extraccion de matriz de tabla de pestana de excel
     % proceso de limpieza de datos para armar correctamente la matriz para la hoja del dr Rolando
     primer_col = coordenadas(:,1);
-    primer_col = primer_col(~isnan(primer_col))
+    primer_col = primer_col(~isnan(primer_col));
     coordenadas_num = coordenadas(:, 6:8);
     coordenadas_num = coordenadas_num(~any(isnan(coordenadas_num), 2), :);
-    coordenadas = horzcat(primer_col, coordenadas_num)
+    coordenadas = horzcat(primer_col, coordenadas_num);
 
     %% SECCIÓN: pestaña "conectividad"
     %% BLOQUE: extracción de qué nudos está cada viga y columna del modelo (conectividad)
@@ -304,16 +304,16 @@ function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_
     % prop_geom = horzcat(prop_geom, tipo, wo_vector, diam_diam_th, gamma_beta_vector) % ajustes por cambio de Jacket a marco, se omitio diam_diam_th
     % prop_geom = horzcat(prop_geom, tipo, wo_vector, diam_diam_thick_tube_sub, gamma_beta_vector) % ajustes por cambio de Jacket a marco, se omitio diam_diam_th
     prop_geom = [prop_geom_cell, E_columna_cell, G_columna_cell, tipo, wo_vector, diam_diam_thick_tube_sub_cell, gamma_beta_vector]; % ajustes por cambio de Jacket a marco, se omitio diam_diam_th
-    
+
     %% SECCION: pestaña "fix nodes"
     hoja_excel = 'Joint Assigns - Restraints';
     nodos_restringidos = readmatrix(archivo_excel, 'Sheet', hoja_excel);
     nodos_restringidos = nodos_restringidos(any(~isnan(nodos_restringidos), 2), :);
-    nodos_restringidos(:,1) = [];
-    nodos_restringidos = nodos_restringidos(:, 1:2);
+    nodos_restringidos(:,1:2) = [];
+    nodos_restringidos(:,2:7) = [];
     matriz_restriccion = ones(length(nodos_restringidos),6);                % se les agrega numeros porque asi va la estructura de las hojas de excel del dr. Rolando Salgado
     matriz_restriccion = horzcat(nodos_restringidos, matriz_restriccion);
-
+    
     % %% SECCION: pestaña "vxz"
     % %% SECCION: Creacion automatica de vectores VXZ para cada elemento del modelo
     % % Reuso de variables de Nodos y sus coordenadas
