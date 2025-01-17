@@ -1,4 +1,4 @@
-function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_secciones] = lectura_datos_modelo_ETABS(archivo_excel)
+function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_secciones, VXZ] = lectura_datos_modelo_ETABS(archivo_excel)
     %% SECCIÓN: pestaña "nudos"
     %% BLOQUE: Nodos y sus coordenadas (coordenadas)
     hoja_excel = 'Point Object Connectivity';
@@ -314,14 +314,34 @@ function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_
     matriz_restriccion = ones(length(nodos_restringidos),6);                % se les agrega numeros porque asi va la estructura de las hojas de excel del dr. Rolando Salgado
     matriz_restriccion = horzcat(nodos_restringidos, matriz_restriccion);
     
-    % %% SECCION: pestaña "vxz"
-    % %% SECCION: Creacion automatica de vectores VXZ para cada elemento del modelo
-    % % Reuso de variables de Nodos y sus coordenadas
-    % % Se concatenó cada columna en función a su dirección
-    % % Las columnas rectas están orientas de manera distinta a las vigas y a las diagonales. Las vigas y diagonales tienen la misma orientación de ejes locales
-    % % el eje global es:
-    %     % Z mirando hacia arriba
-    %     % X mirando hasta adelante
-    %     % Y mirando hasta atrás
-    %     % Sugerencia: Mejor ver el eje global en el modelo de ETABS
+    %% SECCION: pestaña "vxz"
+    %% SECCION: Creacion automatica de vectores VXZ para cada elemento del modelo
+    % Reuso de variables de Nodos y sus coordenadas
+    % Se concatenó cada columna en función a su dirección
+    % Las columnas rectas están orientas de manera distinta a las vigas y a las diagonales. Las vigas y diagonales tienen la misma orientación de ejes locales
+    % el eje global es:
+        % Z mirando hacia arriba
+        % X mirando hasta adelante
+        % Y mirando hasta atrás
+        % Sugerencia: Mejor ver el eje global en el modelo de ETABS ya que no se sabe cuál es adelante y atrás realmente hasta que lo ves en el gráfico
+    
+    % Extración de que tipos son cada elemento frame (si viga, columna o elemento diagonal)
+    hoja_excel = 'Frame Assigns - Summary'; % Nombre de la pestaña
+    columna_texto = readcell(archivo_excel, 'Sheet', hoja_excel, 'Range', 'D:D');   % Lectura de qué tipo de elemento es cada 
+    columna_texto(1:2,:) = [];              % Limpieza 
+    matriz_ceros = zeros(size(columna_texto, 1), 3);
+    for i = 1:length(columna_texto)  % Iterar sobre cada elemento del cell
+        if strcmp(columna_texto{i}, 'Beam')
+            matriz_ceros(i,3) = 1; % Añadir un 1 en el elemento 3 de la fila i
+        elseif strcmp(columna_texto{i}, 'Column')
+            matriz_ceros(i,1) = 1; % Añadir un 1 en el elemento 1 de la fila i
+        end
+    end
+    matriz_num_vxz = matriz_ceros;
+    % Números UniqueName de cada elemento frame para despues contatenar con cada tipo y organizar de menor a mayor.
+    UniqueName_frame = readmatrix(archivo_excel, 'Sheet', hoja_excel);
+    UniqueName_frame = UniqueName_frame(:,3);
+    UniqueName_frame(1) = [];
+    VXZ = sortrows(horzcat(UniqueName_frame, matriz_num_vxz),1);
+
 end

@@ -24,7 +24,7 @@ pathfile        = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\marco3Ddam0
 % Danos a elementos tubulares, caso de dano y su respectivo porcentaje
 no_elemento_a_danar = [1 5 9];
 caso_dano           = repmat({'corrosion'}, 1, length(no_elemento_a_danar));
-dano_porcentaje     = ones(1,length(no_elemento_a_danar)) * length(no_elemento_a_danar);
+dano_porcentaje     = [0.0001 0.0001 0.0001];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 
 % Corregir de formato los números en la tabla importada de ETABS: En todo este bloque de código, se realizó el cambio de formato de los números, debido a que ETABS importa sus tablas en formato de texto en algunas columnas.
 % % % % correccion_format_TablaETABS(archivo_excel);
@@ -37,14 +37,14 @@ dano_porcentaje     = ones(1,length(no_elemento_a_danar)) * length(no_elemento_a
 %     DESDE 1 HASTA LOS n ELEMENTOS QUE VAYA A TENER LA PLATAFORMA
 
 % Lectura de datos del modelo de ETABS
-[coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_secciones] = lectura_datos_modelo_ETABS(archivo_excel);
+[coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_secciones, VXZ] = lectura_datos_modelo_ETABS(archivo_excel);
 
 % Modificación de la matriz de masas
 % [masas_en_cada_nodo] = modificacion_matriz_masas(archivo_excel, tirante, d_agua, matriz_cell_secciones, tiempo, densidad_crec);
 [masas_en_cada_nodo] = modificacion_matriz_masas_estructura_sencilla(archivo_excel);
 
 % Escritura de los datos hacia la hoja de excel del Dr. Rolando
-escritura_datos_hoja_excel_del_dr_Rolando(coordenadas, conectividad, prop_geom, matriz_restriccion, masas_en_cada_nodo);
+escritura_datos_hoja_excel_del_dr_Rolando(coordenadas, conectividad, prop_geom, matriz_restriccion, masas_en_cada_nodo, VXZ);
 
 % % % % Matriz de masas completa y condensada
 % % % [M_cond] = Matriz_M_completa_y_condensada(masas_en_cada_nodo);
@@ -99,6 +99,8 @@ L_d = long_elem_con_dano;
 [ke_d_total, ke_d, prop_geom_mat] = switch_case_danos(no_elemento_a_danar, num_de_ele_long, L_d, caso_dano, dano_porcentaje, prop_geom, E, G);
 
 [KG_damaged, KG_undamaged,L, kg] = ensamblaje_matriz_rigidez_global_ambos_modelos(ID, NE, ke_d_total,elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G,  vxz, elem_con_dano_long_NE);
+
+
 % 
 % % Función Condensación estática
 % KG_damaged_cond   = condensacion_estatica(KG_damaged);
