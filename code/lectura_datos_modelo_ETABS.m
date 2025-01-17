@@ -2,8 +2,8 @@ function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_
     %% SECCIÓN: pestaña "nudos"
     %% BLOQUE: Nodos y sus coordenadas (coordenadas)
     hoja_excel = 'Point Object Connectivity';
-    % coordenadas_crudo = readmatrix(archivo_excel, 'Sheet', hoja_excel);
-    coordenadas_crudo = readmatrix(archivo_excel, 'Sheet', hoja_excel, 'Range', '');
+    coordenadas_crudo = readmatrix(archivo_excel, 'Sheet', hoja_excel);
+    % coordenadas_crudo = readmatrix(archivo_excel, 'Sheet', hoja_excel, 'Range', '');
     coordenadas = sortrows(coordenadas_crudo, 1);   % Extraccion de matriz de tabla de pestana de excel
     % proceso de limpieza de datos para armar correctamente la matriz para la hoja del dr Rolando
     primer_col = coordenadas(:,1);
@@ -21,13 +21,13 @@ function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_
     vigas(:, cols_con_nan) = [];
     vigas(:,4) = [];
     vigas_conectividad = vigas;
-    % Extracción de datos de las columas diagonales (tanto en la subestructura como en al superestructura)
-    hoja_excel = 'Brace Object Connectivity'; % pestaña con elementos diagonales (generalmente ubicados en la subestructura)
-    col_diag = readmatrix(archivo_excel, 'Sheet', hoja_excel);
-    cols_con_nan = any(isnan(col_diag), 1);
-    col_diag(:, cols_con_nan) = [];
-    col_diag(:,4) = [];
-    col_diag_conectividad = col_diag;
+    % % Extracción de datos de las columas diagonales (tanto en la subestructura como en al superestructura)
+    % hoja_excel = 'Brace Object Connectivity'; % pestaña con elementos diagonales (generalmente ubicados en la subestructura)
+    % col_diag = readmatrix(archivo_excel, 'Sheet', hoja_excel);
+    % cols_con_nan = any(isnan(col_diag), 1);
+    % col_diag(:, cols_con_nan) = [];
+    % col_diag(:,4) = [];
+    % col_diag_conectividad = col_diag;
     % Extracción de datos de las columas rectas (tanto en la subestructura como en al superestructura)
     hoja_excel = 'Column Object Connectivity'; % pestaña con columnas rectas (generalmente ubicados en la superestructura)
     col = readmatrix(archivo_excel, 'Sheet', hoja_excel);
@@ -36,7 +36,8 @@ function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_
     col(:,4) = [];
     col_conectividad = col;
     % Concatenación de las vigas y columnas
-    conectividad = vertcat(vigas_conectividad, col_diag_conectividad,col_conectividad);   % Matriz con todos los elementos y entre qué y qué nodos está conectados
+    % conectividad = vertcat(vigas_conectividad, col_diag_conectividad,col_conectividad);   % Matriz con todos los elementos y entre qué y qué nodos está conectados
+    conectividad = vertcat(vigas_conectividad, col_conectividad);   % Matriz con todos los elementos y entre qué y qué nodos está conectados
     conectividad = sortrows(conectividad, 1);                           % Matriz organizada con todos los elementos y entre qué nudos está cada elemento frame
     conectividad = conectividad(:,1:3);
 
@@ -333,8 +334,10 @@ function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_
     for i = 1:length(columna_texto)  % Iterar sobre cada elemento del cell
         if strcmp(columna_texto{i}, 'Beam')
             matriz_ceros(i,3) = 1; % Añadir un 1 en el elemento 3 de la fila i
+            % VXZ = 0 0 1
         elseif strcmp(columna_texto{i}, 'Column')
             matriz_ceros(i,1) = 1; % Añadir un 1 en el elemento 1 de la fila i
+            % VXZ = 1 0 0
         end
     end
     matriz_num_vxz = matriz_ceros;

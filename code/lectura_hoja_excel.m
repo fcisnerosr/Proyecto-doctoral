@@ -1,6 +1,6 @@
-function [NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, E, G, vxz, ID, KG, KGtu] = lectura_hoja_excel(pathfile, coordenadas)
+function [NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, E, G, vxz, ID, KG, KGtu] = lectura_hoja_excel(pathfile)
    % Lectura de datos de entrada desde el archivo Excel
-    nodes            = coordenadas;
+    nodes            = xlsread(pathfile, 'nudos');
     elements         = xlsread(pathfile, 'conectividad');
     [propgeom, txtpg] = xlsread(pathfile, 'prop geom');
     fixnodes         = xlsread(pathfile, 'fix nodes');
@@ -22,7 +22,7 @@ function [NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, E, G, 
 
     % Inicialización de la matriz de restricciones
     fixt = zeros(nnodes, 6);
-
+    
     % Incorporación de nodos fijos
     for l = 1:length(fixnodes(:, 1))
         indxfix = find(fixnodes(l, 1) == nodes(:, 1));

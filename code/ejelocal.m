@@ -7,7 +7,7 @@
 function [cosalpha, sinalpha] = ejelocal(CX, CY, CZ, CXY, vxz_user)
 
     % Definimos el eje X local del elemento a partir de los cosenos directores
-    local_x = [CX, CY, CZ];
+    local_x = [CX, CY, CZ]
 
     % Si el elemento es diagonal, calculamos vxz_user dinámicamente
     if abs(CX) > 0.1 && abs(CY) > 0.1 && abs(CZ) > 0.1  % Condición para detectar un elemento diagonal

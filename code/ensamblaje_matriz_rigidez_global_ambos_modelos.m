@@ -1,4 +1,5 @@
-function [KG_damaged, KG_undamaged,L, kg] = ensamblaje_matriz_rigidez_global_ambos_modelos(ID, NE, ke_d_total,elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G,  vxz, elem_con_dano_long_NE)
+% function [KG_damaged, KG_undamaged,L, kg] = ensamblaje_matriz_rigidez_global_ambos_modelos(ID, NE, ke_d_total,elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G,  vxz, elem_con_dano_long_NE)
+function [KG_damaged, KG_undamaged,L, kg] = ensamblaje_matriz_rigidez_global_ambos_modelos(ID, NE, elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G,  vxz)
     % KG con daño
     KG_damaged = [];  % Inicializa con un valor vacío o cero
     KG_undamaged = [];  % Inicializa con un valor vacío o cero
@@ -24,18 +25,19 @@ function [KG_damaged, KG_undamaged,L, kg] = ensamblaje_matriz_rigidez_global_amb
         locdent = find(eledent==i,1);
         if isempty(locdam) && isempty(locdent)
             % local stiffness matrix of the elements
-            if i == elem_con_dano_long_NE(i)
-               % Asignacion de dano local a la matrices locales con danos asignadas previamente
-                ke(:,:,i) = ke_d_total(:,:,cont);
-                cont = cont + 1;
-            else
+            % if i == elem_con_dano_long_NE(i)
+            %    % Asignacion de dano local a la matrices locales con danos asignadas previamente
+            %     % ke(:,:,i) = ke_d_total(:,:,cont);
+            %     % cont = cont + 1;
+            % else
+                A(i)
                 ke(:,:,i) = localkeframe3D(A(i),Iy(i),Iz(i),J(i),E(i),G(i),L(i));
-            end            
+            % end            
         end
 
         % Matriz de transformaciones
         vxzl(:,i) = vxz(i,2:end);       % VXZ para elementos ortogonales, no aplica para elementos diagonales
-        [cosalpha,sinalpha] = ejelocal(CX(i),CY(i),CZ(i),CXY(i),vxzl(:,i));     % Calculo de angulos de cada elemento (esto solo es util para discriminar los elementos ortogonales de los elementos inclinados)
+        [cosalpha,sinalpha] = ejelocal(CX(i),CY(i),CZ(i),CXY(i),vxzl(:,i))     % Calculo de angulos de cada elemento (esto solo es util para discriminar los elementos ortogonales de los elementos inclinados)
         [Gamma_gamma, Gamma_beta] = TransfM3Dframe(CX, CY, CZ , CXY, i, cosalpha, sinalpha);    % Matriz de transformaciones para cualquier dirección de elementos (vigas, columnas o elementos inclinados)
         
         % matriz global de cada elemento
