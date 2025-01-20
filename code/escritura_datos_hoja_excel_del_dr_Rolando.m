@@ -4,8 +4,8 @@ function  [] = escritura_datos_hoja_excel_del_dr_Rolando(coordenadas, conectivid
     % Nombre del archivo Excel y nombre de la hoja
     sheet_name = 'nudos';
     borrar_elementos_en_hoja(sheet_name);
-    % sheet_name = 'vxz';
-    % borrar_elementos_en_hoja(sheet_name);
+    sheet_name = 'vxz';
+    borrar_elementos_en_hoja(sheet_name);
     sheet_name = 'conectividad';
     borrar_elementos_en_hoja(sheet_name);
     sheet_name = 'fix nodes';

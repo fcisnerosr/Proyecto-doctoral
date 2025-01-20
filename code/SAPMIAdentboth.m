@@ -28,7 +28,7 @@ pathfile        = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\marco3Ddam0
 % pathfile = '/home/francisco/Documents/Proyecto-doctoral/pruebas_excel/marco3Ddam0.xlsx';
 
 % Danos a elementos tubulares, caso de dano y su respectivo porcentaje
-no_elemento_a_danar = 0;
+no_elemento_a_danar = 1;
 caso_dano           = repmat({'corrosion'}, 1, length(no_elemento_a_danar));
 dano_porcentaje     = [0.000];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 
@@ -42,80 +42,75 @@ dano_porcentaje     = [0.000];  % El dano va en decimal y se debe incluir el num
 %     ES IMPORTANTE REESCRIBIRLOS A MANO PARA QUE VAYAN SECUENCIALMENTE SIN SALTARSE NINGÚN NÚMERO
 %     DESDE 1 HASTA LOS n ELEMENTOS QUE VAYA A TENER LA PLATAFORMA
 
-% % % Lectura de datos del modelo de ETABS
-% [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_secciones, VXZ] = lectura_datos_modelo_ETABS(archivo_excel);
-% 
-% % Modificación de la matriz de masas
-% % [masas_en_cada_nodo] = modificacion_matriz_masas(archivo_excel, tirante, d_agua, matriz_cell_secciones, tiempo, densidad_crec);
-% [masas_en_cada_nodo] = modificacion_matriz_masas_estructura_sencilla(archivo_excel);
+% Lectura de datos del modelo de ETABS
+[coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_secciones, VXZ] = lectura_datos_modelo_ETABS(archivo_excel);
 
-% % Escritura de los datos hacia la hoja de excel del Dr. Rolando
-% escritura_datos_hoja_excel_del_dr_Rolando(coordenadas, conectividad, prop_geom, matriz_restriccion, masas_en_cada_nodo, VXZ);
+% Modificación de la matriz de masas
+% [masas_en_cada_nodo] = modificacion_matriz_masas(archivo_excel, tirante, d_agua, matriz_cell_secciones, tiempo, densidad_crec);
+[masas_en_cada_nodo] = modificacion_matriz_masas_estructura_sencilla(archivo_excel);
 
-% % % % % Matriz de masas completa y condensada
-% % % % [M_cond] = Matriz_M_completa_y_condensada(masas_en_cada_nodo);
+% Escritura de los datos hacia la hoja de excel del Dr. Rolando
+escritura_datos_hoja_excel_del_dr_Rolando(coordenadas, conectividad, prop_geom, matriz_restriccion, masas_en_cada_nodo, VXZ);
+
+% % % % Matriz de masas completa y condensada
+% % % [M_cond] = Matriz_M_completa_y_condensada(masas_en_cada_nodo);
 
 % % Lectura de datos de la hoja de EXCEL del dr. Rolando para la función "Ensamblaje de matrices globales"
 [NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, E, G, vxz, ID, KG, KGtu] = lectura_hoja_excel(pathfile);
 % clearvars -except archivo_excel tirante tiempo d_agua densidad_crec pathfile no_elemento_a_danar caso_dano dano_porcentaje coordenadas vxz conectividad prop_geom matriz_restriccion matriz_cell_secciones masas_en_cada_nodo M_cond NE IDmax NEn elements nodes damele eledent A Iy Iz J E G ID KG KGtu hoja_excel vigas_long brac_long col_long num_de_ele_long
 
-% % Danos locales
-% % % [ke_d_total, ke_d, elem_con_dano_long_NE] = switch_case_danos(no_elemento_a_danar, caso_dano, dano_porcentaje, archivo_excel, NE, prop_geom, E, G, J);
-% prop_geom(:,8:9)    = [];                          % eliminacion de 'circular' y 'wo', si no se eliminan la conversion a matriz numerica no es posible
+% Danos locales
+% % [ke_d_total, ke_d, elem_con_dano_long_NE] = switch_case_danos(no_elemento_a_danar, caso_dano, dano_porcentaje, archivo_excel, NE, prop_geom, E, G, J);
+prop_geom(:,8:9)    = [];                          % eliminacion de 'circular' y 'wo', si no se eliminan la conversion a matriz numerica no es posible
 
-% % Tabla con no. de elemento y longitud de orden descendente
-% hoja_excel = 'Beam Object Connectivity';
-% % vigas_long = readmatrix(archivo_excel, hoja_excel, '')
-% vigas_long = readmatrix(archivo_excel, 'Sheet', hoja_excel);
-% vigas_long(:,2:5) = [];
-% vigas_long(:,3) = [];
-% % Extracción de datos de las columas (tanto en la subestructura como en al superestructura)
-% hoja_excel = 'Brace Object Connectivity'; % pestaña con elementos diagonales (ubicados en la subestructura)
-% brac_long = readmatrix(archivo_excel, 'Sheet', hoja_excel);
-% brac_long(:,2:5) = [];
-% brac_long(:,3) = [];
-% hoja_excel = 'Column Object Connectivity'; % pestaña con columnas rectas (generalmente ubicados en la superestructura)
-% col_long = readmatrix(archivo_excel, 'Sheet', hoja_excel);
-% col_long(:,2:5) = [];
-% col_long(:,3) = [];
-% num_de_ele_long = sortrows(vertcat(vigas_long,brac_long,col_long),1);
+% Tabla con no. de elemento y longitud de orden descendente
+hoja_excel = 'Beam Object Connectivity';
+% vigas_long = readmatrix(archivo_excel, hoja_excel, '')
+vigas_long = readmatrix(archivo_excel, 'Sheet', hoja_excel);
+vigas_long(:,2:5) = [];
+vigas_long(:,3) = [];
+% Extracción de datos de las columas (tanto en la subestructura como en al superestructura)
+hoja_excel = 'Brace Object Connectivity'; % pestaña con elementos diagonales (ubicados en la subestructura)
+brac_long = readmatrix(archivo_excel, 'Sheet', hoja_excel);
+brac_long(:,2:5) = [];
+brac_long(:,3) = [];
+hoja_excel = 'Column Object Connectivity'; % pestaña con columnas rectas (generalmente ubicados en la superestructura)
+col_long = readmatrix(archivo_excel, 'Sheet', hoja_excel);
+col_long(:,2:5) = [];
+col_long(:,3) = [];
+num_de_ele_long = sortrows(vertcat(vigas_long,brac_long,col_long),1);
 
-%%
-clc
-% SECCION: Longitudes de elementos a danar (long_elem_con_dano)
-
-% hoja_excel              = 'Frame Assigns - Summary';
-% datos_tabla = readtable(archivo_excel, 'Sheet', hoja_excel);
-% datos_tabla(1,:) = [];
-% uniqueName = datos_tabla.UniqueName;            % Columna C. % Extraer las columnas C (UniqueName) y E (Length mm)
-% uniqueName = cellfun(@str2double, uniqueName);  % Conversión a matriz      
-% length_mm = datos_tabla.Length;                 % Columna E
-% datos_para_long = horzcat(uniqueName, length_mm);
-% elementos_y_long        = sortrows(datos_para_long, 1);
-% for i = 1:length(no_elemento_a_danar)
-%     long_elem_con_dano(i)  = elementos_y_long(no_elemento_a_danar(i),2);
-% end
-% L_d = long_elem_con_dano;
-L_d = 0;
+%% SECCION: Longitudes de elementos a danar (long_elem_con_dano)
+hoja_excel              = 'Frame Assigns - Summary';
+datos_tabla = readtable(archivo_excel, 'Sheet', hoja_excel);
+datos_tabla(1,:) = [];
+uniqueName = datos_tabla.UniqueName;            % Columna C. % Extraer las columnas C (UniqueName) y E (Length mm)
+% % uniqueName = cellfun(@str2double, uniqueName);  % Conversión a matriz      
+length_mm = datos_tabla.Length;                 % Columna E
+datos_para_long = horzcat(uniqueName, length_mm);
+elementos_y_long        = sortrows(datos_para_long, 1);
+for i = 1:length(no_elemento_a_danar)
+    long_elem_con_dano(i)  = elementos_y_long(no_elemento_a_danar(i),2);
+end
+L_d = long_elem_con_dano;
 
 % Vector que posiciona en un indice del elemento a danar
 [elem_con_dano_long_NE] = vector_asignacion_danos(no_elemento_a_danar, NE);
 
-% % % Matriz de rigidez local con dano aplicado
-% [ke_d_total, ke_d, prop_geom_mat] = switch_case_danos(no_elemento_a_danar, num_de_ele_long, L_d, caso_dano, dano_porcentaje, prop_geom, E, G);
+% % Matriz de rigidez local con dano aplicado
+[ke_d_total, ke_d, prop_geom_mat] = switch_case_danos(no_elemento_a_danar, num_de_ele_long, L_d, caso_dano, dano_porcentaje, prop_geom, E, G);
 
-% [KG_damaged, KG_undamaged,L, kg] = ensamblaje_matriz_rigidez_global_ambos_modelos(ID, NE, ke_d_total,elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G,  vxz, elem_con_dano_long_NE);
-[KG_damaged, KG_undamaged,L, kg] = ensamblaje_matriz_rigidez_global_ambos_modelos(ID, NE,elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G,  vxz);
+[KG_damaged, KG_undamaged,L, kg] = ensamblaje_matriz_rigidez_global_ambos_modelos(ID, NE, ke_d_total,elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G,  vxz, elem_con_dano_long_NE);
 KG_damaged
 
-%%
-% Cargas aplicadas
-P = [5; 6; 0; 0;0;0; ...
-    5; 6; 0; 0;0;0; ...
-    5; 6; 0; 0;0;0; ...
-    5; 6; 0; 0;0;0]*1000
-
-Deform = KG_damaged^-1 * P
+% %%
+% % Cargas aplicadas
+% P = [5; 6; 0; 0;0;0; ...
+%     5; 6; 0; 0;0;0; ...
+%     5; 6; 0; 0;0;0; ...
+%     5; 6; 0; 0;0;0]*1000;
+% 
+% Deform = KG_damaged^-1 * P
 
 
 %%

@@ -21,13 +21,13 @@ function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_
     vigas(:, cols_con_nan) = [];
     vigas(:,4) = [];
     vigas_conectividad = vigas;
-    % % Extracción de datos de las columas diagonales (tanto en la subestructura como en al superestructura)
-    % hoja_excel = 'Brace Object Connectivity'; % pestaña con elementos diagonales (generalmente ubicados en la subestructura)
-    % col_diag = readmatrix(archivo_excel, 'Sheet', hoja_excel);
-    % cols_con_nan = any(isnan(col_diag), 1);
-    % col_diag(:, cols_con_nan) = [];
-    % col_diag(:,4) = [];
-    % col_diag_conectividad = col_diag;
+    % Extracción de datos de las columas diagonales (tanto en la subestructura como en al superestructura)
+    hoja_excel = 'Brace Object Connectivity'; % pestaña con elementos diagonales (generalmente ubicados en la subestructura)
+    col_diag = readmatrix(archivo_excel, 'Sheet', hoja_excel);
+    cols_con_nan = any(isnan(col_diag), 1);
+    col_diag(:, cols_con_nan) = [];
+    col_diag(:,4) = [];
+    col_diag_conectividad = col_diag;
     % Extracción de datos de las columas rectas (tanto en la subestructura como en al superestructura)
     hoja_excel = 'Column Object Connectivity'; % pestaña con columnas rectas (generalmente ubicados en la superestructura)
     col = readmatrix(archivo_excel, 'Sheet', hoja_excel);
@@ -36,8 +36,7 @@ function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_
     col(:,4) = [];
     col_conectividad = col;
     % Concatenación de las vigas y columnas
-    % conectividad = vertcat(vigas_conectividad, col_diag_conectividad,col_conectividad);   % Matriz con todos los elementos y entre qué y qué nodos está conectados
-    conectividad = vertcat(vigas_conectividad, col_conectividad);   % Matriz con todos los elementos y entre qué y qué nodos está conectados
+    conectividad = vertcat(vigas_conectividad, col_diag_conectividad,col_conectividad);   % Matriz con todos los elementos y entre qué y qué nodos está conectados
     conectividad = sortrows(conectividad, 1);                           % Matriz organizada con todos los elementos y entre qué nudos está cada elemento frame
     conectividad = conectividad(:,1:3);
 
@@ -117,8 +116,7 @@ function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_
         end
     end
     propiedades = prop_geom;
-    prop_geom(1,:) = [];
-    % 
+
     %% BLOQUE: Columnas adicionales de tabla (wo_vector, gamma_beta_vector, tipo)
     % Creación de vector 'wo'
     wo_vector = cell(length(prop_geom),1);
@@ -292,7 +290,7 @@ function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_
     elementos = string(elementos);
     prop_geom = cellfun(@num2str, prop_geom, 'UniformOutput', false);
     prop_geom = string(prop_geom);
-    prop_geom =  [elementos, prop_geom];
+    prop_geom = [elementos, prop_geom];
     prop_geom = sortrows(prop_geom);            % Matriz organizada con cada elemento y sus propiedades extraídas del ETABS
     % Conversion de tablas a celdas para poder concatenar
     diam_diam_thick_tube_sub(:,1) = [];
@@ -314,7 +312,7 @@ function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_
     nodos_restringidos(:,2:7) = [];
     matriz_restriccion = ones(length(nodos_restringidos),6);                % se les agrega numeros porque asi va la estructura de las hojas de excel del dr. Rolando Salgado
     matriz_restriccion = horzcat(nodos_restringidos, matriz_restriccion);
-    
+
     %% SECCION: pestaña "vxz"
     %% SECCION: Creacion automatica de vectores VXZ para cada elemento del modelo
     % Reuso de variables de Nodos y sus coordenadas
@@ -325,7 +323,7 @@ function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_
         % X mirando hasta adelante
         % Y mirando hasta atrás
         % Sugerencia: Mejor ver el eje global en el modelo de ETABS ya que no se sabe cuál es adelante y atrás realmente hasta que lo ves en el gráfico
-    
+
     % Extración de que tipos son cada elemento frame (si viga, columna o elemento diagonal)
     hoja_excel = 'Frame Assigns - Summary'; % Nombre de la pestaña
     columna_texto = readcell(archivo_excel, 'Sheet', hoja_excel, 'Range', 'D:D');   % Lectura de qué tipo de elemento es cada 
@@ -346,5 +344,4 @@ function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_
     UniqueName_frame = UniqueName_frame(:,3);
     UniqueName_frame(1) = [];
     VXZ = sortrows(horzcat(UniqueName_frame, matriz_num_vxz),1);
-
 end

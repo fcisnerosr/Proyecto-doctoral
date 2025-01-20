@@ -1,5 +1,4 @@
-% function [KG_damaged, KG_undamaged,L, kg] = ensamblaje_matriz_rigidez_global_ambos_modelos(ID, NE, ke_d_total,elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G,  vxz, elem_con_dano_long_NE)
-function [KG_damaged, KG_undamaged,L, kg] = ensamblaje_matriz_rigidez_global_ambos_modelos(ID, NE, elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G,  vxz)
+function [KG_damaged, KG_undamaged,L, kg] = ensamblaje_matriz_rigidez_global_ambos_modelos(ID, NE, ke_d_total,elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G,  vxz, elem_con_dano_long_NE)
     % KG con daño
     KG_damaged = [];  % Inicializa con un valor vacío o cero
     KG_undamaged = [];  % Inicializa con un valor vacío o cero
@@ -9,7 +8,6 @@ function [KG_damaged, KG_undamaged,L, kg] = ensamblaje_matriz_rigidez_global_amb
     KGtu=zeros(IDmax,NEn);
     cont = 1;   % contador para iterar sobre ke_d_total
     for i = 1:NE
-    % for i = 1:1
         KGf     = zeros(IDmax,IDmax);
         KGtuf   = zeros(IDmax,NEn);
         L(i) = norm(nodes(elements(i,3),2:4) - nodes(elements(i,2),2:4));
@@ -25,14 +23,13 @@ function [KG_damaged, KG_undamaged,L, kg] = ensamblaje_matriz_rigidez_global_amb
         locdent = find(eledent==i,1);
         if isempty(locdam) && isempty(locdent)
             % local stiffness matrix of the elements
-            % if i == elem_con_dano_long_NE(i)
-            %    % Asignacion de dano local a la matrices locales con danos asignadas previamente
-            %     % ke(:,:,i) = ke_d_total(:,:,cont);
-            %     % cont = cont + 1;
-            % else
-                A(i)
+            if i == elem_con_dano_long_NE(i)
+               % Asignacion de dano local a la matrices locales con danos asignadas previamente
+                ke(:,:,i) = ke_d_total(:,:,cont);
+                cont = cont + 1;
+            else
                 ke(:,:,i) = localkeframe3D(A(i),Iy(i),Iz(i),J(i),E(i),G(i),L(i));
-            % end            
+            end            
         end
 
         % Matriz de transformaciones
