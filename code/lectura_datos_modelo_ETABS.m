@@ -68,12 +68,12 @@ function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_
     % ya que así lo requiere el XLSX del dr. Rolando.
     %% Proceso de concatenación de los vectores columnas de E y G
     num_filas = size(vector_organizado_con_propiedades, 1);
-    E = E * ones(num_filas, 1);
-    G = G * ones(num_filas, 1);
+    E_num_elementos = E * ones(num_filas, 1);
+    G_num_elementos = G * ones(num_filas, 1);
 
     %% BLOQUE: Estracción de módulos de elasticidad y cortante (E y G)
     % Concatenación de la matriz "vector_organizado_con_propiedades" y los dos vectores columna E y G
-    vector_organizado_con_propiedades = [cell2mat(vector_organizado_con_propiedades), E, G];
+    vector_organizado_con_propiedades = [cell2mat(vector_organizado_con_propiedades), E_num_elementos, G_num_elementos];
     vector_organizado_con_propiedades = num2cell(vector_organizado_con_propiedades);
     % Concateniacón de la lista de SECC01, SECC02, ..., SECCn en la subestructura
     % y SteelBm y SteelCol de la superestructura
@@ -301,6 +301,10 @@ function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_
     G_columna_cell = num2cell(G_columna);
     % Concatenación final de la matriz de diámetros y espesores
     prop_geom = [prop_geom_cell, E_columna_cell, G_columna_cell, tipo, wo_vector, diam_diam_thick_tube_sub_cell, gamma_beta_vector]; % ajustes por cambio de Jacket a marco, se omitio diam_diam_th
+    % Ordenamiento de prop_geo, ascendentemente, con respeco a la primera columna
+    columna_numerica = cellfun(@str2double, prop_geom(:,1));    % Convertir la primera columna de cell a número
+    [~, orden] = sort(columna_numerica);                        % Obtener el orden de índices para ordenar
+    prop_geom = prop_geom(orden, :);                   % Reorganizar el cell array según el orden obtenido    
 
     %% SECCION: pestaña "fix nodes"
     hoja_excel = 'Joint Assigns - Restraints';

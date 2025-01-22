@@ -31,7 +31,7 @@ function [ke_d_total, ke_d, prop_geom_mat] = switch_case_danos(no_elemento_a_dan
                 prop_geom_mat = cell2mat(prop_geom_mat);        % Convierte el cell array a matriz numérica
                 t(i) = prop_geom_mat(no_elemento_a_danar(i),10); % Espesor extraido intacto
                 t_corro(i) = dano_porcentaje(i) * t(i) / 100; % Espesor que va a restar al espesor sin dano
-                t_d(i) = t(i) - t_corro(i); % Espesor ya reducido
+                t_d(i) = t(i) - t_corro(i) % Espesor ya reducido
                 % Área con corrosión
                 D(i) = prop_geom_mat(no_elemento_a_danar(i),9);
                 D_d(i) = D(i) - (2*t_corro(i));

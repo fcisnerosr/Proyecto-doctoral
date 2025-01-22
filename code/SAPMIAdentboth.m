@@ -28,9 +28,9 @@ pathfile        = 'E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\marco
 % pathfile = '/home/francisco/Documents/Proyecto-doctoral/pruebas_excel/marco3Ddam0.xlsx';
 
 % Danos a elementos tubulares, caso de dano y su respectivo porcentaje
-no_elemento_a_danar = 1;
+no_elemento_a_danar = [1 9];
 caso_dano           = repmat({'corrosion'}, 1, length(no_elemento_a_danar));
-dano_porcentaje     = [0.000];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
+dano_porcentaje     = [50 50];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 
 % Corregir de formato los números en la tabla importada de ETABS: En todo este bloque de código, se realizó el cambio de formato de los números, debido a que ETABS importa sus tablas en formato de texto en algunas columnas.
 % % % % correccion_format_TablaETABS(archivo_excel);
@@ -42,28 +42,24 @@ dano_porcentaje     = [0.000];  % El dano va en decimal y se debe incluir el num
 %     ES IMPORTANTE REESCRIBIRLOS A MANO PARA QUE VAYAN SECUENCIALMENTE SIN SALTARSE NINGÚN NÚMERO
 %     DESDE 1 HASTA LOS n ELEMENTOS QUE VAYA A TENER LA PLATAFORMA
 
-% Lectura de datos del modelo de ETABS
+% % % Lectura de datos del modelo de ETABS
 [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_secciones, VXZ] = lectura_datos_modelo_ETABS(archivo_excel);
 
 % Modificación de la matriz de masas
 % [masas_en_cada_nodo] = modificacion_matriz_masas(archivo_excel, tirante, d_agua, matriz_cell_secciones, tiempo, densidad_crec);
-[masas_en_cada_nodo] = modificacion_matriz_masas_estructura_sencilla(archivo_excel);
+[masas_en_cada_nodo, M_cond] = modificacion_matriz_masas_estructura_sencilla(archivo_excel);
 
 % Escritura de los datos hacia la hoja de excel del Dr. Rolando
 escritura_datos_hoja_excel_del_dr_Rolando(coordenadas, conectividad, prop_geom, matriz_restriccion, masas_en_cada_nodo, VXZ);
-
-% % % % Matriz de masas completa y condensada
-% % % [M_cond] = Matriz_M_completa_y_condensada(masas_en_cada_nodo);
 
 % % Lectura de datos de la hoja de EXCEL del dr. Rolando para la función "Ensamblaje de matrices globales"
 [NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, E, G, vxz, ID, KG, KGtu] = lectura_hoja_excel(pathfile);
 % clearvars -except archivo_excel tirante tiempo d_agua densidad_crec pathfile no_elemento_a_danar caso_dano dano_porcentaje coordenadas vxz conectividad prop_geom matriz_restriccion matriz_cell_secciones masas_en_cada_nodo M_cond NE IDmax NEn elements nodes damele eledent A Iy Iz J E G ID KG KGtu hoja_excel vigas_long brac_long col_long num_de_ele_long
 
 % Danos locales
-% [ke_d_total, ke_d, elem_con_dano_long_NE] = switch_cae_danos(no_elemento_a_danar, caso_dano, dano_porcentaje, archivo_excel, NE, prop_geom, E, G, J);
 [num_de_ele_long, prop_geom] = extraer_longitudes_elementos(prop_geom, archivo_excel);
 
-L_d = extraer_longitudes_danadas(archivo_excel, no_elemento_a_danar);
+L_d = extraer_longitudes_danadas(archivo_excel, no_elemento_a_danar)
 
 % Vector que posiciona en un indice del elemento a danar
 [elem_con_dano_long_NE] = vector_asignacion_danos(no_elemento_a_danar, NE);
@@ -75,40 +71,29 @@ L_d = extraer_longitudes_danadas(archivo_excel, no_elemento_a_danar);
 
 %%
 % Función Condensación estática
-KG_damaged_cond   = condensacion_estatica(KG_damaged)
+KG_damaged_cond = condensacion_estatica(KG_damaged);
 
-% %%
-% % Cargas aplicadas con matriz completa
-% P = [5; 6; 1; -5; 5; 3; ...
-%     5; 6; 1; -5; 5; 3; ...
-%     5; 6; 1; -5; 5; 3; ...
-%     5; 6; 1; -5; 5; 3]*1000;
+
+% Cargas aplicadas con matriz completa
+P = [5; 6; 1; 0; 0; 0; ...
+    5; 6; 1; 0; 0; 0; ...
+    5; 6; 1; 0; 0; 0; ...
+    5; 6; 1; 0; 0; 0]*1000;
+
+Deform = KG_damaged^-1 * P
+
+% % % % Cargas aplicadas con matriz condensada
+% P = [5; 6; 1;  ...
+%     5; 6; 1;  ...
+%     5; 6; 1;  ...
+%     5; 6; 1 ]*1000;
 % 
-% Deform = KG_damaged^-1 * P
-
-% Cargas aplicadas con matriz condensada
-P = [5; 6; 1;  ...
-    5; 6; 1;  ...
-    5; 6; 1;  ...
-    5; 6; 1 ]*1000;
-
-Deform = (KG_damaged_cond^-1) * P
-
+% Deform = (KG_damaged_cond^-1) * P
 
 
 % % Modos y frecuencias de estructura condensados y globales
-% [modos_cond_d,frec_cond_d] = modos_frecuencias(KG_damaged_cond,M_cond);
+% [modos_cond_d,frec_cond_d] = modos_frecuencias(KG_damaged_cond,M_cond)
 
-% %%% Verificación de numeros reales en mis frecuencias y formas
-% % Verificar si las matrices contienen solo números reales
-% real_modos_cond_d = isreal(modos_cond_d);  % Devuelve true
-% real_frec_cond_d  = isreal(frec_cond_d);  % Devuelve false
-% % Mostrar resultados
-% disp(['La matriz modos_cond_d es completamente real: ', num2str(real_modos_cond_d)]);
-% disp(['La matriz frec_cond_d es completamente real: ', num2str(real_frec_cond_d)]);
-% 
-% 
-% 
 % %%
 % clc
 % % Implementación del Algoritmo Genetico (AG)
