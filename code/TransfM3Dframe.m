@@ -27,7 +27,7 @@ function [Gamma_gamma, Gamma_beta] = TransfM3Dframe(CX, CY, CZ , CXY, i, cosalph
         % VXZ en excel: 0, 0, 1
         % disp('Viga paralela a Y')
         beta_M =[    0      1   0; 
-                     1      0   0;
+                    -1      0   0;
                      0      0   1];
         Gamma_beta = blkdiag(beta_M, beta_M, beta_M, beta_M); % Crea bloques diagonales de R_beta
         Gamma_gamma = eye(12,12);
@@ -35,8 +35,7 @@ function [Gamma_gamma, Gamma_beta] = TransfM3Dframe(CX, CY, CZ , CXY, i, cosalph
         % disp('Viga paralela a X')
         Gamma_beta  = eye(12,12);
         Gamma_gamma = eye(12,12);
-    % elseif sinalpha ~= 0 && cosalpha ~= 1
-    else
+    elseif sinalpha ~= 0 && cosalpha ~= 1
         % disp('Elemento diagonal')
         %% Elementos diagonales
         % VXZ en excel: 0, 0, 0

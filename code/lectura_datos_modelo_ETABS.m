@@ -185,96 +185,96 @@ function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_
     diam_diam_thick_tube_sub = horzcat(UniqueName, vector_diametros_sub, vector_diametros_sub, vector_thickness_sub);
 
     % Esta seccion se omite porque en el marco de estudio no existe superestructura 
-    % % SUBLOQUE: Diametros y espesores de los elementos elementos tubulares de la superestructura (vector_diametros_tube_super y vector_thickness__tube_super)
-    % hoja_excel = 'Frame Assigns - Summary';
-    % tabla_frame_assigns_summary = readtable(archivo_excel, 'Sheet', hoja_excel);
-    % tabla_frame_assigns_summary(1,:) = [];
+    % SUBLOQUE: Diametros y espesores de los elementos elementos tubulares de la superestructura (vector_diametros_tube_super y vector_thickness__tube_super)
+    hoja_excel = 'Frame Assigns - Summary';
+    tabla_frame_assigns_summary = readtable(archivo_excel, 'Sheet', hoja_excel);
+    tabla_frame_assigns_summary(1,:) = [];
+    tabla_a_filtrar = readtable(archivo_excel, 'Sheet', hoja_excel);
+    tabla_a_filtrar(1,:) = [];
+    indices = ~contains(tabla_a_filtrar.Story, 'Story');
+    tabla_filtrada = tabla_a_filtrar(indices, :);
+    indices = ~contains(tabla_filtrada.DesignType, 'Beam');
+    tabla_filtrada = tabla_filtrada(indices, :);
+    tabla_frame_assigns_summary_tube_super = tabla_filtrada;
+    tabla_frame_assigns_summary_tube_super(:,1:2) = [];
+    tabla_frame_assigns_summary_tube_super(:,2:4) = [];
+    tabla_frame_assigns_summary_tube_super(:,3:end) = [];
+    % luego se realiza una asignación y de cada elemento y sección con su diámetro y su espesor
+    vector_diametros_tube_super = zeros(height(tabla_frame_assigns_summary_tube_super), 1);
+    vector_thickness_tube_super = zeros(height(tabla_frame_assigns_summary_tube_super), 1);
+    % Recorrer cada fila de tabla_frame_assigns_summary
+    for i = 1:height(tabla_frame_assigns_summary_tube_super)
+        % Obtener el DesignSection de la fila actual
+        design_section = tabla_frame_assigns_summary_tube_super.DesignSection{i};
+        % Encontrar la fila correspondiente en tabla_diam_thick
+        indice = find(strcmp(tabla_diam_thick.Name, design_section));
+        % Extraer OutsideDiameter y WallThickness
+        if ~isempty(indice)
+            vector_diametros_tube_super(i) = tabla_diam_thick.OutsideDiameter(indice);
+            vector_thickness_tube_super(i) = tabla_diam_thick.WallThickness(indice);
+        else
+            % Si el DesignSection no se encuentra, puedes asignar un valor por defecto o manejarlo según sea necesario
+            vector_diametros_tube_super(i) = NaN;
+            vector_thickness_tube_super(i) = NaN;
+        end
+    end
+    vector_diametros_tube_super = num2cell(vector_diametros_tube_super);
+    vector_thickness_tube_super = num2cell(vector_thickness_tube_super);
+    UniqueName = tabla_frame_assigns_summary_tube_super(:,1);
+    diam_diam_thick_tube_super = horzcat(UniqueName, vector_diametros_tube_super, vector_diametros_tube_super, vector_thickness_tube_super);
+
+    %%% Parte comentada - inicio: en el marco no hay vigas en I
+    % % SUBLOQUE: Diámetros y espesores de los elementos IR de la superestructura (vector_diametros_I y vector_thickness_I)
+    % hoja_excel = 'Frame Sec Def - Steel I';
+    % tabla_diam_thick_I = readtable(archivo_excel, 'Sheet', hoja_excel);
+    % tabla_diam_thick_I(1,:) = [];
+    % tabla_diam_thick_I(:,1:4) = [];
+    % tabla_diam_thick_I(:,3) = [];
+    % tabla_diam_thick_I(:,3) = [];
+    % tabla_diam_thick_I(:,4:end) = [];
+    % hoja_excel = 'Frame Assigns - Summary';    
+    % tabla_frame_assigns_summary_I = readtable(archivo_excel, 'Sheet', hoja_excel);
+    % tabla_frame_assigns_summary_I(1,:) = [];
     % tabla_a_filtrar = readtable(archivo_excel, 'Sheet', hoja_excel);
-    % tabla_a_filtrar(1,:) = [];
     % indices = ~contains(tabla_a_filtrar.Story, 'Story');
-    % tabla_filtrada = tabla_a_filtrar(indices, :)
-    % indices = ~contains(tabla_filtrada.DesignType, 'Beam');
+    % tabla_filtrada = tabla_a_filtrar(indices, :);
+    % tabla_filtrada(1,:) = [];
+    % tabla_filtrada = sortrows(tabla_filtrada, {'DesignType', 'UniqueName'});
+    % indices = ~contains(tabla_filtrada.Label, 'C');
     % tabla_filtrada = tabla_filtrada(indices, :);
-    % tabla_frame_assigns_summary_tube_super = tabla_filtrada;
-    % tabla_frame_assigns_summary_tube_super(:,1:2) = [];
-    % tabla_frame_assigns_summary_tube_super(:,2:4) = [];
-    % tabla_frame_assigns_summary_tube_super(:,3:end) = [];
-    % % luego se realiza una asignación y de cada elemento y sección con su diámetro y su espesor
-    % vector_diametros_tube_super = zeros(height(tabla_frame_assigns_summary_tube_super), 1);
-    % vector_thickness_tube_super = zeros(height(tabla_frame_assigns_summary_tube_super), 1);
-    % % Recorrer cada fila de tabla_frame_assigns_summary
-    % for i = 1:height(tabla_frame_assigns_summary_tube_super)
+    % tabla_frame_assigns_summary_I = tabla_filtrada;
+    % tabla_frame_assigns_summary_I(:,1:2) = [];
+    % tabla_frame_assigns_summary_I(:,2:4) = [];
+    % tabla_frame_assigns_summary_I(:,3:end) = [];
+    % tabla_frame_assigns_summary_I = sortrows(tabla_frame_assigns_summary_I);
+    % vector_diametros_I = zeros(height(tabla_frame_assigns_summary_I), 1);
+    % vector_thickness_I = zeros(height(tabla_frame_assigns_summary_I), 1);
+    % % Recorrer cada fila de tabla_frame_assigns_summary_I
+    % for i = 1:height(tabla_frame_assigns_summary_I)
     %     % Obtener el DesignSection de la fila actual
-    %     design_section = tabla_frame_assigns_summary_tube_super.DesignSection{i};
+    %     design_section = tabla_frame_assigns_summary_I.DesignSection{i};
     %     % Encontrar la fila correspondiente en tabla_diam_thick
-    %     indice = find(strcmp(tabla_diam_thick.Name, design_section));
+    %     indice = find(strcmp(tabla_diam_thick_I.SectionInFile, design_section));
     %     % Extraer OutsideDiameter y WallThickness
     %     if ~isempty(indice)
-    %         vector_diametros_tube_super(i) = tabla_diam_thick.OutsideDiameter(indice);
-    %         vector_thickness_tube_super(i) = tabla_diam_thick.WallThickness(indice);
+    %         vector_diametros_I(i) = tabla_diam_thick_I.TotalDepth(indice);
+    %         vector_thickness_I(i) = tabla_diam_thick_I.WebThickness(indice);
     %     else
     %         % Si el DesignSection no se encuentra, puedes asignar un valor por defecto o manejarlo según sea necesario
-    %         vector_diametros_tube_super(i) = NaN;
-    %         vector_thickness_tube_super(i) = NaN;
+    %         vector_diametros_I(i) = NaN;
+    %         vector_thickness_I(i) = NaN;
     %     end
     % end
-    % vector_diametros_tube_super = num2cell(vector_diametros_tube_super);
-    % vector_thickness_tube_super = num2cell(vector_thickness_tube_super);
-    % UniqueName = tabla_frame_assigns_summary_tube_super(:,1);
-    % diam_diam_thick_tube_super = horzcat(UniqueName, vector_diametros_tube_super, vector_diametros_tube_super, vector_thickness_tube_super)
+    % vector_diametros_I = num2cell(vector_diametros_I);
+    % vector_thickness_I = num2cell(vector_thickness_I);
+    % UniqueName = tabla_frame_assigns_summary_I(:,1);
+    % diam_diam_thick_I = horzcat(UniqueName, vector_diametros_I, vector_diametros_I, vector_thickness_I);
+    % diam_diam_th = vertcat(diam_diam_thick_tube_sub, diam_diam_thick_tube_super, diam_diam_thick_I);
+    % diam_diam_th = sortrows(diam_diam_th);
+    % diam_diam_th = table2cell(diam_diam_th);
+    % diam_diam_th(:,1) = [];
+    %%% Parte comentada - fin: en el marco no hay vigas en I
 
-    % %%% Parte comentada - inicio: en el marco no hay vigas en I
-    % % % SUBLOQUE: Diámetros y espesores de los elementos IR de la superestructura (vector_diametros_I y vector_thickness_I)
-    % % hoja_excel = 'Frame Sec Def - Steel I';
-    % % tabla_diam_thick_I = readtable(archivo_excel, 'Sheet', hoja_excel);
-    % % tabla_diam_thick_I(1,:) = [];
-    % % tabla_diam_thick_I(:,1:4) = [];
-    % % tabla_diam_thick_I(:,3) = [];
-    % % tabla_diam_thick_I(:,3) = [];
-    % % tabla_diam_thick_I(:,4:end) = [];
-    % % hoja_excel = 'Frame Assigns - Summary';    
-    % % tabla_frame_assigns_summary_I = readtable(archivo_excel, 'Sheet', hoja_excel);
-    % % tabla_frame_assigns_summary_I(1,:) = [];
-    % % tabla_a_filtrar = readtable(archivo_excel, 'Sheet', hoja_excel);
-    % % indices = ~contains(tabla_a_filtrar.Story, 'Story');
-    % % tabla_filtrada = tabla_a_filtrar(indices, :);
-    % % tabla_filtrada(1,:) = [];
-    % % tabla_filtrada = sortrows(tabla_filtrada, {'DesignType', 'UniqueName'});
-    % % indices = ~contains(tabla_filtrada.Label, 'C');
-    % % tabla_filtrada = tabla_filtrada(indices, :);
-    % % tabla_frame_assigns_summary_I = tabla_filtrada;
-    % % tabla_frame_assigns_summary_I(:,1:2) = [];
-    % % tabla_frame_assigns_summary_I(:,2:4) = [];
-    % % tabla_frame_assigns_summary_I(:,3:end) = [];
-    % % tabla_frame_assigns_summary_I = sortrows(tabla_frame_assigns_summary_I);
-    % % vector_diametros_I = zeros(height(tabla_frame_assigns_summary_I), 1);
-    % % vector_thickness_I = zeros(height(tabla_frame_assigns_summary_I), 1);
-    % % % Recorrer cada fila de tabla_frame_assigns_summary_I
-    % % for i = 1:height(tabla_frame_assigns_summary_I)
-    % %     % Obtener el DesignSection de la fila actual
-    % %     design_section = tabla_frame_assigns_summary_I.DesignSection{i};
-    % %     % Encontrar la fila correspondiente en tabla_diam_thick
-    % %     indice = find(strcmp(tabla_diam_thick_I.SectionInFile, design_section));
-    % %     % Extraer OutsideDiameter y WallThickness
-    % %     if ~isempty(indice)
-    % %         vector_diametros_I(i) = tabla_diam_thick_I.TotalDepth(indice);
-    % %         vector_thickness_I(i) = tabla_diam_thick_I.WebThickness(indice);
-    % %     else
-    % %         % Si el DesignSection no se encuentra, puedes asignar un valor por defecto o manejarlo según sea necesario
-    % %         vector_diametros_I(i) = NaN;
-    % %         vector_thickness_I(i) = NaN;
-    % %     end
-    % % end
-    % % vector_diametros_I = num2cell(vector_diametros_I);
-    % % vector_thickness_I = num2cell(vector_thickness_I);
-    % % UniqueName = tabla_frame_assigns_summary_I(:,1);
-    % % diam_diam_thick_I = horzcat(UniqueName, vector_diametros_I, vector_diametros_I, vector_thickness_I);
-    % % diam_diam_th = vertcat(diam_diam_thick_tube_sub, diam_diam_thick_tube_super, diam_diam_thick_I);
-    % % diam_diam_th = sortrows(diam_diam_th);
-    % % diam_diam_th = table2cell(diam_diam_th);
-    % % diam_diam_th(:,1) = [];
-    % %%% Parte comentada - fin: en el marco no hay vigas en I
-    % 
     % SUBLOQUE: Pasos finales (prop_geom)
     % Concatenación final y conversión final de los cell arrays en matrices
         % Se realizan algunos ajustes finales para ahora que se cambio la estructura a un marco sencillo
@@ -300,8 +300,6 @@ function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_
     E_columna_cell = num2cell(E_columna);
     G_columna_cell = num2cell(G_columna);
     % Concatenación final de la matriz de diámetros y espesores
-    % prop_geom = horzcat(prop_geom, tipo, wo_vector, diam_diam_th, gamma_beta_vector) % ajustes por cambio de Jacket a marco, se omitio diam_diam_th
-    % prop_geom = horzcat(prop_geom, tipo, wo_vector, diam_diam_thick_tube_sub, gamma_beta_vector) % ajustes por cambio de Jacket a marco, se omitio diam_diam_th
     prop_geom = [prop_geom_cell, E_columna_cell, G_columna_cell, tipo, wo_vector, diam_diam_thick_tube_sub_cell, gamma_beta_vector]; % ajustes por cambio de Jacket a marco, se omitio diam_diam_th
 
     %% SECCION: pestaña "fix nodes"

@@ -1,5 +1,5 @@
 function[documento_excel_dr_Rolando] = borrar_elementos_en_hoja(sheet_name)
-    documento_excel_dr_Rolando = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\marco3Ddam0.xlsx';
+    documento_excel_dr_Rolando = 'E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\marco3Ddam0_error.xlsx';
     sheet_name2 = 'opensees';
     % Leer el contenido actual de la hoja
     data = xlsread(documento_excel_dr_Rolando, sheet_name2);

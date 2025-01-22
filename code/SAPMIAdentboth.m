@@ -10,7 +10,7 @@ format shortG
 % archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\marco_elementos_inclinados.xlsx';
 
 % Elemento a elemento
-archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_2_marco_elemento_a_elemento\datos_prueba2.xlsx';
+archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_2_marco_elemento_a_elemento\datos_prueba2.xlsx';
 
 %Jacket
 % archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\Datos_nudos_elementos_secciones_masas_nuevo_pend1a8_vigasI.xlsx';
@@ -24,7 +24,7 @@ densidad_crec   = 1.3506*10^-7;    % en N/mm^3
 % Valor de la dessidad del crecimiento marino
 % Valor de encontrado en internet = 1325 kg/m^3
 % Conversión: 1325 kg/m^3 * (1 N / 9.81 kg) * (1 m^3/1000^3 m^3) = 1.3506*10^-7 en N/mm^3
-pathfile        = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\marco3Ddam0.xlsx';
+pathfile        = 'E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\marco3Ddam0_error.xlsx';
 % pathfile = '/home/francisco/Documents/Proyecto-doctoral/pruebas_excel/marco3Ddam0.xlsx';
 
 % Danos a elementos tubulares, caso de dano y su respectivo porcentaje
@@ -60,62 +60,39 @@ escritura_datos_hoja_excel_del_dr_Rolando(coordenadas, conectividad, prop_geom, 
 % clearvars -except archivo_excel tirante tiempo d_agua densidad_crec pathfile no_elemento_a_danar caso_dano dano_porcentaje coordenadas vxz conectividad prop_geom matriz_restriccion matriz_cell_secciones masas_en_cada_nodo M_cond NE IDmax NEn elements nodes damele eledent A Iy Iz J E G ID KG KGtu hoja_excel vigas_long brac_long col_long num_de_ele_long
 
 % Danos locales
-% % [ke_d_total, ke_d, elem_con_dano_long_NE] = switch_case_danos(no_elemento_a_danar, caso_dano, dano_porcentaje, archivo_excel, NE, prop_geom, E, G, J);
-prop_geom(:,8:9)    = [];                          % eliminacion de 'circular' y 'wo', si no se eliminan la conversion a matriz numerica no es posible
+% [ke_d_total, ke_d, elem_con_dano_long_NE] = switch_cae_danos(no_elemento_a_danar, caso_dano, dano_porcentaje, archivo_excel, NE, prop_geom, E, G, J);
+[num_de_ele_long, prop_geom] = extraer_longitudes_elementos(prop_geom, archivo_excel);
 
-% Tabla con no. de elemento y longitud de orden descendente
-hoja_excel = 'Beam Object Connectivity';
-% vigas_long = readmatrix(archivo_excel, hoja_excel, '')
-vigas_long = readmatrix(archivo_excel, 'Sheet', hoja_excel);
-vigas_long(:,2:5) = [];
-vigas_long(:,3) = [];
-% Extracción de datos de las columas (tanto en la subestructura como en al superestructura)
-hoja_excel = 'Brace Object Connectivity'; % pestaña con elementos diagonales (ubicados en la subestructura)
-brac_long = readmatrix(archivo_excel, 'Sheet', hoja_excel);
-brac_long(:,2:5) = [];
-brac_long(:,3) = [];
-hoja_excel = 'Column Object Connectivity'; % pestaña con columnas rectas (generalmente ubicados en la superestructura)
-col_long = readmatrix(archivo_excel, 'Sheet', hoja_excel);
-col_long(:,2:5) = [];
-col_long(:,3) = [];
-num_de_ele_long = sortrows(vertcat(vigas_long,brac_long,col_long),1);
-
-%% SECCION: Longitudes de elementos a danar (long_elem_con_dano)
-hoja_excel              = 'Frame Assigns - Summary';
-datos_tabla = readtable(archivo_excel, 'Sheet', hoja_excel);
-datos_tabla(1,:) = [];
-uniqueName = datos_tabla.UniqueName;            % Columna C. % Extraer las columnas C (UniqueName) y E (Length mm)
-% % uniqueName = cellfun(@str2double, uniqueName);  % Conversión a matriz      
-length_mm = datos_tabla.Length;                 % Columna E
-datos_para_long = horzcat(uniqueName, length_mm);
-elementos_y_long        = sortrows(datos_para_long, 1);
-for i = 1:length(no_elemento_a_danar)
-    long_elem_con_dano(i)  = elementos_y_long(no_elemento_a_danar(i),2);
-end
-L_d = long_elem_con_dano;
+L_d = extraer_longitudes_danadas(archivo_excel, no_elemento_a_danar);
 
 % Vector que posiciona en un indice del elemento a danar
 [elem_con_dano_long_NE] = vector_asignacion_danos(no_elemento_a_danar, NE);
 
 % % Matriz de rigidez local con dano aplicado
 [ke_d_total, ke_d, prop_geom_mat] = switch_case_danos(no_elemento_a_danar, num_de_ele_long, L_d, caso_dano, dano_porcentaje, prop_geom, E, G);
-
 [KG_damaged, KG_undamaged,L, kg] = ensamblaje_matriz_rigidez_global_ambos_modelos(ID, NE, ke_d_total,elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G,  vxz, elem_con_dano_long_NE);
-KG_damaged
-
-% %%
-% % Cargas aplicadas
-% P = [5; 6; 0; 0;0;0; ...
-%     5; 6; 0; 0;0;0; ...
-%     5; 6; 0; 0;0;0; ...
-%     5; 6; 0; 0;0;0]*1000;
-% 
-% Deform = KG_damaged^-1 * P
 
 
 %%
-% % Función Condensación estática
-% KG_damaged_cond   = condensacion_estatica(KG_damaged);
+% Función Condensación estática
+KG_damaged_cond   = condensacion_estatica(KG_damaged)
+
+% %%
+% % Cargas aplicadas con matriz completa
+% P = [5; 6; 1; -5; 5; 3; ...
+%     5; 6; 1; -5; 5; 3; ...
+%     5; 6; 1; -5; 5; 3; ...
+%     5; 6; 1; -5; 5; 3]*1000;
+% 
+% Deform = KG_damaged^-1 * P
+
+% Cargas aplicadas con matriz condensada
+P = [5; 6; 1;  ...
+    5; 6; 1;  ...
+    5; 6; 1;  ...
+    5; 6; 1 ]*1000;
+
+Deform = (KG_damaged_cond^-1) * P
 
 
 
