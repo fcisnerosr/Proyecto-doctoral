@@ -10,7 +10,7 @@ format shortG
 % archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\marco_elementos_inclinados.xlsx';
 
 % Elemento a elemento
-archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\datos_prueba3.xlsx';
+archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\datos_prueba3.xlsx';
 
 %Jacket
 % archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\Datos_nudos_elementos_secciones_masas_nuevo_pend1a8_vigasI.xlsx';
@@ -24,11 +24,11 @@ densidad_crec   = 1.3506*10^-7;    % en N/mm^3
 % Valor de la dessidad del crecimiento marino
 % Valor de encontrado en internet = 1325 kg/m^3
 % Conversión: 1325 kg/m^3 * (1 N / 9.81 kg) * (1 m^3/1000^3 m^3) = 1.3506*10^-7 en N/mm^3
-pathfile        = 'E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\marco3Ddam0_error.xlsx';
+pathfile        = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\marco3Ddam0.xlsx';
 % pathfile = '/home/francisco/Documents/Proyecto-doctoral/pruebas_excel/marco3Ddam0.xlsx';
 
 % Danos a elementos tubulares, caso de dano y su respectivo porcentaje
-no_elemento_a_danar = [1 10];
+no_elemento_a_danar = [1 9];
 caso_dano           = repmat({'corrosion'}, 1, length(no_elemento_a_danar));
 dano_porcentaje     = [50 50];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 
@@ -78,13 +78,13 @@ KG_damaged_cond = condensacion_estatica(KG_damaged);
 % 
 % Deform = KG_damaged^-1 * P
 %%
-% % % % Cargas aplicadas con matriz condensada
-% P = [5; 6; 1;  ...
-%     5; 6; 1;  ...
-%     5; 6; 1;  ...
-%     5; 6; 1]*1000;
+% % % Cargas aplicadas con matriz condensada
+P = [5; 6; 1;  ...
+    5; 6; 1;  ...
+    5; 6; 1;  ...
+    5; 6; 1]*1000;
 
-% Deform = (KG_damaged_cond^-1) * P
+Deform = (KG_damaged_cond^-1) * P
 
 % Modos y frecuencias de estructura condensados y globales
 [modos_cond_d,frec_cond_d] = modos_frecuencias(KG_damaged_cond,M_cond);

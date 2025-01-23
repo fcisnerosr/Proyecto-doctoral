@@ -6,7 +6,7 @@
 
 
 
- B E G I N   A N A L Y S I S                                2025/01/23  04:33:59
+ B E G I N   A N A L Y S I S                                2025/01/23  06:18:08
 
 
  RUNNING ANALYSIS AS A SEPARATE PROCESS
@@ -33,11 +33,11 @@
  NUMBER OF THREADS: FORM (AUTOMATIC)       =           6
 
 
- E L E M E N T   F O R M A T I O N                                      04:33:59
+ E L E M E N T   F O R M A T I O N                                      06:18:08
 
 
 
- L I N E A R   E Q U A T I O N   S O L U T I O N                        04:33:59
+ L I N E A R   E Q U A T I O N   S O L U T I O N                        06:18:08
 
  FORMING STIFFNESS AT ZERO (UNSTRESSED) INITIAL CONDITIONS
 
@@ -54,7 +54,7 @@
  ---------------------------------
 
 
- L I N E A R   S T A T I C   C A S E S                                  04:33:59
+ L I N E A R   S T A T I C   C A S E S                                  06:18:08
 
  USING STIFFNESS AT ZERO (UNSTRESSED) INITIAL CONDITIONS
 
@@ -67,7 +67,7 @@
  CASE: ~LLRF
 
 
- E I G E N   M O D A L   A N A L Y S I S                                04:33:59
+ E I G E N   M O D A L   A N A L Y S I S                                06:18:08
 
  CASE: MODAL
 
@@ -89,22 +89,22 @@
  Original stiffness at shift : EV= 0.0000000E+00, f=     .000000, T=  -INFINITY-
  Number of eigenvalues below shift =      0
 
- Found mode      1 of     12:  EV= 4.3999601E+04, f=   33.384471, T=    0.029954
- Found mode      2 of     12:  EV= 6.9200082E+04, f=   41.867154, T=    0.023885
- Found mode      3 of     12:  EV= 7.7451621E+04, f=   44.293030, T=    0.022577
- Found mode      4 of     12:  EV= 8.0232551E+04, f=   45.081196, T=    0.022182
- Found mode      5 of     12:  EV= 3.8989646E+05, f=   99.379036, T=    0.010062
- Found mode      6 of     12:  EV= 4.0044214E+05, f=  100.714040, T=    0.009929
- Found mode      7 of     12:  EV= 5.6387909E+05, f=  119.512443, T=    0.008367
- Found mode      8 of     12:  EV= 6.3239821E+05, f=  126.565531, T=    0.007901
- Found mode      9 of     12:  EV= 7.1363414E+05, f=  134.449113, T=    0.007438
- Found mode     10 of     12:  EV= 9.1257767E+05, f=  152.039016, T=    0.006577
- Found mode     11 of     12:  EV= 1.1093333E+06, f=  167.629771, T=    0.005966
- Found mode     12 of     12:  EV= 1.4175646E+06, f=  189.492297, T=    0.005277
+ Found mode      1 of     12:  EV= 4.5321029E+04, f=   33.882076, T=    0.029514
+ Found mode      2 of     12:  EV= 6.1690132E+04, f=   39.530106, T=    0.025297
+ Found mode      3 of     12:  EV= 7.0718281E+04, f=   42.323929, T=    0.023627
+ Found mode      4 of     12:  EV= 7.2160592E+04, f=   42.753353, T=    0.023390
+ Found mode      5 of     12:  EV= 3.9279788E+05, f=   99.748115, T=    0.010025
+ Found mode      6 of     12:  EV= 4.0112531E+05, f=  100.799915, T=    0.009921
+ Found mode      7 of     12:  EV= 6.3913193E+05, f=  127.237576, T=    0.007859
+ Found mode      8 of     12:  EV= 6.6386904E+05, f=  129.676518, T=    0.007711
+ Found mode      9 of     12:  EV= 7.0366643E+05, f=  133.506850, T=    0.007490
+ Found mode     10 of     12:  EV= 9.5577249E+05, f=  155.595630, T=    0.006427
+ Found mode     11 of     12:  EV= 1.0711832E+06, f=  164.722151, T=    0.006071
+ Found mode     12 of     12:  EV= 1.3031807E+06, f=  181.686416, T=    0.005504
 
  NUMBER OF EIGEN MODES FOUND               =          12
  NUMBER OF ITERATIONS PERFORMED            =           1
  NUMBER OF STIFFNESS SHIFTS                =           0
 
 
- A N A L Y S I S   C O M P L E T E                          2025/01/23  04:33:59
+ A N A L Y S I S   C O M P L E T E                          2025/01/23  06:18:08
