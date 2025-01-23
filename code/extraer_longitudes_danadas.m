@@ -10,7 +10,6 @@ function L_d = extraer_longitudes_danadas(archivo_excel, no_elemento_a_danar)
     %
     % Salida:
     %   - L_d: Vector con las longitudes de los elementos a dañar.
-
     %% SECCION: Longitudes de elementos a dañar (long_elem_con_dano)
     hoja_excel = 'Frame Assigns - Summary';
     datos_tabla = readtable(archivo_excel, 'Sheet', hoja_excel);
@@ -30,5 +29,5 @@ function L_d = extraer_longitudes_danadas(archivo_excel, no_elemento_a_danar)
         long_elem_con_dano(i) = elementos_y_long(no_elemento_a_danar(i), 2);
     end
 
-    L_d = long_elem_con_dano;
+    L_d = long_elem_con_dano;    
 end

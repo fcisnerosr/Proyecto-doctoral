@@ -17,7 +17,6 @@ function [ke_d_total, ke_d, prop_geom_mat] = switch_case_danos(no_elemento_a_dan
     f_AA_d = zeros(6, 6, length(no_elemento_a_danar));
     ke_d = zeros(12, 12, length(no_elemento_a_danar));
 
-
     for i = 1:length(no_elemento_a_danar)
     % for i = 1
         if strcmp(caso_dano{i}, 'corrosion')
@@ -31,7 +30,7 @@ function [ke_d_total, ke_d, prop_geom_mat] = switch_case_danos(no_elemento_a_dan
                 prop_geom_mat = cell2mat(prop_geom_mat);        % Convierte el cell array a matriz numérica
                 t(i) = prop_geom_mat(no_elemento_a_danar(i),10); % Espesor extraido intacto
                 t_corro(i) = dano_porcentaje(i) * t(i) / 100; % Espesor que va a restar al espesor sin dano
-                t_d(i) = t(i) - t_corro(i) % Espesor ya reducido
+                t_d(i) = t(i) - t_corro(i); % Espesor ya reducido
                 % Área con corrosión
                 D(i) = prop_geom_mat(no_elemento_a_danar(i),9);
                 D_d(i) = D(i) - (2*t_corro(i));
@@ -46,22 +45,34 @@ function [ke_d_total, ke_d, prop_geom_mat] = switch_case_danos(no_elemento_a_dan
                 I_int_d(i) = 1/4 * pi * R_interior_d(i)^4;
                 I_d(i) = I_ext_d(i) - I_int_d(i);
                 % Momento polar del elemento con daño
-                j(i) = prop_geom_mat(no_elemento_a_danar(i),5);
+                j(i) = pi/32 * (D_d^4 - ((D_d - (2*t_d))^4));
                 % Matriz de flexibilidades y uso de matriz de transformación T para convertirla a la matriz de rigidez local completa
+                % Matriz f_AA_d
                 f_AA_d(:,:,i) = [
-                    L_d(i)/(E(i)*A_d(i)) 0 0 0 0 0; ...
-                    0 L_d(i)^3/(3*E(i)*I_d(i)) 0 0 0 L_d(i)^2/(2*E(i)*I_d(i)); ...
-                    0 0 L_d(i)^3/(3*E(i)*I_d(i)) 0 -L_d(i)^2/(2*E(i)*I_d(i)) 0; ...
-                    0 0 0 L_d(i)/(G(i)*j(i)) 0 0; ...
-                    0 0 -L_d(i)^2/(2*E(i)*I_d(i)) 0 L_d(i)/(E(i)*I_d(i)) 0; ...
-                    0 L_d(i)^2/(2*E(i)*I_d(i)) 0 0 0 L_d(i)/(E(i)*I_d(i))
+                    L_d(i)/(E(i)*A_d(i)),       0,                          0,                              0,                  0,                          0;
+                    0,                          L_d(i)^3/(3*E(i)*I_d(i)),   0,                              0,                  0,                          L_d(i)^2/(2*E(i)*I_d(i));
+                    0,                          0,                          L_d(i)^3/(3*E(i)*I_d(i)),       0,                  -L_d(i)^2/(2*E(i)*I_d(i)),  0;
+                    0,                          0,                          0,                              L_d(i)/(G(i)*j(i)), 0,                          0;
+                    0,                          0,                          -L_d(i)^2/(2*E(i)*I_d(i)),      0,                  L_d(i)/(E(i)*I_d(i)),       0;
+                    0,                          L_d(i)^2/(2*E(i)*I_d(i)),   0,                              0,                  0,                          L_d(i)/(E(i)*I_d(i))
                 ];
-                % Matriz de transformación
+
+                % Matriz de transformación T
                 T = [
-                    -1 0 0 0 0 0; 0 -1 0 0 0 0; 0 0 -1 0 0 0; 0 0 0 -1 0 0; ...
-                    0 0 L_d(i) 0 -1 0; 0 -L_d(i) 0 0 0 -1; 1 0 0 0 0 0; ...
-                    0 1 0 0 0 0; 0 0 1 0 0 0; 0 0 0 1 0 0; 0 0 0 0 1 0; 0 0 0 0 0 1
+                    -1,   0,    0,      0,  0,   0;
+                     0,  -1,    0,      0,  0,   0;
+                     0,   0,    -1,     0,  0,   0;
+                     0,   0,    0,      -1, 0,   0;
+                     0,   0,    L_d(i), 0,  -1,  0;
+                     0, -L_d(i),0,      0,  0,  -1;
+                     1,   0,    0,      0,  0,   0;
+                     0,   1,    0,      0,  0,   0;
+                     0,   0,    1,      0,  0,   0;
+                     0,   0,    0,      1,  0,   0;
+                     0,   0,    0,      0,  1,   0;
+                     0,   0,    0,      0,  0,   1
                 ];
+
                 ke_d(:,:,i) = T * f_AA_d(:,:,i)^(-1) * T'; % Matriz de rigidez local del elemento tubular
             end % Fin del bucle for de corrosión
 

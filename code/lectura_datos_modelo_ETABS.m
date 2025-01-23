@@ -119,12 +119,13 @@ function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_
 
     %% BLOQUE: Columnas adicionales de tabla (wo_vector, gamma_beta_vector, tipo)
     % Creación de vector 'wo'
-    wo_vector = cell(length(prop_geom),1);
-    for i = 1:length(prop_geom)
+    altura = size(prop_geom, 1);
+    wo_vector = cell(size(prop_geom, 1),1);
+    for i = 1:altura
         wo_vector{i} = ['wo'];
     end
     % Creación de vector 'gamma y beta'
-    gamma_beta_vector = zeros(length(prop_geom),2);
+    gamma_beta_vector = zeros(size(prop_geom, 1),2);
     for i = 1:length(gamma_beta_vector)
         gamma_beta_vector(i,1) = 7.809E-09;
         gamma_beta_vector(i,2) = 0.65;
@@ -132,7 +133,7 @@ function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_
     gamma_beta_vector = num2cell(gamma_beta_vector);
     % Adicionar 3 columnas más: de tipo de elementos, radio y espesor en mm
     % tipo de elemento
-    tipo = cell(length(prop_geom), 1);
+    tipo = cell(size(prop_geom, 1), 1);
     for i = 1:length(tipo)
         tipo{i} = ['circular'];
     end
@@ -346,4 +347,5 @@ function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_
     UniqueName_frame = UniqueName_frame(:,3);
     UniqueName_frame(1) = [];
     VXZ = sortrows(horzcat(UniqueName_frame, matriz_num_vxz),1);
+
 end

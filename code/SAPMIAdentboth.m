@@ -10,7 +10,7 @@ format shortG
 % archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\marco_elementos_inclinados.xlsx';
 
 % Elemento a elemento
-archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_2_marco_elemento_a_elemento\datos_prueba2.xlsx';
+archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\datos_prueba3.xlsx';
 
 %Jacket
 % archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\Datos_nudos_elementos_secciones_masas_nuevo_pend1a8_vigasI.xlsx';
@@ -28,9 +28,9 @@ pathfile        = 'E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\marco
 % pathfile = '/home/francisco/Documents/Proyecto-doctoral/pruebas_excel/marco3Ddam0.xlsx';
 
 % Danos a elementos tubulares, caso de dano y su respectivo porcentaje
-no_elemento_a_danar = [1 9];
+no_elemento_a_danar = [1];
 caso_dano           = repmat({'corrosion'}, 1, length(no_elemento_a_danar));
-dano_porcentaje     = [50 50];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
+dano_porcentaje     = [50];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 
 % Corregir de formato los números en la tabla importada de ETABS: En todo este bloque de código, se realizó el cambio de formato de los números, debido a que ETABS importa sus tablas en formato de texto en algunas columnas.
 % % % % correccion_format_TablaETABS(archivo_excel);
@@ -58,38 +58,32 @@ escritura_datos_hoja_excel_del_dr_Rolando(coordenadas, conectividad, prop_geom, 
 
 % Danos locales
 [num_de_ele_long, prop_geom] = extraer_longitudes_elementos(prop_geom, archivo_excel);
-
-L_d = extraer_longitudes_danadas(archivo_excel, no_elemento_a_danar)
+L_d = extraer_longitudes_danadas(archivo_excel, no_elemento_a_danar);
 
 % Vector que posiciona en un indice del elemento a danar
 [elem_con_dano_long_NE] = vector_asignacion_danos(no_elemento_a_danar, NE);
-
+ 
 % % Matriz de rigidez local con dano aplicado
 [ke_d_total, ke_d, prop_geom_mat] = switch_case_danos(no_elemento_a_danar, num_de_ele_long, L_d, caso_dano, dano_porcentaje, prop_geom, E, G);
+
 [KG_damaged, KG_undamaged,L, kg] = ensamblaje_matriz_rigidez_global_ambos_modelos(ID, NE, ke_d_total,elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G,  vxz, elem_con_dano_long_NE);
 
-
-%%
 % Función Condensación estática
 KG_damaged_cond = condensacion_estatica(KG_damaged);
 
-
 % Cargas aplicadas con matriz completa
-P = [5; 6; 1; 0; 0; 0; ...
-    5; 6; 1; 0; 0; 0; ...
-    5; 6; 1; 0; 0; 0; ...
-    5; 6; 1; 0; 0; 0]*1000;
-
-Deform = KG_damaged^-1 * P
-
-% % % % Cargas aplicadas con matriz condensada
-% P = [5; 6; 1;  ...
-%     5; 6; 1;  ...
-%     5; 6; 1;  ...
-%     5; 6; 1 ]*1000;
+% P = [5; 6; 1; 0; 0; 0; ...
+%     5; 6; 1; 0; 0; 0; ...
+%     5; 6; 1; 0; 0; 0]*1000;
 % 
-% Deform = (KG_damaged_cond^-1) * P
+% Deform = KG_damaged^-1 * P
+ 
+% % % Cargas aplicadas con matriz condensada
+P = [5; 6; 1;  ...
+    5; 6; 1;  ...
+    5; 6; 1]*1000;
 
+Deform = (KG_damaged_cond^-1) * P
 
 % % Modos y frecuencias de estructura condensados y globales
 % [modos_cond_d,frec_cond_d] = modos_frecuencias(KG_damaged_cond,M_cond)

@@ -10,7 +10,7 @@ format shortG
 % archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\marco_elementos_inclinados.xlsx';
 
 % Elemento a elemento
-archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_2_marco_elemento_a_elemento\datos_prueba2.xlsx';
+archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\datos_prueba3.xlsx';
 
 %Jacket
 % archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\Datos_nudos_elementos_secciones_masas_nuevo_pend1a8_vigasI.xlsx';
@@ -28,9 +28,9 @@ pathfile        = 'E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\marco
 % pathfile = '/home/francisco/Documents/Proyecto-doctoral/pruebas_excel/marco3Ddam0.xlsx';
 
 % Danos a elementos tubulares, caso de dano y su respectivo porcentaje
-no_elemento_a_danar = 1;
+no_elemento_a_danar = [1];
 caso_dano           = repmat({'corrosion'}, 1, length(no_elemento_a_danar));
-dano_porcentaje     = [10];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
+dano_porcentaje     = [50];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 
 % Corregir de formato los números en la tabla importada de ETABS: En todo este bloque de código, se realizó el cambio de formato de los números, debido a que ETABS importa sus tablas en formato de texto en algunas columnas.
 % % % % correccion_format_TablaETABS(archivo_excel);
@@ -57,43 +57,173 @@ escritura_datos_hoja_excel_del_dr_Rolando(coordenadas, conectividad, prop_geom, 
 % clearvars -except archivo_excel tirante tiempo d_agua densidad_crec pathfile no_elemento_a_danar caso_dano dano_porcentaje coordenadas vxz conectividad prop_geom matriz_restriccion matriz_cell_secciones masas_en_cada_nodo M_cond NE IDmax NEn elements nodes damele eledent A Iy Iz J E G ID KG KGtu hoja_excel vigas_long brac_long col_long num_de_ele_long
 
 % Danos locales
-% [ke_d_total, ke_d, elem_con_dano_long_NE] = switch_cae_danos(no_elemento_a_danar, caso_dano, dano_porcentaje, archivo_excel, NE, prop_geom, E, G, J);
-[num_de_ele_long, prop_geom] = extraer_longitudes_elementos(prop_geom, archivo_excel);
+% [num_de_ele_long, prop_geom] = extraer_longitudes_elementos(prop_geom, archivo_excel);
+% Eliminación de columnas innecesarias en prop_geom
+    prop_geom(:,8:9) = []; % Eliminación de 'circular' y 'wo', para conversión numérica
 
-L_d = extraer_longitudes_danadas(archivo_excel, no_elemento_a_danar);
+    % Lectura y procesamiento de las vigas
+    hoja_excel = 'Beam Object Connectivity';
+    vigas_long = readmatrix(archivo_excel, 'Sheet', hoja_excel);
+    vigas_long(:,2:5) = []; % Eliminación de columnas innecesarias
+    vigas_long(:,3) = [];
+
+    % Lectura y procesamiento de las diagonales
+    hoja_excel = 'Brace Object Connectivity'; % Pestaña con elementos diagonales (subestructura)
+    brac_long = readmatrix(archivo_excel, 'Sheet', hoja_excel);
+    brac_long(:,2:5) = [];
+    brac_long(:,3) = [];
+
+    % Lectura y procesamiento de las columnas rectas
+    hoja_excel = 'Column Object Connectivity'; % Pestaña con columnas rectas (superestructura)
+    col_long = readmatrix(archivo_excel, 'Sheet', hoja_excel);
+    col_long(:,2:5) = [];
+    col_long(:,3) = [];
+
+    % Concatenación y ordenamiento
+    num_de_ele_long = sortrows(vertcat(vigas_long, brac_long, col_long), 1);
+
+% L_d = extraer_longitudes_danadas(archivo_excel, no_elemento_a_danar);
+%% SECCION: Longitudes de elementos a dañar (long_elem_con_dano)
+    hoja_excel = 'Frame Assigns - Summary';
+    datos_tabla = readtable(archivo_excel, 'Sheet', hoja_excel);
+    datos_tabla(1,:) = [];  % Eliminar encabezados
+
+    % Extraer columnas de interés
+    uniqueName = datos_tabla.UniqueName;  % Columna C
+    length_mm = datos_tabla.Length;       % Columna E
+
+    % Fusionar datos y ordenarlos
+    datos_para_long = horzcat(uniqueName, length_mm);
+    elementos_y_long = sortrows(datos_para_long, 1);
+
+    % Extraer longitudes de los elementos a dañar
+    long_elem_con_dano = zeros(length(no_elemento_a_danar), 1);
+    for i = 1:length(no_elemento_a_danar)
+        long_elem_con_dano(i) = elementos_y_long(no_elemento_a_danar(i), 2);
+    end
+
+    L_d = long_elem_con_dano;
 
 % Vector que posiciona en un indice del elemento a danar
-[elem_con_dano_long_NE] = vector_asignacion_danos(no_elemento_a_danar, NE);
+% [elem_con_dano_long_NE] = vector_asignacion_danos(no_elemento_a_danar, NE);
+    elem_con_dano_long_NE = []; % vector de long NE con todos los elementos danados en las posiciones correspondientes
+    index = find(no_elemento_a_danar == 1);
+    
+    if isempty(index)
+        for i = 1:length(no_elemento_a_danar)
+            if i < length(no_elemento_a_danar)
+                elem_con_dano_long_NE = [elem_con_dano_long_NE, ones(1, no_elemento_a_danar(i + 1) - no_elemento_a_danar(i)) * no_elemento_a_danar(i)];
+            else
+                elem_con_dano_long_NE = [elem_con_dano_long_NE, ones(1, NE - no_elemento_a_danar(i) + 1) * no_elemento_a_danar(i)];
+            end
+        end
+        ceros_agregar = NE - length(elem_con_dano_long_NE);
+        mat_zero = zeros(1,ceros_agregar);
+        elem_con_dano_long_NE = horzcat(mat_zero,elem_con_dano_long_NE);
+    else
+        for i = 1:length(no_elemento_a_danar)
+            if i < length(no_elemento_a_danar)
+                elem_con_dano_long_NE = [elem_con_dano_long_NE, ones(1, no_elemento_a_danar(i + 1) - no_elemento_a_danar(i)) * no_elemento_a_danar(i)];
+            else
+                elem_con_dano_long_NE = [elem_con_dano_long_NE, ones(1, NE - no_elemento_a_danar(i) + 1) * no_elemento_a_danar(i)];
+            end
+        end
+    end
 
 % % Matriz de rigidez local con dano aplicado
-[ke_d_total, ke_d, prop_geom_mat] = switch_case_danos(no_elemento_a_danar, num_de_ele_long, L_d, caso_dano, dano_porcentaje, prop_geom, E, G);
+%%
+clc
+% [ke_d_total, ke_d, prop_geom_mat] = switch_case_danos(no_elemento_a_danar, num_de_ele_long, L_d, caso_dano, dano_porcentaje, prop_geom, E, G);
+    % Matrices de flexibilidades y de rigidez local llenas de ceros
+    f_AA_d = zeros(6, 6, length(no_elemento_a_danar));
+    ke_d = zeros(12, 12, length(no_elemento_a_danar));
+
+
+    for i = 1:length(no_elemento_a_danar)
+    % for i = 1
+        if strcmp(caso_dano{i}, 'corrosion')
+            % Código de la corrosión local
+            % Bucle para cada elemento a dañar
+            for i = 1:length(no_elemento_a_danar)
+                % Reducción de espesor por corrosión
+                % index = find(num_de_ele_long(:,1) == i);
+                % long_elem_a_danar = num_de_ele_long(index,2);
+                prop_geom_mat = cellfun(@(x) convert_to_number(x), prop_geom, 'UniformOutput', false);  % Recorre cada elemento de prop_geom y lo convierte a número si es string
+                prop_geom_mat = cell2mat(prop_geom_mat);        % Convierte el cell array a matriz numérica
+                t(i) = prop_geom_mat(no_elemento_a_danar(i),10); % Espesor extraido intacto
+                t_corro(i) = dano_porcentaje(i) * t(i) / 100; % Espesor que va a restar al espesor sin dano
+                t_d(i) = t(i) - t_corro(i); % Espesor ya reducido
+                % Área con corrosión
+                D(i) = prop_geom_mat(no_elemento_a_danar(i),9);
+                D_d(i) = D(i) - (2*t_corro(i));
+                R_d(i) = 0.5 * D_d(i);
+                A1_d(i) = pi * R_d(i)^2;
+                R_interior_d(i) = 0.5 * (D_d(i) - (2*t_d(i)));
+                A2_d(i) = pi  * R_interior_d(i)^2;
+                A_d(i) = A1_d(i) - A2_d(i) % en mm^2
+                % Momento de inercia con daño
+                R_ext_d(i) = 0.5*D_d(i);
+                I_ext_d(i) = 1/4 * pi * R_ext_d(i)^4;
+                I_int_d(i) = 1/4 * pi * R_interior_d(i)^4;
+                I_d(i) = I_ext_d(i) - I_int_d(i)
+                % Momento polar del elemento con daño
+                J(i) = prop_geom_mat(no_elemento_a_danar(i),5)
+                % Matriz de flexibilidades y uso de matriz de transformación T para convertirla a la matriz de rigidez local completa
+                % Matriz f_AA_d
+                f_AA_d(:,:,i) = [
+                    L_d(i)/(E(i)*A_d(i)),       0,                          0,                              0,                  0,                          0;
+                    0,                          L_d(i)^3/(3*E(i)*I_d(i)),   0,                              0,                  0,                          L_d(i)^2/(2*E(i)*I_d(i));
+                    0,                          0,                          L_d(i)^3/(3*E(i)*I_d(i)),       0,                  -L_d(i)^2/(2*E(i)*I_d(i)),  0;
+                    0,                          0,                          0,                              L_d(i)/(G(i)*j(i)), 0,                          0;
+                    0,                          0,                          -L_d(i)^2/(2*E(i)*I_d(i)),      0,                  L_d(i)/(E(i)*I_d(i)),       0;
+                    0,                          L_d(i)^2/(2*E(i)*I_d(i)),   0,                              0,                  0,                          L_d(i)/(E(i)*I_d(i))
+                ];
+
+                % Matriz de transformación T
+                T = [
+                    -1,   0,    0,      0,  0,   0;
+                     0,  -1,    0,      0,  0,   0;
+                     0,   0,    -1,     0,  0,   0;
+                     0,   0,    0,      -1, 0,   0;
+                     0,   0,    L_d(i), 0,  -1,  0;
+                     0, -L_d(i),0,      0,  0,  -1;
+                     1,   0,    0,      0,  0,   0;
+                     0,   1,    0,      0,  0,   0;
+                     0,   0,    1,      0,  0,   0;
+                     0,   0,    0,      1,  0,   0;
+                     0,   0,    0,      0,  1,   0;
+                     0,   0,    0,      0,  0,   1
+                ];
+
+                ke_d(:,:,i) = T * f_AA_d(:,:,i)^(-1) * T'; % Matriz de rigidez local del elemento tubular
+            end % Fin del bucle for de corrosión
+
+        elseif strcmp(caso_dano{i}, 'abolladura')
+            % El código de la aboladura está en codigo_abolladura.txt en esta misma carpeta
+        end
+    end % Fin del ciclo for que itera sobre cada elemento a dañar
+    ke_d_total = ke_d;
 [KG_damaged, KG_undamaged,L, kg] = ensamblaje_matriz_rigidez_global_ambos_modelos(ID, NE, ke_d_total,elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G,  vxz, elem_con_dano_long_NE);
 
-
-%%
 % Función Condensación estática
 KG_damaged_cond = condensacion_estatica(KG_damaged);
 
-% %
-% Cargas aplicadas con matriz completa
+% % Cargas aplicadas con matriz completa
 % P = [5; 6; 1; 0; 0; 0; ...
-%     5; 6; 1; 0; 0; 0; ...
 %     5; 6; 1; 0; 0; 0; ...
 %     5; 6; 1; 0; 0; 0]*1000;
 % 
 % Deform = KG_damaged^-1 * P
-% 
-% Cargas aplicadas con matriz condensada
+ 
+% % % Cargas aplicadas con matriz condensada
 P = [5; 6; 1;  ...
     5; 6; 1;  ...
-    5; 6; 1;  ...
-    5; 6; 1 ]*1000;
+    5; 6; 1]*1000;
 
 Deform = (KG_damaged_cond^-1) * P
 
-
-% Modos y frecuencias de estructura condensados y globales
-[modos_cond_d,frec_cond_d] = modos_frecuencias(KG_damaged_cond,M_cond);
+% % Modos y frecuencias de estructura condensados y globales
+% [modos_cond_d,frec_cond_d] = modos_frecuencias(KG_damaged_cond,M_cond)
 
 % %%
 % clc
