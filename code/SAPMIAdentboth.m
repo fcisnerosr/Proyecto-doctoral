@@ -28,9 +28,9 @@ pathfile        = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\marco3Ddam0
 % pathfile = '/home/francisco/Documents/Proyecto-doctoral/pruebas_excel/marco3Ddam0.xlsx';
 
 % Danos a elementos tubulares, caso de dano y su respectivo porcentaje
-no_elemento_a_danar = [1 9];
+no_elemento_a_danar = [5];
 caso_dano           = repmat({'corrosion'}, 1, length(no_elemento_a_danar));
-dano_porcentaje     = [50 50];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
+dano_porcentaje     = [20];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 
 % Corregir de formato los números en la tabla importada de ETABS: En todo este bloque de código, se realizó el cambio de formato de los números, debido a que ETABS importa sus tablas en formato de texto en algunas columnas.
 % % % % correccion_format_TablaETABS(archivo_excel);
@@ -71,144 +71,147 @@ L_d = extraer_longitudes_danadas(archivo_excel, no_elemento_a_danar);
 % Función Condensación estática
 KG_damaged_cond = condensacion_estatica(KG_damaged);
 
-% Cargas aplicadas con matriz completa
-% P = [5; 6; 1; 0; 0; 0; ...
-%     5; 6; 1; 0; 0; 0; ...
-%     5; 6; 1; 0; 0; 0]*1000;
+% % Cargas aplicadas con matriz completa
+% % P = [5; 6; 1; 0; 0; 0; ...
+% %     5; 6; 1; 0; 0; 0; ...
+% %     5; 6; 1; 0; 0; 0]*1000;
+% % 
+% % Deform = KG_damaged^-1 * P
+% %%
+% % % % Cargas aplicadas con matriz condensada
+% P = [5; 6; 1;  ...
+%     5; 6; 1;  ...
+%     5; 6; 1;  ...
+%     5; 6; 1]*1000;
 % 
-% Deform = KG_damaged^-1 * P
-%%
-% % % Cargas aplicadas con matriz condensada
-P = [5; 6; 1;  ...
-    5; 6; 1;  ...
-    5; 6; 1;  ...
-    5; 6; 1]*1000;
-
-Deform = (KG_damaged_cond^-1) * P
+% Deform = (KG_damaged_cond^-1) * P
 
 % Modos y frecuencias de estructura condensados y globales
 [modos_cond_d,frec_cond_d] = modos_frecuencias(KG_damaged_cond,M_cond);
 
-% %%
-% clc
-% % Implementación del Algoritmo Genetico (AG)
-% % Inicializar los vectores LB y UB con el tamaño adecuado para long_x daños
-% % Por ahora solo se está considerando la corrosión
-% % Cerrar cualquier parallel pool existente
-% delete(gcp('nocreate'));
-% num_element_sub = 13;
-% long_x = 3 * num_element_sub;
-% % 3 porque solamente se aplica dano al área y ambas inercias en x y en y
-% % 116 porque se le aplica dano a los primeros 116 elementos de la subestructura % Configuraciones básicas del AG
-% 
-% % vector de danos %
-% long_x = 1 * num_element_sub;
-% 
-% Samples     = 100;
-% Generations = 200;
-% Nvar        = long_x;        % numero de variables que va a tener la variable de dano x. Son 116 elementos de la subestructura * 3 variables de dano de la corrosion = long_x
-% options                 = gaoptimset(@ga);          % gaoptimset es para crear las configuraciones específicas para el AG
-% options.PopulationSize  = Samples;
-% options.Generations     = Generations;
-% options.StallGenLimit   = 20;          % límite de generaciones en donde los individuos no cumplen con la función objetivo
-% options.Display         = 'iter';                         % Muestra la información en cada iteración
-% options.OutputFcn       = @gaoutfun;  % Añade la función de salida para mostrar el tiempo transcurrido
-% 
-% % Configuraciones específicas del AG
-% % Este bloque de código configura funciones específicas que controlan el comportamiento de varios procesos dentro del Algoritmo Genético (GA) en MATLAB. Cada opción define una función que el GA utilizará para diferentes aspectos del proceso de evolución, como la creación de la población inicial, la selección de individuos, la mutación, y si se debe usar o no procesamiento paralelo.
-% % el @ le dice al campo de options que haga uso de la función después de @
-% options.CreationFcn         = @gacreationlinearfeasible;  % esta línea del dice al AG cómo debe crear la primera generación de los individuos. @gacreationlinearfeasible hace que la primera generación de individuos cumplan con cualquier restricción lineal que defina en el problema. Esto asegura que el AG comience desde un inicio con soluciones válidas y así poder aumentar las probabilidades de que devuelva una respuesta correcta cuando el AG finalice
-% 
-% % options.FitnessScalingFcn = @fitscalingrank;         % Asigna rangos a los individuos según su aptitud en lugar de escalar los valores directamente, reduciendo el impacto de las grandes diferencias de aptitud y evitando convergencia prematura.
-% options.FitnessScalingFcn   = @fitscalingprop;      % fitscalingprop: Esta técnica de escalamiento ajusta los valores de aptitud para que las diferencias entre ellos no sean tan extremas. Esto significa que incluso los individuos con una aptitud no tan alta todavía tienen una oportunidad razonable de ser seleccionados para la reproducción. Uno de los riesgos en los Algoritmos Genéticos (GA) es que si un individuo (o un pequeno grupo de individuos) tiene un valor de aptitud significativamente superior al de los demás en una población, el GA podría converger rápidamente hacia las características de esos individuos. Esto puede llevar a que el algoritmo se quede atrapado en un óptimo local en lugar de encontrar el óptimo global, que es la mejor solución posible en todo el espacio de búsqueda.
-% 
-% % options.SelectionFcn        = @selectionroulette;        % En este método, la probabilidad de que un individuo sea seleccionado es proporcional a su aptitud. Los individuos con mejores valores de aptitud tienen más probabilidades de ser seleccionados, pero también hay una oportunidad para aquellos con menor aptitud, lo que ayuda a mantener la diversidad genética en la población.
-% options.SelectionFcn        = @selectiontournament;        % Este método selecciona grupos al azar (torneos), y dentro de cada torneo, se elige el mejor individuo, favoreciendo la diversidad y mejores aptitudes.
-% 
-% % Nuevas opciones de cruce comentadas para experimentar
-% % options.CrossoverFcn = @crossoverarithmetic; % Cruce aritmético
-% % options.CrossoverFcn = @crossoversinglepoint; % Cruce de un punto
-% options.CrossoverFcn = @crossovertwopoint; % Cruce de dos puntos
-% 
-% options.MutationFcn         = @mutationadaptfeasible;     % Configura cómo se llevará a cabo la mutación. Función de Mutación Adaptativa Factible: mutationadaptfeasible es una función específica de MATLAB que realiza mutaciones de manera adaptativa. Aquí está lo que hace: Adaptativa: La mutación es adaptativa porque ajusta el grado de mutación dependiendo del progreso del GA. Si el algoritmo está haciendo buenos progresos, la mutación puede ser menos agresiva. Si no está haciendo mucho progreso, la mutación puede volverse más agresiva para explorar nuevas áreas del espacio de soluciones. Factibilidad: La mutación se realiza de tal manera que los individuos mutados aún cumplen con cualquier restricción del problema. Esto es crucial para asegurarse de que las soluciones mutadas sigan siendo válidas dentro del espacio de búsqueda permitido.
-% % options.MutationFcn         = @mutationuniform;
-% 
-% options.CreationFcn         = @gacreationlinearfeasible;    % Genera la población inicial asegurando que cumpla con restricciones lineales
-% options.EliteCount          = 2;                            % Preserva los 2 mejores individuos en cada generación para evitar perder buenas soluciones
+%%
+clc
+
+% --- Implementación del Algoritmo Genético (AG) ---
+%
+% Este script implementa un Algoritmo Genético (AG) para la optimización de la
+% identificación de daños, enfocándose por ahora en la corrosión.
+% Se considera una subestructura de 'num_element_sub' elementos y se 
+% crea un vector de daño 'long_x' para representar el nivel de corrosión
+% en cada elemento.
+
+% Cierra cualquier 'parallel pool' existente para evitar conflictos
+delete(gcp('nocreate'));
+
+% --- Parámetros de la subestructura y del AG ---
+num_element_sub = 9;       % Número de elementos en la subestructura
+long_x = num_element_sub;   % Longitud del vector de daños (corrosión)
+
+% --- Configuración del AG ---
+Samples     = 100;         % Tamaño de la población (número de individuos en cada generación)
+Generations = 200;         % Número máximo de generaciones
+Nvar        = long_x;     % Número de variables (parámetros) a optimizar = longitud del vector de daños
+
+% --- Opciones de optimización del AG ---
+options                 = gaoptimset(@ga);  % Crea las opciones de configuración específicas para el AG (usando gaoptimset)
+options.PopulationSize  = Samples;          % Establece el tamaño de la población
+options.Generations     = Generations;      % Establece el número máximo de generaciones
+options.StallGenLimit   = 50;               % Establece el límite de generaciones sin mejora en la función objetivo antes de detener el AG
+options.Display         = 'iter';           % Muestra información en cada iteración del AG
+% options.OutputFcn       = @gaoutfun;        % Añade la función de salida para mostrar el tiempo transcurrido (personalizada)
+
+% Configuraciones específicas del AG
+% Este bloque de código configura funciones específicas que controlan el comportamiento de varios procesos dentro del Algoritmo Genético (GA) en MATLAB. Cada opción define una función que el GA utilizará para diferentes aspectos del proceso de evolución, como la creación de la población inicial, la selección de individuos, la mutación, y si se debe usar o no procesamiento paralelo.
+% el @ le dice al campo de options que haga uso de la función después de @
+options.CreationFcn         = @gacreationlinearfeasible;  % esta línea del dice al AG cómo debe crear la primera generación de los individuos. @gacreationlinearfeasible hace que la primera generación de individuos cumplan con cualquier restricción lineal que defina en el problema. Esto asegura que el AG comience desde un inicio con soluciones válidas y así poder aumentar las probabilidades de que devuelva una respuesta correcta cuando el AG finalice
+
 % options.FitnessScalingFcn = @fitscalingrank;         % Asigna rangos a los individuos según su aptitud en lugar de escalar los valores directamente, reduciendo el impacto de las grandes diferencias de aptitud y evitando convergencia prematura.
-% % options.FitnessScalingFcn   = @fitscalingprop;      % fitscalingprop: Esta técnica de escalamiento ajusta los valores de aptitud para que las diferencias entre ellos no sean tan extremas. Esto significa que incluso los individuos con una aptitud no tan alta todavía tienen una oportunidad razonable de ser seleccionados para la reproducción. Uno de los riesgos en los Algoritmos Genéticos (GA) es que si un individuo (o un pequeno grupo de individuos) tiene un valor de aptitud significativamente superior al de los demás en una población, el GA podría converger rápidamente hacia las características de esos individuos. Esto puede llevar a que el algoritmo se quede atrapado en un óptimo local en lugar de encontrar el óptimo global, que es la mejor solución posible en todo el espacio de búsqueda.
-% 
-% options.SelectionFcn        = @selectionroulette;        % En este método, la probabilidad de que un individuo sea seleccionado es proporcional a su aptitud. Los individuos con mejores valores de aptitud tienen más probabilidades de ser seleccionados, pero también hay una oportunidad para aquellos con menor aptitud, lo que ayuda a mantener la diversidad genética en la población.
+options.FitnessScalingFcn   = @fitscalingprop;      % fitscalingprop: Esta técnica de escalamiento ajusta los valores de aptitud para que las diferencias entre ellos no sean tan extremas. Esto significa que incluso los individuos con una aptitud no tan alta todavía tienen una oportunidad razonable de ser seleccionados para la reproducción. Uno de los riesgos en los Algoritmos Genéticos (GA) es que si un individuo (o un pequeno grupo de individuos) tiene un valor de aptitud significativamente superior al de los demás en una población, el GA podría converger rápidamente hacia las características de esos individuos. Esto puede llevar a que el algoritmo se quede atrapado en un óptimo local en lugar de encontrar el óptimo global, que es la mejor solución posible en todo el espacio de búsqueda.
+
+% Nuevas opciones de cruce comentadas para experimentar
+options.CrossoverFcn = @crossoverarithmetic; % Cruce aritmético
+% options.CrossoverFcn = @crossoversinglepoint; % Cruce de un punto
+% options.CrossoverFcn = @crossovertwopoint; % Cruce de dos puntos
+
+% options.MutationFcn         = @mutationadaptfeasible;     % Configura cómo se llevará a cabo la mutación. Función de Mutación Adaptativa Factible: mutationadaptfeasible es una función específica de MATLAB que realiza mutaciones de manera adaptativa. Aquí está lo que hace: Adaptativa: La mutación es adaptativa porque ajusta el grado de mutación dependiendo del progreso del GA. Si el algoritmo está haciendo buenos progresos, la mutación puede ser menos agresiva. Si no está haciendo mucho progreso, la mutación puede volverse más agresiva para explorar nuevas áreas del espacio de soluciones. Factibilidad: La mutación se realiza de tal manera que los individuos mutados aún cumplen con cualquier restricción del problema. Esto es crucial para asegurarse de que las soluciones mutadas sigan siendo válidas dentro del espacio de búsqueda permitido.
+options.MutationFcn         = @mutationuniform;
+
+options.CreationFcn         = @gacreationlinearfeasible;    % Genera la población inicial asegurando que cumpla con restricciones lineales
+options.EliteCount          = 2;                            % Preserva los 2 mejores individuos en cada generación para evitar perder buenas soluciones
+options.FitnessScalingFcn = @fitscalingrank;         % Asigna rangos a los individuos según su aptitud en lugar de escalar los valores directamente, reduciendo el impacto de las grandes diferencias de aptitud y evitando convergencia prematura.
+% options.FitnessScalingFcn   = @fitscalingprop;      % fitscalingprop: Esta técnica de escalamiento ajusta los valores de aptitud para que las diferencias entre ellos no sean tan extremas. Esto significa que incluso los individuos con una aptitud no tan alta todavía tienen una oportunidad razonable de ser seleccionados para la reproducción. Uno de los riesgos en los Algoritmos Genéticos (GA) es que si un individuo (o un pequeno grupo de individuos) tiene un valor de aptitud significativamente superior al de los demás en una población, el GA podría converger rápidamente hacia las características de esos individuos. Esto puede llevar a que el algoritmo se quede atrapado en un óptimo local en lugar de encontrar el óptimo global, que es la mejor solución posible en todo el espacio de búsqueda.
+
+options.SelectionFcn        = @selectionroulette;        % En este método, la probabilidad de que un individuo sea seleccionado es proporcional a su aptitud. Los individuos con mejores valores de aptitud tienen más probabilidades de ser seleccionados, pero también hay una oportunidad para aquellos con menor aptitud, lo que ayuda a mantener la diversidad genética en la población.
 % options.SelectionFcn = {@selectiontournament, 3}; % Torneo con 3 individuos para favorecer convergencia
 % options.SelectionFcn = {@selectiontournament, 2}; % Torneo con 2 individuos
 % options.SelectionFcn        = @selectiontournament;        % Este método selecciona grupos al azar (torneos), y dentro de cada torneo, se elige el mejor individuo, favoreciendo la diversidad y mejores aptitudes.
 % options.SelectionFcn = {@selectiontournament, 1}; % Solo se selecciona el mejor individuo
 % options.SelectionFcn = @selectionstochunif; % Selección estocástica uniforme
-% 
-% options.MutationFcn                               = @mutationadaptfeasible;     % Configura cómo se llevará a cabo la mutación. Función de Mutación Adaptativa Factible: mutationadaptfeasible es una función específica de MATLAB que realiza mutaciones de manera adaptativa. Aquí está lo que hace: Adaptativa: La mutación es adaptativa porque ajusta el grado de mutación dependiendo del progreso del GA. Si el algoritmo está haciendo buenos progresos, la mutación puede ser menos agresiva. Si no está haciendo mucho progreso, la mutación puede volverse más agresiva para explorar nuevas áreas del espacio de soluciones. Factibilidad: La mutación se realiza de tal manera que los individuos mutados aún cumplen con cualquier restricción del problema. Esto es crucial para asegurarse de que las soluciones mutadas sigan siendo válidas dentro del espacio de búsqueda permitido.
-% % % % % options.MutationFcn = @(parents,options,nvars,FitnessFcn,state,thisScore,thisPopulation) ...
-% % % % %     round(mutationadaptfeasible(parents,options,nvars,FitnessFcn,state,thisScore,thisPopulation) / 0.005) * 0.005;
-% % % % % options.MutationFcn    = {@mutationuniform, 0.02}; % Solo el 2% de las variables mutará en cada generación
-% % % % % options.MutationFcn = {@mutationuniform, 0.01}; % Solo el 1% de las variables mutará en cada generación
-% % % % % options.MutationFcn = {@mutationuniform, 0.005}; % Solo el 0.5% de las variables mutará en cada generación
-% % % % % options.MutationFcn = {@mutationuniform, 0.002}; % Solo el 0.2% de las variables mutará
-% % % % % options.MutationFcn = {@mutationuniform, 0.001}; % Solo el 0.1% de las variables mutará
-% % % % % options.MutationFcn = {@mutationuniform, 0.0005}; % Solo 0.05% de las variables mutarán
-% % % % options.MutationFcn = {@mutationuniform, 0.0001}; % Solo el 0.01% de las variables mutará
-% % % % 
-% % % % 
-% % % % % Propósito de la Mutación: La mutación es una operación que introduce variación en los individuos de una población. Es esencial para mantener la diversidad genética, permitiendo que el algoritmo explore nuevas soluciones que no estaban presentes en la población original.
-% % Cómo Funciona: Durante la mutación, una pequena parte del código genético (representado por el vector x en tu caso) de un individuo se altera al azar. Esta alteración puede ser un cambio pequeno en el valor de una variable o un ajuste más significativo, dependiendo de cómo esté definida la función de mutación.
-% options.UseParallel = 'always';
-% % Graficas de monitoreo para ver el estado del AG durante todo su proceso
-% options = gaoptimset('PlotFcn', {@gaplotbestf, @gaplotbestindiv, @gaplotdistance, @gaplotrange, @gaplotstopping});
-% options.OutputFcn = @gaoutfun;
-% % options = gaoptimset('PlotFcn', {@gaplotbestindiv});
+
+options.MutationFcn                               = @mutationadaptfeasible;     % Configura cómo se llevará a cabo la mutación. Función de Mutación Adaptativa Factible: mutationadaptfeasible es una función específica de MATLAB que realiza mutaciones de manera adaptativa. Aquí está lo que hace: Adaptativa: La mutación es adaptativa porque ajusta el grado de mutación dependiendo del progreso del GA. Si el algoritmo está haciendo buenos progresos, la mutación puede ser menos agresiva. Si no está haciendo mucho progreso, la mutación puede volverse más agresiva para explorar nuevas áreas del espacio de soluciones. Factibilidad: La mutación se realiza de tal manera que los individuos mutados aún cumplen con cualquier restricción del problema. Esto es crucial para asegurarse de que las soluciones mutadas sigan siendo válidas dentro del espacio de búsqueda permitido.
+% % % % options.MutationFcn = @(parents,options,nvars,FitnessFcn,state,thisScore,thisPopulation) ...
+% % % %     round(mutationadaptfeasible(parents,options,nvars,FitnessFcn,state,thisScore,thisPopulation) / 0.005) * 0.005;
+% % % % options.MutationFcn    = {@mutationuniform, 0.02}; % Solo el 2% de las variables mutará en cada generación
+% % % % options.MutationFcn = {@mutationuniform, 0.01}; % Solo el 1% de las variables mutará en cada generación
+% % % % options.MutationFcn = {@mutationuniform, 0.005}; % Solo el 0.5% de las variables mutará en cada generación
+% % % % options.MutationFcn = {@mutationuniform, 0.002}; % Solo el 0.2% de las variables mutará
+% % % % options.MutationFcn = {@mutationuniform, 0.001}; % Solo el 0.1% de las variables mutará
+% % % % options.MutationFcn = {@mutationuniform, 0.0005}; % Solo 0.05% de las variables mutarán
+% % % options.MutationFcn = {@mutationuniform, 0.0001}; % Solo el 0.01% de las variables mutará
+% % % 
+% % % 
+% % % % Propósito de la Mutación: La mutación es una operación que introduce variación en los individuos de una población. Es esencial para mantener la diversidad genética, permitiendo que el algoritmo explore nuevas soluciones que no estaban presentes en la población original.
+% Cómo Funciona: Durante la mutación, una pequena parte del código genético (representado por el vector x en tu caso) de un individuo se altera al azar. Esta alteración puede ser un cambio pequeno en el valor de una variable o un ajuste más significativo, dependiendo de cómo esté definida la función de mutación.
+options.UseParallel = 'always';
+% % % Graficas de monitoreo para ver el estado del AG durante todo su proceso
 % % options = gaoptimset('PlotFcn', {@gaplotbestf, @gaplotbestindiv, @gaplotdistance, @gaplotrange, @gaplotstopping});
-% % % % % @gaplotbestf: Mejores valores de función
-% % % % % @gaplotbestindiv: Valores del mejor individuo por generación
-% % % % % @gaplotdistance: Distancia entre individuos en las soluciones de busqueda
-% % % % % @gaplotrange: Rango de valores de la población
-% % % % % @gaplotstopping: Criterios de parada del algoritmo
-% % % % 
-% % Definir los límites de daño
-% LowerLim = 0.0;       % Daño mínimo permitido
-% UpperLim = 0.5;      % Daño máximo permitido
+% options.OutputFcn = @gaoutfun;
+% options = gaoptimset('PlotFcn', {@gaplotbestindiv});
+options = gaoptimset('PlotFcn', {@gaplotbestf, @gaplotbestindiv, @gaplotdistance, @gaplotrange, @gaplotstopping});
+% % % % @gaplotbestf: Mejores valores de función
+% % % % @gaplotbestindiv: Valores del mejor individuo por generación
+% % % % @gaplotdistance: Distancia entre individuos en las soluciones de busqueda
+% % % % @gaplotrange: Rango de valores de la población
+% % % % @gaplotstopping: Criterios de parada del algoritmo
+% % % 
+% Definir los límites de daño
+LowerLim = 0.0;       % Daño mínimo permitido
+UpperLim = 0.2;      % Daño máximo permitido
+
+LB = LowerLim * ones(long_x, 1);  % Límite inferior
+UB = UpperLim * ones(long_x, 1);  % Límite superior
+
+% % % % % % Escritura de registros del AG
+% % % % % CWFile='CWFOutput1.txt';    % Nombre del archivo donde irán registrándose los resultados del AG
+% % % % % diary (CWFile);             % Abre el archivo de salida para que todas las salidas en la consola de MATLAB se registren en este archivo
 % 
-% LB = LowerLim * ones(long_x, 1);  % Límite inferior
-% UB = UpperLim * ones(long_x, 1);  % Límite superior
-% 
-% % % % % % % Escritura de registros del AG
-% % % % % % CWFile='CWFOutput1.txt';    % Nombre del archivo donde irán registrándose los resultados del AG
-% % % % % % diary (CWFile);             % Abre el archivo de salida para que todas las salidas en la consola de MATLAB se registren en este archivo
-% % 
-% % Proceso en paralelo
-% parpool('Processes', 6, 'IdleTimeout', 6000);  % Configura n minutos de inactividad antes de apagarse
-% % En mi CPU se pueden 6 como máximo, para saber cuántos puede cada usaurio ejecutar en el command window lo siguiente:
-% % numCores = feature('numcores');
-% % disp(['Número de núcleos: ', num2str(numCores)]);
-% % La siguiente linea se a cabo el proceso del ga
-% tic;
-% 
-% clc
+% Proceso en paralelo
+parpool('Processes', 6, 'IdleTimeout', 6000);  % Configura n minutos de inactividad antes de apagarse
+% En mi CPU se pueden 6 como máximo, para saber cuántos puede cada usaurio ejecutar en el command window lo siguiente:
+% numCores = feature('numcores');
+% disp(['Número de núcleos: ', num2str(numCores)]);
+% La siguiente linea se a cabo el proceso del ga
+tic;
+
+clc
 % % Inicialización de las matrices COMAC
 % nodos = ((nodes(end,1))-4)*3;
 % modos = 3;
 % comac_values = zeros(nodos, modos);
 % comac_ref = ones(nodos, modos);  % COMAC de referencia, asumimos valores ideales (1)
-% 
-% [x,fval,exitflag,output,population,scores] = ga(@(x)RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
-%         L, ID, NE, elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G, ...
-%         vxz, elem_con_dano_long_NE,...
-%         modos_cond_d, prop_geom_mat, no_elemento_a_danar),Nvar,[],[],[],[],LB,UB,[],options);
+
+[x,fval,exitflag,output,population,scores] = ga(@(x)RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
+        L, ID, NE, elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G, ...
+        vxz, elem_con_dano_long_NE,...
+        modos_cond_d, prop_geom_mat),Nvar,[],[],[],[],LB,UB,[],options);
 % % % % 
-% % % % % Crear la gráfica de barras
-% % % % figure;        % Abre una nueva ventana de figura
-% % % % bar(x*100);   % Genera la gráfica de barras
-% % % % title('Mejor individuo');  % Título de la gráfica
-% % % % xlabel('Elemento con daño');                % Etiqueta del eje X
-% % % % ylabel('Porcentaje con daño');                        % Etiqueta del eje Y
-% % % % toc;
+% Crear la gráfica de barras
+figure;        % Abre una nueva ventana de figura
+bar(x*100);   % Genera la gráfica de barras
+title('Mejor individuo');  % Título de la gráfica
+xlabel('Elemento con daño');                % Etiqueta del eje X
+ylabel('Porcentaje con daño');                        % Etiqueta del eje Y
+toc;
 % % % % % 
 % % % % % % % Datos de salida de la funcion ga (Algoritmo Genético de MATLAB):
 % % % % % % % fval: Valor mínimo de la función objetivo (RMSE) alcanzado durante la optimización.

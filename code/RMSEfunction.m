@@ -8,7 +8,7 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d, ...
 
     % --- Pesos para las funciones objetivo ---
     w1 = 0.5;               % Peso para el RMSE
-    w2 = 0.5;               % Peso para el MACN
+    w2 = 0;               % Peso para el MACN
 
     % --- Recorte de propiedades a la subestructura ---
     L_sub  = L(1:num_element_sub);   % Longitud de los elementos de la subestructura
@@ -17,7 +17,7 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d, ...
     Iz_sub = Iz(1:num_element_sub);  % Momento de inercia en z de los elementos de la subestructura
     E_sub  = E(1:num_element_sub);   % Módulo de elasticidad de los elementos de la subestructura
     G_sub  = G(1:num_element_sub);   % Módulo de corte de los elementos de la subestructura
-    J_sub  = J(1:num_element_sub);   % Constante de torsión de los elementos de la subestructura
+    % J_sub  = J(1:num_element_sub);   % Constante de torsión de los elementos de la subestructura
 
     ke_AG_tensor = zeros(12, 12, num_element_sub);  % Inicializa el tensor de rigidez local
 
@@ -48,18 +48,21 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d, ...
         Iy_damaged = I_ext_d - I_int_d; % Momento de inercia con daño (eje y)
         Iz_damaged = Iy_damaged;        % Momento de inercia con daño (eje z)
 
+        % --- Momento polar de inercia con daño ---
+        J_sub = pi/32 * (D_d^4 - ((D_d - (2*t_d))^4));
+
         % --- Modificación de la matriz de rigidez local (ke_AG) ---        
         % Elementos de la diagonal principal
-        ke_AG(1,  1) = E_sub(i)       * A_damaged  / L_sub(i);
+        ke_AG(1,  1) = E_sub(i)        * A_damaged  / L_sub(i);
         ke_AG(2,  2) = 12 * E_sub(i)   * Iz_damaged / L_sub(i)^3;
         ke_AG(3,  3) = 12 * E_sub(i)   * Iy_damaged / L_sub(i)^3;
-        ke_AG(4,  4) = (G_sub(i)       * J_sub(i))  / L_sub(i);
+        ke_AG(4,  4) = (G_sub(i)       * J_sub)     / L_sub(i);
         ke_AG(5,  5) = 4  * E_sub(i)   * Iy_damaged / L_sub(i);
         ke_AG(6,  6) = 4  * E_sub(i)   * Iz_damaged / L_sub(i);
-        ke_AG(7,  7) = E_sub(i)       * A_damaged  / L_sub(i);
+        ke_AG(7,  7) = E_sub(i)        * A_damaged  / L_sub(i);
         ke_AG(8,  8) = 12 * E_sub(i)   * Iy_damaged / L_sub(i)^3;
         ke_AG(9,  9) = 12 * E_sub(i)   * Iz_damaged / L_sub(i)^3;
-        ke_AG(10,10) = (G_sub(i)       * J_sub(i))  / L_sub(i);
+        ke_AG(10,10) = (G_sub(i)       * J_sub)     / L_sub(i);
         ke_AG(11,11) = 4  * E_sub(i)   * Iy_damaged / L_sub(i);
         ke_AG(12,12) = 4  * E_sub(i)   * Iz_damaged / L_sub(i);
         
@@ -71,7 +74,7 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d, ...
         ke_AG(5, 3) = -(6               * E_sub(i) * Iy_damaged) / L_sub(i)^2;
         ke_AG(9, 3) = (-12              * E_sub(i) * Iy_damaged) / L_sub(i)^3;
         ke_AG(11,3) = (-6               * E_sub(i) * Iy_damaged) / L_sub(i)^2;
-        ke_AG(10,4) = (-G_sub(i)        * J_sub(i))   / L_sub(i);
+        ke_AG(10,4) = (-G_sub(i)        * J_sub)      / L_sub(i);
         ke_AG(9, 5) = (6    * E_sub(i)  * Iy_damaged) / L_sub(i)^2;
         ke_AG(11,5) = 2     * E_sub(i)  * Iy_damaged  / L_sub(i);
         ke_AG(8, 6) = (-6   * E_sub(i)  * Iz_damaged) / L_sub(i)^2;
@@ -89,7 +92,9 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d, ...
         % Almacenamiento de la matriz de rigidez local
         ke_AG_tensor(:,:,i) = ke_AG;
         
-   end
+    end
+
+    % check_symmetry(ke_AG_tensor)
 
     % Reensamblar la matriz global de rigidez con daño del AG
     [KG_AG] = ensamblaje_matriz_rigidez_global_AG(num_element_sub,ke_AG_tensor,ID, NE, elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G, vxz, elem_con_dano_long_NE);
