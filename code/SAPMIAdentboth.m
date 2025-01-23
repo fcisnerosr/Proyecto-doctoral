@@ -28,19 +28,9 @@ pathfile        = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\marco3Ddam0
 % pathfile = '/home/francisco/Documents/Proyecto-doctoral/pruebas_excel/marco3Ddam0.xlsx';
 
 % Danos a elementos tubulares, caso de dano y su respectivo porcentaje
-<<<<<<< HEAD
-% no_elemento_a_danar = [35 36 37 38 39 40];
-% caso_dano           = repmat({'corrosion'}, 1, 6);
-% dano_porcentaje     = [30 30 30 30 30 30];
-no_elemento_a_danar = 1;
-caso_dano           = repmat({'corrosion'}, 1, 1);
-dano_porcentaje     = 90;
-
-=======
 no_elemento_a_danar = 1:30;
 caso_dano           = repmat({'corrosion'}, 1, length(no_elemento_a_danar));
 dano_porcentaje     = ones(1,30) * 30;
->>>>>>> AG_experimentos_001
 
 % Corregir de formato los números en la tabla importada de ETABS: En todo este bloque de código, se realizó el cambio de formato de los números, debido a que ETABS importa sus tablas en formato de texto en algunas columnas.
 % % % % correccion_format_TablaETABS(archivo_excel);
@@ -120,16 +110,8 @@ num_element_sub = 116;
 % vector de danos %
 long_x = 1 * num_element_sub;
 
-<<<<<<< HEAD
-
-% Samples     = 1;
-Samples     = 18000;
-% Generations = 1;
-Generations = 200;
-=======
 Samples     = 300;
 Generations = 150;
->>>>>>> AG_experimentos_001
 Nvar        = long_x;        % numero de variables que va a tener la variable de dano x. Son 116 elementos de la subestructura * 3 variables de dano de la corrosion = long_x
 options                 = gaoptimset(@ga);          % gaoptimset es para crear las configuraciones específicas para el AG
 options.PopulationSize  = Samples;
