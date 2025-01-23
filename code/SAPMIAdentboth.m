@@ -6,8 +6,15 @@ tic
 format shortG
 
 % Datos iniciales de entrada
-archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\Datos_nudos_elementos_secciones_masas_nuevo_pend1a8_vigasI.xlsx';
-% archivo_excel = '/home/francisco/Documents/Proyecto-doctoral/pruebas_excel/Datos_nudos_elementos_secciones_masas_nuevo_pend1a8_vigasI.xlsx';
+% Marco inclinado
+% archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\marco_elementos_inclinados.xlsx';
+
+% Elemento a elemento
+archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\datos_prueba3.xlsx';
+
+%Jacket
+% archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\Datos_nudos_elementos_secciones_masas_nuevo_pend1a8_vigasI.xlsx';
+
 tirante         = 87000;    % en mm
 tiempo          = 03;       % en anos
 d_agua          = 1.07487 * 10^-8; % unidades de la densidad del agua en N/mm^3
@@ -17,10 +24,11 @@ densidad_crec   = 1.3506*10^-7;    % en N/mm^3
 % Valor de la dessidad del crecimiento marino
 % Valor de encontrado en internet = 1325 kg/m^3
 % Conversión: 1325 kg/m^3 * (1 N / 9.81 kg) * (1 m^3/1000^3 m^3) = 1.3506*10^-7 en N/mm^3
-pathfile        = 'E:\Archivos_Jaret\Mis_modificaciones\pruebas_excel\marco3Ddam0.xlsx';
+pathfile        = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\marco3Ddam0.xlsx';
 % pathfile = '/home/francisco/Documents/Proyecto-doctoral/pruebas_excel/marco3Ddam0.xlsx';
 
 % Danos a elementos tubulares, caso de dano y su respectivo porcentaje
+<<<<<<< HEAD
 % no_elemento_a_danar = [35 36 37 38 39 40];
 % caso_dano           = repmat({'corrosion'}, 1, 6);
 % dano_porcentaje     = [30 30 30 30 30 30];
@@ -28,6 +36,11 @@ no_elemento_a_danar = 1;
 caso_dano           = repmat({'corrosion'}, 1, 1);
 dano_porcentaje     = 90;
 
+=======
+no_elemento_a_danar = 1:30;
+caso_dano           = repmat({'corrosion'}, 1, length(no_elemento_a_danar));
+dano_porcentaje     = ones(1,30) * 30;
+>>>>>>> AG_experimentos_001
 
 % Corregir de formato los números en la tabla importada de ETABS: En todo este bloque de código, se realizó el cambio de formato de los números, debido a que ETABS importa sus tablas en formato de texto en algunas columnas.
 % % % % correccion_format_TablaETABS(archivo_excel);
@@ -39,82 +52,65 @@ dano_porcentaje     = 90;
 %     ES IMPORTANTE REESCRIBIRLOS A MANO PARA QUE VAYAN SECUENCIALMENTE SIN SALTARSE NINGÚN NÚMERO
 %     DESDE 1 HASTA LOS n ELEMENTOS QUE VAYA A TENER LA PLATAFORMA
 
-% Lectura de datos del modelo de ETABS
-[coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_secciones] = lectura_datos_modelo_ETABS(archivo_excel);
+% % % Lectura de datos del modelo de ETABS
+[coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_secciones, VXZ] = lectura_datos_modelo_ETABS(archivo_excel);
 
 % Modificación de la matriz de masas
-[masas_en_cada_nodo]                                                                      = modificacion_matriz_masas(archivo_excel, tirante, d_agua, matriz_cell_secciones, tiempo, densidad_crec);
-
+% [masas_en_cada_nodo] = modificacion_matriz_masas(archivo_excel, tirante, d_agua, matriz_cell_secciones, tiempo, densidad_crec);
+[masas_en_cada_nodo, M_cond] = modificacion_matriz_masas_estructura_sencilla(archivo_excel);
+ 
 % Escritura de los datos hacia la hoja de excel del Dr. Rolando
-escritura_datos_hoja_excel_del_dr_Rolando(coordenadas, conectividad, prop_geom, matriz_restriccion,masas_en_cada_nodo);
+escritura_datos_hoja_excel_del_dr_Rolando(coordenadas, conectividad, prop_geom, matriz_restriccion, masas_en_cada_nodo, VXZ);
 
-% Matriz de masas completa y condensada
-[M_cond] = Matriz_M_completa_y_condensada(masas_en_cada_nodo);
-
-% Lectura de datos de la hoja de EXCEL del dr. Rolando para la función "Ensamblaje de matrices globales"
+% % Lectura de datos de la hoja de EXCEL del dr. Rolando para la función "Ensamblaje de matrices globales"
 [NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, E, G, vxz, ID, KG, KGtu] = lectura_hoja_excel(pathfile);
 % clearvars -except archivo_excel tirante tiempo d_agua densidad_crec pathfile no_elemento_a_danar caso_dano dano_porcentaje coordenadas vxz conectividad prop_geom matriz_restriccion matriz_cell_secciones masas_en_cada_nodo M_cond NE IDmax NEn elements nodes damele eledent A Iy Iz J E G ID KG KGtu hoja_excel vigas_long brac_long col_long num_de_ele_long
 
 % Danos locales
-% [ke_d_total, ke_d, elem_con_dano_long_NE] = switch_case_danos(no_elemento_a_danar, caso_dano, dano_porcentaje, archivo_excel, NE, prop_geom, E, G, J);
-prop_geom(:,8:9)    = [];                          % eliminacion de 'circular' y 'wo', si no se eliminan la conversion a matriz numerica no es posible
-% Tabla con no. de elemento y longitud de orden descendente
-hoja_excel = 'Beam Object Connectivity';
-vigas_long = xlsread (archivo_excel, hoja_excel, '');
-vigas_long(:,2:5) = [];
-% Extracción de datos de las columas (tanto en la subestructura como en al superestructura)
-hoja_excel = 'Brace Object Connectivity'; % pestaña con elementos diagonales (ubicados en la subestructura)
-brac_long = xlsread (archivo_excel, hoja_excel, '');
-brac_long(:,2:5) = [];
-hoja_excel = 'Column Object Connectivity'; % pestaña con columnas rectas (generalmente ubicados en la superestructura)
-col_long = xlsread (archivo_excel, hoja_excel, '');
-col_long(:,2:5) = [];
-% no_ele_long = sort(vertcat(vigas_long,brac_long,col_long),1)
-num_de_ele_long = sortrows(vertcat(vigas_long,brac_long,col_long),1);
-% SECCION: Longitudes de elementos a danar (long_elem_con_dano)
-hoja_excel              = 'Frame Assigns - Summary';
-datos_para_long         = xlsread(archivo_excel, hoja_excel, 'C:E');
-datos_para_long(:,2)    = [];
-elementos_y_long        = sortrows(datos_para_long, 1);
-for i = 1:length(no_elemento_a_danar)
-    long_elem_con_dano(i)  = elementos_y_long(no_elemento_a_danar(i),2);
-end
-L_d = long_elem_con_dano;
+[num_de_ele_long, prop_geom] = extraer_longitudes_elementos(prop_geom, archivo_excel);
+L_d = extraer_longitudes_danadas(archivo_excel, no_elemento_a_danar);
 
 % Vector que posiciona en un indice del elemento a danar
 [elem_con_dano_long_NE] = vector_asignacion_danos(no_elemento_a_danar, NE);
 
-%%
-% clc
-% Matriz de rigidez local con dano aplicado
+% % Matriz de rigidez local con dano aplicado
 [ke_d_total, ke_d, prop_geom_mat] = switch_case_danos(no_elemento_a_danar, num_de_ele_long, L_d, caso_dano, dano_porcentaje, prop_geom, E, G);
 
-%%
-% clc
 [KG_damaged, KG_undamaged,L, kg] = ensamblaje_matriz_rigidez_global_ambos_modelos(ID, NE, ke_d_total,elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G,  vxz, elem_con_dano_long_NE);
 
 % Función Condensación estática
-KG_damaged_cond   = condensacion_estatica(KG_damaged);
+KG_damaged_cond = condensacion_estatica(KG_damaged);
+
+% % Cargas aplicadas con matriz completa
+% % P = [5; 6; 1; 0; 0; 0; ...
+% %     5; 6; 1; 0; 0; 0; ...
+% %     5; 6; 1; 0; 0; 0]*1000;
+% % 
+% % Deform = KG_damaged^-1 * P
+% %%
+% % % % Cargas aplicadas con matriz condensada
+% P = [5; 6; 1;  ...
+%     5; 6; 1;  ...
+%     5; 6; 1;  ...
+%     5; 6; 1]*1000;
+% 
+% Deform = (KG_damaged_cond^-1) * P
 
 % Modos y frecuencias de estructura condensados y globales
 [modos_cond_d,frec_cond_d] = modos_frecuencias(KG_damaged_cond,M_cond);
 
-%%% Verificación de numeros reales en mis frecuencias y formas
-% Verificar si las matrices contienen solo números reales
-real_modos_cond_d = isreal(modos_cond_d);  % Devuelve true
-real_frec_cond_d  = isreal(frec_cond_d);  % Devuelve false
-% Mostrar resultados
-disp(['La matriz modos_cond_d es completamente real: ', num2str(real_modos_cond_d)]);
-disp(['La matriz frec_cond_d es completamente real: ', num2str(real_frec_cond_d)]);
-
-
-
 %%
 clc
-% Implementación del Algoritmo Genetico (AG)
-% Inicializar los vectores LB y UB con el tamaño adecuado para long_x daños
-% Por ahora solo se está considerando la corrosión
-% Cerrar cualquier parallel pool existente
+
+% --- Implementación del Algoritmo Genético (AG) ---
+%
+% Este script implementa un Algoritmo Genético (AG) para la optimización de la
+% identificación de daños, enfocándose por ahora en la corrosión.
+% Se considera una subestructura de 'num_element_sub' elementos y se 
+% crea un vector de daño 'long_x' para representar el nivel de corrosión
+% en cada elemento.
+
+% Cierra cualquier 'parallel pool' existente para evitar conflictos
 delete(gcp('nocreate'));
 num_element_sub = 116;
 % long_x = 3 * num_element_sub; % = 348
@@ -124,8 +120,16 @@ num_element_sub = 116;
 % vector de danos %
 long_x = 1 * num_element_sub;
 
+<<<<<<< HEAD
+
+% Samples     = 1;
+Samples     = 18000;
+% Generations = 1;
+Generations = 200;
+=======
 Samples     = 300;
 Generations = 150;
+>>>>>>> AG_experimentos_001
 Nvar        = long_x;        % numero de variables que va a tener la variable de dano x. Son 116 elementos de la subestructura * 3 variables de dano de la corrosion = long_x
 options                 = gaoptimset(@ga);          % gaoptimset es para crear las configuraciones específicas para el AG
 options.PopulationSize  = Samples;
@@ -142,8 +146,8 @@ options.EliteCount          = 2;                            % Preserva los 2 mej
 options.FitnessScalingFcn = @fitscalingrank;         % Asigna rangos a los individuos según su aptitud en lugar de escalar los valores directamente, reduciendo el impacto de las grandes diferencias de aptitud y evitando convergencia prematura.
 % options.FitnessScalingFcn   = @fitscalingprop;      % fitscalingprop: Esta técnica de escalamiento ajusta los valores de aptitud para que las diferencias entre ellos no sean tan extremas. Esto significa que incluso los individuos con una aptitud no tan alta todavía tienen una oportunidad razonable de ser seleccionados para la reproducción. Uno de los riesgos en los Algoritmos Genéticos (GA) es que si un individuo (o un pequeno grupo de individuos) tiene un valor de aptitud significativamente superior al de los demás en una población, el GA podría converger rápidamente hacia las características de esos individuos. Esto puede llevar a que el algoritmo se quede atrapado en un óptimo local en lugar de encontrar el óptimo global, que es la mejor solución posible en todo el espacio de búsqueda.
 
-% options.SelectionFcn        = @selectionroulette;        % En este método, la probabilidad de que un individuo sea seleccionado es proporcional a su aptitud. Los individuos con mejores valores de aptitud tienen más probabilidades de ser seleccionados, pero también hay una oportunidad para aquellos con menor aptitud, lo que ayuda a mantener la diversidad genética en la población.
-options.SelectionFcn = {@selectiontournament, 3}; % Torneo con 3 individuos para favorecer convergencia
+options.SelectionFcn        = @selectionroulette;        % En este método, la probabilidad de que un individuo sea seleccionado es proporcional a su aptitud. Los individuos con mejores valores de aptitud tienen más probabilidades de ser seleccionados, pero también hay una oportunidad para aquellos con menor aptitud, lo que ayuda a mantener la diversidad genética en la población.
+% options.SelectionFcn = {@selectiontournament, 3}; % Torneo con 3 individuos para favorecer convergencia
 % options.SelectionFcn = {@selectiontournament, 2}; % Torneo con 2 individuos
 % options.SelectionFcn        = @selectiontournament;        % Este método selecciona grupos al azar (torneos), y dentro de cada torneo, se elige el mejor individuo, favoreciendo la diversidad y mejores aptitudes.
 % options.SelectionFcn = {@selectiontournament, 1}; % Solo se selecciona el mejor individuo
@@ -190,18 +194,18 @@ parpool('Processes', 6, 'IdleTimeout', 6000);  % Configura n minutos de inactivi
 % disp(['Número de núcleos: ', num2str(numCores)]);
 % La siguiente linea se a cabo el proceso del ga
 tic;
-%%
+
 clc
-% Inicialización de las matrices COMAC
-nodos = ((nodes(end,1))-4)*3;
-modos = 3;
-comac_values = zeros(nodos, modos);
-comac_ref = ones(nodos, modos);  % COMAC de referencia, asumimos valores ideales (1)
-    
+% % Inicialización de las matrices COMAC
+% nodos = ((nodes(end,1))-4)*3;
+% modos = 3;
+% comac_values = zeros(nodos, modos);
+% comac_ref = ones(nodos, modos);  % COMAC de referencia, asumimos valores ideales (1)
+
 [x,fval,exitflag,output,population,scores] = ga(@(x)RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
         L, ID, NE, elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G, ...
         vxz, elem_con_dano_long_NE,...
-        modos_cond_d, prop_geom_mat),Nvar,[],[],[],[],LB,UB,[],options);
+        modos_cond_d, prop_geom_mat, comac_values, comac_ref, nodos, modos),Nvar,[],[],[],[],LB,UB,[],options);
 
 % Crear la gráfica de barras
 figure;        % Abre una nueva ventana de figura
@@ -210,16 +214,16 @@ title('Mejor individuo');  % Título de la gráfica
 xlabel('Elemento con daño');                % Etiqueta del eje X
 ylabel('Porcentaje con daño');                        % Etiqueta del eje Y
 toc;
-% 
-% % % Datos de salida de la funcion ga (Algoritmo Genético de MATLAB):
-% % % fval: Valor mínimo de la función objetivo (RMSE) alcanzado durante la optimización.
-% % % exitflag: Razón por la que el AG terminó (convergencia, límite Ade generaciones, error, etc.).
-% % % output: Estructura que contiene detalles del proceso de optimización, como el número de generaciones, evaluaciones de la función objetivo, y tiempo de ejecución.
-% % % population: Población de individuos en la última generación del AG.
-% % % scores: Valores de la función objetivo (RMSE) para cada individuo en la última generación.
-% % % Datos de entrada de la función ga:
-% % %     Función Objetivo: RMSEfunction es la función objetivo que el AG intenta minimizar.
-% % %     Variables de Optimización: Nvar define el número de variables que se optimizan.
-% % %     Límites: LB y UB+ son los límites inferiores y superiores para las variables de optimización, definidos previamente.
-% %     % Opciones: options incluye todas las configuraciones del AG como el tamaño de la población, número de generaciones, funciones de selección, etc.
-% % % delete(gcp('nocreate'));    % Cierra el procesamiento paralelo
+% % % % % 
+% % % % % % % Datos de salida de la funcion ga (Algoritmo Genético de MATLAB):
+% % % % % % % fval: Valor mínimo de la función objetivo (RMSE) alcanzado durante la optimización.
+% % % % % % % exitflag: Razón por la que el AG terminó (convergencia, límite Ade generaciones, error, etc.).
+% % % % % % % output: Estructura que contiene detalles del proceso de optimización, como el número de generaciones, evaluaciones de la función objetivo, y tiempo de ejecución.
+% % % % % % % population: Población de individuos en la última generación del AG.
+% % % % % % % scores: Valores de la función objetivo (RMSE) para cada individuo en la última generación.
+% % % % % % % Datos de entrada de la función ga:
+% % % % % % %     Función Objetivo: RMSEfunction es la función objetivo que el AG intenta minimizar.
+% % % % % % %     Variables de Optimización: Nvar define el número de variables que se optimizan.
+% % % % % % %     Límites: LB y UB+ son los límites inferiores y superiores para las variables de optimización, definidos previamente.
+% % % % % %     % Opciones: options incluye todas las configuraciones del AG como el tamaño de la población, número de generaciones, funciones de selección, etc.
+% % % % % % % delete(gcp('nocreate'));    % Cierra el procesamiento paralelo

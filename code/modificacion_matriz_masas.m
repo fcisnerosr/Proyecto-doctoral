@@ -1,4 +1,4 @@
-function [masas_en_cada_nodo] = modificacion_matriz_masas(archivo_excel, tirante, d_agua, matriz_cell_secciones, tiempo, densidad_crec)
+function [masas_en_cada_nodo, modos_cond_d] = modificacion_matriz_masas(archivo_excel, tirante, d_agua, matriz_cell_secciones, tiempo, densidad_crec)
 %% Modificaciones a la matriz de masas
     %% SECCION: Preliminares de estracción de storys de la subestructra
     %% Bloque: Stories y stories acumulados
@@ -916,4 +916,5 @@ function [masas_en_cada_nodo] = modificacion_matriz_masas(archivo_excel, tirante
                 masas_en_cada_nodo(i,2) = masas_en_cada_nodo(i,2) + masaadd_nodal(idx,2);
             end
         end
+    modos_cond_d = masas_en_cada_nodo;
 end

@@ -18,14 +18,16 @@ function [KG_AG] = ensamblaje_matriz_rigidez_global_AG(num_element_sub,ke_AG_ten
         locdam  = find(damele == i,1);
         locdent = find(eledent==i,1);
         if isempty(locdam) && isempty(locdent)   
-            if i < num_element_sub
+            %% Importante: Las lineas comentadas a continuacion son porque se hace discriminación de un elemento de la subestructura con otro de la superestructura
+            %% Para el caso del marco no hay superestructura, por tanto todos los elementos son dañados por el AG
+            % if i < num_element_sub
                 ke(:,:,i) = ke_AG_tensor(:,:,i);
                 % fprintf('numero de elemento %d, en sub-estructura\n',i);
                 
-            else
-                ke(:,:,i) = localkeframe3D(A(i),Iy(i),Iz(i),J(i),E(i),G(i),L(i)); % matriz de rigidez
-                % fprintf('numero de elemento %d, en super-estructura\n',i);
-            end
+            % else
+            %     ke(:,:,i) = localkeframe3D(A(i),Iy(i),Iz(i),J(i),E(i),G(i),L(i)); % matriz de rigidez
+            %     % fprintf('numero de elemento %d, en super-estructura\n',i);
+            % end
         end
         vxzl(:,i) = vxz(i,2:end);       % VXZ para elementos ortogonales, no aplica para elementos diagonales
         [cosalpha,sinalpha] = ejelocal(CX(i),CY(i),CZ(i),CXY(i),vxzl(:,i));     % Calculo de angulos de cada elemento (esto solo es util para discriminar los elementos ortogonales de los elementos inclinados)
@@ -35,14 +37,6 @@ function [KG_AG] = ensamblaje_matriz_rigidez_global_AG(num_element_sub,ke_AG_ten
         kg(:,:,i) = Gamma_gamma' * Gamma_beta' * ke(:,:,i) * Gamma_beta * Gamma_gamma;
         kg(:,:,i) = simetria(kg(:,:,i));    % Limpiado de elementos que no son completamente simetricos
         kg(:,:,i) = double(kg(:,:,i));
-        % Comprobación de simetría
-        % kg_numerica_exacta = double(kg(:,:,i));
-        % kg_numerica = double(kg(:,:,i));
-        % if issymmetric(kg_numerica)
-        %    disp('La matriz es simétrica.');            
-        % else
-        %    disp('La matriz no es simétrica.')
-        % end
 
         LV(:,i) = [ID(:,elements(i,2)); ID(:,elements(i,3))];
         indxLV = find(LV(:,i)>0);

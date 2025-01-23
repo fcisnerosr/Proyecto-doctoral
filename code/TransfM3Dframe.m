@@ -11,21 +11,23 @@ function [Gamma_gamma, Gamma_beta] = TransfM3Dframe(CX, CY, CZ , CXY, i, cosalph
     % CY_v        = CY(i)
     % CZ_v        = CZ(i)
     % CXY_v       = CXY(i)
+    % Referencia de los VXZ para elementos orientados de manera recta
 
     if CXY(i) <= 1e-3 || CXY(i) == 1 && sinalpha ~= 0
         %% Elementos ortogonales
-        % disp('Columna')
-        % Columnas
+        %% Columnas
+        % VXZ en excel: 1, 0, 0
         beta_M =[    0                  0           CZ(i); 
                      CZ(i)*sinalpha     cosalpha    0;
                     -CZ(i)*cosalpha     sinalpha    0];
         Gamma_beta = blkdiag(beta_M, beta_M, beta_M, beta_M); % Crea bloques diagonales de R_beta
         Gamma_gamma = eye(12,12);
     elseif sinalpha == 0 && cosalpha == 1 && CY(i) == 1
-        % Vigas
+        %% Vigas
+        % VXZ en excel: 0, 0, 1
         % disp('Viga paralela a Y')
         beta_M =[    0      1   0; 
-                     1      0   0;
+                    -1      0   0;
                      0      0   1];
         Gamma_beta = blkdiag(beta_M, beta_M, beta_M, beta_M); % Crea bloques diagonales de R_beta
         Gamma_gamma = eye(12,12);
@@ -33,10 +35,10 @@ function [Gamma_gamma, Gamma_beta] = TransfM3Dframe(CX, CY, CZ , CXY, i, cosalph
         % disp('Viga paralela a X')
         Gamma_beta  = eye(12,12);
         Gamma_gamma = eye(12,12);
-    % elseif sinalpha ~= 0 && cosalpha ~= 1
-    else
+    elseif sinalpha ~= 0 && cosalpha ~= 1
         % disp('Elemento diagonal')
         %% Elementos diagonales
+        % VXZ en excel: 0, 0, 0
         %% Angulo Beta, angulo que gira alrededor de Y global
         % Nota: No eliminar las siguientes líneas de código; son necesarias para verificar los ángulos correspondientes.
         % nodes(2,4)
