@@ -1,4 +1,4 @@
-$ File E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.$et saved 22/01/2025 18:12:21
+$ File E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.$et saved 23/01/2025 04:33:56
  
 $ PROGRAM INFORMATION
   PROGRAM  "ETABS"  VERSION "19.1.0"  
@@ -96,27 +96,50 @@ $ POINT COORDINATES
   POINT "1"  0 5000 
   POINT "2"  6000 5000 
   POINT "3"  6000 0 
+  POINT "4"  0 0 
 
 $ LINE CONNECTIVITIES
   LINE  "C1"  COLUMN  "2"  "2"  1
+  LINE  "C2"  COLUMN  "1"  "1"  1
+  LINE  "C3"  COLUMN  "4"  "4"  1
+  LINE  "C4"  COLUMN  "3"  "3"  1
   LINE  "B1"  BEAM  "1"  "2"  0
+  LINE  "B2"  BEAM  "4"  "1"  0
+  LINE  "B3"  BEAM  "4"  "3"  0
+  LINE  "B4"  BEAM  "3"  "2"  0
   LINE  "D1"  BRACE  "3"  "2"  1
+  LINE  "D2"  BRACE  "4"  "1"  1
+  LINE  "D3"  BRACE  "3"  "4"  1
+  LINE  "D4"  BRACE  "2"  "1"  1
 
 $ POINT ASSIGNS
+  POINTASSIGN  "2"  "Base"  RESTRAINT "UX UY UZ RX RY RZ"  
+  POINTASSIGN  "3"  "Base"  RESTRAINT "UX UY UZ RX RY RZ"  
   POINTASSIGN  "1"  "Base"  RESTRAINT "UX UY UZ RX RY RZ"  
+  POINTASSIGN  "4"  "Base"  RESTRAINT "UX UY UZ RX RY RZ"  
 
 $ LINE ASSIGNS
-  LINEASSIGN  "B1"  "Base"  SECTION "FSec1_corrosion"  CARDINALPT 8  MAXSTASPC 500 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
   LINEASSIGN  "C1"  "Story1"  SECTION "FSec1"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
   LINEASSIGN  "D1"  "Story1"  SECTION "FSec1"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "B1"  "Story1"  SECTION "FSec1_corrosion"  CARDINALPT 8  MAXSTASPC 500 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "C2"  "Story1"  SECTION "FSec1"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "D2"  "Story1"  SECTION "FSec1"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "B2"  "Story1"  SECTION "FSec1"  CARDINALPT 8  MAXSTASPC 500 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "B3"  "Story1"  SECTION "FSec1"  CARDINALPT 8  MAXSTASPC 500 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "B4"  "Story1"  SECTION "FSec1"  CARDINALPT 8  MAXSTASPC 500 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "C3"  "Story1"  SECTION "FSec1"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "C4"  "Story1"  SECTION "FSec1_corrosion"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "D3"  "Story1"  SECTION "FSec1"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "D4"  "Story1"  SECTION "FSec1"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
 
 $ LOAD PATTERNS
   LOADPATTERN "Live"  TYPE  "Live"  SELFWEIGHT  0
 
 $ POINT OBJECT LOADS
-  POINTLOAD  "2"  "Base"  TYPE "FORCE"  LC "Live"  FX 5000  FY 6000  FZ 1000
   POINTLOAD  "2"  "Story1"  TYPE "FORCE"  LC "Live"  FX 5000  FY 6000  FZ 1000
-  POINTLOAD  "3"  "Base"  TYPE "FORCE"  LC "Live"  FX 5000  FY 6000  FZ 1000
+  POINTLOAD  "1"  "Story1"  TYPE "FORCE"  LC "Live"  FX 5000  FY 6000  FZ 1000
+  POINTLOAD  "4"  "Story1"  TYPE "FORCE"  LC "Live"  FX 5000  FY 6000  FZ 1000
+  POINTLOAD  "3"  "Story1"  TYPE "FORCE"  LC "Live"  FX 5000  FY 6000  FZ 1000
 
 $ FRAME OBJECT LOADS
 
@@ -643,6 +666,46 @@ ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\p
 ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 22/01/2025 17:34:04
 ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 22/01/2025 17:34:07
 ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 22/01/2025 18:12:21
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 22/01/2025 18:12:23
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 22/01/2025 18:12:23
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 22/01/2025 18:12:26
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 22/01/2025 18:59:20
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 22/01/2025 18:59:22
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 22/01/2025 18:59:22
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 22/01/2025 18:59:26
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 23/01/2025 03:42:22
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 23/01/2025 03:42:25
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 23/01/2025 03:42:25
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 23/01/2025 03:42:28
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 23/01/2025 03:48:24
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 23/01/2025 03:48:26
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 23/01/2025 03:48:26
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 23/01/2025 03:48:29
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 23/01/2025 03:51:04
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 23/01/2025 03:51:06
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 23/01/2025 03:51:07
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 23/01/2025 03:51:10
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 23/01/2025 03:54:30
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 23/01/2025 03:54:32
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 23/01/2025 03:54:33
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 23/01/2025 03:54:36
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 23/01/2025 03:57:54
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 23/01/2025 03:57:56
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 23/01/2025 03:57:56
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 23/01/2025 03:57:59
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 23/01/2025 03:58:14
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 23/01/2025 03:58:17
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 23/01/2025 03:58:17
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 23/01/2025 03:58:20
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 23/01/2025 04:00:21
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 23/01/2025 04:00:24
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 23/01/2025 04:00:24
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 23/01/2025 04:00:27
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 23/01/2025 04:04:01
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 23/01/2025 04:04:03
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 23/01/2025 04:04:04
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 23/01/2025 04:04:07
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral_error\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 23/01/2025 04:33:56
   ENDCOMMENTS  
 
   END

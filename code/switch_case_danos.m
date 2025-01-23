@@ -45,7 +45,7 @@ function [ke_d_total, ke_d, prop_geom_mat] = switch_case_danos(no_elemento_a_dan
                 I_int_d(i) = 1/4 * pi * R_interior_d(i)^4;
                 I_d(i) = I_ext_d(i) - I_int_d(i);
                 % Momento polar del elemento con daño
-                j(i) = pi/32 * (D_d^4 - ((D_d - (2*t_d))^4));
+                j(i) = pi/32 * (D_d(i)^4 - ((D_d(i) - (2*t_d(i)))^4));
                 % Matriz de flexibilidades y uso de matriz de transformación T para convertirla a la matriz de rigidez local completa
                 % Matriz f_AA_d
                 f_AA_d(:,:,i) = [

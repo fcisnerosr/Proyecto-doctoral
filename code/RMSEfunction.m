@@ -25,23 +25,15 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
     %     print('Frecuencias con numeros imaginarios\n') % Línea de HEAD comentada
     % end % Línea de HEAD comentada
     % 
-    % SumRMSEVal = 0; % Línea de HEAD comentada
-    % for i = 1:length(frec_AG) % Línea de HEAD comentada
-    %     % SumRMSEVal = SumRMSEVal + (frec_AG(i) - frec_cond_d(i))^2; % Línea de HEAD comentada
-    %     SumRMSEVal = SumRMSEVal + ((2*pi/frec_AG(i)) - (2*pi/frec_cond_d(i)))^2; % Línea de HEAD comentada
-    % end % Línea de HEAD comentada
-    % RMSE = sqrt(SumRMSEVal / length(frec_AG)); % Línea de HEAD comentada
+    SumRMSEVal = 0; % Línea de HEAD comentada
+    for i = 1:length(frec_AG) % Línea de HEAD comentada
+        % SumRMSEVal = SumRMSEVal + (frec_AG(i) - frec_cond_d(i))^2; % Línea de HEAD comentada
+        SumRMSEVal = SumRMSEVal + ((2*pi/frec_AG(i)) - (2*pi/frec_cond_d(i)))^2; % Línea de HEAD comentada
+    end % Línea de HEAD comentada
+    RMSE = sqrt(SumRMSEVal / length(frec_AG)); % Línea de HEAD comentada
 
-    % Código de AG_experimentos_001
-    real_modos_cond_d = isreal(modos_AG_cond);
-    real_frec_cond_d  = isreal(frec_AG);
-    if real_frec_cond_d == 0
-        frec_AG
-        i
-        x
-    end
-
-    % Cálculo del CoMAC para cada nodo en cada modo
+    
+    % % Cálculo del CoMAC para cada nodo en cada modo
     % for i = 1:3  % Iterar sobre cada modo  % Línea de HEAD comentada
     %     for node = 1:216  % Iterar sobre cada nodo % Línea de HEAD comentada
     %         num = (modos_cond_d(node, i) * modos_AG_cond(node, i))^2; % Línea de HEAD comentada
@@ -63,7 +55,7 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
     % Calcular el MAC para cada par de modos
     for i = 1:size(modos_cond_d, 2)
         % Numerador: Producto interno cuadrado entre los modos
-        num = (modos_cond_d(:,i)' * modos_AG_cond(:,i))^2;
+        num = (modos_cond_d(:,i)' * modos_AG_cond(:,i))^2;masas_con_nodos
         % Denominador: Producto de las normas cuadradas de ambos modos
         den = (modos_cond_d(:,i)' * modos_cond_d(:,i)) * (modos_AG_cond(:,i)' * modos_AG_cond(:,i));
         % Cálculo del MAC
