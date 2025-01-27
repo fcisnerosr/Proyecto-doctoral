@@ -28,9 +28,9 @@ pathfile        = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\marco3Ddam0
 % pathfile = '/home/francisco/Documents/Proyecto-doctoral/pruebas_excel/marco3Ddam0.xlsx';
 
 % Danos a elementos tubulares, caso de dano y su respectivo porcentaje
-no_elemento_a_danar = 1:30;
+no_elemento_a_danar = [5];
 caso_dano           = repmat({'corrosion'}, 1, length(no_elemento_a_danar));
-dano_porcentaje     = ones(1,30) * 30;
+dano_porcentaje     = [20];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 
 % Corregir de formato los números en la tabla importada de ETABS: En todo este bloque de código, se realizó el cambio de formato de los números, debido a que ETABS importa sus tablas en formato de texto en algunas columnas.
 % % % % correccion_format_TablaETABS(archivo_excel);
