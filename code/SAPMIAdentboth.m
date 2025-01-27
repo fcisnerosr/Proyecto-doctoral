@@ -28,7 +28,7 @@ pathfile        = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\marco3Ddam0
 % pathfile = '/home/francisco/Documents/Proyecto-doctoral/pruebas_excel/marco3Ddam0.xlsx';
 
 % Danos a elementos tubulares, caso de dano y su respectivo porcentaje
-no_elemento_a_danar = [5];
+no_elemento_a_danar = [1];
 caso_dano           = repmat({'corrosion'}, 1, length(no_elemento_a_danar));
 dano_porcentaje     = [20];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 
@@ -102,13 +102,10 @@ clc
 
 % Cierra cualquier 'parallel pool' existente para evitar conflictos
 delete(gcp('nocreate'));
-num_element_sub = 116;
-% long_x = 3 * num_element_sub; % = 348
-% 3 porque solamente se aplica dano al área y ambas inercias en x y en y
-% 116 porque se le aplica dano a los primeros 116 elementos de la subestructura % Configuraciones básicas del AG
 
-% vector de danos %
-long_x = 1 * num_element_sub;
+% --- Parámetros de la subestructura y del AG ---
+num_element_sub = 9;       % Número de elementos en la subestructura
+long_x = num_element_sub;   % Longitud del vector de daños (corrosión)
 
 Samples     = 300;
 Generations = 150;
@@ -151,7 +148,7 @@ options.MutationFcn = {@mutationuniform, 0.0001}; % Solo el 0.01% de las variabl
 % Cómo Funciona: Durante la mutación, una pequena parte del código genético (representado por el vector x en tu caso) de un individuo se altera al azar. Esta alteración puede ser un cambio pequeno en el valor de una variable o un ajuste más significativo, dependiendo de cómo esté definida la función de mutación.
 options.UseParallel = 'always';
 % Graficas de monitoreo para ver el estado del AG durante todo su proceso
-% options = gaoptimset('PlotFcn', {@gaplotbestf, @gaplotbestindiv, @gaplotdistance, @gaplotrange, @gaplotstopping});
+options = gaoptimset('PlotFcn', {@gaplotbestf, @gaplotbestindiv, @gaplotdistance, @gaplotrange, @gaplotstopping});
 % @gaplotbestf: Mejores valores de función
 % @gaplotbestindiv: Valores del mejor individuo por generación
 % @gaplotdistance: Distancia entre individuos en las soluciones de busqueda
@@ -160,7 +157,7 @@ options.UseParallel = 'always';
 
 % Definir los límites de daño
 LowerLim = 0.0;       % Daño mínimo permitido
-UpperLim = 0.30;      % Daño máximo permitido
+UpperLim = 0.20;      % Daño máximo permitido
 
 LB = LowerLim * ones(long_x, 1);  % Límite inferior
 UB = UpperLim * ones(long_x, 1);  % Límite superior
@@ -187,7 +184,7 @@ clc
 [x,fval,exitflag,output,population,scores] = ga(@(x)RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
         L, ID, NE, elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G, ...
         vxz, elem_con_dano_long_NE,...
-        modos_cond_d, prop_geom_mat, comac_values, comac_ref, nodos, modos),Nvar,[],[],[],[],LB,UB,[],options);
+        modos_cond_d, prop_geom_mat),Nvar,[],[],[],[],LB,UB,[],options);
 
 % Crear la gráfica de barras
 figure;        % Abre una nueva ventana de figura
