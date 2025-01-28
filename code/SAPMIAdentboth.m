@@ -28,9 +28,10 @@ pathfile        = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\marco3Ddam0
 % pathfile = '/home/francisco/Documents/Proyecto-doctoral/pruebas_excel/marco3Ddam0.xlsx';
 
 % Danos a elementos tubulares, caso de dano y su respectivo porcentaje
-no_elemento_a_danar = [9];
+no_elemento_a_danar = [6 7 8 9];
 caso_dano           = repmat({'corrosion'}, 1, length(no_elemento_a_danar));
-dano_porcentaje     = [60];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
+% dano_porcentaje     = [10 10 10 10];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
+dano_porcentaje     = [40 30 20 40];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 
 % Corregir de formato los números en la tabla importada de ETABS: En todo este bloque de código, se realizó el cambio de formato de los números, debido a que ETABS importa sus tablas en formato de texto en algunas columnas.
 % % % % correccion_format_TablaETABS(archivo_excel);
@@ -104,7 +105,7 @@ clc
 delete(gcp('nocreate'));
 
 % --- Parámetros de la subestructura y del AG ---
-num_element_sub = 9;       % Número de elementos en la subestructura
+num_element_sub = 24;       % Número de elementos en la subestructura
 long_x = num_element_sub;   % Longitud del vector de daños (corrosión)
 
 Samples     = 400;
@@ -113,7 +114,7 @@ Nvar        = long_x;        % numero de variables que va a tener la variable de
 options                 = gaoptimset(@ga);          % gaoptimset es para crear las configuraciones específicas para el AG
 options.PopulationSize  = Samples;
 options.Generations     = Generations;
-options.StallGenLimit   = 20;          % límite de generaciones en donde los individuos no cumplen con la función objetivo
+options.StallGenLimit   = 50;          % límite de generaciones en donde los individuos no cumplen con la función objetivo
 options.Display         = 'iter';                         % Muestra la información en cada iteración
 options.OutputFcn       = @gaoutfun;  % Añade la función de salida para mostrar el tiempo transcurrido
 
@@ -157,7 +158,7 @@ options = gaoptimset('PlotFcn', {@gaplotbestf, @gaplotbestindiv, @gaplotdistance
 
 % Definir los límites de daño
 LowerLim = 0.0;       % Daño mínimo permitido
-UpperLim = 0.6;      % Daño máximo permitido
+UpperLim = 0.40;      % Daño máximo permitido
 % UpperLim = dano_porcentaje/100;      % Daño máximo permitido
 
 LB = LowerLim * ones(long_x, 1);  % Límite inferior

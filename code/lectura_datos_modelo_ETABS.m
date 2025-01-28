@@ -281,7 +281,7 @@ function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_
         % Se realizan algunos ajustes finales para ahora que se cambio la estructura a un marco sencillo
     hoja_excel = 'Frame Assigns - Frame Auto Mesh';
     % Leer la columna "C" desde la fila 4 en adelante
-    rango = 'C4:C20'; % Se asume un límite alto (ajusta si es necesario)
+    rango = 'C4:C200'; % Se asume un límite alto (ajusta si es necesario)
     % Extraer los datos numéricos de la columna sin importar el número de filas
     numero_frame = readmatrix(archivo_excel, 'Sheet', hoja_excel, 'Range', rango);
     numero_frame = numero_frame(~isnan(numero_frame));
