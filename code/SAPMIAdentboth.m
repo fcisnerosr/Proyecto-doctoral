@@ -28,9 +28,9 @@ pathfile        = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\marco3Ddam0
 % pathfile = '/home/francisco/Documents/Proyecto-doctoral/pruebas_excel/marco3Ddam0.xlsx';
 
 % Danos a elementos tubulares, caso de dano y su respectivo porcentaje
-no_elemento_a_danar = [1];
+no_elemento_a_danar = [9];
 caso_dano           = repmat({'corrosion'}, 1, length(no_elemento_a_danar));
-dano_porcentaje     = [20];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
+dano_porcentaje     = [60];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 
 % Corregir de formato los números en la tabla importada de ETABS: En todo este bloque de código, se realizó el cambio de formato de los números, debido a que ETABS importa sus tablas en formato de texto en algunas columnas.
 % % % % correccion_format_TablaETABS(archivo_excel);
@@ -107,7 +107,7 @@ delete(gcp('nocreate'));
 num_element_sub = 9;       % Número de elementos en la subestructura
 long_x = num_element_sub;   % Longitud del vector de daños (corrosión)
 
-Samples     = 300;
+Samples     = 400;
 Generations = 150;
 Nvar        = long_x;        % numero de variables que va a tener la variable de dano x. Son 116 elementos de la subestructura * 3 variables de dano de la corrosion = long_x
 options                 = gaoptimset(@ga);          % gaoptimset es para crear las configuraciones específicas para el AG
@@ -157,7 +157,8 @@ options = gaoptimset('PlotFcn', {@gaplotbestf, @gaplotbestindiv, @gaplotdistance
 
 % Definir los límites de daño
 LowerLim = 0.0;       % Daño mínimo permitido
-UpperLim = 0.20;      % Daño máximo permitido
+UpperLim = 0.6;      % Daño máximo permitido
+% UpperLim = dano_porcentaje/100;      % Daño máximo permitido
 
 LB = LowerLim * ones(long_x, 1);  % Límite inferior
 UB = UpperLim * ones(long_x, 1);  % Límite superior

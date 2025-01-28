@@ -1,0 +1,22 @@
+
+
+ ETABS Ultimate 64-bit 19.1.0 Build 2420 (Analysis Build 9853/64)               
+ File: E:\Archivos_Jaret\Proye...\ETABS\revision_3_marco_con_dano\revision_3.OUT
+                                                                     
+                                                                       
+
+ D I S P L A C E M E N T   D E G R E E S   O F   F R E E D O M
+
+         (A) = Active DOF, equilibrium equation
+         (-) = Restrained DOF, reaction computed
+         (+) = Constrained DOF
+         (>) = External substructure DOF
+         ( ) = Null DOF
+
+  JOINTS              UX  UY  UZ  RX  RY  RZ
+       2               -   -   -   -   -   -
+       3               A   A   A   A   A   A
+       4               -   -   -   -   -   -
+       1               A   A   A   A   A   A
+       5 TO       6    -   -   -   -   -   -
+       7 TO       8    A   A   A   A   A   A
