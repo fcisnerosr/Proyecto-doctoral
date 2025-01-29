@@ -9,11 +9,8 @@ format shortG
 % Marco inclinado
 % archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\marco_elementos_inclinados.xlsx';
 
-% Elemento a elemento
-archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\datos_prueba3.xlsx';
-
-%Jacket
-% archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\Datos_nudos_elementos_secciones_masas_nuevo_pend1a8_vigasI.xlsx';
+% Ruta del modelo en ETABS
+archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\datos_revision4_jacket-subestructura_2NIVELES.xlsx';
 
 tirante         = 87000;    % en mm
 tiempo          = 03;       % en anos
