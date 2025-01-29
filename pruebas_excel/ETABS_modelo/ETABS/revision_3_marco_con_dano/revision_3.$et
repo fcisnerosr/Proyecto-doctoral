@@ -1,4 +1,4 @@
-$ File E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.$et saved 27/01/2025 21:08:22
+$ File E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.$et saved 28/01/2025 23:04:34
  
 $ PROGRAM INFORMATION
   PROGRAM  "ETABS"  VERSION "19.1.0"  
@@ -11,12 +11,12 @@ $ CONTROLS
   RLLF  METHOD "ASCE7-10"  USEDEFAULTMIN "YES"  
 
 $ STORIES - IN SEQUENCE FROM TOP
+  STORY "Story2"  HEIGHT 5000 MASTERSTORY "Yes"  
   STORY "Story1"  HEIGHT 5000 MASTERSTORY "Yes"  
   STORY "Base"  ELEV 0 
 
 $ GRIDS
   GRIDSYSTEM "G1"  TYPE "CARTESIAN"  BUBBLESIZE 500 
-  GRID "G1"  LABEL "A"  DIR "X"  COORD 0 VISIBLE "Yes"  BUBBLELOC "End"  
   GRID "G1"  LABEL "B"  DIR "X"  COORD 6000 VISIBLE "Yes"  BUBBLELOC "End"  
   GRID "G1"  LABEL "2"  DIR "Y"  COORD 5000 VISIBLE "Yes"  BUBBLELOC "Start"  
 
@@ -157,6 +157,30 @@ $ LINE ASSIGNS
   LINEASSIGN  "D22"  "Story1"  SECTION "FSec1"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
   LINEASSIGN  "D23"  "Story1"  SECTION "FSec1"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
   LINEASSIGN  "D24"  "Story1"  SECTION "FSec1"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "B2"  "Story2"  SECTION "FSec1"  CARDINALPT 8  MAXSTASPC 500 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "B3"  "Story2"  SECTION "FSec1"  CARDINALPT 8  MAXSTASPC 500 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "B4"  "Story2"  SECTION "FSec1"  CARDINALPT 8  MAXSTASPC 500 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "B1"  "Story2"  SECTION "FSec1"  CARDINALPT 8  MAXSTASPC 500 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "C3"  "Story2"  SECTION "FSec1"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "C2"  "Story2"  SECTION "FSec1"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "C4"  "Story2"  SECTION "FSec1"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "D21"  "Story2"  SECTION "FSec1"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "D22"  "Story2"  SECTION "FSec1"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "D9"  "Story2"  SECTION "FSec1"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "D10"  "Story2"  SECTION "FSec1"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "D23"  "Story2"  SECTION "FSec1"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "D24"  "Story2"  SECTION "FSec1"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "D15"  "Story2"  SECTION "FSec1"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "D16"  "Story2"  SECTION "FSec1"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "D13"  "Story2"  SECTION "FSec1"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "D14"  "Story2"  SECTION "FSec1"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "D19"  "Story2"  SECTION "FSec1"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "D20"  "Story2"  SECTION "FSec1"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "D17"  "Story2"  SECTION "FSec1"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "D18"  "Story2"  SECTION "FSec1"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "D11"  "Story2"  SECTION "FSec1"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "D12"  "Story2"  SECTION "FSec1"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "C1"  "Story2"  SECTION "FSec1"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
 
 $ LOAD PATTERNS
   LOADPATTERN "Live"  TYPE  "Live"  SELFWEIGHT  0
@@ -762,6 +786,19 @@ ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas
 ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 27/01/2025 20:00:57
 ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 27/01/2025 20:01:02
 ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 27/01/2025 21:08:21
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 27/01/2025 21:08:23
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 27/01/2025 21:08:24
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 27/01/2025 21:08:27
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 28/01/2025 10:45:14
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 28/01/2025 10:45:39
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 28/01/2025 10:45:42
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 28/01/2025 10:45:42
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 28/01/2025 10:45:47
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 28/01/2025 10:57:26
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 28/01/2025 10:57:28
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 28/01/2025 10:57:29
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 28/01/2025 10:57:32
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\revision_3.EDB at 28/01/2025 23:04:33
   ENDCOMMENTS  
 
   END

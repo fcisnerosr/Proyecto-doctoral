@@ -8,7 +8,7 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d, ...
 
     % --- Pesos para las funciones objetivo ---
     w1 = 0.5;               % Peso para el RMSE
-    w2 = 0;               % Peso para el MACN
+    w2 = 0.5;               % Peso para el MACN
 
     % --- Recorte de propiedades a la subestructura ---
     L_sub  = L(1:num_element_sub);   % Longitud de los elementos de la subestructura
@@ -116,10 +116,12 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d, ...
         num = (modos_cond_d(:, i)' * modos_AG_cond(:, i))^2; % Numerador del MAC
         den = (modos_cond_d(:, i)' * modos_cond_d(:, i)) * (modos_AG_cond(:, i)' * modos_AG_cond(:, i)); % Denominador del MAC
         MAC_value = num / den;           % Calcula el MAC
-        macn_value = macn_value + sqrt((1 - MAC_value) / MAC_value); % Suma del valor del MACN
+        % macn_value = macn_value + sqrt((1 - MAC_value) / MAC_value); % Suma del valor del MACN
+        macn_value = macn_value + ((1-sqrt(MAC_value))^2 / MAC_value); % Suma del valor del MACN
     end
-    macn_value = macn_value / size(modos_cond_d, 2);  % Calcula el promedio del MACN
+    % macn_value = macn_value / size(modos_cond_d, 2);  % Calcula el promedio del MACN
 
     % Combinar en una función objetivo ponderada
-    Objetivo = w1 * RMSE + w2 * (1 - macn_value);
+    % Objetivo = w1 * RMSE + w2 * (1 - macn_value);
+    Objetivo = w1 * RMSE + w2 * macn_value;
 end

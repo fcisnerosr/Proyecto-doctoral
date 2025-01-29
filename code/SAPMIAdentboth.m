@@ -28,10 +28,10 @@ pathfile        = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\marco3Ddam0
 % pathfile = '/home/francisco/Documents/Proyecto-doctoral/pruebas_excel/marco3Ddam0.xlsx';
 
 % Danos a elementos tubulares, caso de dano y su respectivo porcentaje
-no_elemento_a_danar = [6 7 8 9];
+no_elemento_a_danar = [45];
 caso_dano           = repmat({'corrosion'}, 1, length(no_elemento_a_danar));
 % dano_porcentaje     = [10 10 10 10];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
-dano_porcentaje     = [40 30 20 40];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
+dano_porcentaje     = [40];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 
 % Corregir de formato los números en la tabla importada de ETABS: En todo este bloque de código, se realizó el cambio de formato de los números, debido a que ETABS importa sus tablas en formato de texto en algunas columnas.
 % % % % correccion_format_TablaETABS(archivo_excel);
@@ -105,16 +105,16 @@ clc
 delete(gcp('nocreate'));
 
 % --- Parámetros de la subestructura y del AG ---
-num_element_sub = 24;       % Número de elementos en la subestructura
-long_x = num_element_sub;   % Longitud del vector de daños (corrosión)
+num_element_sub = length(elements);       % Número de elementos en la subestructura
+long_x = num_element_sub(end, 1);   % Longitud del vector de daños (corrosión)
 
-Samples     = 400;
+Samples     = 450;
 Generations = 150;
 Nvar        = long_x;        % numero de variables que va a tener la variable de dano x. Son 116 elementos de la subestructura * 3 variables de dano de la corrosion = long_x
 options                 = gaoptimset(@ga);          % gaoptimset es para crear las configuraciones específicas para el AG
 options.PopulationSize  = Samples;
 options.Generations     = Generations;
-options.StallGenLimit   = 50;          % límite de generaciones en donde los individuos no cumplen con la función objetivo
+options.StallGenLimit   = 200;          % límite de generaciones en donde los individuos no cumplen con la función objetivo
 options.Display         = 'iter';                         % Muestra la información en cada iteración
 options.OutputFcn       = @gaoutfun;  % Añade la función de salida para mostrar el tiempo transcurrido
 
@@ -133,7 +133,7 @@ options.SelectionFcn        = @selectionroulette;        % En este método, la p
 % options.SelectionFcn = {@selectiontournament, 1}; % Solo se selecciona el mejor individuo
 % options.SelectionFcn = @selectionstochunif; % Selección estocástica uniforme
 
-% options.MutationFcn                               = @mutationadaptfeasible;     % Configura cómo se llevará a cabo la mutación. Función de Mutación Adaptativa Factible: mutationadaptfeasible es una función específica de MATLAB que realiza mutaciones de manera adaptativa. Aquí está lo que hace: Adaptativa: La mutación es adaptativa porque ajusta el grado de mutación dependiendo del progreso del GA. Si el algoritmo está haciendo buenos progresos, la mutación puede ser menos agresiva. Si no está haciendo mucho progreso, la mutación puede volverse más agresiva para explorar nuevas áreas del espacio de soluciones. Factibilidad: La mutación se realiza de tal manera que los individuos mutados aún cumplen con cualquier restricción del problema. Esto es crucial para asegurarse de que las soluciones mutadas sigan siendo válidas dentro del espacio de búsqueda permitido.
+options.MutationFcn                               = @mutationadaptfeasible;     % Configura cómo se llevará a cabo la mutación. Función de Mutación Adaptativa Factible: mutationadaptfeasible es una función específica de MATLAB que realiza mutaciones de manera adaptativa. Aquí está lo que hace: Adaptativa: La mutación es adaptativa porque ajusta el grado de mutación dependiendo del progreso del GA. Si el algoritmo está haciendo buenos progresos, la mutación puede ser menos agresiva. Si no está haciendo mucho progreso, la mutación puede volverse más agresiva para explorar nuevas áreas del espacio de soluciones. Factibilidad: La mutación se realiza de tal manera que los individuos mutados aún cumplen con cualquier restricción del problema. Esto es crucial para asegurarse de que las soluciones mutadas sigan siendo válidas dentro del espacio de búsqueda permitido.
 % options.MutationFcn = @(parents,options,nvars,FitnessFcn,state,thisScore,thisPopulation) ...
 %     round(mutationadaptfeasible(parents,options,nvars,FitnessFcn,state,thisScore,thisPopulation) / 0.005) * 0.005;
 % options.MutationFcn    = {@mutationuniform, 0.02}; % Solo el 2% de las variables mutará en cada generación
@@ -142,7 +142,7 @@ options.SelectionFcn        = @selectionroulette;        % En este método, la p
 % options.MutationFcn = {@mutationuniform, 0.002}; % Solo el 0.2% de las variables mutará
 % options.MutationFcn = {@mutationuniform, 0.001}; % Solo el 0.1% de las variables mutará
 % options.MutationFcn = {@mutationuniform, 0.0005}; % Solo 0.05% de las variables mutarán
-options.MutationFcn = {@mutationuniform, 0.0001}; % Solo el 0.01% de las variables mutará
+% options.MutationFcn = {@mutationuniform, 0.0001}; % Solo el 0.01% de las variables mutará
 
 
 % Propósito de la Mutación: La mutación es una operación que introduce variación en los individuos de una población. Es esencial para mantener la diversidad genética, permitiendo que el algoritmo explore nuevas soluciones que no estaban presentes en la población original.
