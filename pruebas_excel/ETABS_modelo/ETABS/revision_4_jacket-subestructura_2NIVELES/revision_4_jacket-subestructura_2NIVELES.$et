@@ -1,4 +1,4 @@
-$ File E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.$et saved 29/01/2025 13:55:42
+$ File E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.$et saved 29/01/2025 15:44:36
  
 $ PROGRAM INFORMATION
   PROGRAM  "ETABS"  VERSION "19.1.0"  
@@ -145,6 +145,10 @@ $ POINT COORDINATES
   POINT "20"  151.2387 820.2098 364.8934
 
 $ LINE CONNECTIVITIES
+  LINE  "C1"  COLUMN  "13"  "13"  1
+  LINE  "C2"  COLUMN  "14"  "14"  1
+  LINE  "C3"  COLUMN  "15"  "15"  1
+  LINE  "C4"  COLUMN  "16"  "16"  1
   LINE  "B1"  BEAM  "2"  "3"  0
   LINE  "B2"  BEAM  "3"  "7"  0
   LINE  "B3"  BEAM  "9"  "7"  0
@@ -199,6 +203,10 @@ $ POINT ASSIGNS
   POINTASSIGN  "4"  "Base"  RESTRAINT "UX UY UZ RX RY RZ"  
   POINTASSIGN  "6"  "Base"  RESTRAINT "UX UY UZ RX RY RZ"  
   POINTASSIGN  "8"  "Base"  RESTRAINT "UX UY UZ RX RY RZ"  
+  POINTASSIGN  "13"  "Story3"  USERJOINT  "Yes"  
+  POINTASSIGN  "14"  "Story3"  USERJOINT  "Yes"  
+  POINTASSIGN  "15"  "Story3"  USERJOINT  "Yes"  
+  POINTASSIGN  "16"  "Story3"  USERJOINT  "Yes"  
 
 $ LINE ASSIGNS
   LINEASSIGN  "D1"  "Story1"  SECTION "SECC04"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
@@ -249,6 +257,14 @@ $ LINE ASSIGNS
   LINEASSIGN  "B6"  "Story2"  SECTION "SECC01"  CARDINALPT 8  MAXSTASPC 24 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
   LINEASSIGN  "B7"  "Story2"  SECTION "SECC01"  CARDINALPT 8  MAXSTASPC 24 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
   LINEASSIGN  "B8"  "Story2"  SECTION "SECC01"  CARDINALPT 8  MAXSTASPC 24 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "B5"  "Story3"  SECTION "SECC01"  CARDINALPT 8  MAXSTASPC 24 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "B6"  "Story3"  SECTION "SECC01"  CARDINALPT 8  MAXSTASPC 24 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "B7"  "Story3"  SECTION "SECC01"  CARDINALPT 8  MAXSTASPC 24 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "B8"  "Story3"  SECTION "SECC01"  CARDINALPT 8  MAXSTASPC 24 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "C1"  "Story3"  SECTION "SECC01"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "C2"  "Story3"  SECTION "SECC01"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "C3"  "Story3"  SECTION "SECC01"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "C4"  "Story3"  SECTION "SECC01"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
 
 $ LOAD PATTERNS
   LOADPATTERN "Dead"  TYPE  "Dead"  SELFWEIGHT  1
@@ -258,6 +274,8 @@ $ POINT OBJECT LOADS
   POINTLOAD  "3"  "Story1"  TYPE "FORCE"  LC "Live"  FX 224.8089  FY 449.6179  FZ -786.8312  MX 0.8850745  MY 0.8850745  MZ -26.55223
   POINTLOAD  "14"  "Story2"  TYPE "FORCE"  LC "Live"  FX 224.8089  FY 449.6179  FZ -786.8312  MX 0.8850745  MY 0.8850745  MZ -26.55223
   POINTLOAD  "16"  "Story2"  TYPE "FORCE"  LC "Live"  FX 224.8089  FY 449.6179  FZ -786.8312  MX 0.8850745  MY 0.8850745  MZ -26.55223
+  POINTLOAD  "14"  "Story3"  TYPE "FORCE"  LC "Live"  FX 224.8089  FY 449.6179  FZ -786.8312  MX 0.8850745  MY 0.8850745  MZ -26.55223
+  POINTLOAD  "16"  "Story3"  TYPE "FORCE"  LC "Live"  FX 224.8089  FY 449.6179  FZ -786.8312  MX 0.8850745  MY 0.8850745  MZ -26.55223
 
 $ FRAME OBJECT LOADS
 
@@ -823,6 +841,15 @@ ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas
 ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\Modelo_ETABS_5_stories_pend1a8_vigasI\Modelo_ETABS_5_stories_pend1a8_vigasI.EDB at 21/11/2024 13:46:44
 ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura\revision_4_jacket-subestructura.EDB at 29/01/2025 13:54:37
 ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 29/01/2025 13:55:42
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 29/01/2025 13:55:46
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 29/01/2025 13:55:47
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 29/01/2025 13:55:50
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELESR\revision_4_jacket-subestructura_2NIVELES.EDB at 29/01/2025 14:12:01
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 29/01/2025 14:25:39
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 29/01/2025 14:25:43
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 29/01/2025 14:25:43
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 29/01/2025 14:25:46
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 29/01/2025 15:44:36
   ENDCOMMENTS  
 
   END

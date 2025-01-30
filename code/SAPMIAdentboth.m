@@ -10,7 +10,7 @@ format shortG
 % archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\marco_elementos_inclinados.xlsx';
 
 % Ruta del modelo en ETABS
-archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\datos_revision4_jacket-subestructura_2NIVELES.xlsx';
+archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\datos_revision_4_jacket-subestructura_2NIVELES.xlsx';
 
 tirante         = 87000;    % en mm
 tiempo          = 03;       % en anos
@@ -25,10 +25,10 @@ pathfile        = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\marco3Ddam0
 % pathfile = '/home/francisco/Documents/Proyecto-doctoral/pruebas_excel/marco3Ddam0.xlsx';
 
 % Danos a elementos tubulares, caso de dano y su respectivo porcentaje
-no_elemento_a_danar = [45];
+no_elemento_a_danar = [1 2 5 18 19];
 caso_dano           = repmat({'corrosion'}, 1, length(no_elemento_a_danar));
 % dano_porcentaje     = [10 10 10 10];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
-dano_porcentaje     = [40];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
+dano_porcentaje     = [50 50 50 50 50];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 
 % Corregir de formato los números en la tabla importada de ETABS: En todo este bloque de código, se realizó el cambio de formato de los números, debido a que ETABS importa sus tablas en formato de texto en algunas columnas.
 % % % % correccion_format_TablaETABS(archivo_excel);
@@ -46,7 +46,7 @@ dano_porcentaje     = [40];  % El dano va en decimal y se debe incluir el numero
 % Modificación de la matriz de masas
 % [masas_en_cada_nodo] = modificacion_matriz_masas(archivo_excel, tirante, d_agua, matriz_cell_secciones, tiempo, densidad_crec);
 [masas_en_cada_nodo, M_cond] = modificacion_matriz_masas_estructura_sencilla(archivo_excel);
- 
+
 % Escritura de los datos hacia la hoja de excel del Dr. Rolando
 escritura_datos_hoja_excel_del_dr_Rolando(coordenadas, conectividad, prop_geom, matriz_restriccion, masas_en_cada_nodo, VXZ);
 
@@ -155,7 +155,7 @@ options = gaoptimset('PlotFcn', {@gaplotbestf, @gaplotbestindiv, @gaplotdistance
 
 % Definir los límites de daño
 LowerLim = 0.0;       % Daño mínimo permitido
-UpperLim = 0.40;      % Daño máximo permitido
+UpperLim = 0.50;      % Daño máximo permitido
 % UpperLim = dano_porcentaje/100;      % Daño máximo permitido
 
 LB = LowerLim * ones(long_x, 1);  % Límite inferior
