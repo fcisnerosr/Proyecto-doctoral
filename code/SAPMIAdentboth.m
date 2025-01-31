@@ -10,7 +10,7 @@ format shortG
 % archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\marco_elementos_inclinados.xlsx';
 
 % Ruta del modelo en ETABS
-archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\datos_revision_4_jacket-subestructura_2NIVELES.xlsx';
+archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_5_jacket-subestructura_3NIVELES\revision_5_jacket-subestructura_3NIVELES.xlsx';
 
 tirante         = 87000;    % en mm
 tiempo          = 03;       % en anos
@@ -25,10 +25,10 @@ pathfile        = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\marco3Ddam0
 % pathfile = '/home/francisco/Documents/Proyecto-doctoral/pruebas_excel/marco3Ddam0.xlsx';
 
 % Danos a elementos tubulares, caso de dano y su respectivo porcentaje
-no_elemento_a_danar = [1 2 5 18 19];
+no_elemento_a_danar = sort([1 2 5 3 4 6 18 19 20 17 16]);
 caso_dano           = repmat({'corrosion'}, 1, length(no_elemento_a_danar));
 % dano_porcentaje     = [10 10 10 10];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
-dano_porcentaje     = [50 50 50 50 50];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
+dano_porcentaje     = [50 50 50 50 50 50 50 50 50 50 50];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 
 % Corregir de formato los números en la tabla importada de ETABS: En todo este bloque de código, se realizó el cambio de formato de los números, debido a que ETABS importa sus tablas en formato de texto en algunas columnas.
 % % % % correccion_format_TablaETABS(archivo_excel);

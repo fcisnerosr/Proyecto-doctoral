@@ -1,0 +1,10 @@
+﻿Referencia a objeto no establecida como instancia de un objeto.
+   en at8.a(Int32 A_0, Int32 A_1, Double[] A_2, Double[] A_3, Double[] A_4, Boolean& A_5)
+   en at8.a(Int32 A_0, Int32 A_1, Boolean A_2, Boolean& A_3)
+   en at8.c(Int32 A_0, String& A_1, String A_2)
+   en arw.d(Object A_0, MouseEventArgs A_1)
+   en arw.m(Object A_0, MouseEventArgs A_1)
+   en System.Windows.Forms.Control.OnMouseMove(MouseEventArgs e)
+   en System.Windows.Forms.Control.WmMouseMove(Message& m)
+   en System.Windows.Forms.Control.WndProc(Message& m)
+   en System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)

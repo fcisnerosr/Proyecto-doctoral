@@ -5,6 +5,7 @@ function [modos_cond,frec_cond] = modos_frecuencias(KG_cond,M_cond)
         % [modos_cond, wn2_cond] = eig(KG_cond,M_cond);
         % frec_cond = sort(diag(((wn2_cond)^0.5)/(2*pi)));
 
+    % [modos_cond, wn2_cond] = eigs(KG_cond,M_cond,3,'sm');
     [modos_cond, wn2_cond] = eigs(KG_cond,M_cond,3,'sm');
     frec_cond = (sort(diag(((wn2_cond)^0.5)/(2*pi)))).^-1;  % (segundos)
 

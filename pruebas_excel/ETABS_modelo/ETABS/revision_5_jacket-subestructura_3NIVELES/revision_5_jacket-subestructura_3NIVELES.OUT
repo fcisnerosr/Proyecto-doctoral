@@ -1,0 +1,24 @@
+
+
+ ETABS Ultimate 64-bit 19.1.0 Build 2420 (Analysis Build 9853/64)               
+ File: E:\Archivos_Jaret\Proye...ES\revision_5_jacket-subestructura_3NIVELES.OUT
+                                                                     
+                                                                       
+
+ D I S P L A C E M E N T   D E G R E E S   O F   F R E E D O M
+
+         (A) = Active DOF, equilibrium equation
+         (-) = Restrained DOF, reaction computed
+         (+) = Constrained DOF
+         (>) = External substructure DOF
+         ( ) = Null DOF
+
+  JOINTS              UX  UY  UZ  RX  RY  RZ
+       1               -   -   -   -   -   -
+       9 TO      10    A   A   A   A   A   A
+       2               -   -   -   -   -   -
+       5               A   A   A   A   A   A
+       3               -   -   -   -   -   -
+      11               A   A   A   A   A   A
+       4               -   -   -   -   -   -
+      12 TO      31    A   A   A   A   A   A
