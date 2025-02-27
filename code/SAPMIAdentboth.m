@@ -6,11 +6,19 @@ tic
 format shortG
 
 % Datos iniciales de entrada
+% archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\datos_prueba3.xlsx';
+
 % Marco inclinado
 % archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\marco_elementos_inclinados.xlsx';
 
-% Ruta del modelo en ETABS
-archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_5_jacket-subestructura_3NIVELES\revision_5_jacket-subestructura_3NIVELES.xlsx';
+% Elemento a elemento
+directorio_actual = pwd;
+ruta_relativa = fullfile('..', 'pruebas_excel', 'ETABS_modelo', 'ETABS', 'revision_3_marco_con_dano', 'datos_prueba3.xlsx');
+archivo_excel = fullfile(directorio_actual, ruta_relativa);
+% archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\datos_prueba3.xlsx';
+
+%Jacket
+% archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\Datos_nudos_elementos_secciones_masas_nuevo_pend1a8_vigasI.xlsx';
 
 tirante         = 87000;    % en mm
 tiempo          = 03;       % en anos
@@ -21,7 +29,14 @@ densidad_crec   = 1.3506*10^-7;    % en N/mm^3
 % Valor de la dessidad del crecimiento marino
 % Valor de encontrado en internet = 1325 kg/m^3
 % Conversión: 1325 kg/m^3 * (1 N / 9.81 kg) * (1 m^3/1000^3 m^3) = 1.3506*10^-7 en N/mm^3
-pathfile        = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\marco3Ddam0.xlsx';
+
+% Ruta relativa para la ubicación de marco3Ddam0
+directorio_actual = pwd;
+% ruta_relativa   = fullfile('Proyecto-doctoral', 'pruebas_excel', 'marco3Ddam0.xlsx');     % Construir la ruta relativa al archivo Excel
+ruta_relativa = fullfile('..', 'pruebas_excel', 'marco3Ddam0.xlsx');
+pathfile        = fullfile(directorio_actual, ruta_relativa);                             % Construir la ruta completa combinando el directorio actual y la ruta relativa
+
+% pathfile        = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\marco3Ddam0.xlsx';
 % pathfile = '/home/francisco/Documents/Proyecto-doctoral/pruebas_excel/marco3Ddam0.xlsx';
 
 % Danos a elementos tubulares, caso de dano y su respectivo porcentaje
@@ -166,7 +181,8 @@ UB = UpperLim * ones(long_x, 1);  % Límite superior
 % % % % % diary (CWFile);             % Abre el archivo de salida para que todas las salidas en la consola de MATLAB se registren en este archivo
 % 
 % Proceso en paralelo
-parpool('Processes', 6, 'IdleTimeout', 6000);  % Configura n minutos de inactividad antes de apagarse
+% parpool('Processes', 6, 'IdleTimeout', 6000);  % Configura n minutos de inactividad antes de apagarse
+parpool('Processes', 2, 'IdleTimeout', 6000);
 % En mi CPU se pueden 6 como máximo, para saber cuántos puede cada usaurio ejecutar en el command window lo siguiente:
 % numCores = feature('numcores');
 % disp(['Número de núcleos: ', num2str(numCores)]);
@@ -180,10 +196,28 @@ clc
 % comac_values = zeros(nodos, modos);
 % comac_ref = ones(nodos, modos);  % COMAC de referencia, asumimos valores ideales (1)
 
-[x,fval,exitflag,output,population,scores] = ga(@(x)RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
+% Obtener la ruta del directorio de SAPMIAdentboth.m
+ruta_directorio_actual = fileparts(mfilename('fullpath'));
+
+% Construir la ruta a RMSEfunction.m
+ruta_rmse = fullfile(ruta_directorio_actual, 'RMSEfunction.m');
+
+% Verificar si RMSEfunction.m existe
+if exist(ruta_rmse, 'file') == 2
+    % Agregar la ruta al path de manera temporal
+    addpath(ruta_directorio_actual);
+    [x,fval,exitflag,output,population,scores] = ga(@(x)RMSEfunction(x, num_element_sub, M_cond, frec_cond_d,...
         L, ID, NE, elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G, ...
         vxz, elem_con_dano_long_NE,...
         modos_cond_d, prop_geom_mat),Nvar,[],[],[],[],LB,UB,[],options);
+
+    % Remover la ruta del path de manera temporal
+    rmpath(ruta_directorio_actual);
+else
+    error('No se encontró RMSEfunction.m');
+end
+
+
 
 % Crear la gráfica de barras
 figure;        % Abre una nueva ventana de figura
