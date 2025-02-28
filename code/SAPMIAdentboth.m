@@ -6,19 +6,9 @@ tic
 format shortG
 
 % Datos iniciales de entrada
-% archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\datos_prueba3.xlsx';
-
-% Marco inclinado
-% archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\marco_elementos_inclinados.xlsx';
-
-% Elemento a elemento
-directorio_actual = pwd;
-ruta_relativa = fullfile('..', 'pruebas_excel', 'ETABS_modelo', 'ETABS', 'revision_3_marco_con_dano', 'datos_prueba3.xlsx');
-archivo_excel = fullfile(directorio_actual, ruta_relativa);
-% archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_3_marco_con_dano\datos_prueba3.xlsx';
-
-%Jacket
-% archivo_excel = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\Datos_nudos_elementos_secciones_masas_nuevo_pend1a8_vigasI.xlsx';
+carpeta = 'revision_3_marco_con_dano';
+archivo = 'datos_prueba3.xlsx';
+archivo_excel = construirRutaExcel(carpeta, archivo);
 
 tirante         = 87000;    % en mm
 tiempo          = 03;       % en anos
@@ -31,13 +21,7 @@ densidad_crec   = 1.3506*10^-7;    % en N/mm^3
 % Conversión: 1325 kg/m^3 * (1 N / 9.81 kg) * (1 m^3/1000^3 m^3) = 1.3506*10^-7 en N/mm^3
 
 % Ruta relativa para la ubicación de marco3Ddam0
-directorio_actual = pwd;
-% ruta_relativa   = fullfile('Proyecto-doctoral', 'pruebas_excel', 'marco3Ddam0.xlsx');     % Construir la ruta relativa al archivo Excel
-ruta_relativa   = fullfile('..', 'pruebas_excel', 'marco3Ddam0.xlsx');
-pathfile        = fullfile(directorio_actual, ruta_relativa);                             % Construir la ruta completa combinando el directorio actual y la ruta relativa
-
-% pathfile        = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\marco3Ddam0.xlsx';
-% pathfile = '/home/francisco/Documents/Proyecto-doctoral/pruebas_excel/marco3Ddam0.xlsx';
+obtenerRutaMarco3Ddam0()
 
 % Danos a elementos tubulares, caso de dano y su respectivo porcentaje
 no_elemento_a_danar = sort([1 2 5 3 4 6 18 19 20 17 16]);
@@ -182,8 +166,8 @@ UB = UpperLim * ones(long_x, 1);  % Límite superior
 % % % % % diary (CWFile);             % Abre el archivo de salida para que todas las salidas en la consola de MATLAB se registren en este archivo
 % 
 % Proceso en paralelo
-% parpool('Processes', 6, 'IdleTimeout', 6000);  % Configura n minutos de inactividad antes de apagarse
-parpool('Processes', 2, 'IdleTimeout', 6000);
+parpool('Processes', 6, 'IdleTimeout', 6000);  % Configura n minutos de inactividad antes de apagarse
+% parpool('Processes', 2, 'IdleTimeout', 6000);
 % En mi CPU se pueden 6 como máximo, para saber cuántos puede cada usaurio ejecutar en el command window lo siguiente:
 % numCores = feature('numcores');
 % disp(['Número de núcleos: ', num2str(numCores)]);
