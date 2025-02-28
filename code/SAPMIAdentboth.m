@@ -6,8 +6,8 @@ tic
 format shortG
 
 % Datos iniciales de entrada
-carpeta = 'revision_3_marco_con_dano';
-archivo = 'datos_prueba3.xlsx';
+carpeta = 'revision_4_jacket-subestructura_2NIVELES';
+archivo = 'datos_revision_4_jacket-subestructura_2NIVELES.xlsx';
 archivo_excel = construirRutaExcel(carpeta, archivo);
 
 tirante         = 87000;    % en mm
@@ -24,10 +24,10 @@ densidad_crec   = 1.3506*10^-7;    % en N/mm^3
 pathfile = obtenerRutaMarco3Ddam0();
 
 % Danos a elementos tubulares, caso de dano y su respectivo porcentaje
-no_elemento_a_danar = sort([1 2 5 3 4 6 18 19 20 17 16]);
+no_elemento_a_danar = sort([26 27 28 29]);
 caso_dano           = repmat({'corrosion'}, 1, length(no_elemento_a_danar));
 % dano_porcentaje     = [10 10 10 10];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
-dano_porcentaje     = [50 50 50 50 50 50 50 50 50 50 50];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
+dano_porcentaje     = [50 50 50 50];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 
 % Corregir de formato los números en la tabla importada de ETABS: En todo este bloque de código, se realizó el cambio de formato de los números, debido a que ETABS importa sus tablas en formato de texto en algunas columnas.
 % % % % correccion_format_TablaETABS(archivo_excel);
@@ -41,7 +41,6 @@ dano_porcentaje     = [50 50 50 50 50 50 50 50 50 50 50];  % El dano va en decim
 
 % % Lectura de datos del modelo de ETABS
 [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_secciones, VXZ] = lectura_datos_modelo_ETABS(archivo_excel);
-
 
 % Modificación de la matriz de masas
 % [masas_en_cada_nodo] = modificacion_matriz_masas(archivo_excel, tirante, d_agua, matriz_cell_secciones, tiempo, densidad_crec);
