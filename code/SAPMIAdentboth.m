@@ -21,7 +21,7 @@ densidad_crec   = 1.3506*10^-7;    % en N/mm^3
 % Conversión: 1325 kg/m^3 * (1 N / 9.81 kg) * (1 m^3/1000^3 m^3) = 1.3506*10^-7 en N/mm^3
 
 % Ruta relativa para la ubicación de marco3Ddam0
-obtenerRutaMarco3Ddam0()
+pathfile = obtenerRutaMarco3Ddam0();
 
 % Danos a elementos tubulares, caso de dano y su respectivo porcentaje
 no_elemento_a_danar = sort([1 2 5 3 4 6 18 19 20 17 16]);
