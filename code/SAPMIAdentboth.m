@@ -33,7 +33,7 @@ densidad_crec   = 1.3506*10^-7;    % en N/mm^3
 % Ruta relativa para la ubicación de marco3Ddam0
 directorio_actual = pwd;
 % ruta_relativa   = fullfile('Proyecto-doctoral', 'pruebas_excel', 'marco3Ddam0.xlsx');     % Construir la ruta relativa al archivo Excel
-ruta_relativa = fullfile('..', 'pruebas_excel', 'marco3Ddam0.xlsx');
+ruta_relativa   = fullfile('..', 'pruebas_excel', 'marco3Ddam0.xlsx');
 pathfile        = fullfile(directorio_actual, ruta_relativa);                             % Construir la ruta completa combinando el directorio actual y la ruta relativa
 
 % pathfile        = 'E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\marco3Ddam0.xlsx';
@@ -55,8 +55,9 @@ dano_porcentaje     = [50 50 50 50 50 50 50 50 50 50 50];  % El dano va en decim
 %     ES IMPORTANTE REESCRIBIRLOS A MANO PARA QUE VAYAN SECUENCIALMENTE SIN SALTARSE NINGÚN NÚMERO
 %     DESDE 1 HASTA LOS n ELEMENTOS QUE VAYA A TENER LA PLATAFORMA
 
-% % % Lectura de datos del modelo de ETABS
+% % Lectura de datos del modelo de ETABS
 [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_secciones, VXZ] = lectura_datos_modelo_ETABS(archivo_excel);
+
 
 % Modificación de la matriz de masas
 % [masas_en_cada_nodo] = modificacion_matriz_masas(archivo_excel, tirante, d_agua, matriz_cell_secciones, tiempo, densidad_crec);

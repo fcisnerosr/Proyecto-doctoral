@@ -1,4 +1,6 @@
 function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_secciones, VXZ] = lectura_datos_modelo_ETABS(archivo_excel)
+    % % % Lectura de datos del modelo de ETABS
+    % [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_secciones, VXZ] = lectura_datos_modelo_ETABS(archivo_excel);
     %% SECCIÓN: pestaña "nudos"
     %% BLOQUE: Nodos y sus coordenadas (coordenadas)
     hoja_excel = 'Point Object Connectivity';
@@ -46,8 +48,8 @@ function [coordenadas, conectividad, prop_geom, matriz_restriccion, matriz_cell_
     % Propiedades del material (módulos)
     hoja_excel = 'Mat Prop - Basic Mech Props';
     % Lee los datos de la columna A desde la celda A4 hasta el final de la columna
-    E = xlsread(archivo_excel, hoja_excel, 'E8');      % módulo de elasticidad en MPa del modelo en ETABS
-    G = xlsread(archivo_excel, hoja_excel, 'F8');        % módulo de corte en MPa del modelo en ETABS
+    E = xlsread(archivo_excel, hoja_excel, 'E7');      % módulo de elasticidad en MPa del modelo en ETABS
+    G = xlsread(archivo_excel, hoja_excel, 'F7');        % módulo de corte en MPa del modelo en ETABS
     % Secciones transversales a cada elemento en el modelo
     hoja_excel = 'Frame Prop - Summary';
     % Lee los datos de la columna A desde la celda A4 hasta el final de la columna
