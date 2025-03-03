@@ -24,10 +24,10 @@ densidad_crec   = 1.3506*10^-7;    % en N/mm^3
 pathfile = obtenerRutaMarco3Ddam0();
 
 % Danos a elementos tubulares, caso de dano y su respectivo porcentaje
-no_elemento_a_danar = sort([26 27 28 29]);
+no_elemento_a_danar = sort([1]);
 caso_dano           = repmat({'corrosion'}, 1, length(no_elemento_a_danar));
 % dano_porcentaje     = [10 10 10 10];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
-dano_porcentaje     = [50 50 50 50];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
+dano_porcentaje     = [80];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 
 % Corregir de formato los números en la tabla importada de ETABS: En todo este bloque de código, se realizó el cambio de formato de los números, debido a que ETABS importa sus tablas en formato de texto en algunas columnas.
 % % % % correccion_format_TablaETABS(archivo_excel);
@@ -154,7 +154,7 @@ options = gaoptimset('PlotFcn', {@gaplotbestf, @gaplotbestindiv, @gaplotdistance
 
 % Definir los límites de daño
 LowerLim = 0.0;       % Daño mínimo permitido
-UpperLim = 0.50;      % Daño máximo permitido
+UpperLim = 0.80;      % Daño máximo permitido
 % UpperLim = dano_porcentaje/100;      % Daño máximo permitido
 
 LB = LowerLim * ones(long_x, 1);  % Límite inferior

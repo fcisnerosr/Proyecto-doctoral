@@ -7,9 +7,9 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d, ...
     Objetivo = 0;  % Inicializa la variable objetivo
     
     % --- Pesos para las funciones objetivo ---
-    w1 = 0.5;  % Peso para el RMSE
+    w1 = 0.0;  % Peso para el RMSE
     w2 = 0.0;  % Peso para el MACN
-    w3 = 0.5;  % Peso para el error de curvatura modal
+    w3 = 1;  % Peso para el error de curvatura modal
 
     % --- Recorte de propiedades a la subestructura ---
     L_sub  = L(1:num_element_sub);   % Longitud de los elementos de la subestructura
@@ -127,10 +127,18 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d, ...
 
     error_curvatura_total = 0; % Inicializa la suma del error de curvatura
 
+    % for i = 1:size(curv_modal_damaged, 2) % Itera sobre los modos
+    %     % Calcula el error cuadrático entre la curvatura modal del modelo generado y el modelo con daño
+    %     error_curvatura = sum((curv_modal_gen(:, i) - curv_modal_damaged(:, i)).^2) / length(curv_modal_damaged(:, i));
+    % 
+    %     % Convierte el error en un valor escalar tipo RMSE
+    %     error_curvatura_total = error_curvatura_total + sqrt(error_curvatura);
+    % end
+
     for i = 1:size(curv_modal_damaged, 2) % Itera sobre los modos
-        % Calcula el error cuadrático entre la curvatura modal del modelo generado y el modelo con daño
-        error_curvatura = sum((curv_modal_gen(:, i) - curv_modal_damaged(:, i)).^2) / length(curv_modal_damaged(:, i));
-        
+        % Calcula el error usando la fórmula del artículo para la diferencia de curvatura modal
+        error_curvatura = sum(abs(curv_modal_damaged(:, i) - curv_modal_gen(:, i))); 
+    
         % Convierte el error en un valor escalar tipo RMSE
         error_curvatura_total = error_curvatura_total + sqrt(error_curvatura);
     end
@@ -139,5 +147,6 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d, ...
     error_curvatura_final = error_curvatura_total / size(curv_modal_damaged, 2);
 
     % --- Cálculo de la función objetivo ---
-    Objetivo = w1 * RMSE + w2 * macn_value + w3 * error_curvatura_final;
+    % Objetivo = w1 * RMSE + w2 * macn_value + w3 * error_curvatura_final;
+    Objetivo = w1 * RMSE + w2 * macn_value + w3 * error_curvatura_total;
 end
