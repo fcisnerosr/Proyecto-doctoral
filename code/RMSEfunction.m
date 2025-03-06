@@ -7,9 +7,11 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d, ...
     Objetivo = 0;  % Inicializa la variable objetivo
     
     % --- Pesos para las funciones objetivo ---
-    w1 = 0.3;  % Peso para el RMSE
-    w2 = 0.3;  % Peso para el MACN
-    w3 = 0.3;  % Peso para el error de curvatura modal
+    w1 = 0.2;  % Peso para el RMSE
+    w2 = 0.2;  % Peso para el MACN
+    w3 = 0.2;  % Peso para el error de la diferencia de matriz de flexibilidad modal
+    w4 = 0.2;  % Peso para el error de la relación de matriz de flexibilidad modal
+    w5 = 0.2;  % Peso para el error de la diferencia porcentual de matriz de flexibilidad modal
 
     % --- Recorte de propiedades a la subestructura ---
     L_sub  = L(1:num_element_sub);   % Longitud de los elementos de la subestructura
@@ -18,7 +20,6 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d, ...
     Iz_sub = Iz(1:num_element_sub);  % Momento de inercia en z de los elementos de la subestructura
     E_sub  = E(1:num_element_sub);   % Módulo de elasticidad de los elementos de la subestructura
     G_sub  = G(1:num_element_sub);   % Módulo de corte de los elementos de la subestructura
-    % J_sub  = J(1:num_element_sub);   % Constante de torsión de los elementos de la subestructura
 
     ke_AG_tensor = zeros(12, 12, num_element_sub);  % Inicializa el tensor de rigidez local
 
@@ -146,14 +147,22 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d, ...
     % % Calcula el error promedio de la curvatura modal
     % error_curvatura_final = error_curvatura_total / size(curv_modal_damaged, 2);
 
-    % =========================================================================
-    % Cálculo del índice de daño basado en la flexibilidad modal
-    % =========================================================================
-    F_modal_damaged = calcFlexibility(modos_cond_d, omega)
-    F_modal_gen     = calcFlexibility(modos_AG_cond, omega)
+    % --- Cálculo de índice de daño basado en las diferencias de la flexibilidad modal ---
+    F_modal_damaged = calcFlexibility(modos_cond_d, frec_cond_d);
+    F_modal_gen     = calcFlexibility(modos_AG_cond, frec_AG);
+    diffMatrix      = F_modal_gen - F_modal_damaged;                % Diferencia entre ambas matrices    
+    flexDiffIndex   = sum(diffMatrix(:).^2);                        % Suma de cuadrados de todas las entradas (equivale a la norma de Frobenius al cuadrado)
 
+    % --- Cálculo de índice de daño basado en las relación de la flexibilidad modal ---
+    DivF = calcDivFjR(modos_AG_cond, frec_AG, modos_cond_d, frec_cond_d);
+    scalarDivF = norm(DivF, 2);     % Norma Euclidiana (o también se puede usar sum(DivF.^2))
+
+    % --- Cálculo de índice de daño basado en las diferencia porcentual de la flexibilidad modal ---
+    PercF = calcPercFjR(modos_AG_cond, frec_AG, modos_cond_d, frec_cond_d);
+    scalarPercF = norm(PercF, 2);     % Norma Euclidiana
 
     % --- Cálculo de la función objetivo ---
     % Objetivo = w1 * RMSE + w2 * macn_value + w3 * error_curvatura_final;
-    Objetivo = w1 * RMSE + w2 * macn_value;
+    % Objetivo = w1 * RMSE + w2 * macn_value + w3 * flexDiffIndex;
+    Objetivo = (w1 * RMSE) + (w2 * macn_value) + (w3 * flexDiffIndex) + (w4 * scalarDivF) + (w5 * scalarPercF);
 end

@@ -104,8 +104,8 @@ delete(gcp('nocreate'));
 num_element_sub = length(elements);       % Número de elementos en la subestructura
 long_x = num_element_sub(end, 1);   % Longitud del vector de daños (corrosión)
 
-Samples     = 450;
-Generations = 150;
+Samples     = 300;
+Generations = 5000;
 Nvar        = long_x;        % numero de variables que va a tener la variable de dano x. Son 116 elementos de la subestructura * 3 variables de dano de la corrosion = long_x
 options                 = gaoptimset(@ga);          % gaoptimset es para crear las configuraciones específicas para el AG
 options.PopulationSize  = Samples;
