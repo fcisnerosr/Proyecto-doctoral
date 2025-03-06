@@ -110,7 +110,7 @@ Nvar        = long_x;        % numero de variables que va a tener la variable de
 options                 = gaoptimset(@ga);          % gaoptimset es para crear las configuraciones específicas para el AG
 options.PopulationSize  = Samples;
 options.Generations     = Generations;
-options.StallGenLimit   = 200;          % límite de generaciones en donde los individuos no cumplen con la función objetivo
+options.StallGenLimit   = 2000;          % límite de generaciones en donde los individuos no cumplen con la función objetivo
 options.Display         = 'iter';                         % Muestra la información en cada iteración
 options.OutputFcn       = @gaoutfun;  % Añade la función de salida para mostrar el tiempo transcurrido
 
@@ -165,8 +165,8 @@ UB = UpperLim * ones(long_x, 1);  % Límite superior
 % % % % % diary (CWFile);             % Abre el archivo de salida para que todas las salidas en la consola de MATLAB se registren en este archivo
 % 
 % Proceso en paralelo
-parpool('Processes', 6, 'IdleTimeout', 6000);  % Configura n minutos de inactividad antes de apagarse
-% parpool('Processes', 2, 'IdleTimeout', 6000);
+% parpool('Processes', 6, 'IdleTimeout', 6000);  % Configura n minutos de inactividad antes de apagarse
+parpool('Processes', 2, 'IdleTimeout', 6000);
 % En mi CPU se pueden 6 como máximo, para saber cuántos puede cada usaurio ejecutar en el command window lo siguiente:
 % numCores = feature('numcores');
 % disp(['Número de núcleos: ', num2str(numCores)]);
@@ -186,6 +186,7 @@ ruta_directorio_actual = fileparts(mfilename('fullpath'));
 % Construir la ruta a RMSEfunction.m
 ruta_rmse = fullfile(ruta_directorio_actual, 'RMSEfunction.m');
 
+%%
 % Verificar si RMSEfunction.m existe
 if exist(ruta_rmse, 'file') == 2
     % Agregar la ruta al path de manera temporal

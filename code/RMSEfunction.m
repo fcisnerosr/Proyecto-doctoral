@@ -7,9 +7,9 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d, ...
     Objetivo = 0;  % Inicializa la variable objetivo
     
     % --- Pesos para las funciones objetivo ---
-    w1 = 0.0;  % Peso para el RMSE
-    w2 = 0.0;  % Peso para el MACN
-    w3 = 1;  % Peso para el error de curvatura modal
+    w1 = 0.3;  % Peso para el RMSE
+    w2 = 0.3;  % Peso para el MACN
+    w3 = 0.3;  % Peso para el error de curvatura modal
 
     % --- Recorte de propiedades a la subestructura ---
     L_sub  = L(1:num_element_sub);   % Longitud de los elementos de la subestructura
@@ -122,8 +122,8 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d, ...
     macn_value = macn_value / size(modos_cond_d, 2);  % Calcula el promedio del MACN
     
     % --- Cálculo del Error basado en el Modal Curvature Method (MCM) ---
-    curv_modal_damaged  = mode_shape_curvature(modos_cond_d);
-    curv_modal_gen      = mode_shape_curvature(modos_AG_cond);
+    curv_modal_damaged  = mode_shape_curvature(modos_cond_d, L);
+    curv_modal_gen      = mode_shape_curvature(modos_AG_cond, L);
 
     error_curvatura_total = 0; % Inicializa la suma del error de curvatura
 
