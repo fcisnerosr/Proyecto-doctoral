@@ -1,4 +1,4 @@
-function [masas_en_cada_nodo, M_cond] = modificacion_matriz_masas_estructura_sencilla(archivo_excel)
+function [masas_en_cada_nodo, M_cond, M_completa] = modificacion_matriz_masas_estructura_sencilla(archivo_excel)
     % Creación de la matriz de masas diagonal condensada de la estructura
     % Proceso de extracion de masas de la penstana de excel
     tabla_excel_masas = readmatrix(archivo_excel, 'Sheet', 'Assembled Joint Masses');  % Extracción de la pestana excel de masas del modelo
@@ -27,4 +27,25 @@ function [masas_en_cada_nodo, M_cond] = modificacion_matriz_masas_estructura_sen
     valores = repelem(masas_con_nodos(:,2), 3, 1); % Repite cada valor 3 veces
     masas_en_cada_nodo = diag(valores); % Crea la matriz diagonal
     M_cond = masas_en_cada_nodo;
+
+    % Calculo de la matriz de masas completas para corroborar las propiedades dinámicas
+    nNodes = size(masas_con_nodos, 1);
+    
+    % Número de DOF por nodo (en este caso 6)
+    dof = 6;
+    
+    % Número total de DOF
+    totalDOF = nNodes * dof;
+    
+    % Inicializamos la matriz de masas completa con ceros
+    M_completa = zeros(totalDOF, totalDOF);
+    
+    % Para cada nodo, asignamos la masa en su bloque diagonal (dof x dof)
+    for i = 1:nNodes
+        massVal = masas_con_nodos(i, 2);  % Valor de masa para el nodo i
+        % Índices correspondientes a este nodo en la matriz global
+        idx = (i-1)*dof + (1:dof);
+        % Asignamos el valor de masa en el bloque diagonal
+        M_completa(idx, idx) = massVal * eye(dof);
+    end
 end

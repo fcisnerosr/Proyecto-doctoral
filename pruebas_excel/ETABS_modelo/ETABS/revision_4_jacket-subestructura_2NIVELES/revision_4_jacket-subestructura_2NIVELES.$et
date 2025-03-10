@@ -1,4 +1,4 @@
-$ File E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.$et saved 30/01/2025 13:11:57
+$ File E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.$et saved 09/03/2025 20:51:57
  
 $ PROGRAM INFORMATION
   PROGRAM  "ETABS"  VERSION "19.1.0"  
@@ -271,11 +271,8 @@ $ LOAD PATTERNS
   LOADPATTERN "Live"  TYPE  "Live"  SELFWEIGHT  0
 
 $ POINT OBJECT LOADS
-  POINTLOAD  "3"  "Story1"  TYPE "FORCE"  LC "Live"  FX 224.8089  FY 449.6179  FZ -786.8312  MX 0.8850745  MY 0.8850745  MZ -26.55223
-  POINTLOAD  "14"  "Story2"  TYPE "FORCE"  LC "Live"  FX 224.8089  FY 449.6179  FZ -786.8312  MX 0.8850745  MY 0.8850745  MZ -26.55223
-  POINTLOAD  "16"  "Story2"  TYPE "FORCE"  LC "Live"  FX 224.8089  FY 449.6179  FZ -786.8312  MX 0.8850745  MY 0.8850745  MZ -26.55223
-  POINTLOAD  "14"  "Story3"  TYPE "FORCE"  LC "Live"  FX 224.8089  FY 449.6179  FZ -786.8312  MX 0.8850745  MY 0.8850745  MZ -26.55223
-  POINTLOAD  "16"  "Story3"  TYPE "FORCE"  LC "Live"  FX 224.8089  FY 449.6179  FZ -786.8312  MX 0.8850745  MY 0.8850745  MZ -26.55223
+  POINTLOAD  "16"  "Story2"  TYPE "FORCE"  LC "Live"    FY 112404.5
+  POINTLOAD  "16"  "Story3"  TYPE "FORCE"  LC "Live"    FY -112404.5
 
 $ FRAME OBJECT LOADS
 
@@ -851,6 +848,35 @@ ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas
 ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 29/01/2025 14:25:46
 ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 29/01/2025 15:44:36
 ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 30/01/2025 13:11:56
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 09/03/2025 19:44:26
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 09/03/2025 19:44:30
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 09/03/2025 19:44:30
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 09/03/2025 19:44:34
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 09/03/2025 19:48:17
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 09/03/2025 19:48:19
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 09/03/2025 19:48:19
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 09/03/2025 19:48:21
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 09/03/2025 19:49:14
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 09/03/2025 19:49:16
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 09/03/2025 19:49:16
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 09/03/2025 19:49:19
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 09/03/2025 20:04:44
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 09/03/2025 20:04:46
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 09/03/2025 20:04:46
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 09/03/2025 20:04:49
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 09/03/2025 20:08:10
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 09/03/2025 20:08:12
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 09/03/2025 20:08:12
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 09/03/2025 20:08:14
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 09/03/2025 20:44:49
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 09/03/2025 20:44:50
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 09/03/2025 20:44:51
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 09/03/2025 20:44:53
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 09/03/2025 20:46:55
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 09/03/2025 20:46:58
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 09/03/2025 20:46:58
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 09/03/2025 20:47:00
+ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 09/03/2025 20:51:57
   ENDCOMMENTS  
 
   END
