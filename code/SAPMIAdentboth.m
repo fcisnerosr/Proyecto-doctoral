@@ -69,79 +69,74 @@ L_d = extraer_longitudes_danadas(archivo_excel, no_elemento_a_danar);
 KG_damaged_cond = condensacion_estatica(KG_damaged);
 
 %%
-% % % % Cargas aplicadas con matriz condensada
-% P = buildLoadVector();
-P = [    0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         500000
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         0
-         -500000
-         0]
-Deform = (KG_damaged_cond^-1) * P
+% % % % % Cargas aplicadas con matriz condensada
+% % P = buildLoadVector();
+% P = [    0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          500000
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          0
+%          -500000
+%          0]
+% Deform = (KG_damaged_cond^-1) * P;
 
-% % P = [5; 6; 1; 0; 0; 0; ...
-% %     5; 6; 1; 0; 0; 0; ...
-% %     5; 6; 1; 0; 0; 0]*1000;
-% % 
-% % Deform = KG_damaged^-1 * P
 
 % Modos y frecuencias de estructura condensados y globales
 [modos_cond_d,frec_cond_d] = modos_frecuencias(KG_damaged_cond,M_cond);
-[modos_completos,frec_completos] = modos_frecuencias(KG_damaged,M_completa);
+% [modos_completos,frec_completos] = modos_frecuencias(KG_damaged,M_completa);
 
 % %%
 % clc
