@@ -6,7 +6,7 @@
 
 
 
- B E G I N   A N A L Y S I S                                2025/03/09  20:52:00
+ B E G I N   A N A L Y S I S                                2025/03/13  14:38:35
 
 
  RUNNING ANALYSIS AS A SEPARATE PROCESS
@@ -33,11 +33,11 @@
  NUMBER OF THREADS: FORM (AUTOMATIC)       =           6
 
 
- E L E M E N T   F O R M A T I O N                                      20:52:00
+ E L E M E N T   F O R M A T I O N                                      14:38:35
 
 
 
- L I N E A R   E Q U A T I O N   S O L U T I O N                        20:52:00
+ L I N E A R   E Q U A T I O N   S O L U T I O N                        14:38:35
 
  FORMING STIFFNESS AT ZERO (UNSTRESSED) INITIAL CONDITIONS
 
@@ -54,7 +54,7 @@
  ---------------------------------
 
 
- L I N E A R   S T A T I C   C A S E S                                  20:52:00
+ L I N E A R   S T A T I C   C A S E S                                  14:38:35
 
  USING STIFFNESS AT ZERO (UNSTRESSED) INITIAL CONDITIONS
 
@@ -68,7 +68,7 @@
  CASE: ~LLRF
 
 
- E I G E N   M O D A L   A N A L Y S I S                                20:52:00
+ E I G E N   M O D A L   A N A L Y S I S                                14:38:35
 
  CASE: MODAL
 
@@ -89,6 +89,11 @@
 
  Original stiffness at shift : EV= 0.0000000E+00, f=     .000000, T=  -INFINITY-
  Number of eigenvalues below shift =      0
+
+ Iteration    Approximations to next 5 eigenvalues, from shift EV= 0.0000000E+00
+       3   1.5737698E+02 1.5737699E+02 1.8609537E+02 3.1096599E+02 8.3210243E+02
+       4   1.5737698E+02 1.5737699E+02 1.8609537E+02 3.1096599E+02 8.3210163E+02
+
  Found mode      1 of     12:  EV= 1.5737698E+02, f=    1.996598, T=    0.500852
  Found mode      2 of     12:  EV= 1.5737699E+02, f=    1.996599, T=    0.500852
  Found mode      3 of     12:  EV= 1.8609537E+02, f=    2.171140, T=    0.460587
@@ -107,4 +112,4 @@
  NUMBER OF STIFFNESS SHIFTS                =           0
 
 
- A N A L Y S I S   C O M P L E T E                          2025/03/09  20:52:00
+ A N A L Y S I S   C O M P L E T E                          2025/03/13  14:38:35

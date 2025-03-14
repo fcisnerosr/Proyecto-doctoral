@@ -6,13 +6,6 @@ function [Objetivo] = RMSEfunction(x, num_element_sub, M_cond, frec_cond_d, ...
        % --- Inicialización ---
     Objetivo = 0;  % Inicializa la variable objetivo
     
-    % --- Pesos para las funciones objetivo ---
-    w1 = 0.2;  % Peso para el RMSE
-    w2 = 0.2;  % Peso para el MACN
-    w3 = 0.2;  % Peso para el error de la diferencia de matriz de flexibilidad modal
-    w4 = 0.2;  % Peso para el error de la relación de matriz de flexibilidad modal
-    w5 = 0.2;  % Peso para el error de la diferencia porcentual de matriz de flexibilidad modal
-
     % --- Recorte de propiedades a la subestructura ---
     L_sub  = L(1:num_element_sub);   % Longitud de los elementos de la subestructura
     A_sub  = A(1:num_element_sub);   % Área de los elementos de la subestructura
