@@ -151,59 +151,58 @@ KG_undamaged_cond   = condensacion_estatica(KG_undamaged);
 % DIs
 % Formas modales
 % 1. COMAC
-COMAC = calcCOMAC(modos_cond_u, modos_cond_d);
-COMAC_sqrt = computeCOMACSqrt(COMAC);
-DI1_COMAC = 1 - COMAC_sqrt;
-DI1_COMAC = normalizeTo01(DI1_COMAC);
+COMAC       = calcCOMAC(modos_cond_u, modos_cond_d);
+COMAC_sqrt  = computeCOMACSqrt(COMAC);
+DI1_COMAC   = 1 - COMAC_sqrt;
+DI1_COMAC   = normalizeTo01(DI1_COMAC);
 
 % 2. Diff
-DI2_Diff = abs(modos_cond_u - modos_cond_d);
-Diff_perNode = unifyDiff(DI2_Diff);
-DI2_Diff = normalizeTo01(Diff_perNode);
+DI2_Diff        = abs(modos_cond_u - modos_cond_d);
+Diff_perNode    = unifyDiff(DI2_Diff);
+DI2_Diff        = normalizeTo01(Diff_perNode);
 
 % 3. Div
-ratio = modos_cond_d ./ modos_cond_u;
+ratio       = modos_cond_d ./ modos_cond_u;
 Div_perNode = unifyDiff(ratio);
-DI3_Div = abs(ratio - 1);
-DI3_Div = unifyDiff(DI3_Div);
-DI3_Div = normalizeTo01(DI3_Div);
+DI3_Div     = abs(ratio - 1);
+DI3_Div     = unifyDiff(DI3_Div);
+DI3_Div     = normalizeTo01(DI3_Div);
 
 %%
-% Flexibility
+% Flexibilidad
 F_u = modos_cond_u * diag(1./(Omega_cond_u.^2)) * modos_cond_u';
 F_d = modos_cond_d * diag(1./(Omega_cond_d.^2)) * modos_cond_d';
 % 4. Diff
-DI4_Diff_Flex = abs(F_d - F_u);
-diff_diag = diag(DI4_Diff_Flex);
-DI4_Diff_Flex_node = unifyDiffVector(diff_diag, 3);
-DI4_Diff_Flex = normalizeTo01(DI4_Diff_Flex_node);
-
-% error_F = norm(DI4_Diff_Flex, 'fro');
-% error_F_norm = error_F / norm(F_u, 'fro');
-% DI4_Diff_Flex = error_F_norm;
-% 
-% % 5. Div
-% DI5_Div_Flex = abs((F_d ./ F_u) - 1);
-% error_F_div = norm(DI5_Div_Flex, 'fro') / norm(F_u, 'fro');
-% DI5_Div_Flex = error_F_div;
+DI4_Diff_Flex       = abs(F_d - F_u);
+diff_diag           = diag(DI4_Diff_Flex);
+DI4_Diff_Flex_node  = unifyDiffVector(diff_diag, 3);
+DI4_Diff_Flex       = normalizeTo01(DI4_Diff_Flex_node);
+% 5. Div
+flex_diag_u     = diag(F_u);
+flex_diag_d     = diag(F_d);
+ratio_flex      = flex_diag_d ./ flex_diag_u;    % Calcular el ratio (elemento a elemento) para cada DOF
+DI_F_Div_raw    = abs(ratio_flex - 1);         % Calcular el DI de división para la flexibilidad (elemento a elemento)
+DI_F_Div_node   = unifyDiffVector(DI_F_Div_raw, 3);   % Unificar los valores por nodo. Suponiendo que tienes 3 DOF por nodo, usa la función 'unifyDiffVector' para agrupar el vector en índices por nodo.
+DI_F_Div        = normalizeTo01(DI_F_Div_node);            % Normalizar el vector resultante a [0,1]
+DI5_Div_Flex    = DI_F_Div;
 
 
 %%
 clc
-% --- Nueva Implementación del Algoritmo Genético (AG) ---
+% --- Nueva Implementación del Algoritmo Genético de detección de dano en los nodos del modelo (AG) ---
 
 % Definir DI como estructura con los 5 índices ya calculados (escalares)
 DI.DI1_COMAC     = DI1_COMAC;
 DI.DI2_Diff      = DI2_Diff;
 DI.DI3_Div       = DI3_Div;
 DI.DI4_Diff_Flex = DI4_Diff_Flex;
-% DI.DI5_Div_Flex  = DI5_Div_Flex;        % valor escalar para Div en flexibilidad
+DI.DI5_Div_Flex  = DI5_Div_Flex;        % valor escalar para Div en flexibilidad
 
 T = zeros(20,1);  % Vector columna de 20 elementos, todos 0
 T(9) = 1;         % Nodo 13 se marca como dañado
 threshold = 0.05*2;   % umbral definido, por ejemplo, 0.05 (ajusta según tu caso)
 
-nVars = 4;
+nVars = 5;
 lb = zeros(1, nVars);
 ub = ones(1, nVars);
 
@@ -222,14 +221,14 @@ disp('Valor de la función objetivo:');
 disp(fval);
 
 
-[w1, w2, w3, w4] = assignWeights(optimal_alpha);
+[w1, w2, w3, w4, w5] = assignWeights(optimal_alpha);
 
 nNodes = length(DI1_COMAC);
 P = zeros(nNodes,1);  % Inicializamos el vector resultado
 
 % Iterar por cada nodo para combinar los índices
 for j = 1:nNodes
-    P(j) = w1 * DI1_COMAC(j) + w2 * DI2_Diff(j) + w3 * DI3_Div(j) + w4 * DI4_Diff_Flex(j);
+    P(j) = w1 * DI1_COMAC(j) + w2 * DI2_Diff(j) + w3 * DI3_Div(j) + w4 * DI4_Diff_Flex(j) + w5 * DI5_Div_Flex(j);
 end
 
 % Mostrar el vector combinado P

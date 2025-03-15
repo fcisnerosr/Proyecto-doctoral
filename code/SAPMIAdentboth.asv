@@ -174,65 +174,66 @@ F_u = modos_cond_u * diag(1./(Omega_cond_u.^2)) * modos_cond_u';
 F_d = modos_cond_d * diag(1./(Omega_cond_d.^2)) * modos_cond_d';
 % 4. Diff
 DI4_Diff_Flex = abs(F_d - F_u);
-
-% error_F = norm(DI4_Diff_Flex, 'fro');
-% error_F_norm = error_F / norm(F_u, 'fro');
-% DI4_Diff_Flex = error_F_norm;
-% 
-% % 5. Div
+diff_diag = diag(DI4_Diff_Flex);
+DI4_Diff_Flex_node = unifyDiffVector(diff_diag, 3);
+DI4_Diff_Flex = normalizeTo01(DI4_Diff_Flex_node);
+% 5. Div
 % DI5_Div_Flex = abs((F_d ./ F_u) - 1);
 % error_F_div = norm(DI5_Div_Flex, 'fro') / norm(F_u, 'fro');
 % DI5_Div_Flex = error_F_div;
 
 
-% %%
-% clc
-% % --- Nueva Implementación del Algoritmo Genético (AG) ---
-% 
-% % Definir DI como estructura con los 5 índices ya calculados (escalares)
-% DI.DI1_COMAC     = DI1_COMAC;
-% DI.DI2_Diff      = DI2_Diff;
-% DI.DI3_Div       = DI3_Div;
-% % DI.DI4_Diff_Flex = DI4_Diff_Flex;       % valor escalar para Diff en flexibilidad
-% % DI.DI5_Div_Flex  = DI5_Div_Flex;        % valor escalar para Div en flexibilidad
-% 
-% T = zeros(20,1);  % Vector columna de 20 elementos, todos 0
-% T(5) = 1;         % Nodo 9 se marca como dañado
-% threshold = 0.05;   % umbral definido, por ejemplo, 0.05 (ajusta según tu caso)
-% 
-% nVars = 4;
-% lb = zeros(1, nVars);
-% ub = ones(1, nVars);
-% 
-% options.PopulationSize  = 300;
-% options.Generations     = 500;
-% options.StallGenLimit   = 200;          % límite de generaciones en donde los individuos no cumplen con la función objetivo
-% 
-% objFun = @(alpha) objective_function(alpha, DI, T, threshold);
-% options = optimoptions('ga', 'Display', 'iter', 'PlotFcn', {@gaplotbestf, @gaplotbestindiv, @gaplotdistance, @gaplotrange, @gaplotstopping});
-% 
-% [optimal_alpha, fval] = ga(objFun, nVars, [], [], [], [], lb, ub, [], options);
-% 
-% disp('Pesos óptimos (alpha):');
-% disp(optimal_alpha);
-% disp('Valor de la función objetivo:');
-% disp(fval);
-% 
-% 
-% [w1, w2, w3] = assignWeights(optimal_alpha);
-% 
-% nNodes = length(DI1_COMAC);
-% P = zeros(nNodes,1);  % Inicializamos el vector resultado
-% 
-% % Iterar por cada nodo para combinar los índices
-% for j = 1:nNodes
-%     P(j) = w1 * DI1_COMAC(j) + w2 * DI2_Diff(j) + w3 * DI3_Div(j);
-% end
-% 
-% % Mostrar el vector combinado P
+%%
+clc
+% --- Nueva Implementación del Algoritmo Genético (AG) ---
+
+% Definir DI como estructura con los 5 índices ya calculados (escalares)
+DI.DI1_COMAC     = DI1_COMAC;
+DI.DI2_Diff      = DI2_Diff;
+DI.DI3_Div       = DI3_Div;
+DI.DI4_Diff_Flex = DI4_Diff_Flex;
+% DI.DI5_Div_Flex  = DI5_Div_Flex;        % valor escalar para Div en flexibilidad
+
+T = zeros(20,1);  % Vector columna de 20 elementos, todos 0
+T(9) = 1;         % Nodo 13 se marca como dañado
+threshold = 0.05*2;   % umbral definido, por ejemplo, 0.05 (ajusta según tu caso)
+
+nVars = 4;
+lb = zeros(1, nVars);
+ub = ones(1, nVars);
+
+options.PopulationSize  = 300;
+options.Generations     = 500;
+options.StallGenLimit   = 200;          % límite de generaciones en donde los individuos no cumplen con la función objetivo
+
+objFun = @(alpha) objective_function(alpha, DI, T, threshold);
+options = optimoptions('ga', 'Display', 'iter', 'PlotFcn', {@gaplotbestf, @gaplotbestindiv, @gaplotdistance, @gaplotrange, @gaplotstopping});
+
+[optimal_alpha, fval] = ga(objFun, nVars, [], [], [], [], lb, ub, [], options);
+
+disp('Pesos óptimos (alpha):');
+disp(optimal_alpha);
+disp('Valor de la función objetivo:');
+disp(fval);
+
+
+[w1, w2, w3, w4] = assignWeights(optimal_alpha);
+
+nNodes = length(DI1_COMAC);
+P = zeros(nNodes,1);  % Inicializamos el vector resultado
+
+% Iterar por cada nodo para combinar los índices
+for j = 1:nNodes
+    P(j) = w1 * DI1_COMAC(j) + w2 * DI2_Diff(j) + w3 * DI3_Div(j) + w4 * DI4_Diff_Flex(j);
+end
+
+% Mostrar el vector combinado P
 % disp('Valor combinado P para cada nodo:');
-% disp(P*100);
-% 
+% disp(P);
+%%
+Resultado_final = createNodeTable(P, DI1_COMAC);
+
+toc
 % % 
 % % %%
 % % 

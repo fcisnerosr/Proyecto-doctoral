@@ -17,12 +17,12 @@ function f = objective_function(alpha, DI, T, threshold)
     DI2_Diff_adj      = max(DI.DI2_Diff - threshold, 0);
     DI3_Div_adj       = max(DI.DI3_Div - threshold, 0);
     DI4_Diff_Flex_adj = max(DI.DI4_Diff_Flex - threshold, 0);
-    % DI5_Div_Flex_adj  = max(DI.DI5_Div_Flex - threshold, 0);
+    DI5_Div_Flex_adj  = max(DI.DI5_Div_Flex - threshold, 0);
     
     % Combinar los DI ajustados usando los pesos alpha
     P = alpha(1)*DI1_COMAC_adj + alpha(2)*DI2_Diff_adj + alpha(3)*DI3_Div_adj + ...
-        + alpha(4)*DI4_Diff_Flex_adj; % + ...
-        % alpha(5)*DI5_Div_Flex_adj;
+        + alpha(4)*DI4_Diff_Flex_adj + ...
+        alpha(5)*DI5_Div_Flex_adj;
     
     % Función objetivo: minimizar la diferencia entre la combinación P y T.
     f = sum((P - T).^2);
