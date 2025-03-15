@@ -178,31 +178,48 @@ diff_diag           = diag(DI4_Diff_Flex);
 DI4_Diff_Flex_node  = unifyDiffVector(diff_diag, 3);
 DI4_Diff_Flex       = normalizeTo01(DI4_Diff_Flex_node);
 % 5. Div
-flex_diag_u     = diag(F_u);
-flex_diag_d     = diag(F_d);
-ratio_flex      = flex_diag_d ./ flex_diag_u;    % Calcular el ratio (elemento a elemento) para cada DOF
-DI_F_Div_raw    = abs(ratio_flex - 1);         % Calcular el DI de división para la flexibilidad (elemento a elemento)
-DI_F_Div_node   = unifyDiffVector(DI_F_Div_raw, 3);   % Unificar los valores por nodo. Suponiendo que tienes 3 DOF por nodo, usa la función 'unifyDiffVector' para agrupar el vector en índices por nodo.
-DI_F_Div        = normalizeTo01(DI_F_Div_node);            % Normalizar el vector resultante a [0,1]
+flex_diag_u     = diag(F_u);                        % Extrae un vector donde cada entrada es la flexibilidad (autovalor) del estado sano para cada DOF.
+flex_diag_d     = diag(F_d);                        % Extrae de forma similar los valores locales de flexibilidad en el estado dañado.
+ratio_flex      = flex_diag_d ./ flex_diag_u;       % Calcular el ratio (elemento a elemento) para cada DOF
+DI_F_Div_raw    = abs(ratio_flex - 1);              % Calcular el DI de división para la flexibilidad (elemento a elemento)
+DI_F_Div_node   = unifyDiffVector(DI_F_Div_raw, 3); % Unificar los valores por nodo. Suponiendo que tienes 3 DOF por nodo, usa la función 'unifyDiffVector' para agrupar el vector en índices por nodo.
+DI_F_Div        = normalizeTo01(DI_F_Div_node);     % Normalizar el vector resultante a [0,1]
 DI5_Div_Flex    = DI_F_Div;
-
+% 6. Perc
+Perc_flex_raw = 100 * abs(flex_diag_d - flex_diag_u) ./ max(flex_diag_u, eps);  % Calcular la variación porcentual para cada DOF evita dividir por cero si algún elemento de flex_diag_u es 0
+Perc_flex_node = unifyDiffVector(Perc_flex_raw, 3);     % Unificar los valores por nodo. Si cada nodo tiene 3 DOF (x, y, z), agrupa cada 3 elementos usando, por ejemplo, 'unifyDiffVector'. (Suponiendo que unifyDiffVector está definida para hacer RSS o alguna combinación de esos 3 DOF). 
+Perc_flex_node_norm = normalizeTo01(Perc_flex_node);    % Normalizar a [0,1] para integrarlo con otros DIs
+DI6_Perc_Flex = Perc_flex_node_norm;
+% 7. Z-score
+diff_flex   = abs(F_d - F_u);         % Diferencia global de flexibilidad (matriz)
+diff_diag   = diag(diff_flex);          % Vector de diferencias por DOF
+flex_unify  = unifyDiffVector(diff_diag, 3);  % Unifica cada 3 DOF en 1 valor por nodo
+% (Opcional: normalizar los valores unificados si se desea)
+% flex_normalize = normalizeTo01(flex_unify);
+mu_flex     = mean(flex_unify);
+sigma_flex  = std(flex_unify);
+Z_flex      = (flex_unify - mu_flex) / sigma_flex;
+DI7_Zscore_Flex = Z_flex;
 
 %%
 clc
 % --- Nueva Implementación del Algoritmo Genético de detección de dano en los nodos del modelo (AG) ---
 
 % Definir DI como estructura con los 5 índices ya calculados (escalares)
-DI.DI1_COMAC     = DI1_COMAC;
-DI.DI2_Diff      = DI2_Diff;
-DI.DI3_Div       = DI3_Div;
-DI.DI4_Diff_Flex = DI4_Diff_Flex;
-DI.DI5_Div_Flex  = DI5_Div_Flex;        % valor escalar para Div en flexibilidad
+DI.DI1_COMAC        = DI1_COMAC;
+DI.DI2_Diff         = DI2_Diff;
+DI.DI3_Div          = DI3_Div;
+DI.DI4_Diff_Flex    = DI4_Diff_Flex;
+DI.DI5_Div_Flex     = DI5_Div_Flex;        % valor escalar para Div en flexibilidad
+DI.DI6_Perc_Flex    = DI6_Perc_Flex; 
+DI.DI7_Zscore_Flex  = DI7_Zscore_Flex; 
 
-T = zeros(20,1);  % Vector columna de 20 elementos, todos 0
-T(9) = 1;         % Nodo 13 se marca como dañado
-threshold = 0.05*2;   % umbral definido, por ejemplo, 0.05 (ajusta según tu caso)
+T = zeros(length(DI1_COMAC),1);     
+T(9) = 1;                           % Nodo 13 se marca como dañado
+% threshold = 0.05*5;                 % umbral definido, por ejemplo, 0.05 (ajusta según tu caso)
+threshold = 0.2;                 % umbral definido, por ejemplo, 0.05 (ajusta según tu caso)
 
-nVars = 5;
+nVars = 7;
 lb = zeros(1, nVars);
 ub = ones(1, nVars);
 
@@ -221,20 +238,23 @@ disp('Valor de la función objetivo:');
 disp(fval);
 
 
-[w1, w2, w3, w4, w5] = assignWeights(optimal_alpha);
+[w1, w2, w3, w4, w5, w6, w7] = assignWeights(optimal_alpha);
 
 nNodes = length(DI1_COMAC);
 P = zeros(nNodes,1);  % Inicializamos el vector resultado
 
 % Iterar por cada nodo para combinar los índices
 for j = 1:nNodes
-    P(j) = w1 * DI1_COMAC(j) + w2 * DI2_Diff(j) + w3 * DI3_Div(j) + w4 * DI4_Diff_Flex(j) + w5 * DI5_Div_Flex(j);
+    P(j) =      w1 * DI1_COMAC(j)       + w2 * DI2_Diff(j) +...
+            +   w3 * DI3_Div(j)         + w4 * DI4_Diff_Flex(j) + ...
+            +   w5 * DI5_Div_Flex(j)    + w6 * DI6_Perc_Flex(j) + ...
+            +   w7 * DI7_Zscore_Flex(j); %   + w6 * DI6_Perc_Flex(j);
 end
 
 % Mostrar el vector combinado P
 % disp('Valor combinado P para cada nodo:');
 % disp(P);
-%%
+
 Resultado_final = createNodeTable(P, DI1_COMAC);
 
 toc

@@ -33,20 +33,23 @@ function Resultado_final = createNodeTable(P_values, DI1_COMAC)
     % Multiplicar P_values por 100 para expresar el "valor de daño ponderado"
     % (como en tu código original)
     dano_valor = P_values * 100;
+
+    Pmax = max(P_values);        % Valor máximo en P
+    P_scaled = (P_values / Pmax) * 100;
     
     % Crear etiquetas para cada nodo según el criterio: valor mayor a 50 => "nodo con daño"
     Estado = cell(nNodes,1);
     for i = 1:nNodes
-        if dano_valor(i) > 50
-            Estado{i} = 'nodo con daño';
+        if P_scaled(i) > 50
+            Estado{i} = 'Daño';
         else
             Estado{i} = ' - ';
         end
     end
     
     % Crear la tabla final
-    Resultado_final = table(nodes, dano_valor, Estado, ...
-        'VariableNames', {'Número_de_nodo', 'Valor_de_daño_ponderado', 'Estado'});
+    Resultado_final = table(nodes, P_scaled, Estado, ...
+        'VariableNames', {'Número_de_nodo', 'Valor_de_daño_normalizado', 'Estado'});
     
     % Mostrar la tabla
     disp(Resultado_final);
