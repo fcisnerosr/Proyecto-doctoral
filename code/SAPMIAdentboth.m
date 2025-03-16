@@ -168,7 +168,7 @@ DI3_Div     = abs(ratio - 1);
 DI3_Div     = unifyDiff(DI3_Div);
 DI3_Div     = normalizeTo01(DI3_Div);
 
-%%
+
 % Flexibilidad
 F_u = modos_cond_u * diag(1./(Omega_cond_u.^2)) * modos_cond_u';
 F_d = modos_cond_d * diag(1./(Omega_cond_d.^2)) * modos_cond_d';
@@ -200,6 +200,12 @@ mu_flex     = mean(flex_unify);
 sigma_flex  = std(flex_unify);
 Z_flex      = (flex_unify - mu_flex) / sigma_flex;
 DI7_Zscore_Flex = Z_flex;
+%%
+% 8. Probabilidad
+absZ = abs(Z_flex);
+p_flex = 2 * (1 - myNormcdf(absZ));  % Prueba bilateral
+p_flex_norm = normalizeTo01(Perc_flex_node);    % Normalizar a [0,1] para integrarlo con otros DIs
+DI8_Prob_Flex = p_flex_norm;
 
 %%
 clc
@@ -210,16 +216,17 @@ DI.DI1_COMAC        = DI1_COMAC;
 DI.DI2_Diff         = DI2_Diff;
 DI.DI3_Div          = DI3_Div;
 DI.DI4_Diff_Flex    = DI4_Diff_Flex;
-DI.DI5_Div_Flex     = DI5_Div_Flex;        % valor escalar para Div en flexibilidad
+DI.DI5_Div_Flex     = DI5_Div_Flex;
 DI.DI6_Perc_Flex    = DI6_Perc_Flex; 
 DI.DI7_Zscore_Flex  = DI7_Zscore_Flex; 
+DI.DI8_Prob_Flex    = DI8_Prob_Flex; 
 
 T = zeros(length(DI1_COMAC),1);     
 T(9) = 1;                           % Nodo 13 se marca como dañado
-% threshold = 0.05*5;                 % umbral definido, por ejemplo, 0.05 (ajusta según tu caso)
-threshold = 0.2;                 % umbral definido, por ejemplo, 0.05 (ajusta según tu caso)
+threshold = 0.05;                 % umbral definido, por ejemplo, 0.05 (ajusta según tu caso)
+% threshold = 0.2*2;                 % umbral definido, por ejemplo, 0.05 (ajusta según tu caso)
 
-nVars = 7;
+nVars = 8;
 lb = zeros(1, nVars);
 ub = ones(1, nVars);
 
@@ -238,22 +245,19 @@ disp('Valor de la función objetivo:');
 disp(fval);
 
 
-[w1, w2, w3, w4, w5, w6, w7] = assignWeights(optimal_alpha);
+[w1, w2, w3, w4, w5, w6, w7, w8] = assignWeights(optimal_alpha);
 
 nNodes = length(DI1_COMAC);
 P = zeros(nNodes,1);  % Inicializamos el vector resultado
-
+%%
 % Iterar por cada nodo para combinar los índices
 for j = 1:nNodes
     P(j) =      w1 * DI1_COMAC(j)       + w2 * DI2_Diff(j) +...
             +   w3 * DI3_Div(j)         + w4 * DI4_Diff_Flex(j) + ...
             +   w5 * DI5_Div_Flex(j)    + w6 * DI6_Perc_Flex(j) + ...
-            +   w7 * DI7_Zscore_Flex(j); %   + w6 * DI6_Perc_Flex(j);
+            +   w7 * DI7_Zscore_Flex(j) + w8 + DI8_Prob_Flex(j); 
 end
 
-% Mostrar el vector combinado P
-% disp('Valor combinado P para cada nodo:');
-% disp(P);
 
 Resultado_final = createNodeTable(P, DI1_COMAC);
 

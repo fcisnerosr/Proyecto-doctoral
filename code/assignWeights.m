@@ -1,4 +1,4 @@
-function [W1, W2, W3, W4, W5, W6, W7] = assignWeights(optimal_alpha)
+function [W1, W2, W3, W4, W5, W6, W7, W8] = assignWeights(optimal_alpha)
 % assignWeights Asigna cada elemento de optimal_alpha a W1, W2 y W3.
 %
 % Sintaxis:
@@ -14,12 +14,12 @@ function [W1, W2, W3, W4, W5, W6, W7] = assignWeights(optimal_alpha)
 %   optimal_alpha = [0.10922, 2.8805e-05, 6.5801e-05];
 %   [W1, W2, W3] = assignWeights(optimal_alpha);
 
-    if numel(optimal_alpha) ~= 7
-        error('El vector optimal_alpha debe tener exactamente 7 elementos.');
+    if numel(optimal_alpha) ~= 8
+        error('El vector optimal_alpha debe tener exactamente 8 elementos.');
     end
 
     % Asignación mediante un loop y switch-case:
-    for i = 1:7
+    for i = 1:8
         switch i
             case 1
                 W1 = optimal_alpha(i);
@@ -35,6 +35,8 @@ function [W1, W2, W3, W4, W5, W6, W7] = assignWeights(optimal_alpha)
                 W6 = optimal_alpha(i);
             case 7
                 W7 = optimal_alpha(i);
+            case 8
+                W8 = optimal_alpha(i);
         end
     end
 end
