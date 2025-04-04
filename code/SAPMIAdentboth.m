@@ -31,9 +31,12 @@ pathfile = obtenerRutaMarco3Ddam0();
 % dano_porcentaje     = [80 80 80 80 80 80 80 80];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 
 no_elemento_a_danar = sort([26 27 29 28]);
+% no_elemento_a_danar = sort([17 18 19 20]);
+% no_elemento_a_danar = sort([1 5 21 26 25 43 24 18]);
 caso_dano           = repmat({'corrosion'}, 1, length(no_elemento_a_danar)); 
 % dano_porcentaje     = [10 10 10 10];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 % dano_porcentaje     = [60 60 60 60 60 60 60 60];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
+% dano_porcentaje     = [80 80 80 80 80 80 80 80];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 dano_porcentaje     = [80 80 80 80];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 
 
@@ -204,71 +207,71 @@ absZ = abs(Z_flex);
 p_flex = 2 * (1 - myNormcdf(absZ));  % Prueba bilateral
 p_flex_norm = normalizeTo01(Perc_flex_node);    % Normalizar a [0,1] para integrarlo con otros DIs
 DI8_Prob_Flex = p_flex_norm;
-%%
-% Energía de deformacion
-U_u = 0.5 * (modos_cond_u') * KG_undamaged_cond * modos_cond_u;
-U_d = 0.5 * (modos_cond_d') * KG_damaged_cond   * modos_cond_d;
-%%
-% Diff
-DI17_Diff_U     = abs(U_u - U_d);
-% Diff_U_perNode  = unifyDiff(DI17_Diff_U);
+% %%
+% % Energía de deformacion
+% U_u = 0.5 * (modos_cond_u') * KG_undamaged_cond * modos_cond_u;
+% U_d = 0.5 * (modos_cond_d') * KG_damaged_cond   * modos_cond_d;
+% %%
+% % Diff
+% DI17_Diff_U     = abs(U_u - U_d);
+% % Diff_U_perNode  = unifyDiff(DI17_Diff_U);
 % DI2_Diff        = normalizeTo01(DI17_Diff_U);
 
-% %%
-% clc
-% % --- Nueva Implementación del Algoritmo Genético de detección de dano en los nodos del modelo (AG) ---
-% 
-% % Definir DI como estructura con los 5 índices ya calculados (escalares)
-% DI.DI1_COMAC        = DI1_COMAC;
-% DI.DI2_Diff         = DI2_Diff;
-% DI.DI3_Div          = DI3_Div;
-% DI.DI4_Diff_Flex    = DI4_Diff_Flex;
-% DI.DI5_Div_Flex     = DI5_Div_Flex;
-% DI.DI6_Perc_Flex    = DI6_Perc_Flex; 
-% DI.DI7_Zscore_Flex  = DI7_Zscore_Flex; 
-% DI.DI8_Prob_Flex    = DI8_Prob_Flex; 
-% 
-% T = zeros(length(DI1_COMAC),1);     
-% T(9) = 1;                           % Nodo 13 se marca como dañado
-% threshold = 0.05;                 % umbral definido, por ejemplo, 0.05 (ajusta según tu caso)
-% % threshold = 0.2*2;                 % umbral definido, por ejemplo, 0.05 (ajusta según tu caso)
-% 
-% nVars = 8;
-% lb = zeros(1, nVars);
-% ub = ones(1, nVars);
-% 
-% options.PopulationSize  = 300;
-% options.Generations     = 500;
-% options.StallGenLimit   = 200;          % límite de generaciones en donde los individuos no cumplen con la función objetivo
-% 
-% objFun = @(alpha) objective_function(alpha, DI, T, threshold);
-% options = optimoptions('ga', 'Display', 'iter', 'PlotFcn', {@gaplotbestf, @gaplotbestindiv, @gaplotdistance, @gaplotrange, @gaplotstopping});
-% 
-% [optimal_alpha, fval] = ga(objFun, nVars, [], [], [], [], lb, ub, [], options);
-% 
-% disp('Pesos óptimos (alpha):');
-% disp(optimal_alpha);
-% disp('Valor de la función objetivo:');
-% disp(fval);
-% 
-% 
-% [w1, w2, w3, w4, w5, w6, w7, w8] = assignWeights(optimal_alpha);
-% 
-% nNodes = length(DI1_COMAC);
-% P = zeros(nNodes,1);  % Inicializamos el vector resultado
-% %%
-% % Iterar por cada nodo para combinar los índices
-% for j = 1:nNodes
-%     P(j) =      w1 * DI1_COMAC(j)       + w2 * DI2_Diff(j) +...
-%             +   w3 * DI3_Div(j)         + w4 * DI4_Diff_Flex(j) + ...
-%             +   w5 * DI5_Div_Flex(j)    + w6 * DI6_Perc_Flex(j) + ...
-%             +   w7 * DI7_Zscore_Flex(j) + w8 + DI8_Prob_Flex(j); 
-% end
-% 
-% 
-% Resultado_final = createNodeTable(P, DI1_COMAC);
-% 
-% toc
+%%
+clc
+% --- Nueva Implementación del Algoritmo Genético de detección de dano en los nodos del modelo (AG) ---
+
+% Definir DI como estructura con los 5 índices ya calculados (escalares)
+DI.DI1_COMAC        = DI1_COMAC;
+DI.DI2_Diff         = DI2_Diff;
+DI.DI3_Div          = DI3_Div;
+DI.DI4_Diff_Flex    = DI4_Diff_Flex;
+DI.DI5_Div_Flex     = DI5_Div_Flex;
+DI.DI6_Perc_Flex    = DI6_Perc_Flex; 
+DI.DI7_Zscore_Flex  = DI7_Zscore_Flex; 
+DI.DI8_Prob_Flex    = DI8_Prob_Flex; 
+
+T = zeros(length(DI1_COMAC),1);     
+T(9) = 1;                           % Nodo 13 se marca como dañado
+threshold = 0.05;                 % umbral definido, por ejemplo, 0.05 (ajusta según tu caso)
+% threshold = 0.2*2;                 % umbral definido, por ejemplo, 0.05 (ajusta según tu caso)
+
+nVars = 8;
+lb = zeros(1, nVars);
+ub = ones(1, nVars);
+
+options.PopulationSize  = 300;
+options.Generations     = 500;
+options.StallGenLimit   = 200;          % límite de generaciones en donde los individuos no cumplen con la función objetivo
+
+objFun = @(alpha) objective_function(alpha, DI, T, threshold);
+options = optimoptions('ga', 'Display', 'iter', 'PlotFcn', {@gaplotbestf, @gaplotbestindiv, @gaplotdistance, @gaplotrange, @gaplotstopping});
+
+[optimal_alpha, fval] = ga(objFun, nVars, [], [], [], [], lb, ub, [], options);
+
+disp('Pesos óptimos (alpha):');
+disp(optimal_alpha);
+disp('Valor de la función objetivo:');
+disp(fval);
+
+
+[w1, w2, w3, w4, w5, w6, w7, w8] = assignWeights(optimal_alpha);
+
+nNodes = length(DI1_COMAC);
+P = zeros(nNodes,1);  % Inicializamos el vector resultado
+%%
+% Iterar por cada nodo para combinar los índices
+for j = 1:nNodes
+    P(j) =      w1 * DI1_COMAC(j)       + w2 * DI2_Diff(j) +...
+            +   w3 * DI3_Div(j)         + w4 * DI4_Diff_Flex(j) + ...
+            +   w5 * DI5_Div_Flex(j)    + w6 * DI6_Perc_Flex(j) + ...
+            +   w7 * DI7_Zscore_Flex(j) + w8 + DI8_Prob_Flex(j); 
+end
+
+
+Resultado_final = createNodeTable(P, DI1_COMAC);
+
+toc
 % % % 
 % % % %%
 % % % 

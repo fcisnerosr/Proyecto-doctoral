@@ -1,4 +1,4 @@
-$ File E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.$et saved 21/03/2025 20:38:41
+$ File E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.$et saved 13/03/2025 14:38:30
  
 $ PROGRAM INFORMATION
   PROGRAM  "ETABS"  VERSION "19.1.0"  
@@ -262,9 +262,9 @@ $ LINE ASSIGNS
   LINEASSIGN  "B7"  "Story3"  SECTION "SECC01"  CARDINALPT 8  MAXSTASPC 24 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
   LINEASSIGN  "B8"  "Story3"  SECTION "SECC01"  CARDINALPT 8  MAXSTASPC 24 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
   LINEASSIGN  "C1"  "Story3"  SECTION "SECC01"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
+  LINEASSIGN  "C2"  "Story3"  SECTION "SECC01"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
   LINEASSIGN  "C3"  "Story3"  SECTION "SECC01"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
   LINEASSIGN  "C4"  "Story3"  SECTION "SECC01"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
-  LINEASSIGN  "C2"  "Story3"  SECTION "SECC01"  MINNUMSTA 3 AUTOMESH "YES"  MESHATINTERSECTIONS "YES"  
 
 $ LOAD PATTERNS
   LOADPATTERN "Dead"  TYPE  "Dead"  SELFWEIGHT  1
@@ -881,11 +881,6 @@ ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas
 ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 09/03/2025 20:51:59
 ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 09/03/2025 20:52:01
 ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 13/03/2025 14:38:30
-ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 13/03/2025 14:38:33
-ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 13/03/2025 14:38:33
-ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 13/03/2025 14:38:37
-ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 13/03/2025 14:43:40
-ETABS Ultimate  19.1.0 File saved as E:\Archivos_Jaret\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_4_jacket-subestructura_2NIVELES\revision_4_jacket-subestructura_2NIVELES.EDB at 21/03/2025 20:38:41
   ENDCOMMENTS  
 
   END
