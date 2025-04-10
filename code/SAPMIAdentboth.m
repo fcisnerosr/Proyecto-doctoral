@@ -72,7 +72,8 @@ L_d = extraer_longitudes_danadas(archivo_excel, no_elemento_a_danar);
 
 % Matriz de rigidez local con dano aplicado
 [ke_d_total, ke_d, prop_geom_mat] = switch_case_danos(no_elemento_a_danar, num_de_ele_long, L_d, caso_dano, dano_porcentaje, prop_geom, E, G);
-[KG_damaged, KG_undamaged,L, kg] = ensamblaje_matriz_rigidez_global_con_dano(ID, NE, ke_d_total,elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G,  vxz, elem_con_dano_long_NE);
+% [KG_damaged, KG_undamaged,L, kg] = ensamblaje_matriz_rigidez_global_con_dano(ID, NE, ke_d_total,elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G,  vxz, elem_con_dano_long_NE);
+[KG_damaged, L, kg] = ensamblaje_matriz_rigidez_global_con_dano(ID, NE, ke_d_total,elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G,  vxz, elem_con_dano_long_NE);
 
 % Matriz de rigidez global sin dano (para el método de los DIs)
 [KG_undamaged] = ensamblaje_matriz_rigidez_global_sin_dano(ID, NE, ke_d_total, elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G, vxz, elem_con_dano_long_NE);
@@ -149,72 +150,72 @@ KG_undamaged_cond   = condensacion_estatica(KG_undamaged);
 [modos_cond_d,frec_cond_d, Omega_cond_d] = modos_frecuencias(KG_damaged_cond,M_cond);
 [modos_cond_u,frec_cond_u, Omega_cond_u] = modos_frecuencias(KG_undamaged_cond,M_cond);
 % [modos_completos,frec_completos] = modos_frecuencias(KG_damaged,M_completa);
+%
+% DIs
+Formas modales
+1. COMAC
+COMAC       = calcCOMAC(modos_cond_u, modos_cond_d);
+COMAC_sqrt  = computeCOMACSqrt(COMAC);
+DI1_COMAC   = 1 - COMAC_sqrt;
+DI1_COMAC   = normalizeTo01(DI1_COMAC);
+
+% 2. Diff
+DI2_Diff        = abs(modos_cond_u - modos_cond_d);
+Diff_perNode    = unifyDiff(DI2_Diff);
+DI2_Diff        = normalizeTo01(Diff_perNode);
+
+% 3. Div
+ratio       = modos_cond_d ./ modos_cond_u;
+Div_perNode = unifyDiff(ratio);
+DI3_Div     = abs(ratio - 1);
+DI3_Div     = unifyDiff(DI3_Div);
+DI3_Div     = normalizeTo01(DI3_Div);
+
+% Flexibilidad
+F_u = modos_cond_u * diag(1./(Omega_cond_u.^2)) * modos_cond_u';
+F_d = modos_cond_d * diag(1./(Omega_cond_d.^2)) * modos_cond_d';
+% 4. Diff
+DI4_Diff_Flex       = abs(F_d - F_u);
+diff_diag           = diag(DI4_Diff_Flex);
+DI4_Diff_Flex_node  = unifyDiffVector(diff_diag, 3);
+DI4_Diff_Flex       = normalizeTo01(DI4_Diff_Flex_node);
+% 5. Div
+flex_diag_u     = diag(F_u);                        % Extrae un vector donde cada entrada es la flexibilidad (autovalor) del estado sano para cada DOF.
+flex_diag_d     = diag(F_d);                        % Extrae de forma similar los valores locales de flexibilidad en el estado dañado.
+ratio_flex      = flex_diag_d ./ flex_diag_u;       % Calcular el ratio (elemento a elemento) para cada DOF
+DI_F_Div_raw    = abs(ratio_flex - 1);              % Calcular el DI de división para la flexibilidad (elemento a elemento)
+DI_F_Div_node   = unifyDiffVector(DI_F_Div_raw, 3); % Unificar los valores por nodo. Suponiendo que tienes 3 DOF por nodo, usa la función 'unifyDiffVector' para agrupar el vector en índices por nodo.
+DI_F_Div        = normalizeTo01(DI_F_Div_node);     % Normalizar el vector resultante a [0,1]
+DI5_Div_Flex    = DI_F_Div;
+% 6. Perc
+Perc_flex_raw = 100 * abs(flex_diag_d - flex_diag_u) ./ max(flex_diag_u, eps);  % Calcular la variación porcentual para cada DOF evita dividir por cero si algún elemento de flex_diag_u es 0
+Perc_flex_node = unifyDiffVector(Perc_flex_raw, 3);     % Unificar los valores por nodo. Si cada nodo tiene 3 DOF (x, y, z), agrupa cada 3 elementos usando, por ejemplo, 'unifyDiffVector'. (Suponiendo que unifyDiffVector está definida para hacer RSS o alguna combinación de esos 3 DOF). 
+Perc_flex_node_norm = normalizeTo01(Perc_flex_node);    % Normalizar a [0,1] para integrarlo con otros DIs
+DI6_Perc_Flex = Perc_flex_node_norm;
+% 7. Z-score
+diff_flex   = abs(F_d - F_u);         % Diferencia global de flexibilidad (matriz)
+diff_diag   = diag(diff_flex);          % Vector de diferencias por DOF
+flex_unify  = unifyDiffVector(diff_diag, 3);  % Unifica cada 3 DOF en 1 valor por nodo
+% (Opcional: normalizar los valores unificados si se desea)
+% flex_normalize = normalizeTo01(flex_unify);
+mu_flex     = mean(flex_unify);
+sigma_flex  = std(flex_unify);
+Z_flex      = (flex_unify - mu_flex) / sigma_flex;
+DI7_Zscore_Flex = Z_flex;
+% 8. Probabilidad
+absZ = abs(Z_flex);
+p_flex = 2 * (1 - myNormcdf(absZ));  % Prueba bilateral
+p_flex_norm = normalizeTo01(Perc_flex_node);    % Normalizar a [0,1] para integrarlo con otros DIs
+DI8_Prob_Flex = p_flex_norm;
 % %%
-% % DIs
-% % Formas modales
-% % 1. COMAC
-% COMAC       = calcCOMAC(modos_cond_u, modos_cond_d);
-% COMAC_sqrt  = computeCOMACSqrt(COMAC);
-% DI1_COMAC   = 1 - COMAC_sqrt;
-% DI1_COMAC   = normalizeTo01(DI1_COMAC);
-% 
-% % 2. Diff
-% DI2_Diff        = abs(modos_cond_u - modos_cond_d);
-% Diff_perNode    = unifyDiff(DI2_Diff);
-% DI2_Diff        = normalizeTo01(Diff_perNode);
-% 
-% % 3. Div
-% ratio       = modos_cond_d ./ modos_cond_u;
-% Div_perNode = unifyDiff(ratio);
-% DI3_Div     = abs(ratio - 1);
-% DI3_Div     = unifyDiff(DI3_Div);
-% DI3_Div     = normalizeTo01(DI3_Div);
-% 
-% % Flexibilidad
-% F_u = modos_cond_u * diag(1./(Omega_cond_u.^2)) * modos_cond_u';
-% F_d = modos_cond_d * diag(1./(Omega_cond_d.^2)) * modos_cond_d';
-% % 4. Diff
-% DI4_Diff_Flex       = abs(F_d - F_u);
-% diff_diag           = diag(DI4_Diff_Flex);
-% DI4_Diff_Flex_node  = unifyDiffVector(diff_diag, 3);
-% DI4_Diff_Flex       = normalizeTo01(DI4_Diff_Flex_node);
-% % 5. Div
-% flex_diag_u     = diag(F_u);                        % Extrae un vector donde cada entrada es la flexibilidad (autovalor) del estado sano para cada DOF.
-% flex_diag_d     = diag(F_d);                        % Extrae de forma similar los valores locales de flexibilidad en el estado dañado.
-% ratio_flex      = flex_diag_d ./ flex_diag_u;       % Calcular el ratio (elemento a elemento) para cada DOF
-% DI_F_Div_raw    = abs(ratio_flex - 1);              % Calcular el DI de división para la flexibilidad (elemento a elemento)
-% DI_F_Div_node   = unifyDiffVector(DI_F_Div_raw, 3); % Unificar los valores por nodo. Suponiendo que tienes 3 DOF por nodo, usa la función 'unifyDiffVector' para agrupar el vector en índices por nodo.
-% DI_F_Div        = normalizeTo01(DI_F_Div_node);     % Normalizar el vector resultante a [0,1]
-% DI5_Div_Flex    = DI_F_Div;
-% % 6. Perc
-% Perc_flex_raw = 100 * abs(flex_diag_d - flex_diag_u) ./ max(flex_diag_u, eps);  % Calcular la variación porcentual para cada DOF evita dividir por cero si algún elemento de flex_diag_u es 0
-% Perc_flex_node = unifyDiffVector(Perc_flex_raw, 3);     % Unificar los valores por nodo. Si cada nodo tiene 3 DOF (x, y, z), agrupa cada 3 elementos usando, por ejemplo, 'unifyDiffVector'. (Suponiendo que unifyDiffVector está definida para hacer RSS o alguna combinación de esos 3 DOF). 
-% Perc_flex_node_norm = normalizeTo01(Perc_flex_node);    % Normalizar a [0,1] para integrarlo con otros DIs
-% DI6_Perc_Flex = Perc_flex_node_norm;
-% % 7. Z-score
-% diff_flex   = abs(F_d - F_u);         % Diferencia global de flexibilidad (matriz)
-% diff_diag   = diag(diff_flex);          % Vector de diferencias por DOF
-% flex_unify  = unifyDiffVector(diff_diag, 3);  % Unifica cada 3 DOF en 1 valor por nodo
-% % (Opcional: normalizar los valores unificados si se desea)
-% % flex_normalize = normalizeTo01(flex_unify);
-% mu_flex     = mean(flex_unify);
-% sigma_flex  = std(flex_unify);
-% Z_flex      = (flex_unify - mu_flex) / sigma_flex;
-% DI7_Zscore_Flex = Z_flex;
-% % 8. Probabilidad
-% absZ = abs(Z_flex);
-% p_flex = 2 * (1 - myNormcdf(absZ));  % Prueba bilateral
-% p_flex_norm = normalizeTo01(Perc_flex_node);    % Normalizar a [0,1] para integrarlo con otros DIs
-% DI8_Prob_Flex = p_flex_norm;
-% % %%
-% % % Energía de deformacion
-% % U_u = 0.5 * (modos_cond_u') * KG_undamaged_cond * modos_cond_u;
-% % U_d = 0.5 * (modos_cond_d') * KG_damaged_cond   * modos_cond_d;
-% % %%
-% % % Diff
-% % DI17_Diff_U     = abs(U_u - U_d);
-% % % Diff_U_perNode  = unifyDiff(DI17_Diff_U);
-% % DI2_Diff        = normalizeTo01(DI17_Diff_U);
+% % Energía de deformacion
+% U_u = 0.5 * (modos_cond_u') * KG_undamaged_cond * modos_cond_u;
+% U_d = 0.5 * (modos_cond_d') * KG_damaged_cond   * modos_cond_d;
+% %%
+% % Diff
+% DI17_Diff_U     = abs(U_u - U_d);
+% % Diff_U_perNode  = unifyDiff(DI17_Diff_U);
+% DI2_Diff        = normalizeTo01(DI17_Diff_U);
 % 
 % % Metodo de la curvatura
 % % matriz de rigidez de modelo subdividido
@@ -251,8 +252,8 @@ KG_undamaged_cond   = condensacion_estatica(KG_undamaged);
 % options.Generations     = 500;
 % options.StallGenLimit   = 200;          % límite de generaciones en donde los individuos no cumplen con la función objetivo
 % 
-% objFun = @(alpha) objective_function(alpha, DI, T, threshold);
-% options = optimoptions('ga', 'Display', 'iter', 'PlotFcn', {@gaplotbestf, @gaplotbestindiv, @gaplotdistance, @gaplotrange, @gaplotstopping});
+objFun = @(alpha) objective_function(alpha, DI, T, threshold);
+options = optimoptions('ga', 'Display', 'iter', 'PlotFcn', {@gaplotbestf, @gaplotbestindiv, @gaplotdistance, @gaplotrange, @gaplotstopping});
 % 
 % [optimal_alpha, fval] = ga(objFun, nVars, [], [], [], [], lb, ub, [], options);
 % 
