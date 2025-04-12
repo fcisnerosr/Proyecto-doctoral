@@ -226,7 +226,7 @@ DI8_Prob_Flex = p_flex_norm;
 % Metodo de la curvatura
 % cálculo de longitud de arco
 %% 
-arcLength = computeArcLength(coordinates)
+arcLength = computeArcLength(coordenadas)
 % % 
 % % 
 % % %%
