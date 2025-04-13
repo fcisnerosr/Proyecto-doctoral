@@ -226,7 +226,9 @@ DI8_Prob_Flex = p_flex_norm;
 % Metodo de la curvatura
 % cálculo de longitud de arco
 %% 
-arcLength = computeArcLength(coordenadas)
+curvatureProfiles_intact = computeAllElementsCurvature(conectividad, coordenadas, modos_cond_u, 1);
+% curvatureProfiles_damaged = computeAllElementsCurvature(conectividad, coordMatrix, modalMatrix_damaged, modeIndex);
+
 % % 
 % % 
 % % %%
