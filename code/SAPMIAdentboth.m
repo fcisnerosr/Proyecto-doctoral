@@ -364,7 +364,6 @@ modalMatrix = modos_cond_u;
 modeIndex = 1;
 clc
 for idx = 1:size(conectividad,1)
-    idx
     currentElemID = conectividad(idx, 1);  % Se extrae el ID del elemento actual
 
     % Número total de elementos en la subestructura
@@ -386,11 +385,11 @@ for idx = 1:size(conectividad,1)
         % Extraer la fila correspondiente; se asume que las columnas 2:end son los nodos
         connRow = conectividad(rowIndex, :);
         elementNodes = connRow(2:end);
-        % Excluir nodos empotrados (IDs ≤ 4)
-        elementNodes = elementNodes(elementNodes > 4);
-        if isempty(elementNodes)
-            error('Para el elemento %d, no quedan nodos válidos luego de excluir empotrados.', currentElemID);
-        end
+        % % Excluir nodos empotrados (IDs ≤ 4)
+        % elementNodes = elementNodes(elementNodes > 4);
+        % if isempty(elementNodes)
+        %     error('Para el elemento %d, no quedan nodos válidos luego de excluir empotrados.', currentElemID);
+        % end
 
         % --- Paso 2: Extraer las coordenadas de los nodos del elemento y calcular el vector de longitudes de arco ---
         numNodes = numel(elementNodes);
@@ -403,76 +402,77 @@ for idx = 1:size(conectividad,1)
             end
             coordsElem(j, :) = coordenadas(rowCoord, 2:4);  % Extrae [x, y, z]
         end
+
         % Calcular el vector de longitud de arco para este elemento a partir de sus nodos
         % arcLength = computeArcLength(coordsElem);
         rowIndex = find(conectividad(:,1) == currentElemID);
         if isempty(rowIndex)
             error('Elemento con ID %d no se encuentra en la matriz de conectividad.', currentElemID);
         end
-        
+
         % Extraer la fila correspondiente
         connRow = conectividad(rowIndex, :);
-        
+
         % connRow = [ elemID, nodo1, nodo2, (nodo3, nodo4,... si hubiera) ]
         % Nos interesan los nodos a partir de la segunda columna:
         elementNodes = connRow(2:end);
-        
-        % 2. Excluir los nodos empotrados (IDs 1..4) si aparecen
-        %    Filtramos los nodos que sean > 4
-        validNodes = elementNodes(elementNodes > 4);
-        if isempty(validNodes)
-            % Si todos los nodos eran empotrados, no hay nada que calcular
-            arcLength = 0;
-            warning('Todos los nodos del elemento %d estaban empotrados (1..4).', elemID);
-            return;
-        end
-        
+
+        % % 2. Excluir los nodos empotrados (IDs 1..4) si aparecen
+        % %    Filtramos los nodos que sean > 4
+        % validNodes = elementNodes(elementNodes > 4);
+        % if isempty(validNodes)
+        %     % Si todos los nodos eran empotrados, no hay nada que calcular
+        %     arcLength = 0;
+        %     warning('Todos los nodos del elemento %d estaban empotrados (1..4).', elemID);
+        %     return;
+        % end
+
         % 3. Construir una lista de coordenadas (x,y,z) para estos nodos (en orden).
         %    Ojo: si hay más de 2 nodos, asegúrate de ordenarlos adecuadamente
         %    según la secuencia real. En un reticulado simple (2 nodos por elem),
         %    la "ordenación" es trivial. Si no, tendrías que definir la secuencia.
-        
+
         coordsElement = zeros(numel(validNodes), 3);
-        
-        for i = 1:numel(validNodes)
-            nodeID = validNodes(i);
+
+        for j = 1:numel(validNodes)
+            nodeID = validNodes(j);
             % Encontrar la fila en coordenadas con ID = nodeID
             rowCoord = find(coordenadas(:,1) == nodeID);
             if isempty(rowCoord)
                 error('No se encuentra la fila de coordenadas para nodeID = %d.', nodeID);
             end
-            coordsElement(i,:) = coordenadas(rowCoord, 2:4);  % tomar [x,y,z]
+            coordsElement(j,:) = coordenadas(rowCoord, 2:4);  % tomar [x,y,z]
         end
-        
-        % Si tu elemento "básico" es solo 2 nodos, coordsElement tendrá 2 filas,
-        % lo cual facilita el cálculo. Para más de 2 nodos, están en coordsElement
-        % y dependerá de su orden si requieres un reordenamiento adicional.
-    
-        % 4. Calcular las diferencias entre nodos consecutivos
-        deltas = diff(coordsElement, 1, 1);  % (M-1) x 3, donde M = size(coordsElement,1)
-    
-        % 5. Distancia Euclidiana por cada tramo
-        distances = sqrt(sum(deltas.^2, 2));
-    
-        % 6. Longitud de arco acumulada
-        arcLength = [0; cumsum(distances)];
-
-        % --- Paso 3: Extraer los valores modales para cada nodo del elemento para el modo indicado ---
-        phi = zeros(numNodes, 1);
-        for j = 1:numNodes
-            nodeID = elementNodes(j);
-            phi_nodeMatrix = extractNodeModal(modalMatrix, nodeID);
-            phi(j) = norm(phi_nodeMatrix(:, modeIndex));  % Usando la norma para unificar los 3 DOF
-        end
-
-        % --- Paso 4: Construir la función spline y calcular la curvatura ---
-        pp = spline(arcLength, phi);
-        pp2 = fnder(pp, 2);
-        s_dense = linspace(min(arcLength), max(arcLength), 100);
-        curvatureProfile = fnval(pp2, s_dense);
-
-        % Almacenar el perfil en el cell array
-        curvatureProfiles{i} = curvatureProfile;
+    % 
+    %     % Si tu elemento "básico" es solo 2 nodos, coordsElement tendrá 2 filas,
+    %     % lo cual facilita el cálculo. Para más de 2 nodos, están en coordsElement
+    %     % y dependerá de su orden si requieres un reordenamiento adicional.
+    % 
+    %     % 4. Calcular las diferencias entre nodos consecutivos
+    %     deltas = diff(coordsElement, 1, 1);  % (M-1) x 3, donde M = size(coordsElement,1)
+    % 
+    %     % 5. Distancia Euclidiana por cada tramo
+    %     distances = sqrt(sum(deltas.^2, 2));
+    % 
+    %     % 6. Longitud de arco acumulada
+    %     arcLength = [0; cumsum(distances)];
+    % 
+    %     % --- Paso 3: Extraer los valores modales para cada nodo del elemento para el modo indicado ---
+    %     phi = zeros(numNodes, 1);
+    %     for j = 1:numNodes
+    %         nodeID = elementNodes(j);
+    %         phi_nodeMatrix = extractNodeModal(modalMatrix, nodeID);
+    %         phi(j) = norm(phi_nodeMatrix(:, modeIndex));  % Usando la norma para unificar los 3 DOF
+    %     end
+    % 
+    %     % --- Paso 4: Construir la función spline y calcular la curvatura ---
+    %     pp = spline(arcLength, phi);
+    %     pp2 = fnder(pp, 2);
+    %     s_dense = linspace(min(arcLength), max(arcLength), 100);
+    %     curvatureProfile = fnval(pp2, s_dense);
+    % 
+    %     % Almacenar el perfil en el cell array
+    %     curvatureProfiles{i} = curvatureProfile;
     end
 end
 
