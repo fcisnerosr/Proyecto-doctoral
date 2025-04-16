@@ -363,7 +363,8 @@ DI8_Prob_Flex = p_flex_norm;
 modalMatrix = modos_cond_u;
 modeIndex = 1;
 clc
-for idx = 1:size(conectividad,1)
+% for idx = 1:size(conectividad,1)
+for idx = 1
     currentElemID = conectividad(idx, 1);  % Se extrae el ID del elemento actual
 
     % Número total de elementos en la subestructura
@@ -432,10 +433,10 @@ for idx = 1:size(conectividad,1)
         %    según la secuencia real. En un reticulado simple (2 nodos por elem),
         %    la "ordenación" es trivial. Si no, tendrías que definir la secuencia.
 
-        coordsElement = zeros(numel(validNodes), 3);
+        coordsElement = zeros(numel(elementNodes), 3);
 
-        for j = 1:numel(validNodes)
-            nodeID = validNodes(j);
+        for j = 1:numel(elementNodes)
+            nodeID = elementNodes(j);
             % Encontrar la fila en coordenadas con ID = nodeID
             rowCoord = find(coordenadas(:,1) == nodeID);
             if isempty(rowCoord)
@@ -443,34 +444,41 @@ for idx = 1:size(conectividad,1)
             end
             coordsElement(j,:) = coordenadas(rowCoord, 2:4);  % tomar [x,y,z]
         end
-    % 
-    %     % Si tu elemento "básico" es solo 2 nodos, coordsElement tendrá 2 filas,
-    %     % lo cual facilita el cálculo. Para más de 2 nodos, están en coordsElement
-    %     % y dependerá de su orden si requieres un reordenamiento adicional.
-    % 
-    %     % 4. Calcular las diferencias entre nodos consecutivos
-    %     deltas = diff(coordsElement, 1, 1);  % (M-1) x 3, donde M = size(coordsElement,1)
-    % 
-    %     % 5. Distancia Euclidiana por cada tramo
-    %     distances = sqrt(sum(deltas.^2, 2));
-    % 
-    %     % 6. Longitud de arco acumulada
-    %     arcLength = [0; cumsum(distances)];
-    % 
-    %     % --- Paso 3: Extraer los valores modales para cada nodo del elemento para el modo indicado ---
-    %     phi = zeros(numNodes, 1);
-    %     for j = 1:numNodes
-    %         nodeID = elementNodes(j);
-    %         phi_nodeMatrix = extractNodeModal(modalMatrix, nodeID);
-    %         phi(j) = norm(phi_nodeMatrix(:, modeIndex));  % Usando la norma para unificar los 3 DOF
-    %     end
-    % 
-    %     % --- Paso 4: Construir la función spline y calcular la curvatura ---
-    %     pp = spline(arcLength, phi);
-    %     pp2 = fnder(pp, 2);
-    %     s_dense = linspace(min(arcLength), max(arcLength), 100);
-    %     curvatureProfile = fnval(pp2, s_dense);
-    % 
+
+        % Si tu elemento "básico" es solo 2 nodos, coordsElement tendrá 2 filas,
+        % lo cual facilita el cálculo. Para más de 2 nodos, están en coordsElement
+        % y dependerá de su orden si requieres un reordenamiento adicional.
+
+        % 4. Calcular las diferencias entre nodos consecutivos
+        deltas = diff(coordsElement, 1, 1);  % (M-1) x 3, donde M = size(coordsElement,1)
+
+        % 5. Distancia Euclidiana por cada tramo
+        distances = sqrt(sum(deltas.^2, 2));
+
+        % 6. Longitud de arco acumulada
+        arcLength = [0; cumsum(distances)];
+
+        % --- Paso 3: Extraer los valores modales para cada nodo del elemento para el modo indicado ---
+        phi = zeros(numNodes, 1);
+        for j = 1:numNodes
+            nodeID = elementNodes(j);
+            % phi_nodeMatrix = extractNodeModal(modalMatrix, nodeID);
+            % Calcular el índice inicial y final para el nodo (3 DOF por nodo)
+            localNodeID = nodeID - 4;
+            startRow = 3 * (localNodeID - 1) + 1
+            endRow = 3 * localNodeID
+            % Extraer las filas correspondientes
+            phi_node = modalMatrix(startRow:endRow, :);
+
+            phi(j) = norm(phi_node(:, modeIndex));  % Usando la norma para unificar los 3 DOF
+        end
+
+        % % --- Paso 4: Construir la función spline y calcular la curvatura ---
+        % pp = spline(arcLength, phi);
+        % pp2 = fnder(pp, 2);
+        % s_dense = linspace(min(arcLength), max(arcLength), 100);
+        % curvatureProfile = fnval(pp2, s_dense);
+
     %     % Almacenar el perfil en el cell array
     %     curvatureProfiles{i} = curvatureProfile;
     end
