@@ -37,7 +37,8 @@ caso_dano           = repmat({'corrosion'}, 1, length(no_elemento_a_danar));
 % dano_porcentaje     = [10 10 10 10];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 % dano_porcentaje     = [60 60 60 60 60 60 60 60];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 % dano_porcentaje     = [80 80 80 80 80 80 80 80];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
-dano_porcentaje     = [60 60 60 60];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
+% dano_porcentaje     = [60 60 60 60];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
+dano_porcentaje     = [50 50 50 50];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 % dano_porcentaje     = [80 80 80 80];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 
 % Corregir de formato los números en la tabla importada de ETABS: En todo este bloque de código, se realizó el cambio de formato de los números, debido a que ETABS importa sus tablas en formato de texto en algunas columnas.
