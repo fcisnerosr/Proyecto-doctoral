@@ -24,9 +24,12 @@ densidad_crec   = 1.3506*10^-7;    % en N/mm^3
 pathfile = obtenerRutaMarco3Ddam0();
 
 % Danos en elementos tubulares
-no_elemento_a_danar = sort([5 3 2 4]);
+no_elemento_a_danar = sort([24 43 25 26 21 5 1 18]);
 caso_dano           = repmat({'corrosion'}, 1, length(no_elemento_a_danar)); 
-dano_porcentaje     = [40 40 40 40];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
+dano_porcentaje     = [30 30 30 30 30 30 30 30 30];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
+% dano_porcentaje     = [40 40 40 40 40 40 40 40 40];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
+% dano_porcentaje     = [50 50 50 50 50 50 50 50 50];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
+% dano_porcentaje     = [80 80 80 80 80 80 80 80 80];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 
 % Corregir de formato los números en la tabla importada de ETABS: En todo este bloque de código, se realizó el cambio de formato de los números, debido a que ETABS importa sus tablas en formato de texto en algunas columnas.
 % % % % correccion_format_TablaETABS(archivo_excel);
@@ -221,7 +224,7 @@ DI.DI7_Zscore_Flex  = DI7_Zscore_Flex;
 DI.DI8_Prob_Flex    = DI8_Prob_Flex; 
 
 T = zeros(length(DI1_COMAC),1);     
-T(1) = 1;                       % Nodo 13 se marca como dañado
+T(5) = 1;                       % Nodo 13 se marca como dañado
 threshold = 0.05;               % umbral definido, por ejemplo, 0.05 (ajusta según tu caso)
 
 nVars = 8;
