@@ -214,22 +214,7 @@ p_flex = 2 * (1 - myNormcdf(absZ));  % Prueba bilateral
 p_flex_norm = normalizeTo01(Perc_flex_node);    % Normalizar a [0,1] para integrarlo con otros DIs
 DI8_Prob_Flex = p_flex_norm;
 % %%
-% % Energía de deformacion
-% U_u = 0.5 * (modos_cond_u') * KG_undamaged_cond * modos_cond_u;
-% U_d = 0.5 * (modos_cond_d') * KG_damaged_cond   * modos_cond_d;
-% %%
-% % Diff
-% DI17_Diff_U     = abs(U_u - U_d);
-% % Diff_U_perNode  = unifyDiff(DI17_Diff_U);
-% DI2_Diff        = normalizeTo01(DI17_Diff_U);
-% 
-% Metodo de la curvatura
-% cálculo de longitud de arco
-%% 
-for elemID = 1:1
-    curvatureProfiles_intact = computeAllElementsCurvature(conectividad, coordenadas, modos_cond_u, 1);
-end
-% curvatureProfiles_damaged = computeAllElementsCurvature(conectividad, coordMatrix, modalMatrix_damaged, modeIndex);
+% Pendientes integrar energía de deformacion y curvatura
 
 % % 
 % % 
