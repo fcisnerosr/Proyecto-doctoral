@@ -360,11 +360,12 @@ DI8_Prob_Flex = p_flex_norm;
 % % curvatureProfiles_damaged = computeAllElementsCurvature(conectividad, coordenadas, modalMatrix_damaged, modeIndex);
 
 %%
-modalMatrix = modos_cond_u;
-modeIndex = 1;
+% modalMatrix = modos_cond_u;
+modalMatrix = modos_cond_d;
+modeIndex = 2;
 clc
-% for idx = 1:size(conectividad,1)
-for idx = 1
+for idx = 1:size(conectividad,1)
+% for idx = 1
     currentElemID = conectividad(idx, 1);  % Se extrae el ID del elemento actual
 
     % Número total de elementos en la subestructura
@@ -401,7 +402,7 @@ for idx = 1
             if isempty(rowCoord)
                 error('No se encontraron coordenadas para el nodo %d.', nodeID);
             end
-            coordsElem(j, :) = coordenadas(rowCoord, 2:4);  % Extrae [x, y, z]
+            coordsElem(j, :) = coordenadas(rowCoord, 2:4)  % Extrae [x, y, z]
         end
 
         % Calcular el vector de longitud de arco para este elemento a partir de sus nodos
@@ -464,25 +465,30 @@ for idx = 1
             nodeID = elementNodes(j);
             % phi_nodeMatrix = extractNodeModal(modalMatrix, nodeID);
             % Calcular el índice inicial y final para el nodo (3 DOF por nodo)
-            localNodeID = nodeID - 4;
-            startRow = 3 * (localNodeID - 1) + 1
-            endRow = 3 * localNodeID
-            % Extraer las filas correspondientes
+            if nodeID <= 4
+                localNodeID = nodeID;  % Mantener la numeración global para nodos empotrados
+            else
+                localNodeID = nodeID - 4;  % Remapea para que los nodos no empotrados se indexen a partir de 1
+            end
+            startRow = 3 * (localNodeID - 1) + 1;
+            endRow = 3 * localNodeID;
             phi_node = modalMatrix(startRow:endRow, :);
+
 
             phi(j) = norm(phi_node(:, modeIndex));  % Usando la norma para unificar los 3 DOF
         end
 
-        % % --- Paso 4: Construir la función spline y calcular la curvatura ---
-        % pp = spline(arcLength, phi);
-        % pp2 = fnder(pp, 2);
-        % s_dense = linspace(min(arcLength), max(arcLength), 100);
-        % curvatureProfile = fnval(pp2, s_dense);
+        % --- Paso 4: Construir la función spline y calcular la curvatura ---
+        pp = spline(arcLength, phi);
+        pp2 = fnder(pp, 2);
+        s_dense = linspace(min(arcLength), max(arcLength), 100);
+        curvatureProfile = fnval(pp2, s_dense);
 
-    %     % Almacenar el perfil en el cell array
-    %     curvatureProfiles{i} = curvatureProfile;
+        % Almacenar el perfil en el cell array
+        curvatureProfiles{i} = curvatureProfile;
     end
 end
+% curvatureProfiles
 
 
 % % 
