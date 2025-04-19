@@ -6,8 +6,8 @@ tic
 format shortG
 
 % Datos iniciales de entrada
-carpeta = 'revision_4_jacket-subestructura_2NIVELES';
-archivo = 'datos_revision_4_jacket-subestructura_2NIVELES.xlsx';
+carpeta = 'revision_5_jacket-subestructura_3NIVELES';
+archivo = 'datos_revision_5_jacket-subestructura_3NIVELES';
 archivo_excel = construirRutaExcel(carpeta, archivo);
 
 tirante         = 87000;    % en mm
@@ -24,9 +24,13 @@ densidad_crec   = 1.3506*10^-7;    % en N/mm^3
 pathfile = obtenerRutaMarco3Ddam0();
 
 % Danos en elementos tubulares
-no_elemento_a_danar = sort([24 43 25 26 21 5 1 18]);
+% no_elemento_a_danar = sort([3 4 5 2]);
+no_elemento_a_danar = sort([29 27 26 28]);
+% no_elemento_a_danar = sort([1 18 24 43 25 26 21 5]);
+% no_elemento_a_danar = sort([25 42 48 67 49 50 45 29]);
 caso_dano           = repmat({'corrosion'}, 1, length(no_elemento_a_danar)); 
-dano_porcentaje     = [30 30 30 30 30 30 30 30 30];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
+dano_porcentaje     = [40 40 40 40];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
+% dano_porcentaje     = [30 30 30 30 30 30 30 30 30];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 % dano_porcentaje     = [40 40 40 40 40 40 40 40 40];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 % dano_porcentaje     = [50 50 50 50 50 50 50 50 50];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 % dano_porcentaje     = [80 80 80 80 80 80 80 80 80];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
@@ -143,10 +147,10 @@ KG_undamaged_cond   = condensacion_estatica(KG_undamaged);
 [modos_cond_u,frec_cond_u, Omega_cond_u] = modos_frecuencias(KG_undamaged_cond,M_cond);
 % [modos_completos,frec_completos] = modos_frecuencias(KG_damaged,M_completa);
 
-% proceso de filtrado de nodos de la superestructura
-mask = createMask(17, 20, modos_cond_u);
-modos_cond_d = modos_cond_d .* mask; % Aplica la máscara a cada fila
-modos_cond_u = modos_cond_u .* mask; % Se "anulan" los DOF excluidos en ambos modelos
+% % proceso de filtrado de nodos de la superestructura
+% mask = createMask(25, 32, modos_cond_u);
+% modos_cond_d = modos_cond_d .* mask; % Aplica la máscara a cada fila
+% modos_cond_u = modos_cond_u .* mask; % Se "anulan" los DOF excluidos en ambos modelos
 
 %
 % DIs
@@ -258,7 +262,6 @@ for j = 1:nNodes
             +   w5 * DI5_Div_Flex(j)    + w6 * DI6_Perc_Flex(j) + ...
             +   w7 * DI7_Zscore_Flex(j) + w8 + DI8_Prob_Flex(j); 
 end
-
 
 Resultado_final = createNodeTable(P, DI1_COMAC);
 
