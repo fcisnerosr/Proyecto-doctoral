@@ -24,6 +24,7 @@ archivo_excel = construirRutaExcel(carpeta, archivo);
 pathfile = obtenerRutaMarco3Ddam0();
 
 % Danos en elementos tubulares
+ID_Ejecucion = 1;
 no_elemento_a_danar = sort([3 4 5 2]);
 % no_elemento_a_danar = sort([29 27 26 28]);
 % no_elemento_a_danar = sort([103 104 106 108]);
@@ -209,5 +210,7 @@ Resultado_final = createNodeTable(P, DI1_COMAC);
 
 toc
 %%
+
 tiempo_total = toc;
-guardar_resultados_AG(Resultado_final, no_elemento_a_danar, dano_porcentaje, tiempo_total);
+guardar_resultados_AG(Resultado_final, no_elemento_a_danar, dano_porcentaje, tiempo_total, ID_Ejecucion, P);
+

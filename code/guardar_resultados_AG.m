@@ -1,8 +1,16 @@
-function guardar_resultados_AG(Resultado_final, no_elemento_a_danar, dano_porcentaje, tiempo_ejecucion)
-% guarda los resultados en un archivo Excel con ruta absoluta calculada automáticamente
+function guardar_resultados_AG(Resultado_final, no_elemento_a_danar, dano_porcentaje, tiempo_ejecucion, ID_Ejecucion, P)
+% Guarda resultados de AG en Excel, incluyendo archivos adicionales por variable
 
-    archivo_excel = obtenerRutaResultadosAG();  % ← SIEMPRE usa la ruta automática
+    %% Archivo principal con nombre dinámico
+    archivo_excel = obtenerRutaResultadosAG(ID_Ejecucion);  % Usa el ID para nombrar el archivo
 
+    % Crear carpeta si no existe
+    carpeta = fileparts(archivo_excel);
+    if ~exist(carpeta, 'dir')
+        mkdir(carpeta);
+    end
+
+    %% HOJA 1: Resumen
     elementos_txt = join(string(no_elemento_a_danar), ', ');
     porcentajes_txt = join(string(dano_porcentaje), ', ');
 
@@ -12,29 +20,94 @@ function guardar_resultados_AG(Resultado_final, no_elemento_a_danar, dano_porcen
         porcentajes_txt, ...
         tiempo_ejecucion
     };
+    encabezados = {'Fecha', 'Elementos_dañados', 'Porcentaje_dañado', 'Tiempo_ejecución_s'};
+    writecell(encabezados, archivo_excel, 'Sheet', 'Resumen', 'Range', 'A1');
+    writecell(fila_resumen, archivo_excel, 'Sheet', 'Resumen', 'Range', 'A2');
 
-    if ~isfile(archivo_excel)
-        encabezados = {'Fecha', 'Elementos_dañados', 'Porcentaje_dañado', 'Tiempo_ejecución_s'};
-        writecell(encabezados, archivo_excel, 'Sheet', 'Resumen', 'Range', 'A1');
-    end
+    %% HOJA 2: Daño por nodo
+    Resultado_final.ID_Ejecucion = repmat(ID_Ejecucion, height(Resultado_final), 1);
+    writetable(Resultado_final, archivo_excel, 'Sheet', 'Daño_nodos', 'WriteMode', 'replacefile');
 
-    [~, ~, raw] = xlsread(archivo_excel, 'Resumen');
-    fila_nueva = size(raw, 1) + 1;
-    writecell(fila_resumen, archivo_excel, 'Sheet', 'Resumen', 'Range', ['A' num2str(fila_nueva)]);
+    %% HOJA 3: Elementos dañados
+    tabla_danios = table( ...
+        repmat(ID_Ejecucion, length(no_elemento_a_danar), 1), ...
+        no_elemento_a_danar(:), ...
+        dano_porcentaje(:), ...
+        repmat(tiempo_ejecucion, length(no_elemento_a_danar), 1), ...
+        'VariableNames', {'ID_Ejecucion', 'Elemento', 'Porcentaje_de_Daño', 'Tiempo_ejecución_s'} ...
+    );
+    writetable(tabla_danios, archivo_excel, 'Sheet', 'Elementos_dañados', 'WriteMode', 'replacefile');
 
-    Resultado_final.ID_Ejecucion = repmat(fila_nueva - 1, height(Resultado_final), 1);
+    %% 📁 Archivos adicionales por variable
 
-    if fila_nueva == 2
-        writetable(Resultado_final, archivo_excel, 'Sheet', 'Daño_nodos', 'WriteMode', 'replacefile');
-    else
-        writetable(Resultado_final, archivo_excel, 'Sheet', 'Daño_nodos', 'WriteMode', 'Append');
-    end
+    % no_elemento_a_danar_ID.xlsx
+    archivo1 = fullfile(carpeta, sprintf('no_elemento_a_danar_%d.xlsx', ID_Ejecucion));
+    writematrix(no_elemento_a_danar(:), archivo1);
+
+    % dano_porcentaje_ID.xlsx
+    archivo2 = fullfile(carpeta, sprintf('dano_porcentaje_%d.xlsx', ID_Ejecucion));
+    writeMatrixWithHeader(archivo2, dano_porcentaje(:), "Porcentaje_de_Daño");
+
+    % P_ID.xlsx
+    archivo3 = fullfile(carpeta, sprintf('P_%d.xlsx', ID_Ejecucion));
+    writeMatrixWithHeader(archivo3, P, "P");
+
+    fprintf("✅ Archivos guardados correctamente en: %s\n", carpeta);
 end
 
-
-% SUBFUNCIÓN INTERNA
-function pathfile = obtenerRutaResultadosAG()
+% Ruta principal para archivo general
+function pathfile = obtenerRutaResultadosAG(ID)
     directorio_actual = pwd;
-    ruta_relativa = fullfile('..', 'resultados', 'resultados_AG.xlsx');
+    nombre_archivo = sprintf('resultados_AG_ID%d.xlsx', ID);
+    ruta_relativa = fullfile('..', 'resultados', nombre_archivo);
     pathfile = fullfile(directorio_actual, ruta_relativa);
 end
+
+% Función auxiliar para escribir matriz con encabezado
+function writeMatrixWithHeader(filename, data, header)
+    encabezado = cell(1, 1); encabezado{1} = header;
+    writecell(encabezado, filename, 'Sheet', 1, 'Range', 'A1');
+    writematrix(data, filename, 'Sheet', 1, 'Range', 'A2');
+end
+
+
+% function guardar_resultados_AG(Resultado_final, no_elemento_a_danar, dano_porcentaje, tiempo_ejecucion, ID_Ejecucion)
+% % Guarda los resultados en un archivo Excel nombrado según el ID de ejecución
+% 
+%     archivo_excel = obtenerRutaResultadosAG(ID_Ejecucion);  % ← Ahora recibe el ID
+% 
+%     elementos_txt = join(string(no_elemento_a_danar), ', ');
+%     porcentajes_txt = join(string(dano_porcentaje), ', ');
+% 
+%     fila_resumen = {
+%         datetime('now'), ...
+%         elementos_txt, ...
+%         porcentajes_txt, ...
+%         tiempo_ejecucion
+%     };
+% 
+%     if ~isfile(archivo_excel)
+%         encabezados = {'Fecha', 'Elementos_dañados', 'Porcentaje_dañado', 'Tiempo_ejecución_s'};
+%         writecell(encabezados, archivo_excel, 'Sheet', 'Resumen', 'Range', 'A1');
+%     end
+% 
+%     [~, ~, raw] = xlsread(archivo_excel, 'Resumen');
+%     fila_nueva = size(raw, 1) + 1;
+%     writecell(fila_resumen, archivo_excel, 'Sheet', 'Resumen', 'Range', ['A' num2str(fila_nueva)]);
+% 
+%     Resultado_final.ID_Ejecucion = repmat(fila_nueva - 1, height(Resultado_final), 1);
+% 
+%     if fila_nueva == 2
+%         writetable(Resultado_final, archivo_excel, 'Sheet', 'Daño_nodos', 'WriteMode', 'replacefile');
+%     else
+%         writetable(Resultado_final, archivo_excel, 'Sheet', 'Daño_nodos', 'WriteMode', 'Append');
+%     end
+% end
+% 
+% % SUBFUNCIÓN ACTUALIZADA para recibir ID
+% function pathfile = obtenerRutaResultadosAG(ID)
+%     directorio_actual = pwd;
+%     nombre_archivo = sprintf('resultados_AG_ID%d.xlsx', ID);
+%     ruta_relativa = fullfile('..', 'resultados', nombre_archivo);
+%     pathfile = fullfile(directorio_actual, ruta_relativa);
+% end
