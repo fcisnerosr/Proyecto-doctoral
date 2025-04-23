@@ -82,69 +82,6 @@ L_d = extraer_longitudes_danadas(archivo_excel, no_elemento_a_danar);
 KG_damaged_cond     = condensacion_estatica(KG_damaged);
 KG_undamaged_cond   = condensacion_estatica(KG_undamaged);
 
-% Cargas aplicadas con matriz condensada
-% P = buildLoadVector();
-% P = [    0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          500000
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          0
-%          -500000
-%          0]
-% Deform = (KG_ubdamaged_cond^-1) * P
 
 % Modos y frecuencias de estructura condensados y globales
 [modos_cond_d,frec_cond_d, Omega_cond_d] = modos_frecuencias(KG_damaged_cond,M_cond);
