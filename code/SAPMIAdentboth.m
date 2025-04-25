@@ -10,12 +10,11 @@ carpeta = 'revision_6_jacket-subestructura_4NIVELES';
 archivo = 'datos_revision_5_jacket-subestructura_5NIVELES';
 archivo_excel = construirRutaExcel(carpeta, archivo);
 
-% tirante         = 87000;    % en mm
-% tiempo          = 03;       % en anos
-% d_agua          = 1.07487 * 10^-8; % unidades de la densidad del agua en N/mm^3
-% % d_agua          = 0; % unidades de la densidad del agua en N/mm^3
-% densidad_crec   = 1.3506*10^-7;    % en N/mm^3
-% densidad_crec   = 0;    % en N/mm^3
+tirante         = 87000;    % en mm
+tiempo          = 03;       % en anos
+d_agua          = 1.07487 * 10^-8; % unidades de la densidad del agua en N/mm^3
+% d_agua          = 0; % unidades de la densidad del agua en N/mm^3
+densidad_crec   = 1.3506*10^-7;    % en N/mm^3
 % Valor de la dessidad del crecimiento marino
 % Valor de encontrado en internet = 1325 kg/m^3
 % Conversión: 1325 kg/m^3 * (1 N / 9.81 kg) * (1 m^3/1000^3 m^3) = 1.3506*10^-7 en N/mm^3
@@ -24,16 +23,19 @@ archivo_excel = construirRutaExcel(carpeta, archivo);
 pathfile = obtenerRutaMarco3Ddam0();
 
 % Danos en elementos tubulares
-ID_Ejecucion = 1;
-no_elemento_a_danar = sort([3 4 5 2]);
+ID_Ejecucion = 5;
+no_elemento_a_danar = sort([102]);
+% no_elemento_a_danar = sort([3 4 5 2]);
 % no_elemento_a_danar = sort([29 27 26 28]);
-% no_elemento_a_danar = sort([103 104 106 108]);
+% no_elemento_a_danar = sort([50 51 52 53]);
 % no_elemento_a_danar = sort([76 74 72 75]);
+% no_elemento_a_danar = sort([103 104 106 108]);
 % no_elemento_a_danar = sort([1 18 24 43 25 26 21 5]);
 % no_elemento_a_danar = sort([25 42 48 67 49 50 45 29]);
 caso_dano           = repmat({'corrosion'}, 1, length(no_elemento_a_danar)); 
 % dano_porcentaje     = [5 5 5 5];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
-dano_porcentaje     = [10 10 10 10];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
+dano_porcentaje     = [40];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
+% dano_porcentaje     = [10 10 10 10];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 % dano_porcentaje     = [40 40 40 40];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 % dano_porcentaje     = [30 30 30 30 30 30 30 30 30];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 % dano_porcentaje     = [40 40 40 40 40 40 40 40 40];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
