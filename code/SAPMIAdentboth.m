@@ -24,17 +24,18 @@ pathfile = obtenerRutaMarco3Ddam0();
 
 % Danos en elementos tubulares
 ID_Ejecucion = 5;
-no_elemento_a_danar = sort([102]);
+% no_elemento_a_danar = sort([102]);
 % no_elemento_a_danar = sort([3 4 5 2]);
 % no_elemento_a_danar = sort([29 27 26 28]);
 % no_elemento_a_danar = sort([50 51 52 53]);
 % no_elemento_a_danar = sort([76 74 72 75]);
-% no_elemento_a_danar = sort([103 104 106 108]);
+no_elemento_a_danar = sort([104]);
+% no_elemento_a_danar = sort([103 104 105 106]);
 % no_elemento_a_danar = sort([1 18 24 43 25 26 21 5]);
 % no_elemento_a_danar = sort([25 42 48 67 49 50 45 29]);
 caso_dano           = repmat({'corrosion'}, 1, length(no_elemento_a_danar)); 
-% dano_porcentaje     = [5 5 5 5];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
-dano_porcentaje     = [40];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
+dano_porcentaje     = [30];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
+% dano_porcentaje     = [40];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 % dano_porcentaje     = [10 10 10 10];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 % dano_porcentaje     = [40 40 40 40];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 % dano_porcentaje     = [30 30 30 30 30 30 30 30 30];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
@@ -85,7 +86,6 @@ L_d = extraer_longitudes_danadas(archivo_excel, no_elemento_a_danar);
 KG_damaged_cond     = condensacion_estatica(KG_damaged);
 KG_undamaged_cond   = condensacion_estatica(KG_undamaged);
 
-
 % Modos y frecuencias de estructura condensados y globales
 [modos_cond_d,frec_cond_d, Omega_cond_d] = modos_frecuencias(KG_damaged_cond,M_cond);
 [modos_cond_u,frec_cond_u, Omega_cond_u] = modos_frecuencias(KG_undamaged_cond,M_cond);
@@ -96,8 +96,8 @@ KG_undamaged_cond   = condensacion_estatica(KG_undamaged);
 % modos_cond_d = modos_cond_d .* mask; % Aplica la máscara a cada fila
 % modos_cond_u = modos_cond_u .* mask; % Se "anulan" los DOF excluidos en ambos modelos
 
-%
-% DIs
+
+% DIs (Damage Index)
 % Formas modales
 % 1. COMAC
 COMAC       = calcCOMAC(modos_cond_u, modos_cond_d);
@@ -153,8 +153,7 @@ absZ = abs(Z_flex);
 p_flex = 2 * (1 - myNormcdf(absZ));  % Prueba bilateral
 p_flex_norm = normalizeTo01(Perc_flex_node);    % Normalizar a [0,1] para integrarlo con otros DIs
 DI8_Prob_Flex = p_flex_norm;
-% %%
-% Pendientes integrar energía de deformacion y curvatura
+
 
 
 %%
@@ -172,7 +171,7 @@ DI.DI7_Zscore_Flex  = DI7_Zscore_Flex;
 DI.DI8_Prob_Flex    = DI8_Prob_Flex; 
 
 T = zeros(length(DI1_COMAC),1);     
-T(1) = 1;                       % Nodo 13 se marca como dañado
+T(33) = 1;                       % Nodo 13 se marca como dañado
 threshold = 0.05;               % umbral definido, por ejemplo, 0.05 (ajusta según tu caso)
 
 nVars = 8;
