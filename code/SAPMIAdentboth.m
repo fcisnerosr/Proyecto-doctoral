@@ -29,13 +29,13 @@ ID_Ejecucion = 5;
 % no_elemento_a_danar = sort([29 27 26 28]);
 % no_elemento_a_danar = sort([50 51 52 53]);
 % no_elemento_a_danar = sort([76 74 72 75]);
-no_elemento_a_danar = sort([104]);
+no_elemento_a_danar = sort([111 109 108 110]);
 % no_elemento_a_danar = sort([103 104 105 106]);
 % no_elemento_a_danar = sort([1 18 24 43 25 26 21 5]);
 % no_elemento_a_danar = sort([25 42 48 67 49 50 45 29]);
 caso_dano           = repmat({'corrosion'}, 1, length(no_elemento_a_danar)); 
-dano_porcentaje     = [30];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
-% dano_porcentaje     = [40];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
+dano_porcentaje     = [80 80 80 80];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
+    % dano_porcentaje     = [40];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 % dano_porcentaje     = [10 10 10 10];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 % dano_porcentaje     = [40 40 40 40];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 % dano_porcentaje     = [30 30 30 30 30 30 30 30 30];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
@@ -171,7 +171,7 @@ DI.DI7_Zscore_Flex  = DI7_Zscore_Flex;
 DI.DI8_Prob_Flex    = DI8_Prob_Flex; 
 
 T = zeros(length(DI1_COMAC),1);     
-T(33) = 1;                       % Nodo 13 se marca como dañado
+T(38) = 1;                       % Nodo que se marca como dañado
 threshold = 0.05;               % umbral definido, por ejemplo, 0.05 (ajusta según tu caso)
 
 nVars = 8;
