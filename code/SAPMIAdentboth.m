@@ -34,7 +34,7 @@ no_elemento_a_danar = sort([111 109 108 110]);
 % no_elemento_a_danar = sort([1 18 24 43 25 26 21 5]);
 % no_elemento_a_danar = sort([25 42 48 67 49 50 45 29]);
 caso_dano           = repmat({'corrosion'}, 1, length(no_elemento_a_danar)); 
-dano_porcentaje     = [80 80 80 80];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
+dano_porcentaje     = [40 40 40 40];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
     % dano_porcentaje     = [40];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 % dano_porcentaje     = [10 10 10 10];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 % dano_porcentaje     = [40 40 40 40];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
@@ -91,10 +91,10 @@ KG_undamaged_cond   = condensacion_estatica(KG_undamaged);
 [modos_cond_u,frec_cond_u, Omega_cond_u] = modos_frecuencias(KG_undamaged_cond,M_cond);
 % [modos_completos,frec_completos] = modos_frecuencias(KG_damaged,M_completa);
 
-% % proceso de filtrado de nodos de la superestructura
-% mask = createMask(25, 32, modos_cond_u);
-% modos_cond_d = modos_cond_d .* mask; % Aplica la máscara a cada fila
-% modos_cond_u = modos_cond_u .* mask; % Se "anulan" los DOF excluidos en ambos modelos
+% proceso de filtrado de nodos de la superestructura
+mask = createMask(41-4, 52-4, modos_cond_u);
+modos_cond_d = modos_cond_d .* mask; % Aplica la máscara a cada fila
+modos_cond_u = modos_cond_u .* mask; % Se "anulan" los DOF excluidos en ambos modelos
 
 
 % DIs (Damage Index)
@@ -213,5 +213,5 @@ toc
 %%
 
 tiempo_total = toc;
-guardar_resultados_AG(Resultado_final, no_elemento_a_danar, dano_porcentaje, tiempo_total, ID_Ejecucion, P);
+% guardar_resultados_AG(Resultado_final, no_elemento_a_danar, dano_porcentaje, tiempo_total, ID_Ejecucion, P);
 
