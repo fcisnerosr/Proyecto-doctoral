@@ -22,18 +22,14 @@ densidad_crec   = 1.3506*10^-7;    % en N/mm^3
 % Ruta relativa para la ubicación de marco3Ddam0
 pathfile = obtenerRutaMarco3Ddam0();
 
+% Vector de nodos dañados
+respuesta = [5, 7];  % Escribe aquí los nodos con daño
+
 % Danos en elementos tubulares
 ID_Ejecucion = 18;
-dano_porcentaje     = [30 30];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
-no_elemento_a_danar = sort([2 14]);
+no_elemento_a_danar = sort([98]);
+dano_porcentaje     = [30];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 caso_dano           = repmat({'corrosion'}, 1, length(no_elemento_a_danar)); 
-    % dano_porcentaje     = [40];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
-% dano_porcentaje     = [10 10 10 10];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
-% dano_porcentaje     = [40 40 40 40];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
-% dano_porcentaje     = [30 30 30 30 30 30 30 30 30];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
-% dano_porcentaje     = [40 40 40 40 40 40 40 40 40];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
-% dano_porcentaje     = [50 50 50 50 50 50 50 50 50];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
-% dano_porcentaje     = [80 80 80 80 80 80 80 80 80];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 
 % Corregir de formato los números en la tabla importada de ETABS: En todo este bloque de código, se realizó el cambio de formato de los números, debido a que ETABS importa sus tablas en formato de texto en algunas columnas.
 % % % % correccion_format_TablaETABS(archivo_excel);
@@ -104,33 +100,13 @@ DI.DI6_Perc_Flex    = DI6_Perc_Flex;
 DI.DI7_Zscore_Flex  = DI7_Zscore_Flex; 
 DI.DI8_Prob_Flex    = DI8_Prob_Flex; 
 
-T = zeros(length(DI1_COMAC),1);     
-T(5-4) = 1;                       % Nodo que se marca como dañado
-T(7-4) = 1;                       % Nodo que se marca como dañado
-% T(9-4) = 1;                       % Nodo que se marca como dañado
+% Genera el vector T con nodos marcados como dañados y define un umbral para la evaluación.
+[T, threshold] = generarT(no_elemento_a_danar, conectividad, DI1_COMAC);
 
-threshold = 0.05;               % umbral definido, por ejemplo, 0.05 (ajusta según tu caso)
+% Ejecuta el Algoritmo Genético (AG) para encontrar los pesos óptimos (alpha) que minimizan la diferencia entre los DIs combinados y el patrón de daño real.
+[optimal_alpha, fval] = GA(DI, T, threshold);
 
-nVars = 8;
-lb = zeros(1, nVars);
-ub = ones(1, nVars);
-
-options.PopulationSize  = 300;
-options.Generations     = 500;
-options.StallGenLimit   = 200;          % límite de generaciones en donde los individuos no cumplen con la función objetivo
-
-
-objFun = @(alpha) objective_function(alpha, DI, T, threshold);
-options = optimoptions('ga', 'Display', 'iter', 'PlotFcn', {@gaplotbestf, @gaplotbestindiv, @gaplotdistance, @gaplotrange, @gaplotstopping});
-
-[optimal_alpha, fval] = ga(objFun, nVars, [], [], [], [], lb, ub, [], options);
-
-disp('Pesos óptimos (alpha):');
-disp(optimal_alpha);
-disp('Valor de la función objetivo:');
-disp(fval);
-
-
+% Asigna cada valor del vector optimal_alpha a una variable individual w1 a w8, que representa el peso de cada índice de daño (DI).
 [w1, w2, w3, w4, w5, w6, w7, w8] = assignWeights(optimal_alpha);
 
 nNodes = length(DI1_COMAC);
