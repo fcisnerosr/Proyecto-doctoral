@@ -26,7 +26,7 @@ pathfile = obtenerRutaMarco3Ddam0();
 respuesta = [5, 7];  % Escribe aquí los nodos con daño
 
 % Danos en elementos tubulares
-ID_Ejecucion = 18;
+ID_Ejecucion = 1;
 no_elemento_a_danar = sort([98]);
 dano_porcentaje     = [30];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 caso_dano           = repmat({'corrosion'}, 1, length(no_elemento_a_danar)); 
@@ -142,5 +142,5 @@ fprintf('Desviación estándar: %.2f\n', std_dispersion);
 fprintf('Promedio absoluto: %.2f\n', mean_abs_dispersion);
 fprintf('Falsos positivos fuertes (>50): %d\n', n_falsos_positivos);
 
-guardar_resultados_AG(Resultado_final, no_elemento_a_danar, dano_porcentaje, tiempo_total, ID_Ejecucion, P);
+% guardar_resultados_AG(Resultado_final, no_elemento_a_danar, dano_porcentaje, tiempo_total, ID_Ejecucion, P);
 
