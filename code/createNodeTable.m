@@ -1,4 +1,4 @@
-function Resultado_final = createNodeTable(P_values, DI1_COMAC)
+function [Resultado_final, P_scaled] = createNodeTable(P_values, DI1_COMAC)
 % createNodeTable Crea una tabla con nodos, valores de daño ponderado y etiquetas.
 %
 % Sintaxis:

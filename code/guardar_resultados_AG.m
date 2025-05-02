@@ -56,6 +56,14 @@ function guardar_resultados_AG(Resultado_final, no_elemento_a_danar, dano_porcen
     archivo4 = fullfile(carpeta, sprintf('Resultado_final_%d.xlsx', ID_Ejecucion));
     writetable(Resultado_final, archivo4);
 
+    %% Guardar todas las figuras abiertas con el ID_Ejecucion
+    figs = findall(0, 'Type', 'figure');
+    for i = 1:length(figs)
+        fig = figs(i);
+        nombre_fig = fullfile(carpeta, sprintf('Figura_%d_%d.png', ID_Ejecucion, i));
+        saveas(fig, nombre_fig);  % Guarda como imagen PNG
+    end
+
     fprintf("✅ Archivos guardados correctamente en: %s\n", carpeta);
 end
 

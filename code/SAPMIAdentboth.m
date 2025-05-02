@@ -23,18 +23,10 @@ densidad_crec   = 1.3506*10^-7;    % en N/mm^3
 pathfile = obtenerRutaMarco3Ddam0();
 
 % Danos en elementos tubulares
-ID_Ejecucion = 5;
-% no_elemento_a_danar = sort([102]);
-% no_elemento_a_danar = sort([3 4 5 2]);
-% no_elemento_a_danar = sort([29 27 26 28]);
-% no_elemento_a_danar = sort([50 51 52 53]);
-% no_elemento_a_danar = sort([76 74 72 75]);
-no_elemento_a_danar = sort([111 109 108 110]);
-% no_elemento_a_danar = sort([103 104 105 106]);
-% no_elemento_a_danar = sort([1 18 24 43 25 26 21 5]);
-% no_elemento_a_danar = sort([25 42 48 67 49 50 45 29]);
+ID_Ejecucion = 18;
+dano_porcentaje     = [30 30];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
+no_elemento_a_danar = sort([2 14]);
 caso_dano           = repmat({'corrosion'}, 1, length(no_elemento_a_danar)); 
-dano_porcentaje     = [40 40 40 40];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
     % dano_porcentaje     = [40];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 % dano_porcentaje     = [10 10 10 10];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
 % dano_porcentaje     = [40 40 40 40];  % El dano va en decimal y se debe incluir el numero de elementos con dano dentro de un vector
@@ -171,7 +163,10 @@ DI.DI7_Zscore_Flex  = DI7_Zscore_Flex;
 DI.DI8_Prob_Flex    = DI8_Prob_Flex; 
 
 T = zeros(length(DI1_COMAC),1);     
-T(38) = 1;                       % Nodo que se marca como dañado
+T(5-4) = 1;                       % Nodo que se marca como dañado
+T(7-4) = 1;                       % Nodo que se marca como dañado
+% T(9-4) = 1;                       % Nodo que se marca como dañado
+
 threshold = 0.05;               % umbral definido, por ejemplo, 0.05 (ajusta según tu caso)
 
 nVars = 8;
@@ -181,6 +176,7 @@ ub = ones(1, nVars);
 options.PopulationSize  = 300;
 options.Generations     = 500;
 options.StallGenLimit   = 200;          % límite de generaciones en donde los individuos no cumplen con la función objetivo
+
 
 objFun = @(alpha) objective_function(alpha, DI, T, threshold);
 options = optimoptions('ga', 'Display', 'iter', 'PlotFcn', {@gaplotbestf, @gaplotbestindiv, @gaplotdistance, @gaplotrange, @gaplotstopping});
@@ -206,12 +202,27 @@ for j = 1:nNodes
             +   w7 * DI7_Zscore_Flex(j) + w8 + DI8_Prob_Flex(j); 
 end
 
-Resultado_final = createNodeTable(P, DI1_COMAC);
+[Resultado_final, P_scaled] = createNodeTable(P, DI1_COMAC);
 
 
 toc
 %%
 
 tiempo_total = toc;
-% guardar_resultados_AG(Resultado_final, no_elemento_a_danar, dano_porcentaje, tiempo_total, ID_Ejecucion, P);
+
+
+% Datos estadisticos de valores dispersos
+valid_vals = P_scaled(~isnan(P_scaled) & P_scaled < 50);  % Filtra los valores válidos excluyendo NaNs y posibles verdaderos positivos (valores ≥ 50)
+
+prom_dispersion     = mean(valid_vals);
+std_dispersion      = std(valid_vals);
+mean_abs_dispersion = mean(abs(valid_vals));
+n_falsos_positivos  = sum(valid_vals > 50);
+
+fprintf('Promedio de dispersión: %.2f\n', prom_dispersion);
+fprintf('Desviación estándar: %.2f\n', std_dispersion);
+fprintf('Promedio absoluto: %.2f\n', mean_abs_dispersion);
+fprintf('Falsos positivos fuertes (>50): %d\n', n_falsos_positivos);
+
+guardar_resultados_AG(Resultado_final, no_elemento_a_danar, dano_porcentaje, tiempo_total, ID_Ejecucion, P);
 
