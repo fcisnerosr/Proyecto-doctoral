@@ -86,7 +86,7 @@ modos_cond_u = modos_cond_u .* mask; % Se "anulan" los DOF excluidos en ambos mo
 
 [DI1_COMAC, DI2_Diff, DI3_Div, DI4_Diff_Flex, DI5_Div_Flex, DI6_Perc_Flex, DI7_Zscore_Flex, DI8_Prob_Flex] = calcular_DIs(modos_cond_u, modos_cond_d, Omega_cond_u, Omega_cond_d)
 
-%%
+
 clc
 % --- Nueva Implementación del Algoritmo Genético de detección de dano en los nodos del modelo (AG) ---
 
@@ -111,36 +111,17 @@ DI.DI8_Prob_Flex    = DI8_Prob_Flex;
 
 nNodes = length(DI1_COMAC);
 P = zeros(nNodes,1);  % Inicializamos el vector resultado
-%%
-% Iterar por cada nodo para combinar los índices
-for j = 1:nNodes
-    P(j) =      w1 * DI1_COMAC(j)       + w2 * DI2_Diff(j) +...
-            +   w3 * DI3_Div(j)         + w4 * DI4_Diff_Flex(j) + ...
-            +   w5 * DI5_Div_Flex(j)    + w6 * DI6_Perc_Flex(j) + ...
-            +   w7 * DI7_Zscore_Flex(j) + w8 + DI8_Prob_Flex(j); 
-end
+
+% Combina los 8 DIs aplicando pesos w1–w8 para generar un vector P que resume el daño por nodo.
+P = combinarDIs(w1,w2,w3,w4,w5,w6,w7,w8,DI1_COMAC,DI2_Diff,DI3_Div,DI4_Diff_Flex,DI5_Div_Flex,DI6_Perc_Flex,DI7_Zscore_Flex,DI8_Prob_Flex);
+
 
 [Resultado_final, P_scaled] = createNodeTable(P, DI1_COMAC);
 
-
 toc
-%%
-
 tiempo_total = toc;
 
-
-% Datos estadisticos de valores dispersos
-valid_vals = P_scaled(~isnan(P_scaled) & P_scaled < 50);  % Filtra los valores válidos excluyendo NaNs y posibles verdaderos positivos (valores ≥ 50)
-
-prom_dispersion     = mean(valid_vals);
-std_dispersion      = std(valid_vals);
-mean_abs_dispersion = mean(abs(valid_vals));
-n_falsos_positivos  = sum(valid_vals > 50);
-
-fprintf('Promedio de dispersión: %.2f\n', prom_dispersion);
-fprintf('Desviación estándar: %.2f\n', std_dispersion);
-fprintf('Promedio absoluto: %.2f\n', mean_abs_dispersion);
-fprintf('Falsos positivos fuertes (>50): %d\n', n_falsos_positivos);
+[prom_dispersion, std_dispersion, mean_abs_dispersion, n_falsos_positivos] = calcularEstadisticasDispersion(P_scaled);
 
 % guardar_resultados_AG(Resultado_final, no_elemento_a_danar, dano_porcentaje, tiempo_total, ID_Ejecucion, P);
 
