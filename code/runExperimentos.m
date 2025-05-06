@@ -57,13 +57,7 @@ function resultsTable = runExperimentos(config, DI_base, M_cond, mask, modos_int
             for elem = config.rangoElem
                 for dano = config.porcentajes
                     % Ejecuta una corrida del AG
-                    results(idx) = unaCorridaAG(
-                        elem, ...                   % Índice de elemento dañado
-                        dano, ...                   % Porcentaje de daño aplicado
-                        ID, ...                     % ID de ejecución
-                        config.archivo_excel, ...   % Ruta al Excel de modelo
-                        DI_base, M_cond, mask, ...  % Datos estáticos precomputados
-                        modos_intactos, Omega_intactos, conectividad);
+                    results(idx) = unaCorridaAG(elem, dano, ID, config.archivo_excel, DI_base, M_cond, mask, modos_intactos, Omega_intactos, conectividad);
                     % Avanza índices
                     idx = idx + 1;
                     ID  = ID  + 1;
@@ -75,13 +69,7 @@ function resultsTable = runExperimentos(config, DI_base, M_cond, mask, modos_int
                 for j = i+1:nElem
                     pair = [config.rangoElem(i), config.rangoElem(j)];
                     for dano = config.porcentajes
-                        results(idx) = unaCorridaAG(
-                            pair, ...                 % Pareja de elementos dañados
-                            dano, ...
-                            ID, ...
-                            config.archivo_excel, DI_base,
-                            M_cond, mask, modos_intactos,
-                            Omega_intactos, conectividad);
+                        results(idx) = unaCorridaAG(pair, dano, ID, config.archivo_excel, DI_base, M_cond, mask, modos_intactos, Omega_intactos, conectividad);
                         idx = idx + 1;
                         ID  = ID  + 1;
                     end

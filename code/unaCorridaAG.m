@@ -36,15 +36,16 @@ function resultado = unaCorridaAG( ...
     % 8. Calcular estadísticas de dispersión y falsos positivos
     [prom_dispersion, std_dispersion, mean_abs_dispersion, n_falsos_positivos] = calcularEstadisticasDispersion(P_scaled);
 
-    % 9. Empaquetar resultados en struct
-    resultado.ID                   = ID_Ejecucion;
-    resultado.Elemento             = no_elemento;
-    resultado.Porcentaje           = dano_porcentaje;
-    resultado.Tiempo_s             = toc;  % Asegúrate de un tic() antes de llamar
-    resultado.ObjFinal             = fval;
-    resultado.DeteccionOK          = ( ... % compara elemento dominante vs no_elemento ... );
-    resultado.PromDispersion       = prom_dispersion;
-    resultado.StdDispersion        = std_dispersion;
-    resultado.MeanAbsDispersion    = mean_abs_dispersion;
-    resultado.N_FalsosPositivos    = n_falsos_positivos;
+    % 9) Empaquetar resultados en struct
+    resultado.ID                = ID_Ejecucion;
+    resultado.Elemento          = no_elemento;
+    resultado.Porcentaje        = dano_porcentaje;
+    resultado.Tiempo_s          = toc;  
+    resultado.ObjFinal          = fval;
+    [~, domIdx]                 = max(P_scaled);
+    resultado.DeteccionOK       = (domIdx == no_elemento);
+    resultado.PromDispersion    = prom_dispersion;
+    resultado.StdDispersion     = std_dispersion;
+    resultado.MeanAbsDispersion = mean_abs_dispersion;
+    resultado.N_FalsosPositivos = n_falsos_positivos;
 end
