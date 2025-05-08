@@ -73,6 +73,10 @@ function resultsTable = runExperimentos(config, DI_base, M_cond, mask, modos_int
     fprintf('✅ Resultados guardados en %s\n', outputFile);
 end
 
+
+
+
+
     
 
 
