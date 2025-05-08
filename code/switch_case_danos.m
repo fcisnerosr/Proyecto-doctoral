@@ -1,4 +1,4 @@
-function [ke_d_total, ke_d, prop_geom_mat] = switch_case_danos(no_elemento_a_danar, num_de_ele_long, L_d, caso_dano, dano_porcentaje, prop_geom, E, G)
+function [ke_d_total, ke_d, prop_geom_mat] = switch_case_danos(no_elemento_a_danar, L_d, caso_dano, dano_porcentaje, prop_geom, E, G)
     %  % SECCION: Asignacion de propiedades con dano segun el caso de dano
     %     % for i = 1:length(no_elemento_a_danar)
     %     %     if  strcmp(caso_dano{i}, 'corrosion')

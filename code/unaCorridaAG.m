@@ -3,11 +3,19 @@
 function resultado = unaCorridaAG( ...
     no_elemento, dano_porcentaje, ID_Ejecucion, ...
     archivo_excel, ...                          % Ruta al Excel de datos
-    DI_base, M_cond, mask, modos_intactos, Omega_intactos, conectividad)
+    DI_base, M_cond, mask, modos_intactos, Omega_intactos, conectividad, ...
+    tipo_dano, prop_geom, E, G)
+    
+    % 0. Caso de daño:
+    caso_dano = repmat({ tipo_dano }, 1, numel(no_elemento));
+
+    % 0.1) Extraer longitudes de los elementos dañados
+    %      (no_elemento es el índice o vector de índices que estás dañando)
+    L_d = extraer_longitudes_danadas(archivo_excel, no_elemento);
 
     % 1. Aplicar daño local y ensamblar matrices (suprimir salidas no usadas):
-    [ke_d_total,~,~] = switch_case_danos( ...
-        no_elemento, dano_porcentaje, archivo_excel);
+    [ke_d_total, ~,~] = switch_case_danos(...
+         no_elemento, L_d, caso_dano, dano_porcentaje, prop_geom, E, G);
     [KG_dam,~,~] = ensamblaje_matriz_rigidez_global_con_dano( ...
         ke_d_total, archivo_excel, conectividad, no_elemento);
 

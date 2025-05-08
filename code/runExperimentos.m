@@ -1,75 +1,64 @@
-function resultsTable = runExperimentos(config, DI_base, M_cond, mask, modos_intactos, Omega_intactos, conectividad)
+function resultsTable = runExperimentos(config, DI_base, M_cond, mask, modos_intactos, Omega_intactos, conectividad, tipo_dano, prop_geom, E, G)
 % runExperimentos   Ejecuta un barrido completo de corridas del AG
-%   Esta función itera según la configuración definida en 'config',
-%   ejecuta la función unaCorridaAG para cada escenario, acumula
-%   los resultados y los exporta a un archivo Excel.
+%   resultsTable = runExperimentos(config, DI_base, M_cond, mask, modos_intactos, Omega_intactos, conectividad, tipo_dano, prop_geom, E, G)
 %
 %   Inputs:
-%     config           Struct con campos:
-%                      - tipo: 'simple' o 'combinado' (determina el patrón de iteración)
-%                      - rangoElem: vector de índices de elementos a dañar
-%                      - porcentajes: vector de porcentajes de daño a aplicar
-%                      - archivo_excel: ruta al archivo Excel de modelo original
-%                      - outputFolder: carpeta donde se guardarán los resultados
-%     DI_base          Struct con los 8 índices de daño calculados para el modelo intacto
-%     M_cond           Matriz de masas condensada usada en el análisis modal
-%     mask             Vector lógico o numérico que filtra los DOF relevantes
-%     modos_intactos   Matriz de modos del sistema intacto
-%     Omega_intactos   Vector de frecuencias asociadas a modos_intactos
-%     conectividad     Matriz o estructura que define la topología del modelo
+%     config         : Struct con campos tipo, rangoElem, porcentajes, archivo_excel, outputFolder
+%     DI_base        : Struct con los 8 índices de daño para el modelo intacto
+%     M_cond         : Matriz de masas condensada para análisis modal
+%     mask           : Máscara para filtrar DOF de superestructura
+%     modos_intactos : Modos del sistema intacto
+%     Omega_intactos : Frecuencias asociadas a modos_intactos
+%     conectividad   : Matriz de conectividad
+%     tipo_dano      : Cadena con tipo de daño (e.g., 'corrosion')
+%     prop_geom      : Propiedades geométricas de elementos sin daño
+%     E, G           : Módulos elástico y de cortante del material
 %
 %   Output:
-%     resultsTable     Tabla MATLAB con una fila por corrida y columnas con métricas
+%     resultsTable   : Tabla con resultados de cada corrida
 
-    %-------------------------------------------
     % 1) Determinar número total de corridas
-    %-------------------------------------------
     nElem = numel(config.rangoElem);
     nDano = numel(config.porcentajes);
     switch config.tipo
         case 'simple'
-            % Corridas de un solo elemento dañado por porcentaje
             totalRuns = nElem * nDano;
         case 'combinado'
-            % Corridas de pares de elementos dañados simultáneamente
             totalRuns = (nElem*(nElem-1)/2) * nDano;
         otherwise
             error('Tipo de corrida desconocido: %s', config.tipo);
     end
 
-    %-------------------------------------------
     % 2) Preasignar array de structs para resultados
-    %-------------------------------------------
-    % Prealocamos 'results' de longitud totalRuns para evitar
-    % redimensionamientos costosos dentro del bucle.
-    results(totalRuns) = struct();
+    results(totalRuns) = struct();  % Prealocación para rendimiento
 
     % Inicializar contadores
-    ID  = 1;    % Identificador secuencial de cada corrida
-    idx = 1;    % Índice para recorrer 'results'
+    ID  = 1;
+    idx = 1;
 
-    %-------------------------------------------
     % 3) Bucle principal de corridas
-    %-------------------------------------------
     switch config.tipo
         case 'simple'
-            % Para cada elemento y porcentaje de daño
             for elem = config.rangoElem
                 for dano = config.porcentajes
-                    % Ejecuta una corrida del AG
-                    results(idx) = unaCorridaAG(elem, dano, ID, config.archivo_excel, DI_base, M_cond, mask, modos_intactos, Omega_intactos, conectividad);
-                    % Avanza índices
+                    % Ejecutar una corrida del AG
+                    results(idx) = unaCorridaAG(elem, dano, ID, ...
+                        config.archivo_excel, DI_base, M_cond, mask, ...
+                        modos_intactos, Omega_intactos, conectividad, ...
+                        tipo_dano, prop_geom, E, G);
                     idx = idx + 1;
                     ID  = ID  + 1;
                 end
             end
         case 'combinado'
-            % Para cada par único de elementos y porcentaje de daño
             for i = 1:nElem
                 for j = i+1:nElem
-                    pair = [config.rangoElem(i), config.rangoElem(j)];
+                    elemPair = [config.rangoElem(i), config.rangoElem(j)];
                     for dano = config.porcentajes
-                        results(idx) = unaCorridaAG(pair, dano, ID, config.archivo_excel, DI_base, M_cond, mask, modos_intactos, Omega_intactos, conectividad);
+                        results(idx) = unaCorridaAG(elemPair, dano, ID, ...
+                            config.archivo_excel, DI_base, M_cond, mask, ...
+                            modos_intactos, Omega_intactos, conectividad, ...
+                            tipo_dano, prop_geom, E, G);
                         idx = idx + 1;
                         ID  = ID  + 1;
                     end
@@ -77,16 +66,13 @@ function resultsTable = runExperimentos(config, DI_base, M_cond, mask, modos_int
             end
     end
 
-    %-------------------------------------------
     % 4) Convertir a tabla y guardar en Excel
-    %-------------------------------------------
-    % Transforma el array de structs en una tabla para facilidad de manipulación
     resultsTable = struct2table(results);
-
-    % Construye ruta de salida y escribe el archivo
-    outputFile = fullfile(config.outputFolder, 'todos_los_resultados.xlsx');
+    outputFile   = fullfile(config.outputFolder, 'todos_los_resultados.xlsx');
     writetable(resultsTable, outputFile);
-
-    % Mensaje opcional al usuario
     fprintf('✅ Resultados guardados en %s\n', outputFile);
 end
+
+    
+
+

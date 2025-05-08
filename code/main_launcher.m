@@ -1,7 +1,9 @@
 % main_launcher.m
 % Punto de entrada para el flujo de corridas del AG de detección de daño
 % Realiza pre-cálculos estáticos una sola vez y luego lanza el launcher para las corridas variables
-
+% Apaga todos los warnings
+oldState = warning;
+warning('off', 'all');
 clc; clear; close all;
 % -------------------------------------------------------------------------
 % 1) Carga configuración de parámetros generales
@@ -60,4 +62,6 @@ DI_base = struct('DI1', DI1, 'DI2', DI2, 'DI3', DI3, 'DI4', DI4, ...
 % -------------------------------------------------------------------------
 % 5) Lanzamiento de corridas variables (desactivar para pruebas)
 % -------------------------------------------------------------------------
-tablaResultados = runExperimentos(config, DI_base, M_cond, mask, modos_intactos, Omega_intactos, conectividad);
+tablaResultados = runExperimentos(...
+    config, DI_base, M_cond, mask, modos_intactos, Omega_intactos, conectividad, ...
+    config.tipo_dano, prop_geom, E, G);
