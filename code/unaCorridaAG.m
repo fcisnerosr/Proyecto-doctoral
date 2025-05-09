@@ -2,22 +2,23 @@
 % Ejecuta una corrida del AG con un solo escenario de daño y devuelve resultados clave.
 function resultado = unaCorridaAG( ...
     no_elemento, dano_porcentaje, ID_Ejecucion, ...
-    archivo_excel, ...                          % Ruta al Excel de datos
-    DI_base, M_cond, mask, modos_intactos, Omega_intactos, conectividad, ...
-    tipo_dano, prop_geom, E, G)
+    config.archivo_excel, case_dano, ...
+    NE, IDmax, NEn, elements, nodes, damele, eledent, ...
+    A, Iy, Iz, J, E, G, vxz, elem_con_dano_long_NE)
     
     % 0. Caso de daño:
     caso_dano = repmat({ tipo_dano }, 1, numel(no_elemento));
 
     % 0.1) Extraer longitudes de los elementos dañados
     %      (no_elemento es el índice o vector de índices que estás dañando)
-    L_d = extraer_longitudes_danadas(archivo_excel, no_elemento);
+    L_d = extraer_longitudes_danadas(config.archivo_excel, no_elemento);
+    elem_con_dano_long_NE = vector_asignacion_danos(no_elemento, NE);
 
     % 1. Aplicar daño local y ensamblar matrices (suprimir salidas no usadas):
     [ke_d_total, ~,~] = switch_case_danos(...
          no_elemento, L_d, caso_dano, dano_porcentaje, prop_geom, E, G);
     [KG_dam,~,~] = ensamblaje_matriz_rigidez_global_con_dano( ...
-        ke_d_total, archivo_excel, conectividad, no_elemento);
+        ke_d_total, config.archivo_excel, conectividad, no_elemento);
 
     % 2. Condensación y cálculo de modos del modelo dañado
     KG_dam_cond = condensacion_estatica(KG_dam);
