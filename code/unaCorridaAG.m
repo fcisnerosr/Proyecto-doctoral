@@ -1,60 +1,65 @@
-% unaCorridaAG.m
-% Ejecuta una corrida del AG con un solo escenario de daño y devuelve resultados clave.
 function resultado = unaCorridaAG( ...
-    no_elemento, dano_porcentaje, ID_Ejecucion, ...
-    config.archivo_excel, case_dano, ...
-    NE, IDmax, NEn, elements, nodes, damele, eledent, ...
-    A, Iy, Iz, J, E, G, vxz, elem_con_dano_long_NE)
-    
-    % 0. Caso de daño:
-    caso_dano = repmat({ tipo_dano }, 1, numel(no_elemento));
+    elem, dano_porcentaje, ID_Ejecucion, ...
+    archivo_excel, tipo_dano, prop_geom, ...
+    DI_base, M_cond, mask, modos_intactos, Omega_intactos, conectividad, ...
+    NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, E, G, vxz)
+% unaCorridaAG   Ejecuta una sola corrida del AG y devuelve resultados.
+% Esta función asume que las lecturas estáticas (lectura_hoja_excel, etc.)
+% se hicieron una vez en main_launcher y se pasaron como argumentos.
+    % 0) Generar cell-array con tipo de daño para cada elemento
+    caso_dano = repmat({tipo_dano}, 1, numel(elem));
 
-    % 0.1) Extraer longitudes de los elementos dañados
-    %      (no_elemento es el índice o vector de índices que estás dañando)
-    L_d = extraer_longitudes_danadas(config.archivo_excel, no_elemento);
-    elem_con_dano_long_NE = vector_asignacion_danos(no_elemento, NE);
+    % 1) Extraer longitudes de todos los elementos (solo prop_geom necesario)
+    num_de_ele_long = extraer_longitudes_elementos(prop_geom, archivo_excel);
 
-    % 1. Aplicar daño local y ensamblar matrices (suprimir salidas no usadas):
-    [ke_d_total, ~,~] = switch_case_danos(...
-         no_elemento, L_d, caso_dano, dano_porcentaje, prop_geom, E, G);
+    % 2) Extraer longitudes de los elementos dañados
+    L_d = extraer_longitudes_danadas(archivo_excel, elem);
+
+    % 3) Mapear nodos afectados por daño
+    elem_con_dano_long_NE = vector_asignacion_danos(elem, NE);
+
+    % 4) Aplicar daño local y ensamblar matrices locales
+    [ke_d_total,~,~] = switch_case_danos(elem, L_d, caso_dano, dano_porcentaje, prop_geom, E, G);
+
+    % 5) Ensamble de matriz de rigidez global con daño
     [KG_dam,~,~] = ensamblaje_matriz_rigidez_global_con_dano( ...
-        ke_d_total, config.archivo_excel, conectividad, no_elemento);
+        ID_Ejecucion, NE, ke_d_total, elements, nodes, IDmax, NEn, damele, ...
+        eledent, A, Iy, Iz, J, E, G, vxz, elem_con_dano_long_NE);
 
-    % 2. Condensación y cálculo de modos del modelo dañado
+    % 6) Condensación y cálculo de modos del modelo dañado
     KG_dam_cond = condensacion_estatica(KG_dam);
-    [modos_cond_d,~, Omega_cond_d] = modos_frecuencias(KG_dam_cond, M_cond);  % omitir frec_cond_d
+    [modos_cond_d,~, Omega_cond_d] = modos_frecuencias(KG_dam_cond, M_cond);
 
-    % 3. Aplicar máscara a los modos dañados
+    % 7) Aplicar máscara a los modos dañados
     modos_cond_d = modos_cond_d .* mask;
 
-    % 4. Calcular DIs para el modelo dañado
-    DI_danyado = calcularDIs( ...
-        modos_intactos, modos_cond_d, Omega_intactos, Omega_cond_d);
+    % 8) Calcular DIs para el modelo dañado
+    DI_danado = calcularDIs(modos_intactos, modos_cond_d, Omega_intactos, Omega_cond_d);
 
-    % 5. Generar vector T y umbral
-    [T, threshold] = generarT(no_elemento, conectividad, DI_base.DI1);
+    % 9) Generar vector T y umbral
+    [T, threshold] = generarT(elem, conectividad, DI_base.DI1);
 
-    % 6. Ejecutar el AG
-    [optimal_alpha, fval] = GA(DI_danyado, T, threshold);
+    % 10) Ejecutar el AG
+    [optimal_alpha, fval] = GA(DI_danado, T, threshold);
 
-    % 7. Combinar DIs con pesos y escalar P
-    [w1, w2, w3, w4, w5, w6, w7, w8] = assignWeights(optimal_alpha);
-    P = combinarDIs(w1,w2,w3,w4,w5,w6,w7,w8, DI_base, DI_danyado);
-    [~, P_scaled] = createNodeTable(P, DI_base.DI1);  % suprimir Resultado_final si no se usa
+    % 11) Combinar DIs y escalar P
+    [w1,w2,w3,w4,w5,w6,w7,w8] = assignWeights(optimal_alpha);
+    P = combinarDIs(w1,w2,w3,w4,w5,w6,w7,w8, DI_base, DI_danado);
+    [~, P_scaled] = createNodeTable(P, DI_base.DI1);
 
-    % 8. Calcular estadísticas de dispersión y falsos positivos
+    % 12) Calcular estadísticas de dispersión y falsos positivos
     [prom_dispersion, std_dispersion, mean_abs_dispersion, n_falsos_positivos] = calcularEstadisticasDispersion(P_scaled);
 
-    % 9) Empaquetar resultados en struct
-    resultado.ID                = ID_Ejecucion;
-    resultado.Elemento          = no_elemento;
-    resultado.Porcentaje        = dano_porcentaje;
-    resultado.Tiempo_s          = toc;  
-    resultado.ObjFinal          = fval;
-    [~, domIdx]                 = max(P_scaled);
-    resultado.DeteccionOK       = (domIdx == no_elemento);
-    resultado.PromDispersion    = prom_dispersion;
-    resultado.StdDispersion     = std_dispersion;
-    resultado.MeanAbsDispersion = mean_abs_dispersion;
-    resultado.N_FalsosPositivos = n_falsos_positivos;
+    % 13) Empaquetar resultados en struct
+    resultado.ID               = ID_Ejecucion;
+    resultado.Elemento         = elem;
+    resultado.Porcentaje       = dano_porcentaje;
+    resultado.Tiempo_s         = toc;
+    resultado.ObjFinal         = fval;
+    [~, domIdx]                = max(P_scaled);
+    resultado.DeteccionOK      = (domIdx == elem);
+    resultado.PromDispersion   = prom_dispersion;
+    resultado.StdDispersion    = std_dispersion;
+    resultado.MeanAbsDispersion= mean_abs_dispersion;
+    resultado.N_FalsosPositivos= n_falsos_positivos;
 end
