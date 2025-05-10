@@ -2,6 +2,24 @@ function [KG_damaged, KG_undamaged, L, kg] = ensamblaje_matriz_rigidez_global_co
             ID, NE, ke_d_total, elements, nodes, IDmax, NEn, damele, ...
             eledent, A, Iy, Iz, J, E, G, vxz, elem_con_dano_long_NE)
 
+ID
+NE
+ke_d_total
+elements
+nodes
+IDmax
+NEn
+damele
+eledent
+A
+Iy
+Iz
+J
+E
+G
+vxz
+elem_con_dano_long_NE
+
     % Inicialización de matrices de rigidez global
     KG_damaged = [];
     KG_undamaged = [];

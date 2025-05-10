@@ -1,0 +1,65 @@
+%% Condensación estática
+function [KG_damaged_cond] = condensacion_estatica(KG_damaged)
+    n = length(KG_damaged);
+    vector = 1:n;
+    % [order1, order2] = reorganizar_vector(vector);
+    % Calcula la longitud del vector
+    n = length(vector);
+
+    % Calcula la cantidad de grupos de 6
+    num_grupos = n / 6;
+
+    % Inicializa los vectores order1 y order2
+    order1 = [];
+    order2 = [];
+
+    % Recorre cada grupo de 6 elementos
+    for i = 1:num_grupos
+        % Agrega el primer, segundo, y tercer valor del grupo a order1
+        order1 = [order1, vector((i-1)*6+1), vector((i-1)*6+2), vector((i-1)*6+3)];
+        
+        % Agrega los valores restantes del grupo a order2
+        for j = 4:6
+            order2 = [order2, vector((i-1)*6+j)];
+        end
+    end
+
+    % Ordena los valores en order2 de menor a mayor
+    order2 = sort(order2);
+    order2 = setdiff(order2, order1);
+    order  = horzcat(order1,order2);
+    % en el vector order se elige cómo irán organizados 
+    % las columnas para la reorganización de la matriz de rigidez
+    % el espacio en el vector "order" separa los grados que se van
+    % a condensar primero y después los GDL a considerar
+    % NOTA: Se conservan los grados traslacionales en X, Y y Z local y se condensan las rotaciones al rededor de cada eje local
+          % El resto de los GDL se van a condensar en la aplicación de la fórmula
+
+    % Formula:
+    %     K_tt = K_tt - K_tr' * K_rr^-1 * K_rt
+    %                 t = traslación
+    %                 r = rotación
+
+    % Matriz de permutación 
+    P = eye(length(order));
+    P = P(order,:);
+
+    % Reorganizar la matriz de rigidez
+    KG_reordered = P * KG_damaged * P';
+        % Esta matriz tiene los grados traslacionales (X y Y) de cada nodo del marco 
+        % y los grados rotacionales alrededor de Z, también de cada nodo en los primeros 12 filas y 12 columnas de la matriz.
+
+    % 1) Calcular cuántos grados vamos a conservar (t) y a condensar (r)
+    lim1 = length(order1);
+    lim2 = length(order2);
+    
+    % 2) Extraer las submatrices con los índices correctos
+    K_tt = KG_reordered(1:lim1,            1:lim1);             % t×t
+    K_rr = KG_reordered(lim1+1:lim1+lim2,  lim1+1:lim1+lim2);   % r×r
+    K_tr = KG_reordered(1:lim1,            lim1+1:lim1+lim2);   % t×r
+    K_rt = K_tr';                                            % r×t, simétrico
+    
+    % 3) Condensación estática
+    %    uso '\' en vez de inv() para más estabilidad numérica
+    KG_damaged_cond = K_tt - K_tr * (K_rr \ K_rt);
+end

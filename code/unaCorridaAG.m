@@ -1,11 +1,11 @@
 function resultado = unaCorridaAG( ...
     elem, dano_porcentaje, ID_Ejecucion, ...
-    archivo_excel, tipo_dano, prop_geom, ...
+    archivo_excel, tipo_dano, prop_geom, E, G, ...
     DI_base, M_cond, mask, modos_intactos, Omega_intactos, conectividad, ...
-    NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, E, G, vxz)
-% unaCorridaAG   Ejecuta una sola corrida del AG y devuelve resultados.
-% Esta función asume que las lecturas estáticas (lectura_hoja_excel, etc.)
-% se hicieron una vez en main_launcher y se pasaron como argumentos.
+    ID, NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, vxz)
+    % unaCorridaAG   Ejecuta una sola corrida del AG y devuelve resultados.
+    % Esta función asume que las lecturas estáticas (lectura_hoja_excel, etc.)
+    % se hicieron una vez en main_launcher y se pasaron como argumentos.
     % 0) Generar cell-array con tipo de daño para cada elemento
     caso_dano = repmat({tipo_dano}, 1, numel(elem));
 
@@ -23,10 +23,13 @@ function resultado = unaCorridaAG( ...
 
     % 5) Ensamble de matriz de rigidez global con daño
     [KG_dam,~,~] = ensamblaje_matriz_rigidez_global_con_dano( ...
-        ID_Ejecucion, NE, ke_d_total, elements, nodes, IDmax, NEn, damele, ...
+        ID, NE, ke_d_total, elements, nodes, IDmax, NEn, damele, ...
         eledent, A, Iy, Iz, J, E, G, vxz, elem_con_dano_long_NE);
-
+    
     % 6) Condensación y cálculo de modos del modelo dañado
+    if any(isnan(KG_dam(:))) || any(isinf(KG_dam(:)))
+        error('KG_dam tiene NaN o Inf');
+    end
     KG_dam_cond = condensacion_estatica(KG_dam);
     [modos_cond_d,~, Omega_cond_d] = modos_frecuencias(KG_dam_cond, M_cond);
 
@@ -51,7 +54,7 @@ function resultado = unaCorridaAG( ...
     [prom_dispersion, std_dispersion, mean_abs_dispersion, n_falsos_positivos] = calcularEstadisticasDispersion(P_scaled);
 
     % 13) Empaquetar resultados en struct
-    resultado.ID               = ID_Ejecucion;
+    resultado.ID               = ID;
     resultado.Elemento         = elem;
     resultado.Porcentaje       = dano_porcentaje;
     resultado.Tiempo_s         = toc;
