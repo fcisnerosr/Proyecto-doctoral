@@ -1,86 +1,124 @@
 function [ke_d_total, ke_d, prop_geom_mat] = switch_case_danos(no_elemento_a_danar, L_d, caso_dano, dano_porcentaje, prop_geom, E, G)
-    %  % SECCION: Asignacion de propiedades con dano segun el caso de dano
-    %     % for i = 1:length(no_elemento_a_danar)
-    %     %     if  strcmp(caso_dano{i}, 'corrosion')
-    %     %         [ke_d_total, ke_d, elem_con_dano_long_NE] = corrosionlocal(no_elemento_a_danar, dano_porcentaje, archivo_excel, NE, prop_geom, E, G, J);
-    %     %     elseif strcmp(caso_dano{i}, 'abolladura')
-    %     %         [ke_d_total, ke_d, elem_con_dano_long_NE] = abolladuralocal(no_elemento_a_danar, dano_porcentaje, archivo_excel, NE, prop_geom, E, G, J);
-    %     %     elseif strcmp(caso_dano{i}, 'efecto P-delta')
-    %     % 
-    %     %     elseif strcmp(caso_dano{i}, 'fatiga')
-    %     % 
-    %     %     else
-    %     %         error('Error: The option "%s" in cell %d is incorrectly written or not recognized.', caso_dano{i}, i);
-    %     %     end
-    %     % end
-    % Matrices de flexibilidades y de rigidez local llenas de ceros
-    f_AA_d = zeros(6, 6, length(no_elemento_a_danar));
-    ke_d = zeros(12, 12, length(no_elemento_a_danar));
+% switch_case_danos   Genera matrices de rigidez local con daño
+%   no_elemento_a_danar: vector de índices de elementos dañados
+%   L_d: longitudes de elementos dañados
+%   caso_dano: cell de strings con tipo de daño por elemento
+%   dano_porcentaje: vector de porcentajes de daño
+%   prop_geom: cell array con propiedades geométricas (strings o numéricos)
+%   E, G: módulos de elasticidad y cortante
+    
+    % Convertir prop_geom a matriz numérica (solo una vez)
+    numeric_cells = cellfun(@(x) convert_to_number(x), prop_geom, 'UniformOutput', false);
+    prop_geom_mat = cell2mat(numeric_cells);
 
-    for  idxElem = 1:length(no_elemento_a_danar)
-    % for i = 1
-        if strcmp(caso_dano{idxElem}, 'corrosion')
-            % Código de la corrosión local
-            % Bucle para cada elemento a dañar
-            for j = 1:length(no_elemento_a_danar)
-                % Reducción de espesor por corrosión
-                % index = find(num_de_ele_long(:,1) == j);
-                % long_elem_a_danar = num_de_ele_long(index,2);
-                prop_geom_mat = cellfun(@(x) convert_to_number(x), prop_geom, 'UniformOutput', false);  % Recorre cada elemento de prop_geom y lo convierte a número si es string
-                prop_geom_mat = cell2mat(prop_geom_mat);        % Convierte el cell array a matriz numérica
-                t(j) = prop_geom_mat(no_elemento_a_danar(j),10); % Espesor extraido intacto
-                t_corro(j) = dano_porcentaje(j) * t(j) / 100; % Espesor que va a restar al espesor sin dano
-                t_d(j) = t(j) - t_corro(j); % Espesor ya reducido
-                % Área con corrosión
-                D(j) = prop_geom_mat(no_elemento_a_danar(j),9);
-                D_d(j) = D(j) - (2*t_corro(j));
-                R_d(j) = 0.5 * D_d(j);
-                A1_d(j) = pi * R_d(j)^2;
-                R_interior_d(j) = 0.5 * (D_d(j) - (2*t_d(j)));
-                A2_d(j) = pi  * R_interior_d(j)^2;
-                A_d(j) = A1_d(j) - A2_d(j); % en mm^2
-                % Momento de inercia con daño
-                R_ext_d(j) = 0.5*D_d(j);
-                I_ext_d(j) = 1/4 * pi * R_ext_d(j)^4;
-                I_int_d(j) = 1/4 * pi * R_interior_d(j)^4;
-                I_d(j) = I_ext_d(j) - I_int_d(j);
-                % Momento polar del elemento con daño
-                J(j) = pi/32 * (D_d(j)^4 - ((D_d(j) - (2*t_d(j)))^4));
-                % Matriz de flexibilidades y uso de matriz de transformación T para convertirla a la matriz de rigidez local completa
-                % Matriz f_AA_d
-                f_AA_d(:,:,j) = [
-                    L_d(j)/(E(j)*A_d(j)),       0,                          0,                              0,                  0,                          0;
-                    0,                          L_d(j)^3/(3*E(j)*I_d(j)),   0,                              0,                  0,                          L_d(j)^2/(2*E(j)*I_d(j));
-                    0,                          0,                          L_d(j)^3/(3*E(j)*I_d(j)),       0,                  -L_d(j)^2/(2*E(j)*I_d(j)),  0;
-                    0,                          0,                          0,                              L_d(j)/(G(j)*J(j)), 0,                          0;
-                    0,                          0,                          -L_d(j)^2/(2*E(j)*I_d(j)),      0,                  L_d(j)/(E(j)*I_d(j)),       0;
-                    0,                          L_d(j)^2/(2*E(j)*I_d(j)),   0,                              0,                  0,                          L_d(j)/(E(j)*I_d(j))
+    nElem = numel(no_elemento_a_danar);
+    ke_d  = zeros(12, 12, nElem);
+
+    % Iterar por cada elemento dañado
+    for idxElem = 1:nElem
+        tipo = caso_dano{idxElem};
+        switch tipo
+            case 'corrosion'
+                %%
+                % % Diagnóstico de valores clave antes de armar f_AA
+                % j = idxElem;
+                % idx = no_elemento_a_danar(j);
+                % 
+                % % 1) Longitud del elemento
+                % fprintf('DEBUG: j=%d, elemento=%d, L_d=%g\n', j, idx, L_d(j));
+                % 
+                % % 2) Propiedades geométricas (diámetro y espesor original)
+                % fprintf('DEBUG: prop_geom_mat(%d,9:10) = [%g, %g]\n', idx, ...
+                %         prop_geom_mat(idx,9), prop_geom_mat(idx,10));
+                % 
+                % % 3) Espesor y diámetro extraídos
+                % t  = prop_geom_mat(idx,10);
+                % D  = prop_geom_mat(idx,9);
+                % fprintf('DEBUG: t=%g, D=%g\n', t, D);
+                % 
+                % % 4) Área residual y momento polar calculados
+                % t_corro = dano_porcentaje(j) * t / 100;
+                % t_d     = t - t_corro;
+                % D_d     = D - 2*t_corro;
+                % R_d     = D_d/2;
+                % A1_d    = pi * R_d^2;
+                % R_in    = (D_d - 2*t_d)/2;
+                % A2_d    = pi * R_in^2;
+                % A_d     = A1_d - A2_d;
+                % J_d     = pi/32 * (D_d^4 - (D_d - 2*t_d)^4);
+                % fprintf('DEBUG: A_d=%g, J_d=%g\n', A_d, J_d);
+                % 
+                % % 5) Módulos de material
+                % fprintf('DEBUG: E(%d)=%g, G(%d)=%g\n', j, E(j), j, G(j));
+                % 
+                % % 6) Condición de la matriz de flexibilidades antes de invertir
+                % f_AA = zeros(6);
+                % condF = nan;
+                % try
+                %     condF = condest(f_AA);
+                % catch
+                % end
+                % fprintf('DEBUG: condición inicial f_AA = %g (antes de rellenar)\n', condF);
+                %%
+                % Solo necesitamos procesar el idxElem puntual en modo simple
+                j = idxElem;
+                idx = no_elemento_a_danar(j);
+
+                % Valores geométricos originales
+                t = prop_geom_mat(idx,12);  % espesor
+                D = prop_geom_mat(idx,11);  % diámetro exterior
+
+                % Cálculos de corrosión
+                t_corro = dano_porcentaje(j) * t / 100;
+                t_d = t - t_corro;
+
+                D_d = D - 2*t_corro;
+                R_d = D_d/2;
+                A1_d   = pi * R_d^2;
+                R_in   = (D_d - 2*t_d)/2;
+                A2_d   = pi * R_in^2;
+                A_d    = A1_d - A2_d;
+                if A_d <= 0, error('Área A_d inválida en elemento %d', idx); end
+
+                % Momento polar con daño
+                J_d = pi/32 * (D_d^4 - (D_d - 2*t_d)^4);
+                if J_d <= 0, error('Momento polar J_d inválido en elemento %d', idx); end
+
+                % Matriz de flexibilidades local (6×6)
+                f_AA = [
+                    L_d(j)/(E(j)*A_d), 0, 0, 0, 0, 0;
+                    0, L_d(j)^3/(3*E(j)*J_d), 0, 0, 0, L_d(j)^2/(2*E(j)*J_d);
+                    0, 0, L_d(j)^3/(3*E(j)*J_d), 0, -L_d(j)^2/(2*E(j)*J_d),0;
+                    0, 0, 0, L_d(j)/(G(j)*J_d), 0, 0;
+                    0, 0, -L_d(j)^2/(2*E(j)*J_d), 0, L_d(j)/(E(j)*J_d),0;
+                    0, L_d(j)^2/(2*E(j)*J_d), 0, 0, 0, L_d(j)/(E(j)*J_d)
                 ];
 
-                % Matriz de transformación T
+                % Operación de rigidez local (12×12)
                 T = [
-                    -1,   0,    0,      0,  0,   0;
-                     0,  -1,    0,      0,  0,   0;
-                     0,   0,    -1,     0,  0,   0;
-                     0,   0,    0,      -1, 0,   0;
-                     0,   0,    L_d(j), 0,  -1,  0;
-                     0, -L_d(j),0,      0,  0,  -1;
-                     1,   0,    0,      0,  0,   0;
-                     0,   1,    0,      0,  0,   0;
-                     0,   0,    1,      0,  0,   0;
-                     0,   0,    0,      1,  0,   0;
-                     0,   0,    0,      0,  1,   0;
-                     0,   0,    0,      0,  0,   1
+                    -1,0,0,0,0,0;
+                     0,-1,0,0,0,0;
+                     0,0,-1,0,0,0;
+                     0,0,0,-1,0,0;
+                     0,0,L_d(j),0,-1,0;
+                     0,-L_d(j),0,0,0,-1;
+                     1,0,0,0,0,0;
+                     0,1,0,0,0,0;
+                     0,0,1,0,0,0;
+                     0,0,0,1,0,0;
+                     0,0,0,0,1,0;
+                     0,0,0,0,0,1
                 ];
 
-                ke_d(:,:,j) = T * f_AA_d(:,:,j)^(-1) * T'; % Matriz de rigidez local del elemento tubular
-            end % Fin del bucle for de corrosión
+                ke_d(:,:,j) = T * (f_AA \ eye(6)) * T';
 
-        elseif strcmp(caso_dano{idxElem}, 'abolladura')
-            % código de abolladura...
-        else
-            error('Caso de daño "%s" no soportado', caso_dano{idxElem});
-    end % Fin del ciclo for que itera sobre cada elemento a dañar
+            case 'abolladura'
+                error('Abolladura no implementada');
+
+            otherwise
+                error('Caso de daño "%s" no soportado', tipo);
+        end
+    end
+
     ke_d_total = ke_d;
-
 end

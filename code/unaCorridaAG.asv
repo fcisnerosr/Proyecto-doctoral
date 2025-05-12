@@ -8,6 +8,7 @@ function resultado = unaCorridaAG( ...
     % se hicieron una vez en main_launcher y se pasaron como argumentos.
     % 0) Generar cell-array con tipo de daño para cada elemento
     caso_dano = repmat({tipo_dano}, 1, numel(elem));
+    
 
     % 1) Extraer longitudes de todos los elementos (solo prop_geom necesario)
     % num_de_ele_long = extraer_longitudes_elementos(prop_geom, archivo_excel);
@@ -27,6 +28,9 @@ function resultado = unaCorridaAG( ...
         eledent, A, Iy, Iz, J, E, G, vxz, elem_con_dano_long_NE);
     
     % 6) Condensación y cálculo de modos del modelo dañado
+    if any(isnan(KG_dam(:))) || any(isinf(KG_dam(:)))
+        error('KG_dam tiene NaN o Inf');
+    end
     KG_dam_cond = condensacion_estatica(KG_dam);
     [modos_cond_d,~, Omega_cond_d] = modos_frecuencias(KG_dam_cond, M_cond);
 
@@ -34,7 +38,7 @@ function resultado = unaCorridaAG( ...
     modos_cond_d = modos_cond_d .* mask;
 
     % 8) Calcular DIs para el modelo dañado
-    DI_danado = calcular_DIs(modos_intactos, modos_cond_d, Omega_intactos, Omega_cond_d);
+    DI_danado = calcularDIs(modos_intactos, modos_cond_d, Omega_intactos, Omega_cond_d);
 
     % 9) Generar vector T y umbral
     [T, threshold] = generarT(elem, conectividad, DI_base.DI1);
@@ -48,8 +52,7 @@ function resultado = unaCorridaAG( ...
     [~, P_scaled] = createNodeTable(P, DI_base.DI1);
 
     % 12) Calcular estadísticas de dispersión y falsos positivos
-    [prom_dispersion, std_dispersion, mean_abs_dispersion, n_falsos_positivos] = ...
-        calcularEstadisticasDispersion(P_scaled);
+    [prom_dispersion, std_dispersion, mean_abs_dispersion, n_falsos_positivos] = calcularEstadisticasDispersion(P_scaled);
 
     % 13) Empaquetar resultados en struct
     resultado.ID               = ID;
