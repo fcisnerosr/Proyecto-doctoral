@@ -1,43 +1,32 @@
-function mask = createMask(firstNode, lastNode, modalMatrix)
-% createMask Genera una máscara para excluir nodos, calculando internamente
-%            el número total de nodos a partir de la matriz modal.
+function mask = createMask(firstNode, lastNode, modalMatrix, numFixedNodes)
+% createMask  Genera máscara sabiendo que se han eliminado los 'numFixedNodes' 
+%             primeros nodos de modalMatrix.
 %
-% Sintaxis:
-%   mask = createMask(firstNode, lastNode, modalMatrix)
+% Inputs:
+%  firstNode     – Primer nodo a enmascarar (ID real, p.e. 41)
+%  lastNode      – Último nodo a enmascarar  (ID real, p.e. 52)
+%  modalMatrix   – Matriz de modos (totalDOF×nModes) tras la condensación
+%  numFixedNodes – Cuántos nodos fijos (y sus DOF) ya no están en modalMatrix
 %
-% Entradas:
-%   firstNode  - ID del primer nodo a excluir (por ejemplo, 17)
-%   lastNode   - ID del último nodo a excluir (por ejemplo, 20)
-%   modalMatrix- Matriz de formas modales de tamaño (totalDOF x nModes),
-%                donde totalDOF es el número total de DOF. Se asume que
-%                cada nodo tiene 3 DOF.
-%
-% Salida:
-%   mask       - Vector columna de tamaño (totalDOF x 1) con valores 1 para
-%                los DOF que se incluyen y 0 para los DOF que se excluyen.
-%
-% Ejemplo:
-%   % Si modalMatrix tiene 60 filas (20 nodos * 3 DOF):
-%   mask = createMask(17, 20, modalMatrix);
+% Output:
+%  mask          – Vector (totalDOF×1) con 1 en DOF incluidos, 0 en excluidos
 
-    % Número de DOF totales
-    totalDOF = size(modalMatrix, 1);
-    dofPerNode = 3;  % Se asume que cada nodo tiene 3 DOF.
-    
-    % Calcular el número total de nodos a partir de la matriz modal.
+    if nargin<4, numFixedNodes = 0; end
+    totalDOF   = size(modalMatrix,1);
+    dofPerNode = 3;                  % tras la estática, quedaron sólo 3 DOF por nodo
     totalNodes = totalDOF / dofPerNode;
     
-    % Inicializar la máscara con 1's para todos los DOF.
-    mask = ones(totalDOF, 1);
+    mask = ones(totalDOF,1);
     
-    % Recorrer cada nodo a excluir (desde firstNode hasta lastNode)
-    for node = firstNode:lastNode
-        % Calcular la fila inicial para el nodo 'node'
-        startRow = dofPerNode * (node - 1) + 1;
-        % Calcular la fila final para el nodo 'node'
-        endRow = dofPerNode * (node - 1) + dofPerNode;
-        
-        % Asignar 0 a los DOF correspondientes para excluir ese nodo.
+    % Convertir el ID real de nodo al índice “local” de modalMatrix
+    for nod = firstNode:lastNode
+        localNod = nod - numFixedNodes;
+        if localNod<1 || localNod>totalNodes
+            error('Nodo %d queda fuera de rango tras quitar %d nodos fijos', ...
+                  nod, numFixedNodes);
+        end
+        startRow = (localNod-1)*dofPerNode + 1;
+        endRow   = localNod*dofPerNode;
         mask(startRow:endRow) = 0;
     end
 end

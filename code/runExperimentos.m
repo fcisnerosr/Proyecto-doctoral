@@ -39,7 +39,8 @@ function resultsTable = runExperimentos( ...
     results(totalRuns) = struct();  % Prealocación para rendimiento
 
     % Inicializar contadores
-    ID_Ejecucion  = 1;
+    ID_Ejecucion = 1;
+    idx          = 1;
 
     % 3) Bucle principal de corridas
     switch config.tipo
@@ -53,7 +54,8 @@ function resultsTable = runExperimentos( ...
                         prop_geom, E, G, ...         % ← aquí van los 3
                         DI_base, M_cond, mask, modos_intactos, Omega_intactos, conectividad, ...
                         ID, NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, vxz);
-                    ID_Ejecucion  = ID_Ejecucion  + 1;
+                    ID_Ejecucion = ID_Ejecucion + 1;  % para la próxima corrida
+                    idx          = idx          + 1;  % para la próxima posición en results
                 end
             end
         case 'combinado'

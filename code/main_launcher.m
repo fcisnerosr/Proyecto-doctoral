@@ -51,7 +51,11 @@ KG_und_cond = condensacion_estatica(KG_und);
 [modos_intactos, frec_intactos, Omega_intactos] = modos_frecuencias(KG_und_cond, M_cond);
 
 % 4.6) Creación de máscara para nodos de interés en superestructura
-mask = createMask(41-4, 52-4, modos_intactos);
+% Supongamos que has condensado los 4 nodos empotrados:
+numFixed = 4;
+
+% Nodos 41…52 de la superestructura
+mask = createMask(41, 52, modos_intactos, numFixed);
 
 % 4.7) Cálculo de índices de daño base (DI_base)
 [DI1, DI2, DI3, DI4, DI5, DI6, DI7, DI8] = ...
