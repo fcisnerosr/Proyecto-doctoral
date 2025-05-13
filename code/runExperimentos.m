@@ -23,68 +23,58 @@ function resultsTable = runExperimentos( ...
 %     resultsTable   : Tabla con resultados de cada corrida
 
 
-    % 1) Determinar número total de corridas
-    nElem = numel(config.rangoElem);
-    nDano = numel(config.porcentajes);
-    switch config.tipo
-        case 'simple'
-            totalRuns = nElem * nDano;
-        case 'combinado'
-            totalRuns = (nElem*(nElem-1)/2) * nDano;
-        otherwise
-            error('Tipo de corrida desconocido: %s', config.tipo);
-    end
+    % 1) Número total de corridas
+    % totalRuns = numel(config.rangoElem) * numel(config.porcentajes);
+    % results    = repmat(template, totalRuns, 1);
 
-    % 2) Preasignar array de structs para resultados
-    results(totalRuns) = struct();  % Prealocación para rendimiento
-
-    % Inicializar contadores
+    nElem     = numel(config.rangoElem);
+    nDano     = numel(config.porcentajes);
+    totalRuns = nElem * nDano;  % o la fórmula de combinado…
+    
+    % 2) Crear un "template" con los mismos campos que devuelve unaCorridaAG
+    template = struct( ...
+        'ID',                 [], ...
+        'Elemento',           [], ...
+        'Porcentaje',         [], ...
+        'Tiempo_s',           [], ...
+        'ObjFinal',           [], ...
+        'DeteccionOK',        [], ...
+        'PromDispersion',     [], ...
+        'StdDispersion',      [], ...
+        'MeanAbsDispersion',  [], ...
+        'N_FalsosPositivos',  []  ...
+    );
+    
+    % 3) Pre‐alocar el array results con ese template
+    results = repmat(template, totalRuns, 1);
+    
+    % 4) Inicializar contadores
     ID_Ejecucion = 1;
     idx          = 1;
-
-    % 3) Bucle principal de corridas
-    switch config.tipo
-        case 'simple'
-            for elem = config.rangoElem
-                for dano = config.porcentajes
-                    % Ejecutar una corrida del AG
-                    results(idx) = unaCorridaAG( ...
-                        elem, dano, ...
-                        config.archivo_excel, tipo_dano, ...
-                        prop_geom, E, G, ...         % ← aquí van los 3
-                        DI_base, M_cond, mask, modos_intactos, Omega_intactos, conectividad, ...
-                        ID, NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, vxz);
-                    ID_Ejecucion = ID_Ejecucion + 1;  % para la próxima corrida
-                    idx          = idx          + 1;  % para la próxima posición en results
-                end
-            end
-        case 'combinado'
-            for i = 1:nElem
-                for j = i+1:nElem
-                    elemPair = [config.rangoElem(i), config.rangoElem(j)];
-                    for dano = config.porcentajes
-                        % results(idx) = unaCorridaAG( ...
-                        %     elem, dano, ...
-                        %     config.archivo_excel, tipo_dano, ... % otros inputs
-                        %     DI_base, M_cond, mask, modos_intactos, Omega_intactos, conectividad, ...
-                        %     ID, NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, vxz);
-                        ID_Ejecucion  = ID_Ejecucion  + 1;
-                    end
-                end
-            end
-    end
-
-    % 4) Convertir a tabla y guardar en Excel
-    resultsTable = struct2table(results);
-    outputFile   = fullfile(config.outputFolder, 'todos_los_resultados.xlsx');
-    writetable(resultsTable, outputFile);
-    fprintf('✅ Resultados guardados en %s\n', outputFile);
-end
-
-
-
-
-
     
-
-
+    % 5) Bucle de corridas…
+    switch config.tipo
+      case 'simple'
+        for elem = config.rangoElem
+          for dano = config.porcentajes
+            % Ejecutar la corrida
+            out = unaCorridaAG( elem, dano, ...
+                config.archivo_excel, tipo_dano, prop_geom, E, G, ...
+                DI_base, M_cond, mask, modos_intactos, Omega_intactos, conectividad, ...
+                ID, NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, vxz);
+    
+            % Guardar en el array pre‐alocado
+            results(idx) = out;
+    
+            % Avanzar contadores
+            ID_Ejecucion = ID_Ejecucion + 1;
+            idx          = idx          + 1;
+          end
+        end
+      % … caso 'combinado' similar …
+    end
+    
+    % 6) Convertir a tabla y guardar
+    resultsTable = struct2table(results);
+    writetable(resultsTable, fullfile(config.outputFolder,'todos_los_resultados.xlsx'));
+end
