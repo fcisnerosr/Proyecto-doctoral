@@ -1,4 +1,4 @@
-function resultado = unaCorridaAG( ...
+function resultado = unaCorridaAG( ID_Ejecucion,...
     elem, dano_porcentaje, ...
     archivo_excel, tipo_dano, prop_geom, E, G, ...
     DI_base, M_cond, mask, modos_intactos, Omega_intactos, conectividad, ...
@@ -75,15 +75,14 @@ function resultado = unaCorridaAG( ...
         calcularEstadisticasDispersion(P_scaled);
 
     % 13) Empaquetar resultados en struct
-    resultado.ID               = ID;
-    resultado.Elemento         = elem;
-    resultado.Porcentaje       = dano_porcentaje;
-    resultado.Tiempo_s         = toc;
-    resultado.ObjFinal         = fval;
-    [~, domIdx]                = max(P_scaled);
-    resultado.DeteccionOK      = (domIdx == elem);
-    resultado.PromDispersion   = prom_dispersion;
-    resultado.StdDispersion    = std_dispersion;
-    resultado.MeanAbsDispersion= mean_abs_dispersion;
-    resultado.N_FalsosPositivos= n_falsos_positivos;
+    resultado.ID                = ID_Ejecucion;
+    resultado.Elemento          = elem;
+    resultado.Porcentaje        = dano_porcentaje;
+    resultado.Tiempo_s          = toc;
+    resultado.ObjFinal          = fval;
+    resultado.DeteccionOK       = esDeteccionCorrecta(conectividad, elem, P_scaled);
+    resultado.PromDispersion    = prom_dispersion;
+    resultado.StdDispersion     = std_dispersion;
+    resultado.MeanAbsDispersion = mean_abs_dispersion;
+    resultado.N_FalsosPositivos = n_falsos_positivos;
 end
