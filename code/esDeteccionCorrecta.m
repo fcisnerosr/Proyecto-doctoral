@@ -9,14 +9,19 @@ function ok = esDeteccionCorrecta(conectividad, elemento, P_scaled)
 %   - P_scaled:      vector (nodos×1) de valores normalizados
 %
 %   ok: lógico, true si domIdx ∈ {nodo1,nodo2}
+  % Offset = cuantos nodos empotrados no están en P_scaled
+  offset = 4;
 
-  % Nodo con mayor valor
+  % 1) Índice interno de P_scaled con mayor valor
   [~, domIdx] = max(P_scaled);
 
-  % Extrae los dos nodos del elemento dado
-  fila      = conectividad(:,1)==elemento;
-  elemNodos = conectividad(fila,2:3);
+  % 2) Lo convierto a número de nodo real
+  nodoDetectado = domIdx + offset;
 
-  % Devuelve true si domIdx coincide con alguno
-  ok = any(domIdx == elemNodos);
+  % 3) Extraigo los nodos que componen ese elemento
+  fila      = (conectividad(:,1)==elemento);
+  elemNodos = conectividad(fila,2:3);  % [nodo1 nodo2]
+
+  % 4) Compruebo si el nodoDetectado está en esos dos
+  ok = any(nodoDetectado == elemNodos);
 end

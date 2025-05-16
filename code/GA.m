@@ -1,36 +1,45 @@
-function [optimal_alpha, fval] = GA(DI, T, threshold)
-% optimizarAlphaGA Ejecuta el algoritmo genético para encontrar los pesos óptimos alpha.
+function [optimal_alpha, fval] = GA(DI, T, threshold, ID_Ejecucion, outputFolder)
+% GA  Ejecuta el algoritmo genético “en segundo plano” y guarda la figura.
 %
-% Entradas:
-%   DI        - Matriz o estructura de índices de daño (8 columnas para cada DI).
-%   T         - Vector objetivo (target) para comparación.
-%   threshold - Umbral usado dentro de la función objetivo.
+%   [optimal_alpha, fval] = GA(DI, T, threshold, ID_Ejecucion, outputFolder)
 %
-% Salidas:
-%   optimal_alpha - Vector de pesos alpha óptimos (1x8).
-%   fval          - Valor de la función objetivo correspondiente a optimal_alpha.
+%   - DI, T, threshold: como antes
+%   - ID_Ejecucion     : entero (para nombrar ID_0001.png, etc.)
+%   - outputFolder     : carpeta base “Resultados”
+%
+%   Guarda la figura oculta en: outputFolder/figuras/ID_0001.png, …
 
-    nVars = 8;                            % Número de pesos alpha
-    lb = zeros(1, nVars);                % Límite inferior: 0
-    ub = ones(1, nVars);                 % Límite superior: 1
+    nVars = 8;
+    lb    = zeros(1,nVars);
+    ub    = ones(1,nVars);
+    
+    fig = figure('Visible','off');
 
-    % Configuración del algoritmo genético
+    
+    % 1) Opciones del GA
     options = optimoptions('ga', ...
-        'Display', 'iter', ...
-        'PopulationSize', 300, ...
-        'Generations', 500, ...
+        'Display',       'iter', ...
+        'PopulationSize',300, ...
+        'Generations',   500, ...
         'StallGenLimit', 200, ...
-        'PlotFcn', {@gaplotbestf, @gaplotbestindiv, @gaplotdistance, @gaplotrange, @gaplotstopping});
+        'PlotFcn', {@gaplotbestf, @gaplotbestindiv, @gaplotdistance, @gaplotrange, @gaplotstopping} ...
+    );
 
-    % Definición de la función objetivo
+    % 2) Definir función objetivo y ejecutar GA
     objFun = @(alpha) objective_function(alpha, DI, T, threshold);
+    [optimal_alpha, fval] = ga(objFun, nVars, [],[],[],[], lb, ub, [], options);
 
-    % Ejecutar GA
-    [optimal_alpha, fval] = ga(objFun, nVars, [], [], [], [], lb, ub, [], options);
+    % 3) Asegurar existencia de carpeta "figuras”
+    figDir = fullfile(outputFolder, 'figuras');
+    if ~exist(figDir,'dir')
+        mkdir(figDir);
+    end
 
-    % Mostrar resultados
-    disp('Pesos óptimos (alpha):');
-    disp(optimal_alpha);
-    disp('Valor de la función objetivo:');
-    disp(fval);
+    % 4) Guardar la figura con nombre ID_0001.png, etc.
+    figFile = fullfile(figDir, sprintf('ID_%04d.png', ID_Ejecucion));
+    saveas(fig, figFile);  % guarda la figura en ese archivo
+
+    % (5) Cerrar la figura si ya no la necesitas
+    close(fig);
+
 end

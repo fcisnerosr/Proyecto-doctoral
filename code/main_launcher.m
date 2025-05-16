@@ -70,3 +70,9 @@ tablaResultados = runExperimentos( ...
     config, DI_base, M_cond, mask, modos_intactos, Omega_intactos, conectividad, ...
     config.tipo_dano, prop_geom, E, G, ...
     NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, vxz, ID);
+
+% un “ping” al terminar
+fs = 8192;                % frecuencia de muestreo
+t  = 0:1/fs:0.5;          % medio segundo de duración
+tone = sin(2*pi*440*t);   % tono A4 a 440 Hz
+sound(tone,fs)     
