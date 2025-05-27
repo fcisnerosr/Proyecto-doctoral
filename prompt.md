@@ -1,6 +1,6 @@
 Prompts:
 Te explico mi proyecto de doctorado:
-Objetivo: calcular daños con corrosion de elementos tubuales en la subestructura de un modelo numerico representativo de una plataforma marina fija
+Objetivo: Evaluar los daños ocasionados por la corrosión en los elementos tubulares de la subestructura de un modelo numérico representativo de una plataforma marina fija, con el propósito de optimizar las estrategias de mantenimiento mediante la reducción de inspecciones globales, enfocándose en inspecciones puntuales dirigidas a zonas críticas identificadas.
 
 1. Tengo un modelo representativo de una plataforma marina en ETABS
 2. Exporto todos las propiedades geométricas y nodos de los elementos tubulares
@@ -22,9 +22,33 @@ _matriz de flexibilidad_
 10.6 DI6 = diferencia en porcentaje de la matrices de flexibilidades del modelo intacto y del modelo con daño
 10.7 DI7 = z-score de la matriz de flexibilidades del modelo intacto y del modelo con daño
 10.8 DI8 = probabilida del z-score del modelo intacto y del modelo con daño
-11. Calculo de AG (algoritmo genético)
+1.  Calculo de AG (algoritmo genético)
 11.1 se realiza una suma ponderada de 8 pesos que multiplican a cada uno de los DIs, la funcion objetivo es esta suma ponderada cuyo objetivo es minimizar la diferencia entre cada DI del modelo intacta y el modelo con daño
-12. Imprime los resultados
+1.  Imprime los resultados
+
+
+
+_Ejemplo de búsqueda y generación de párrafos para mi artículo_
+    Te adjuntaré el artículo titulado Feasibility for Damage Identification in Offshore Wind Jacket Structures through Monitoring of Global Structural Dynamics. Estoy realizando una investigación relacionada con la detección de daños en plataformas marinas tipo *Jacket*, enfocándome específicamente en elementos corroidos de la subestructura. Mi objetivo es identificar daños de forma localizada mediante el análisis de formas modales y el uso de algoritmos genéticos (AG), con el fin de optimizar los costos de inspección evitando revisiones estructurales completas.
+
+    Estoy particularmente interesado en el siguiente tema general y sus subpuntos:
+
+    **5. Métodos numéricos avanzados en detección de daños:**
+    - Modelación numérica de estructuras offshore utilizando software especializado (como ETABS, SAP2000, ANSYS, ABAQUS u OpenSees).
+    - Técnicas basadas en dinámica estructural y análisis modal, especialmente *Operational Modal Analysis (OMA)*.
+
+    Me gustaría que al revisar el artículo pudieras identificar si se presentan:
+    1. Evidencias del uso de modelos matemáticos o numéricos en la detección de daños.
+    2. Aplicaciones específicas de estos modelos en el contexto de plataformas marinas.
+    3. Relación entre los métodos utilizados y su efectividad en la localización puntual de daños (en lugar de inspecciones estructurales globales).
+    4. Contribuciones de estas metodologías al mantenimiento estructural y la reducción de costos operativos.
+
+    Con base en los cuatro puntos anteriores, quisiera que generes un párrafo redactado en lenguaje técnico que pueda ser integrado en mi artículo de tesis. Dicho párrafo debe tener coherencia con lo que ya he escrito en mi artículo.
+
+    A continuación te enviaré lo que ya llevo escrito hasta ahora.
+
+    Este no es el fin de mi introducción, sino que estamos armando la introducción poco a poco.
+
 
 De este proceso realicé 2160 corridas.
 dañé del elemento no.1 hasta el elemento 120, cada corrida se daña un elemento desde el 5% hasta el 90% con pasos de 5. dando igual a las 2160 corridas
