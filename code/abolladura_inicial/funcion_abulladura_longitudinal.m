@@ -10,9 +10,9 @@
     % Datos del elemento a dañar
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         porcent = 30; % Porcen_de_prof_de_abolld_con_respecto_al_diam;                                                           %                  
-        D       = 2184.4;      % Diametro_de_elemento_tubular_en_mm;           %
-        t       = 38.1;     % Espesor_en_mm;                                %
-        L_D     = 23430.1;     % longitud dañada_en_mm;                        %
+        D       = 300;      % Diametro_de_elemento_tubular_en_mm;           %
+        t       = 25;     % Espesor_en_mm;                                %
+        L_D     = 4000;     % longitud dañada_en_mm;                        %
         Long    = L_D;
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%% COMENTAR hasta ACÁ %%%%
@@ -515,7 +515,6 @@
     end
     
     %% Polinomio del momento de inercia de la sección
-    VIy
     VIy = horzcat(I_undamaged,VIy,I_undamaged); % en mm^4
     VIz = horzcat(I_undamaged,VIz,I_undamaged); % en mm^4
     x_f = 0 : L_D/Slong : L_D;          % Distancia longitudinal acumulada de L_D
