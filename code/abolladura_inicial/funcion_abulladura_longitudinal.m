@@ -498,7 +498,7 @@
 	    VIz(p) = Iz_t_damaged;
 
         %%%% R E C O R D A T O R I O %%%%
-        % En SAP2000, 
+        % En SAP2000 y ETABS, 
             % El eje y es el 3, mientras que...
             % El eje z es el 2.
 
