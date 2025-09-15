@@ -641,4 +641,207 @@
     
     ke_d = T * f_AA^(-1) * T'
 
+    %% Carga de elemento
+
     
+    %% Comprobación de resultados
+    % % f_BB = f_AA;
+    % % f_AB = [-Long/(E*A)  0          0           0            0           0;...
+    % %         0         f_02_08    0           0            0           f_06_08;...
+    % %         0         0          f_03_09     0            f_05_09     0;...
+    % %         0         0          0           -Long/(G*J)     0           0;...
+    % %         0         0          f_03_11     0            f_05_11     0;...
+    % %         0         f_02_12    0           0  
+%           0           f_06_12];
+    % % f_BA = f_AB;
+    % % f_damage = [f_AA f_AB;...
+    % %             f_BA f_BB]  
+    % 
+    % %% Cálculo de la matriz sin ningún daño (solo para comparar)
+    % I = I_undamaged;
+    % 
+    % % Ecuaciones a integrar
+    %     % Efectos en A,A y B,B
+    %         ec_u_02_02 = @(x) x.^2 / (E*I);
+    %         ec_u_03_03 = @(x) x.^2 / (E*I);
+    %         ec_u_05_05 = Long/(E*I);
+    %         ec_u_06_06 = Long/(E*I);
+    %         ec_u_02_06 = @(x) x / (E*I);
+    %         ec_u_03_05 = @(x) -x / (E*I);
+    %         ec_u_05_03 = ec_u_03_05;
+    %         ec_u_06_02 = ec_u_02_06;
+    %     % Efectos combinados entre A y B
+    %         ec_u_02_08 = @(x) (x - x.^2) / (E*I);
+    %         ec_u_03_09 = @(x) (x - x.^2) / (E*I);
+    %         ec_u_05_11 = - Long / (E*I);
+    %         ec_u_06_12 = - Long / (E*I);
+    %         ec_u_06_08 = @(x) (1-x) / (E*I);
+    %         ec_u_05_09 = @(x) (-1+x) / (E*I);
+    %         ec_u_03_11 = @(x) x / (E*I);
+    %         ec_u_02_12 = @(x) -x / (E*I);
+    % % Integrales
+    %     % Efectos en A,A y B,B
+    %         fu_02_02 = integral(ec_u_02_02, 0 , Long);
+    %         fu_03_03 = integral(ec_u_03_03, 0 , Long);
+    %         fu_05_05 = ec_u_05_05;
+    %         fu_06_06 = ec_u_06_06;
+    %         fu_02_06 = integral(ec_u_02_06, 0 , Long);
+    %         fu_03_05 = integral(ec_u_03_05, 0 , Long);
+    %         fu_05_03 = integral(ec_u_05_03, 0 , Long);
+    %         fu_06_02 = integral(ec_u_06_02, 0 , Long);       
+    %     % Efectos combinados entre A y B
+    %         fu_02_08 = integral(ec_u_02_08, 0, Long);
+    %         fu_03_09 = integral(ec_u_03_09, 0, Long);
+    %         fu_05_11 = ec_u_05_11;
+    %         fu_06_12 = ec_u_06_12;
+    %         fu_06_08 = integral(ec_u_06_08, 0 , Long);
+    %         fu_05_09 = integral(ec_u_05_09, 0, Long);
+    %         fu_03_11 = integral(ec_u_03_11, 0, Long);
+    %         fu_02_12 = integral(ec_u_02_12, 0, Long);
+    % 
+    % f_AA_u = [Long/(E*A)    0               0           0           0          0;...
+    %          0           fu_02_02        0           0           0          fu_06_02;...
+    %          0           0               fu_03_03    0           fu_05_03   0;...
+    %          0           0               0           Long/(G*J)     0          0;...
+    %          0           0               fu_03_05    0           fu_05_05   0;...
+    %          0           fu_02_06        0           0           0          fu_06_06];
+    % 
+    % ke_u = T * f_AA_u^(-1) * T';
+    
+    % f_BB_u = f_AA_u;
+    % 
+    % f_AB_u = [-Long/(E*A)   0               0           0           0          0;...
+    %          0           fu_02_08        0           0           0          fu_06_08;...
+    %          0           0               fu_03_09    0           fu_05_09   0;...
+    %          0           0               0           -Long/(G*J)    0          0;...
+    %          0           0               fu_03_11    0           fu_05_11   0;...
+    %          0           fu_02_12        0           0           0          fu_06_12];
+    % 
+    % f_BA_u = f_AB_u;
+    % f_undamage = [f_AA_u f_AB_u;...
+    %               f_BA_u f_BB_u]
+    % 
+    % format short
+    
+%     %% Expansión de la matriz local
+%             % Tamaño de la matriz expandida_g = global
+%             GDL = 24;
+%         
+%             % Crear matriz expandida con ceros
+%             K_dg = zeros(GDL);
+%             
+%             % Coordenadas del primer elemento de la matriz original en la matriz expandida
+%                 % coord_x = coordenada x en la matriz expandida
+%                 % coord_y = coordenada y en la matriz expandida
+% 
+%             switch ed
+%                 case {1,5}
+%                     coord_x = 1;
+%                     coord_y = 1;
+%                 case {2,6}
+%                     coord_x = 7;
+%                     coord_y = 7;
+%                 case {3,7,8}
+%                     coord_x = 13;
+%                     coord_y = 13;                    
+%                 otherwise
+%                     ke_d = [ke_d(1:6, 1:6)          zeros(6,6)  zeros(6,6)  ke_d(end-5:end, end-5:end);...
+%                             zeros(6,6)              zeros(6,6)  zeros(6,6)  zeros(6,6);...
+%                             zeros(6,6)              zeros(6,6)  zeros(6,6)  zeros(6,6);...
+%                             ke_d(end-5:end, 1:6)    zeros(6,6)  zeros(6,6)  ke_d(end-5:end, end-5:end)];
+%             end
+% 
+%             if ed ~= 4
+%                 % Copiar el primer elemento de la matriz original en la matriz expandida
+%                 K_dg(coord_y, coord_x) = ke_d(1, 1);
+%                 
+%                 % Expandir los elementos restantes
+%                 for i = 1:size(ke_d, 1)
+%                     for j = 1:size(ke_d, 2)
+%                         K_dg(coord_y + i - 1, coord_x + j - 1) = ke_d(i, j);
+%                     end
+%                 end
+%                 K_dg;
+%             else
+%                 K_dg = ke_d;
+%             end
+    
+    %% Ejercicios para comprobar los resultados obtenidos
+%     fprintf('\nViga en cantiliver en 2D \n')
+%     fprintf('Vector P en Newtons \n')
+%     P   = [0; 0; -980.665; 0]
+%     fprintf('\n')
+%     fprintf('Sin daño \n')
+%         ke_u_AA = [ke_u(3,3) ke_u(5,3); ke_u(3,5) ke_u(5,5)];
+%         ke_u_AB = [0 0; 0 0];
+%         ke_u_g  = [ke_u_AA ke_u_AB;ke_u_AB ke_u_AA]
+%         fprintf('\n')
+%         d_u     = ke_u_g^-1*P
+%     fprintf('\n')
+%     fprintf('Con daño \n')
+%         ke_d_AA = [ke_d(3,3) ke_d(5,3); ke_d(3,5) ke_d(5,5)];
+%         ke_d_AB = [0 0; 0 0];
+%         ke_d_g  = [ke_d_AA ke_d_AB;ke_d_AB ke_d_AA]
+%         d_d     = ke_d_g^-1*P        
+% fprintf('\nViga en cantiliver en 3D \n')
+% fprintf('Vector P en Newtons \n')
+% P   =  [0;  0;  0;  0 ; -2941.995;  -980.665;   0;  0]
+%     %   Fy  Fz  My  Mz  Fy          Fz          My  Mz
+% fprintf('\n')
+% fprintf('Sin daño \n')    
+%     ke_u_AA =  [ke_u(2,2)   0           0           ke_u(2,6);...
+%                 0           ke_u(3,3)   ke_u(5,3)   0;...
+%                 0           ke_u(3,5)   ke_u(5,5)   0; 
+%                 ke_u(6,2)   0           0           ke_u(6,6) ];
+% 
+%     ke_u_AB = zeros(4,4);
+%     ke_u_g  = [ke_u_AA ke_u_AB;ke_u_AB ke_u_AA]
+%     d_u     = ke_u_g^(-1)*P
+% fprintf('\n')
+%     fprintf('Con daño \n')
+%         ke_d_AA =  [ke_d(2,2)   0           0           ke_d(2,6);...
+%                     0           ke_d(3,3)   ke_d(5,3)   0;...
+%                     0           ke_d(3,5)   ke_d(5,5)   0; 
+%                     ke_d(6,2)   0           0           ke_d(6,6) ];
+%         ke_d_AB = zeros(4,4);
+%         ke_d_g  = [ke_d_AA ke_d_AB;ke_d_AB ke_d_AA]
+%         d_d     = ke_d_g^(-1)*P
+
+
+    
+    % % Elementos
+    % % Columna
+    %     % Sin daño
+    %         f_AA_u = [Long/(E*A)   0               0           0           0           0;...
+    %              0           fu_02_02        0           0           0          fu_06_02;...
+    %              0           0               fu_03_03    0           fu_05_03   0;...
+    %              0           0               0           Long/(G*J)     0          0;...
+    %              0           0               fu_03_05    0           fu_05_05   0;...
+    %              0           fu_02_06        0           0           0          fu_06_06];
+    %         f_BB_u = f_AA_u;
+    %         f_AB_u = zeros(6,6);
+    %         f_u    = [f_AA_u f_AB_u; f_AB_u f_BB_u] 
+    %         K_u    = f_u^-1
+    %     
+    %         % Tamaño de la matriz expandida_g = global
+    %         GDL = 24;
+    %     
+    %         % Crear matriz expandida con ceros
+    %         K_ug = zeros(GDL);
+    %         
+    %         % Coordenadas del primer elemento de la matriz original en la matriz expandida
+    %         coord_x = 1; % Coordenada x en la matriz expandida
+    %         coord_y = 1; % Coordenada y en la matriz expandida
+    %         
+    %         % Copiar el primer elemento de la matriz original en la matriz expandida
+    %         K_ug(coord_y, coord_x) = K_u(1, 1);
+    %         
+    %         % Expandir los elementos restantes
+    %         for i = 1:size(K_u, 1)
+    %             for j = 1:size(K_u, 2)
+    %                 K_ug(coord_y + i - 1, coord_x + j - 1) = K_u(i, j);
+    %             end
+    %         end
+    %         
+    %         K_ug
+% end
