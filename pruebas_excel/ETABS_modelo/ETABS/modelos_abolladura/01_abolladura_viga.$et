@@ -1,4 +1,4 @@
-$ File C:\Users\HP.DESKTOP-LLLQP6U\Documents\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\modelos_abolladura\01_abolladura_viga.$et saved 9/15/2025 12:38:18 PM
+$ File C:\Users\HP.DESKTOP-LLLQP6U\Documents\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\modelos_abolladura\01_abolladura_viga.$et saved 9/15/2025 1:47:49 PM
  
 $ PROGRAM INFORMATION
   PROGRAM  "ETABS"  VERSION "19.1.0"  
@@ -118,7 +118,7 @@ $ LOAD PATTERNS
   LOADPATTERN "Live"  TYPE  "Live"  SELFWEIGHT  0
 
 $ POINT OBJECT LOADS
-  POINTLOAD  "2"  "Story1"  TYPE "FORCE"  LC "Live"    FZ -1000
+  POINTLOAD  "2"  "Story1"  TYPE "FORCE"  LC "Live"  FX -1000  FY -1000  FZ -1000  MX 2000  MY 2000  MZ 2000
 
 $ FRAME OBJECT LOADS
 
@@ -220,6 +220,16 @@ $ LOG
 ETABS Ultimate  19.1.0 File saved as C:\Users\HP.DESKTOP-LLLQP6U\Documents\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\modelos_abolladura\01_abolladura_viga.EDB at 9/15/2025 9:50:01 AM
 ETABS Ultimate  19.1.0 File saved as C:\Users\HP.DESKTOP-LLLQP6U\Documents\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\modelos_abolladura\01_abolladura_viga.EDB at 9/15/2025 10:28:25 AM
 ETABS Ultimate  19.1.0 File saved as C:\Users\HP.DESKTOP-LLLQP6U\Documents\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\modelos_abolladura\01_abolladura_viga.EDB at 9/15/2025 12:38:18 PM
+ETABS Ultimate  19.1.0 File saved as C:\Users\HP.DESKTOP-LLLQP6U\Documents\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\modelos_abolladura\01_abolladura_viga.EDB at 9/15/2025 12:38:22 PM
+ETABS Ultimate  19.1.0 File saved as C:\Users\HP.DESKTOP-LLLQP6U\Documents\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\modelos_abolladura\01_abolladura_viga.EDB at 9/15/2025 12:38:22 PM
+ETABS Ultimate  19.1.0 File saved as C:\Users\HP.DESKTOP-LLLQP6U\Documents\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\modelos_abolladura\01_abolladura_viga.EDB at 9/15/2025 12:38:26 PM
+ETABS Ultimate  19.1.0 File saved as C:\Users\HP.DESKTOP-LLLQP6U\Documents\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\modelos_abolladura\01_abolladura_viga.EDB at 9/15/2025 12:40:59 PM
+ETABS Ultimate  19.1.0 File saved as C:\Users\HP.DESKTOP-LLLQP6U\Documents\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\modelos_abolladura\01_abolladura_viga.EDB at 9/15/2025 1:45:10 PM
+ETABS Ultimate  19.1.0 File saved as C:\Users\HP.DESKTOP-LLLQP6U\Documents\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\modelos_abolladura\01_abolladura_viga.EDB at 9/15/2025 1:46:12 PM
+ETABS Ultimate  19.1.0 File saved as C:\Users\HP.DESKTOP-LLLQP6U\Documents\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\modelos_abolladura\01_abolladura_viga.EDB at 9/15/2025 1:46:15 PM
+ETABS Ultimate  19.1.0 File saved as C:\Users\HP.DESKTOP-LLLQP6U\Documents\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\modelos_abolladura\01_abolladura_viga.EDB at 9/15/2025 1:46:16 PM
+ETABS Ultimate  19.1.0 File saved as C:\Users\HP.DESKTOP-LLLQP6U\Documents\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\modelos_abolladura\01_abolladura_viga.EDB at 9/15/2025 1:46:19 PM
+ETABS Ultimate  19.1.0 File saved as C:\Users\HP.DESKTOP-LLLQP6U\Documents\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\modelos_abolladura\01_abolladura_viga.EDB at 9/15/2025 1:47:49 PM
   ENDCOMMENTS  
 
   END
