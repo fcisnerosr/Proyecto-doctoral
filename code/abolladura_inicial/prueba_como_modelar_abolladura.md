@@ -54,6 +54,48 @@ Al definir la propiedad de una sección no prismática en ETABS, debemos ingresa
 
 ---
 
+# Configuración: Con sección intermedia (S1)
+
+Si conoces dónde empieza la abolladura (**S1**) y dónde está el máximo (**S2**), se recomienda usar **4 segmentos** para modelar la transición completa:  
+- De la sección intacta (**S0**) hacia la abolladura parcial (**S1**)  
+- De la abolladura parcial (**S1**) al punto máximo (**S2**)  
+- Y luego el regreso de **S2 → S1 → S0**
+
+---
+
+## Condición de longitudes
+Definimos dos valores:
+- **L1** = tramo S0 → S1  
+- **L2** = tramo S1 → S2  
+
+Debe cumplirse la ecuación:  
+2L1 + 2L2 = Longitud total
+
+En tu caso:  
+2L1 + 2L2 = 4000 mm → L1 + L2 = 2000 mm
+
+Ejemplo numérico:  
+- **L1 = 1200 mm**  
+- **L2 = 800 mm**
+
+---
+
+## Tabla de configuración en ETABS
+
+| Start Section | End Section | Length Type | Length (mm) | EI33 Variation | EI22 Variation |
+|---------------|-------------|-------------|-------------|----------------|----------------|
+| S0            | S1          | Absolute    | 1200        | Cubic          | Cubic          |
+| S1            | S2          | Absolute    | 800         | Cubic          | Cubic          |
+| S2            | S1          | Absolute    | 800         | Cubic          | Cubic          |
+| S1            | S0          | Absolute    | 1200        | Cubic          | Cubic          |
+
+---
+
+## Notas
+- **EI33** corresponde al eje fuerte (local 3–3, asociado a tu VIy).  
+- **EI22** corresponde al eje débil (local 2–2, asociado a tu VIz).  
+- Con **Cubic** en ambos, la variación de rigidez será continua y más realista a lo largo de toda la zona dañada.  
+- La suma de todas las longitudes de fila debe ser **4000 mm**, que corresponde al largo total del elemento tubular.
 ## 4. Referencias oficiales
 
 - [ETABS Help – Frame Section Property Data](https://wiki.csiamerica.com/display/etabs/Frame+Section+Property+Data)  
