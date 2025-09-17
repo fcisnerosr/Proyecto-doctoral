@@ -26,7 +26,7 @@ config.archivo_excel = construirRutaExcel(config.carpeta, config.archivo);  % Ru
 % -------------------------------------------------------------------------
 % 3) Preparación de carpeta de resultados
 % -------------------------------------------------------------------------
-config.outputFolder = obtene-rOutputFolder();                 % Ruta absoluta a Proyecto-doctoral/Resultados
+config.outputFolder = obtenerOutputFolder();                 % Ruta absoluta a Proyecto-doctoral/Resultados
 if ~exist(config.outputFolder,'dir')
     mkdir(config.outputFolder);  % Crea carpeta si no existe
 end
