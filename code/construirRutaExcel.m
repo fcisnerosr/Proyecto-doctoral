@@ -9,6 +9,6 @@ function archivo_excel = construirRutaExcel(carpeta, archivo)
     %   archivo_excel: Ruta completa del archivo Excel
     
     directorio_actual = pwd; % Obtiene el directorio actual
-    ruta_relativa = fullfile('..', 'pruebas_excel', 'ETABS_modelo', 'ETABS', carpeta, archivo);
+    ruta_relativa = fullfile('..', '..', 'pruebas_excel', 'ETABS_modelo', 'ETABS', carpeta, archivo);
     archivo_excel = fullfile(directorio_actual, ruta_relativa);
 end

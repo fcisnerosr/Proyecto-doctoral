@@ -1,6 +1,11 @@
 % main_launcher.m
 % Punto de entrada para el flujo de corridas del AG de detección de daño
 % Realiza pre-cálculos estáticos una sola vez y luego lanza el launcher para las corridas variables
+
+% --- PATH del proyecto ---
+setupProjectPath(fileparts(mfilename('fullpath')));        % o:
+% setupProjectPath(fileparts(mfilename('fullpath')), [], true);  % limpia path antes
+
 % Apaga todos los warnings
 oldState = warning;
 warning('off', 'all');
