@@ -7,7 +7,7 @@ function config = config()
   % config.rangoElem   = 5:6; 
   % config.porcentajes = 5:5:10;   % [5,10,15,…,90]
   % config.rangoElem   = 1:120; 
-  config.rangoElem   = 1; 
-  config.porcentajes = 35;   % [5,10,15,…,90]
+  config.rangoElem   = 71; 
+  config.porcentajes = 49;   % [5,10,15,…,90]
   config.outputFolder = fullfile(pwd, "resultados_AG");
 end
