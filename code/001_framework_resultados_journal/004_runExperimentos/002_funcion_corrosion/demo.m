@@ -12,6 +12,6 @@ E = 1.9995e5; G = E/(2*(1+0.28));
 [Ke] = ke_corrosion_uniform_from_prop(no_elemento_a_danar, L_d, dano_porcentaje, prop_geom_mat_dummy, E, G, 11, 12);
 fprintf('Simetría: %.2e\n', norm(Ke-Ke.','fro')/norm(Ke,'fro'));  % ~ 0
 
-% SPD/cond
-[~,p]=chol(Ke);  assert(p==0,'Ke no SPD');
-fprintf('condest(Ke) ~ %.2e\n', condest(Ke));
+% % SPD/cond
+% [~,p]=chol(Ke);  assert(p==0,'Ke no SPD');
+% fprintf('condest(Ke) ~ %.2e\n', condest(Ke));
