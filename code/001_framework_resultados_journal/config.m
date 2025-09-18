@@ -2,6 +2,7 @@
 function config = config()
   config.tipo        = "simple";
   config.tipo_dano   = 'corrosion'; 
+  config.ab = struct('Nseg', 1000, 'Slong', 5, 'lim', 3e-3);
   % config.rangoElem   = 5:6; 
   % config.porcentajes = 5:5:10;   % [5,10,15,…,90]
   % config.rangoElem   = 1:120; 
