@@ -22,9 +22,16 @@ function [ke_d_total, ke_d, prop_geom_mat] = switch_case_danos( ...
         Lj      = L_d(j);
         pctj    = dano_porcentaje(j);
 
+<<<<<<< HEAD
         % E y G como escalar global o por elemento GLOBAL
         if isscalar(E), Ej = E; else, Ej = E(idxElem); end
         if isscalar(G), Gj = G; else, Gj = G(idxElem); end
+=======
+        % E y G como escalares (globales o por elemento)
+        if isscalar(E), Ej = E; else, Ej = E(j); end
+        if isscalar(G), Gj = G; else, Gj = G(j); end
+
+>>>>>>> 0538aa6 (fix: en switch_case se estaba considerando a E y a G como un vector en lugar de un escalar)
 
         switch tipoj
             case 'corrosion'
