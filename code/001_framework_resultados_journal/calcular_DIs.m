@@ -72,8 +72,7 @@ function [DI1_COMAC, DI2_Diff, DI3_Div, DI4_Diff_Flex, DI5_Div_Flex, DI6_Perc_Fl
     DI7_Zscore_Flex = Z_flex;
 
     % 8. Probabilidad asociada al z-score (bilateral)
-    absZ = abs(Z_flex);
-    p_flex = 2 * (1 - myNormcdf(absZ));                             % Probabilidad bilateral
-    p_flex_norm = normalizeTo01(Perc_flex_node);                    % Se reutiliza DI6 para normalización
-    DI8_Prob_Flex = p_flex_norm;
+    absZ   = abs(Z_flex);
+    p_flex = 2 * (1 - myNormcdf(absZ));   % p bilateral
+    DI8_Prob_Flex = 1 - p_flex;           % en [0,1], mayor = más anómalo
 end
