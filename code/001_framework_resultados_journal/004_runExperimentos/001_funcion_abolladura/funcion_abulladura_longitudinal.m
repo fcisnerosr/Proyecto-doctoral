@@ -11,7 +11,7 @@
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         porcent = 30; % Porcen_de_prof_de_abolld_con_respecto_al_diam;                                                           %                  
         D       = 300;      % Diametro_de_elemento_tubular_en_mm;           %
-        t       = 25;     % Espesor_en_mm;                                %
+        t       = 25;     % Espesor_en_mm;                                  %
         L_D     = 4000;     % longitud dañada_en_mm;                        %
         Long    = L_D;
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -11,7 +11,7 @@ Divide los escenarios en **tres niveles de severidad** (alineados con la literat
     - Abolladura: $(10{\%} \leq d/D < 20{\%})$.
     - Corrosión: pérdida de espesor entre **5–10%**.
 - **Daño severo (mayor)**
-    - Abolladura: $(d/D > 30{\%})$ o $(d > 10t{\%})$ (criterio del JIP 2000).
+    - Abolladura: $(d/D > 30{\%})$ o $(d > 10t)$ (criterio del JIP 2000).
     - Corrosión: pérdida de espesor **> 10–15%**, casos críticos en **splash zone** o cerca del **mudline**.
 
 *(Estos rangos los puedes ajustar a tu geometría de referencia, pero la idea es cubrir los tres escalones).*
@@ -37,11 +37,11 @@ Divide los escenarios en **tres niveles de severidad** (alineados con la literat
 - **Tabla comparativa** por nivel de severidad:
     
     
-    | Nivel | Tipo de daño | % detectado correctamente | Error promedio AG | Observación |
-    | --- | --- | --- | --- | --- |
-    | Leve | Abolladura (5–10% D) | XX% | YY% | Más difícil, aporta originalidad. |
-    | Medio | Corrosión (5–10% t) | XX% | YY% | Zona de transición. |
-    | Severo | Abolladura (>30% D) | ~100% | bajo | Fácil de detectar, valida el método. |
+    | Nivel  | Tipo de daño         | % detectado correctamente | Error promedio AG | Observación                          |
+    | ------ | -------------------- | ------------------------- | ----------------- | ------------------------------------ |
+    | Leve   | Abolladura (5–10% D) | XX%                       | YY%               | Más difícil, aporta originalidad.    |
+    | Medio  | Corrosión (5–10% t)  | XX%                       | YY%               | Zona de transición.                  |
+    | Severo | Abolladura (>30% D)  | ~100%                     | bajo              | Fácil de detectar, valida el método. |
 - **Gráficas** de convergencia del AG (fitness vs. generación) para un caso leve y uno severo.
 - **Discusión**: enfatizar que el AG es útil porque puede **detectar daño incipiente (menor)**, donde inspecciones visuales o simples frecuencias no bastan.
 
