@@ -1,6 +1,6 @@
 Prompts:
 Te explico mi proyecto de doctorado:
-Objetivo: calcular daños con corrosion de elementos tubuales en la subestructura de un modelo numerico representativo de una plataforma marina fija
+Objetivo: calcular daños con corrosion de elementos tuburales en la subestructura de un modelo numerico representativo de una plataforma marina fija
 
 1. Tengo un modelo representativo de una plataforma marina en ETABS
 2. Exporto todos las propiedades geométricas y nodos de los elementos tubulares
