@@ -26,8 +26,8 @@ _matriz de flexibilidad_
 11.1 se realiza una suma ponderada de 8 pesos que multiplican a cada uno de los DIs, la funcion objetivo es esta suma ponderada cuyo objetivo es minimizar la diferencia entre cada DI del modelo intacta y el modelo con daño
 12. Imprime los resultados
 
-De este proceso realicé 2160 corridas.
-dañé del elemento no.1 hasta el elemento 120, cada corrida se daña un elemento desde el 5% hasta el 90% con pasos de 5. dando igual a las 2160 corridas
+De este proceso realicé 1080 corridas.
+dañé del elemento no.1 hasta el elemento 120, cada corrida se daña un elemento desde el 5% hasta el 45% con pasos de 5. dando igual a las 1080 corridas
 Las columnas de mi archivo.csv son:
 ID: es el número de corrida
 Elemento: elemento tubular con daño
@@ -47,9 +47,9 @@ ID,Elemento,Porcentaje,Tiempo_s,ObjFinal,DeteccionOK,PromDispersion,StdDispersio
 5,1,25,4418.229896,0.134340811,VERDADERO,6.527849025,6.542074014,6.527849025,1,pierna
 6,1,30,4483.913564,0.130853316,VERDADERO,6.371133919,6.522193133,6.371133919,1,pierna
 7,1,35,4533.097503,0.12658566,VERDADERO,6.238905614,6.460642091,6.238905614,1,pierna
-8,1,40,4582.662004,0.121818024,VERDADERO,6.127645504,6.359745944,6.127645504,1,pierna
+8,1,40,4582.662004,0.12,VERDADERO,6.127645504,6.359745944,6.127645504,1,pierna
 9,1,45,4632.753268,0.116706221,VERDADERO,6.01334201,6.245797501,6.01334201,1,pierna
 10,1,50,4678.552163,0.111366568,VERDADERO,5.893470995,6.125950793,5.893470995,1,pierna
 11,1,55,4731.601217,0.105745186,VERDADERO,5.757510965,6.000611378,5.757510965,1,pierna
 
-Sugiereme qué puedo calcular 
+Si te adjunto el .csv, sugiereme qué hallazgos me puedes ayudar a obtener de todo esto?  
