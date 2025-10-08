@@ -1,0 +1,35 @@
+name: analisis_tesis
+channels:
+  # Usar conda-forge es común para paquetes de ciencia de datos
+  - conda-forge
+  - defaults
+dependencies:
+  # Especifica una versión de Python. >=3.9 es una buena práctica moderna.
+  - python=3.9
+
+  # Librerías principales para análisis y manipulación de datos
+  - pandas>=2.0      # Para DataFrames, carga de CSV, manipulación
+  - numpy>=1.23     # Para operaciones numéricas (pandas depende de numpy)
+  - scipy>=1.9      # Para funciones científicas y estadísticas (opcional, pero útil)
+
+  # Librerías para visualización de datos (muy recomendadas para patrones)
+  - matplotlib>=3.6 # Para crear gráficos estáticos
+  - seaborn>=0.12   # Para gráficos estadísticos más atractivos (se basa en matplotlib)
+
+  # Entorno interactivo (opcional, pero muy útil para explorar datos)
+  - jupyterlab      # O 'notebook' si prefieres Jupyter Notebooks clásicos
+
+  # Si necesitas alguna librería específica que no esté en conda, puedes usar pip
+  # pip:
+  #   - alguna-otra-libreria==1.0
+
+  # Puedes "pinchar" (pin) versiones exactas si necesitas reproducibilidad estricta
+  # Por ejemplo:
+  # - pandas=2.0.3
+  # - numpy=1.24.3
+  # - scipy=1.10.1
+  # - matplotlib=3.7.1
+  # - seaborn=0.12.2
+  # Pero usar `>=` permite mayor flexibilidad con actualizaciones compatibles.
+
+prefix: /opt/conda/envs/analisis_tesis # Conda usará esta ruta o similar
