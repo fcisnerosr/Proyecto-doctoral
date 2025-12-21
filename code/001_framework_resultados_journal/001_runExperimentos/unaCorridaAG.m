@@ -2,7 +2,7 @@ function resultado = unaCorridaAG( ID_Ejecucion,...
     elem, dano_porcentaje, ...
     archivo_excel, tipo_dano, prop_geom, E, G, ...
     DI_base, M_cond, mask, modos_intactos, Omega_intactos, conectividad, ...
-    ID, NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, vxz, outputFolder)
+    ID, NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, vxz, outputFolder, config)
     % unaCorridaAG   Ejecuta una sola corrida del AG y devuelve resultados.
     % Esta función asume que las lecturas estáticas (lectura_hoja_excel, etc.)
     % se hicieron una vez en main_launcher y se pasaron como argumentos.
@@ -34,6 +34,62 @@ function resultado = unaCorridaAG( ID_Ejecucion,...
     % 7) Aplicar máscara a los modos dañados
     modos_cond_u = modos_intactos .* mask;
     modos_cond_d = modos_cond_d .* mask;
+
+    % =========================================================================
+    % 7.5) EMPAREJAMIENTO MODAL CON MAC (si está habilitado en configuración)
+    % =========================================================================
+    % Este bloque resuelve el problema de "cruce modal" (mode veering):
+    % Cuando se introduce daño, las frecuencias naturales pueden cambiar de
+    % orden, haciendo que el modo i del sistema dañado NO corresponda
+    % físicamente al modo i del sistema intacto.
+    %
+    % EJEMPLO DE CRUCE MODAL:
+    %   Sistema intacto:  ω₁ < ω₂ < ω₃ < ω₄ ...
+    %   Sistema dañado:   ω₁' < ω₃' < ω₂' < ω₄' ...  (modos 2 y 3 se cruzaron)
+    %
+    % Sin matching, compararíamos incorrectamente:
+    %   DI2 = abs(modo_intacto_2 - modo_dañado_2)  ← modo_dañado_2 es físicamente el modo 3!
+    %   DI3 = abs(modo_intacto_3 - modo_dañado_3)  ← modo_dañado_3 es físicamente el modo 2!
+    %
+    % Esto produce índices de daño contaminados que confunden al AG.
+    %
+    % SOLUCIÓN:
+    % Usamos el Modal Assurance Criterion (MAC) para identificar la
+    % correspondencia física correcta entre modos y reordenamos los modos
+    % dañados antes de calcular los DIs.
+    %
+    % El MAC(i,j) mide la correlación entre modo i intacto y modo j dañado:
+    %   MAC = (φᵢᵀ·φⱼ)² / [(φᵢᵀ·φᵢ)·(φⱼᵀ·φⱼ)]
+    %   Rango: [0, 1]
+    %   - MAC ≈ 1: modos físicamente idénticos
+    %   - MAC ≈ 0: modos ortogonales (sin relación)
+    
+    % Inicializar variables de diagnóstico (se guardarán en resultado)
+    MAC_matrix_completa = [];
+    MAC_diagonal_emparejamiento = [];
+    hubo_cruces_modales = false;
+    indices_matching = 1:size(modos_cond_d, 2);  % Por defecto: sin reordenamiento
+    
+    if config.usarMACmatching
+        % --- MATCHING MODAL ACTIVO ---
+        % Emparejar modos dañados con modos intactos usando MAC
+        [modos_cond_d, Omega_cond_d, indices_matching, MAC_matrix_completa, MAC_diagonal_emparejamiento] = ...
+            matchModesMAC(modos_cond_u, modos_cond_d, Omega_cond_d, config.MAC_metodo);
+        
+        % Detectar si hubo cruces modales (reordenamiento)
+        % Si indices_matching = [1,2,3,...,12], no hubo cruces
+        % Si indices_matching = [1,3,2,...,12], hubo cruce entre modos 2 y 3
+        hubo_cruces_modales = ~isequal(indices_matching, 1:length(indices_matching));
+        
+        % Nota: Ahora modos_cond_d(:,i) corresponde físicamente a modos_cond_u(:,i)
+        % y Omega_cond_d(i) es la frecuencia del modo que corresponde al modo i intacto
+    else
+        % --- MATCHING DESACTIVADO (comportamiento original) ---
+        % Se asume que modo i dañado corresponde a modo i intacto
+        % (ordenamiento por frecuencia ascendente de ambos sistemas)
+        % Esto funciona solo si no hay cruces modales
+    end
+    % =========================================================================
 
     % 8) Calcular DIs para el modelo dañado
     [DI1_COMAC_d, DI2_Diff_d, DI3_Div_d, DI4_Diff_Flex_d, DI5_Div_Flex_d, DI6_Perc_Flex_d, DI7_Zscore_Flex_d, DI8_Prob_Flex_d] = ...
@@ -130,4 +186,44 @@ function resultado = unaCorridaAG( ID_Ejecucion,...
     resultado.StdDispersion     = std_dispersion;
     resultado.MeanAbsDispersion = mean_abs_dispersion;
     resultado.N_FalsosPositivos = n_falsos_positivos;
+    
+    % =========================================================================
+    % OTROS DATOS DE SALIDA: Información sobre emparejamiento modal
+    % =========================================================================
+    % Estos campos proporcionan información de diagnóstico sobre el
+    % emparejamiento modal realizado con MAC. Son útiles para:
+    % - Análisis post-procesamiento de resultados
+    % - Identificar casos con cruces modales significativos
+    % - Validar que el matching funcionó correctamente
+    % - Detectar daños severos que causan cambios modales drásticos
+    
+    if config.usarMACmatching && ~isempty(MAC_diagonal_emparejamiento)
+        % MAC_minimo: Valor mínimo de correlación modal en el emparejamiento
+        % Si es bajo (< 0.70), indica que algún modo cambió drásticamente
+        % o que apareció un modo local nuevo debido al daño.
+        resultado.MAC_minimo = min(MAC_diagonal_emparejamiento);
+        
+        % MAC_promedio: Correlación modal promedio del emparejamiento
+        % Valores altos (> 0.90) indican que los modos se preservaron bien
+        % Valores bajos (< 0.80) sugieren cambios modales significativos
+        resultado.MAC_promedio = mean(MAC_diagonal_emparejamiento);
+        
+        % Hubo_cruces_modales: Indicador booleano de reordenamiento
+        % - true:  Los modos se reordenaron (hubo cruces modales)
+        %          Esto confirma que el matching fue necesario
+        % - false: No hubo reordenamiento (modo i dañado = modo i intacto)
+        %          El daño no causó cambios en el orden de frecuencias
+        resultado.Hubo_cruces_modales = hubo_cruces_modales;
+        
+        % Opcional: Guardar matriz MAC completa e índices (comentado por espacio)
+        % Descomentar si se necesita análisis detallado del matching
+        % resultado.MAC_matrix = MAC_matrix_completa;
+        % resultado.Indices_matching = indices_matching;
+    else
+        % Si el matching está desactivado o no se aplicó, llenar con NaN
+        resultado.MAC_minimo = NaN;
+        resultado.MAC_promedio = NaN;
+        resultado.Hubo_cruces_modales = false;  % No se verificó
+    end
+    % =========================================================================
 end
