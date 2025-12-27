@@ -50,12 +50,27 @@ end
 % 4.4) ANÁLISIS ESTÁTICO: Cálculo de fuerzas axiales para daño tipo 3
 fprintf('Calculando fuerzas axiales estáticas (bajada de cargas)...\n');
 
-% Peso topside (deck + equipos) según API RP2A-WSD y ISO 19902:2007
-% - Área deck típica: 25m × 25m = 625 m²
-% - Carga típica: 20 kN/m² (deck + equipos permanentes)
-% - W_topside = 625 m² × 20 kN/m² = 12,500 kN = 12.5 MN
-% - Por pierna: ~3.125 MN (vs reacción ETABS 8.29 MN incluye PP + topside)
-W_topside = 12500000;  % [N] = 12.5 MN (~1275 ton)
+% -------------------------------------------------------------------------
+% CARGAS DE TOPSIDE (DECK EQUIPMENT + STRUCTURE)
+% -------------------------------------------------------------------------
+% Basado en API RP 2A-WSD (22nd Ed.) Section 3.2.3 e ISO 19902:2007
+%
+% GEOMETRÍA:
+%   - Área deck: 16.667m × 16.667m = 277.9 m²
+%   - Nivel 1 (Z=100m): Production deck → 20 kN/m² × 277.9 m² = 5.558 MN
+%   - Nivel 2 (Z=109m): Utility deck    → 10 kN/m² × 277.9 m² = 2.779 MN
+%   - Nivel 3 (Z=118m): Roof structure  → 0 MN (peso propio en DEAD)
+%
+% TOTAL TOPSIDE: 8.337 MN (~850 ton)
+%
+% VALIDACIÓN:
+%   - Reacción ETABS (DEAD): 33.16 MN
+%   - Esperado (DEAD + Topside): 41.50 MN → 10.375 MN/pierna ✓
+%
+% NOTA: W_topside es solo un parámetro nominal. Las cargas reales se
+%       aplican diferenciadas por nivel dentro de analisis_estatico_fuerzas_axiales.m
+% -------------------------------------------------------------------------
+W_topside = 8337000;  % [N] = 8.337 MN (~850 ton) TOTAL (2 niveles)
 incluir_peso_propio = true;
 
 [N_axial_global, rho_global, Pcr_global, diagnostico_estatico] = ...

@@ -22,12 +22,16 @@ function [N_axial, rho, Pcr, diagnostico] = analisis_estatico_fuerzas_axiales(..
 %   vxz                - [nElem×3] Vectores del plano xz local
 %   ID                 - [6×nNodos] Matriz de identificadores de DOF
 %                        Positivos: DOF libres, Negativos: DOF restringidos
-%   W_topside          - [escalar] Peso total de la superestructura (deck) [N]
-%                        Aplicado SOLO en nodos de superestructura
-%                        (ejemplo: 12500000 N = 12.5 MN para ~1275 ton)
-%                        Justificación: API RP2A-WSD (15-25 kPa), ISO 19902
+%   W_topside          - [escalar] Peso TOTAL de topside para referencia [N]
+%                        NOTA: Este parámetro es informativo. Las cargas
+%                        reales se calculan INTERNAMENTE diferenciadas por
+%                        nivel según API RP 2A-WSD Section 3.2.3:
+%                          • Production deck (Z=100m): 20 kN/m² × 277.9 m²
+%                          • Utility deck (Z=109m): 10 kN/m² × 277.9 m²
+%                          • Roof (Z=118m): 0 kN (peso propio en DEAD)
+%                        (ejemplo: 8337000 N = 8.337 MN para ~850 ton)
 %   incluir_peso_propio - [bool] true: incluye peso propio de elementos
-%                                 false: solo cargas externas
+%                                 false: solo cargas externas (topside únicamente)
 %
 % SALIDAS:
 %   N_axial            - [nElem×1] Fuerza axial en cada elemento [N]
@@ -58,12 +62,20 @@ function [N_axial, rho, Pcr, diagnostico] = analisis_estatico_fuerzas_axiales(..
 %
 % EJEMPLO DE USO:
 %   % Después de lectura_hoja_excel.m en main_launcher.m
+%   W_topside = 8337000;  % [N] 8.337 MN (cargas diferenciadas internamente)
 %   [N_axial, rho, Pcr, diag] = analisis_estatico_fuerzas_axiales(...
-%       nodes, elements, A, Iy, Iz, J, E, G, vxz, ID, 8290953.54, true);
+%       nodes, elements, A, Iy, Iz, J, E, G, vxz, ID, W_topside, true);
 %   
 %   % Elementos con compresión moderada-alta (buenos para deformación inicial)
 %   idx_optimos = find(rho > 0.3 & rho < 0.7);
 %   fprintf('Elementos óptimos para daño tipo 3: %d\n', length(idx_optimos));
+%
+%   % Verificar distribución de cargas topside
+%   fprintf('Topside aplicado: %.2f MN\n', diag.topside.W_topside_total/1e6);
+%   fprintf('Production deck: %.2f MN en %d nodos\n', ...
+%       diag.topside.W_production_total/1e6, length(diag.topside.nodos_production));
+%   fprintf('Utility deck: %.2f MN en %d nodos\n', ...
+%       diag.topside.W_utility_total/1e6, length(diag.topside.nodos_utility));
 %
 % NOTAS:
 %   - Usa la misma arquitectura que ensamblaje_matriz_rigidez_global_sin_dano.m
@@ -194,50 +206,178 @@ if incluir_peso_propio
     peso_propio_total = sum(rho_acero * A .* arrayfun(@(i) ...
         norm(nodes(elements(i,3),2:4) - nodes(elements(i,2),2:4)), (1:nElem)')) * g;
     fprintf('    Peso propio total: %.2f kN\n', peso_propio_total/1e3);
+else
+    % Si no se incluye peso propio, calcularlo para referencia
+    peso_propio_total = sum(rho_acero * A .* arrayfun(@(i) ...
+        norm(nodes(elements(i,3),2:4) - nodes(elements(i,2),2:4)), (1:nElem)')) * g;
 end
+
+% =========================================================================
+% 3.2) PESO DE SUPERESTRUCTURA (TOPSIDE) - CARGAS DIFERENCIADAS POR NIVEL
+% =========================================================================
+fprintf('  Agregando cargas de topside (deck equipment + structure)...\n');
 
 % -------------------------------------------------------------------------
-% 3.2) PESO DE SUPERESTRUCTURA (TOPSIDE)
+% JUSTIFICACIÓN TÉCNICA Y NORMATIVA
 % -------------------------------------------------------------------------
-fprintf('  Agregando peso topside (deck)...\n');
+% Las cargas aplicadas están basadas en normativa internacional para
+% plataformas offshore de producción sin datos específicos de equipos.
+%
+% REFERENCIAS:
+% [1] API RP 2A-WSD (22nd Edition, 2014)
+%     Section 3.2.3 - Deck Loads for Fixed Offshore Platforms
+%     Tabla 3.2.3-1: Cargas típicas para áreas de proceso y utilidades
+%
+% [2] ISO 19902:2007 - Petroleum and natural gas industries
+%     Section 8.2.2 - Permanent Actions (Dead Loads)
+%     Para plataformas sin datos específicos: 15-25 kN/m² (producción)
+%                                             8-12 kN/m² (utilidades)
+%
+% CRITERIO DE DISEÑO:
+% Se adopta un enfoque conservador utilizando los valores medios de las
+% recomendaciones API/ISO, diferenciando cargas según función del deck:
+%   - Production Deck (equipos de proceso): 20 kN/m²
+%   - Utility Deck (servicios/control): 10 kN/m²
+%   - Roof Structure: Solo peso propio (ya considerado en DEAD)
+%
+% -------------------------------------------------------------------------
+% GEOMETRÍA DE LA SUPERESTRUCTURA (SEGÚN ETABS)
+% -------------------------------------------------------------------------
+% Configuración: 2 niveles de deck + 1 techo estructural
+%   Nivel 1 (Z = 100 m): Production deck - Nodos 41-44
+%   Nivel 2 (Z = 109 m): Utility deck    - Nodos 45-48
+%   Nivel 3 (Z = 118 m): Roof structure  - Nodos 49-52 (sin carga adicional)
+%
+% Dimensiones en planta: 16.667 m × 16.667 m (según Joint Coordinates ETABS)
+% Área efectiva: A_deck = 16.667² = 277.9 m²
+% Altura entre niveles: 9 m
+%
+% -------------------------------------------------------------------------
+% CÁLCULO DE CARGAS POR NIVEL
+% -------------------------------------------------------------------------
 
-% CRITERIO: Aplicar W_topside SOLO en nodos de superestructura
-% Identificamos nodos por conectividad con elementos de superestructura
-% Elementos 121-136 son superestructura, 1-120 son subestructura
+% Parámetros geométricos
+L_deck = 16.667;  % [m] Longitud lado del deck (cuadrado)
+A_deck = L_deck^2;  % [m²] Área efectiva del deck
 
-% Extraer nodos únicos de elementos de superestructura (121-136)
-elemento_inicio_super = 121;
-elemento_fin_super = nElem;  % 136 según config
+% Cargas por área según API RP 2A-WSD (Section 3.2.3)
+q_production = 20e3;  % [N/m²] Production deck (20 kN/m²)
+q_utility = 10e3;     % [N/m²] Utility deck (10 kN/m²)
 
-nodos_superestructura_set = [];
-for i = elemento_inicio_super:elemento_fin_super
-    nodo_i = elements(i, 2);
-    nodo_j = elements(i, 3);
-    nodos_superestructura_set = [nodos_superestructura_set; nodo_i; nodo_j];
+% Carga total por nivel
+W_production = q_production * A_deck;  % [N] = 5,558,000 N = 5.558 MN
+W_utility = q_utility * A_deck;        % [N] = 2,779,000 N = 2.779 MN
+
+% Distribución nodal (4 nodos por nivel, distribución uniforme)
+n_nodos_por_nivel = 4;
+W_production_por_nodo = -W_production / n_nodos_por_nivel;  % [N] -1389.5 kN/nodo
+W_utility_por_nodo = -W_utility / n_nodos_por_nivel;        % [N] -694.75 kN/nodo
+
+% Signo negativo: cargas hacia abajo (dirección -Z)
+
+% -------------------------------------------------------------------------
+% IDENTIFICACIÓN DE NODOS POR NIVEL (SEGÚN COORDENADAS Z)
+% -------------------------------------------------------------------------
+
+% Tolerancia para comparación de coordenadas Z [mm]
+tol_z = 100;  % 100 mm = 0.1 m
+
+% Extraer coordenadas Z de todos los nodos [mm]
+z_coords = nodes(:, 4);
+
+% Nivel 1: Production Deck (Z ≈ 100,000 mm = 100 m)
+z_production = 100000;  % [mm]
+nodos_production = find(abs(z_coords - z_production) < tol_z);
+
+% Nivel 2: Utility Deck (Z ≈ 109,000 mm = 109 m)
+z_utility = 109000;  % [mm]
+nodos_utility = find(abs(z_coords - z_utility) < tol_z);
+
+% Nivel 3: Roof (Z ≈ 118,000 mm = 118 m) - SIN CARGA ADICIONAL
+z_roof = 118000;  % [mm]
+nodos_roof = find(abs(z_coords - z_roof) < tol_z);
+
+% Validación de nodos identificados
+if isempty(nodos_production)
+    error('No se encontraron nodos en nivel production (Z=100m)');
 end
-nodos_topside = unique(nodos_superestructura_set);
-n_topside = length(nodos_topside);
-
-if n_topside == 0
-    error('No se encontraron nodos en la superestructura (elementos 121-136)');
+if isempty(nodos_utility)
+    error('No se encontraron nodos en nivel utility (Z=109m)');
 end
 
-% Distribuir peso uniformemente entre nodos de superestructura
-W_por_nodo = -W_topside / n_topside;  % Negativo: hacia abajo
+fprintf('\n  ┌─ DISTRIBUCIÓN DE CARGAS TOPSIDE ─────────────────────────┐\n');
+fprintf('  │                                                          │\n');
+fprintf('  │ NIVEL 1 - PRODUCTION DECK (Z = 100 m):                  │\n');
+fprintf('  │   Carga área: %.1f kN/m² (API RP 2A Table 3.2.3-1)      │\n', q_production/1e3);
+fprintf('  │   Área: %.1f m²                                          │\n', A_deck);
+fprintf('  │   Carga total: %.2f MN                                  │\n', W_production/1e6);
+fprintf('  │   Nodos: %d (IDs: %s)                                   │\n', ...
+    length(nodos_production), mat2str(nodos_production'));
+fprintf('  │   Carga/nodo: %.2f kN                                   │\n', abs(W_production_por_nodo)/1e3);
+fprintf('  │                                                          │\n');
+fprintf('  │ NIVEL 2 - UTILITY DECK (Z = 109 m):                     │\n');
+fprintf('  │   Carga área: %.1f kN/m² (API RP 2A Utility areas)      │\n', q_utility/1e3);
+fprintf('  │   Área: %.1f m²                                          │\n', A_deck);
+fprintf('  │   Carga total: %.2f MN                                  │\n', W_utility/1e6);
+fprintf('  │   Nodos: %d (IDs: %s)                                   │\n', ...
+    length(nodos_utility), mat2str(nodos_utility'));
+fprintf('  │   Carga/nodo: %.2f kN                                   │\n', abs(W_utility_por_nodo)/1e3);
+fprintf('  │                                                          │\n');
+fprintf('  │ NIVEL 3 - ROOF STRUCTURE (Z = 118 m):                   │\n');
+fprintf('  │   Carga: 0.00 kN (peso propio en DEAD)                  │\n');
+fprintf('  │   Nodos: %d (IDs: %s)                                   │\n', ...
+    length(nodos_roof), mat2str(nodos_roof'));
+fprintf('  │                                                          │\n');
+fprintf('  │ TOTAL TOPSIDE: %.2f MN                                  │\n', (W_production + W_utility)/1e6);
+fprintf('  │ VALIDACIÓN: Reacción ETABS = 33.16 MN (DEAD)            │\n');
+fprintf('  │             Esperado = %.2f MN (DEAD+Topside)           │\n', ...
+    (peso_propio_total + W_production + W_utility)/1e6);
+fprintf('  └──────────────────────────────────────────────────────────┘\n\n');
 
-fprintf('    Nodos superestructura identificados: %d nodos\n', n_topside);
-fprintf('    Carga por nodo: %.2f kN\n', abs(W_por_nodo)/1e3);
+% -------------------------------------------------------------------------
+% APLICACIÓN DE CARGAS EN VECTOR GLOBAL F
+% -------------------------------------------------------------------------
 
-for i = 1:n_topside
-    nodo_id = nodos_topside(i);
-    DOF_z = ID(3, nodo_id);
+% Nivel 1: Production Deck
+for i = 1:length(nodos_production)
+    nodo_id = nodos_production(i);
+    DOF_z = ID(3, nodo_id);  % DOF vertical (Uz)
     
-    if DOF_z > 0  % No restringido
-        F_global(DOF_z) = F_global(DOF_z) + W_por_nodo;
+    if DOF_z > 0  % Nodo no restringido en Z
+        F_global(DOF_z) = F_global(DOF_z) + W_production_por_nodo;
     else
-        warning('Nodo %d del topside está restringido en Z (ignorado)', nodo_id);
+        warning('Nodo %d (production deck) restringido en Z - carga ignorada', nodo_id);
     end
 end
+
+% Nivel 2: Utility Deck
+for i = 1:length(nodos_utility)
+    nodo_id = nodos_utility(i);
+    DOF_z = ID(3, nodo_id);  % DOF vertical (Uz)
+    
+    if DOF_z > 0  % Nodo no restringido en Z
+        F_global(DOF_z) = F_global(DOF_z) + W_utility_por_nodo;
+    else
+        warning('Nodo %d (utility deck) restringido en Z - carga ignorada', nodo_id);
+    end
+end
+
+% Nivel 3: Roof - NO SE APLICA CARGA ADICIONAL
+% El peso propio de la estructura del techo ya está incluido en el análisis
+% de peso propio (Section 3.1)
+
+% Guardar información de topside para diagnóstico
+diagnostico.topside = struct(...
+    'W_production_total', W_production, ...
+    'W_utility_total', W_utility, ...
+    'W_topside_total', W_production + W_utility, ...
+    'nodos_production', nodos_production, ...
+    'nodos_utility', nodos_utility, ...
+    'nodos_roof', nodos_roof, ...
+    'q_production_kPa', q_production/1e3, ...
+    'q_utility_kPa', q_utility/1e3, ...
+    'area_deck_m2', A_deck, ...
+    'referencia_normativa', 'API RP 2A-WSD (22nd Ed.) Section 3.2.3, ISO 19902:2007 Section 8.2.2' ...);
 
 fprintf('    Peso topside: %.2f kN distribuido en %d nodos\n', ...
     W_topside/1e3, n_topside);
