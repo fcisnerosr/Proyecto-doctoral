@@ -1,4 +1,4 @@
-$ File C:\Users\HP.DESKTOP-LLLQP6U\Documents\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_6_jacket-subestructura_4NIVELES\revision_6_jacket-subestructura_4NIVELES.$et saved 10/11/2025 1:12:49 PM
+$ File E:\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_6_jacket-subestructura_4NIVELES\revision_6_jacket-subestructura_4NIVELES.$et saved 27/12/2025 11:18:53
  
 $ PROGRAM INFORMATION
   PROGRAM  "ETABS"  VERSION "19.1.0"  
@@ -593,9 +593,6 @@ $ LOAD PATTERNS
   LOADPATTERN "Live"  TYPE  "Live"  SELFWEIGHT  0
 
 $ POINT OBJECT LOADS
-  POINTLOAD  "3"  "Story1"  TYPE "FORCE"  LC "Live"  FX 224.8089  FY 449.6179  FZ -786.8312  MX 0.8850745  MY 0.8850745  MZ -26.55223
-  POINTLOAD  "14"  "Story2"  TYPE "FORCE"  LC "Live"  FX 224.8089  FY 449.6179  FZ -786.8312  MX 0.8850745  MY 0.8850745  MZ -26.55223
-  POINTLOAD  "16"  "Story2"  TYPE "FORCE"  LC "Live"  FX 224.8089  FY 449.6179  FZ -786.8312  MX 0.8850745  MY 0.8850745  MZ -26.55223
 
 $ FRAME OBJECT LOADS
 
@@ -1203,6 +1200,8 @@ ETABS Ultimate  19.1.0 File saved as C:\Users\HP.DESKTOP-LLLQP6U\Documents\Proye
 ETABS Ultimate  19.1.0 File saved as C:\Users\HP.DESKTOP-LLLQP6U\Documents\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_6_jacket-subestructura_4NIVELES\revision_6_jacket-subestructura_4NIVELES.EDB at 9/26/2025 11:38:39 AM
 ETABS Ultimate  19.1.0 File saved as C:\Users\HP.DESKTOP-LLLQP6U\Documents\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_6_jacket-subestructura_4NIVELES\revision_6_jacket-subestructura_4NIVELES.EDB at 9/26/2025 11:38:46 AM
 ETABS Ultimate  19.1.0 File saved as C:\Users\HP.DESKTOP-LLLQP6U\Documents\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_6_jacket-subestructura_4NIVELES\revision_6_jacket-subestructura_4NIVELES.EDB at 10/11/2025 1:12:49 PM
+ETABS Ultimate  19.1.0 File saved as E:\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_6_jacket-subestructura_4NIVELES\revision_6_jacket-subestructura_4NIVELES.EDB at 27/12/2025 11:18:16
+ETABS Ultimate  19.1.0 File saved as E:\Proyecto-doctoral\pruebas_excel\ETABS_modelo\ETABS\revision_6_jacket-subestructura_4NIVELES\revision_6_jacket-subestructura_4NIVELES.EDB at 27/12/2025 11:18:53
   ENDCOMMENTS  
 
   END
