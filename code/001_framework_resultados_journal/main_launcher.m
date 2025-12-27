@@ -47,22 +47,43 @@ end
 [masas_en_cada_nodo, M_cond, M_completa] = ...
     modificacion_matriz_masas_estructura_sencilla(config.archivo_excel);
 
-% 4.4) Ensamble de matriz de rigidez global intacta y condensación
+% 4.4) ANÁLISIS ESTÁTICO: Cálculo de fuerzas axiales para daño tipo 3
+fprintf('Calculando fuerzas axiales estáticas (bajada de cargas)...\n');
+
+% Peso topside (deck + equipos) según API RP2A-WSD y ISO 19902:2007
+% - Área deck típica: 25m × 25m = 625 m²
+% - Carga típica: 20 kN/m² (deck + equipos permanentes)
+% - W_topside = 625 m² × 20 kN/m² = 12,500 kN = 12.5 MN
+% - Por pierna: ~3.125 MN (vs reacción ETABS 8.29 MN incluye PP + topside)
+W_topside = 12500000;  % [N] = 12.5 MN (~1275 ton)
+incluir_peso_propio = true;
+
+[N_axial_global, rho_global, Pcr_global, diagnostico_estatico] = ...
+    analisis_estatico_fuerzas_axiales(...
+        nodes, elements, A, Iy, Iz, J, E, G, vxz, ID, W_topside, incluir_peso_propio);
+
+fprintf('  ✓ Fuerzas axiales calculadas para %d elementos\n', length(N_axial_global));
+fprintf('  ✓ Elementos con ρ∈[0.3,0.7]: %d (óptimos para deformación inicial)\n', ...
+    sum(rho_global >= 0.3 & rho_global <= 0.7));
+fprintf('  ✓ Elemento más cargado: %d (ρ=%.4f)\n', ...
+    diagnostico_estatico.elem_mas_cargado, diagnostico_estatico.rho_max);
+
+% 4.5) Ensamble de matriz de rigidez global intacta y condensación
 KG_und = ensamblaje_matriz_rigidez_global_sin_dano( ...
     ID, NE, elements, nodes, IDmax, NEn, damele, eledent, A, Iy, Iz, J, E, G, vxz);
 KG_und_cond = condensacion_estatica(KG_und);
 
-% 4.5) Cálculo de modos y frecuencias del modelo intacto
+% 4.6) Cálculo de modos y frecuencias del modelo intacto
 [modos_intactos, frec_intactos, Omega_intactos] = modos_frecuencias(KG_und_cond, M_cond);
 
-% 4.6) Creación de máscara para nodos de interés en superestructura
+% 4.7) Creación de máscara para nodos de interés en superestructura
 % Supongamos que has condensado los 4 nodos empotrados:
 numFixed = 4;
 
 % Nodos 41…52 de la superestructura
 mask = createMask(41, 52, modos_intactos, numFixed);
 
-% 4.7) Cálculo de índices de daño base (DI_base)
+% 4.8) Cálculo de índices de daño base (DI_base)
 [DI1, DI2, DI3, DI4, DI5, DI6, DI7, DI8] = ...
     calcular_DIs(modos_intactos, modos_intactos, Omega_intactos, Omega_intactos);
 DI_base = struct('DI1', DI1, 'DI2', DI2, 'DI3', DI3, 'DI4', DI4, ...
@@ -74,7 +95,8 @@ DI_base = struct('DI1', DI1, 'DI2', DI2, 'DI3', DI3, 'DI4', DI4, ...
 tablaResultados = runExperimentos( ...
     config, DI_base, M_cond, mask, modos_intactos, Omega_intactos, conectividad, ...
     config.tipo_dano, prop_geom, E, G, ...
-    NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, vxz, ID);
+    NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, vxz, ID, ...
+    N_axial_global, rho_global, matriz_cell_secciones);
 
 % un “ping” al terminar
 fs = 8192;                % frecuencia de muestreo-

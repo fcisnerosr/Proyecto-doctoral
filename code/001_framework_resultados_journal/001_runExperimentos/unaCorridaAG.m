@@ -2,10 +2,17 @@ function resultado = unaCorridaAG( ID_Ejecucion,...
     elem, dano_porcentaje, ...
     archivo_excel, tipo_dano, prop_geom, E, G, ...
     DI_base, M_cond, mask, modos_intactos, Omega_intactos, conectividad, ...
-    ID, NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, vxz, outputFolder, config)
+    ID, NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, vxz, outputFolder, config, ...
+    N_axial_global, rho_global, matriz_cell_secciones)
     % unaCorridaAG   Ejecuta una sola corrida del AG y devuelve resultados.
     % Esta función asume que las lecturas estáticas (lectura_hoja_excel, etc.)
     % se hicieron una vez en main_launcher y se pasaron como argumentos.
+    %
+    % NUEVOS PARÁMETROS:
+    %   N_axial_global : [nElem×1] Fuerzas axiales precalculadas [N]
+    %   rho_global     : [nElem×1] Ratios de carga crítica
+    %   matriz_cell_secciones : Cell array con info de secciones (D, t, etc.)
+    
     % 0) Generar cell-array con tipo de daño para cada elemento
     caso_dano = repmat({tipo_dano}, 1, numel(elem));
 
@@ -19,7 +26,9 @@ function resultado = unaCorridaAG( ID_Ejecucion,...
     elem_con_dano_long_NE = vector_asignacion_danos(elem, NE);
 
     % 4) Aplicar daño local y ensamblar matrices locales
-    [ke_d_total,~,~] = switch_case_danos(elem, L_d, caso_dano, dano_porcentaje, prop_geom, E, G);
+    % MODIFICADO: Pasar N_axial y rho para daño tipo 'deformacion_inicial'
+    [ke_d_total,~,~] = switch_case_danos(elem, L_d, caso_dano, dano_porcentaje, prop_geom, E, G, ...
+        N_axial_global, rho_global, matriz_cell_secciones);
 
     % 5) Ensamble de matriz de rigidez global con daño
     [KG_dam,~,~] = ensamblaje_matriz_rigidez_global_con_dano( ...

@@ -2,10 +2,11 @@ function resultsTable = runExperimentos( ...
     config, DI_base, M_cond, mask, modos_intactos, Omega_intactos, conectividad, ...
     tipo_dano, prop_geom, E, G, ...
     NE, IDmax, NEn, elements, nodes, damele, eledent, ...
-    A, Iy, Iz, J, vxz, ID)
+    A, Iy, Iz, J, vxz, ID, ...
+    N_axial_global, rho_global, matriz_cell_secciones)
 
 % runExperimentos   Ejecuta un barrido completo de corridas del AG
-%   resultsTable = runExperimentos(config, DI_base, M_cond, mask, modos_intactos, Omega_intactos, conectividad, tipo_dano, prop_geom, E, G)
+%   resultsTable = runExperimentos(config, DI_base, M_cond, mask, modos_intactos, Omega_intactos, conectividad, tipo_dano, prop_geom, E, G, ...)
 %
 %   Inputs:
 %     config         : Struct con campos tipo, rangoElem, porcentajes, archivo_excel, outputFolder
@@ -18,18 +19,70 @@ function resultsTable = runExperimentos( ...
 %     tipo_dano      : Cadena con tipo de daño (e.g., 'corrosion')
 %     prop_geom      : Propiedades geométricas de elementos sin daño
 %     E, G           : Módulos elástico y de cortante del material
+%     N_axial_global : [nElem×1] Fuerzas axiales de análisis estático [N] (NUEVO)
+%     rho_global     : [nElem×1] Ratios de carga crítica ρ = |N|/Pcr (NUEVO)
+%     matriz_cell_secciones : Cell array con secciones tipo SECC01, SECC04 (NUEVO)
 %
 %   Output:
 %     resultsTable   : Tabla con resultados de cada corrida
 
 
+    % =========================================================================
+    % 0) FILTRADO DE ELEMENTOS (para deformación inicial)
+    % =========================================================================
+    elementos_a_probar = config.rangoElem;
+    
+    if isfield(config, 'filtrar_elementos_por_rho') && config.filtrar_elementos_por_rho
+        % Filtrar elementos por ratio de carga crítica
+        fprintf('\n--- FILTRADO DE ELEMENTOS POR ρ ---\n');
+        fprintf('Rango permitido: %.2f ≤ ρ ≤ %.2f\n', config.rho_min, config.rho_max);
+        
+        % Elementos en rango óptimo
+        idx_validos = find(rho_global >= config.rho_min & rho_global <= config.rho_max);
+        elementos_validos = intersect(elementos_a_probar, idx_validos);
+        
+        % Elementos rechazados
+        elementos_rechazados = setdiff(elementos_a_probar, elementos_validos);
+        n_rechazados = length(elementos_rechazados);
+        
+        if n_rechazados > 0
+            fprintf('  Elementos rechazados: %d\n', n_rechazados);
+            if n_rechazados <= 10
+                fprintf('    IDs: %s\n', mat2str(elementos_rechazados));
+            end
+            fprintf('  Razones:\n');
+            for k = elementos_rechazados(:)'
+                if rho_global(k) < config.rho_min
+                    fprintf('    Elem %d: ρ=%.4f < %.2f (baja detectabilidad)\n', ...
+                        k, rho_global(k), config.rho_min);
+                elseif rho_global(k) > config.rho_max
+                    fprintf('    Elem %d: ρ=%.4f > %.2f (riesgo inestabilidad)\n', ...
+                        k, rho_global(k), config.rho_max);
+                end
+            end
+        end
+        
+        fprintf('  Elementos a probar: %d (%.1f%% del total)\n', ...
+            length(elementos_validos), 100*length(elementos_validos)/length(elementos_a_probar));
+        
+        % Actualizar lista
+        elementos_a_probar = elementos_validos;
+        
+        if isempty(elementos_a_probar)
+            error('runExperimentos:SinElementosValidos', ...
+                'No hay elementos con ρ en rango [%.2f, %.2f]', config.rho_min, config.rho_max);
+        end
+    else
+        fprintf('\n--- SIN FILTRADO DE ELEMENTOS ---\n');
+        fprintf('  Probando %d elementos\n', length(elementos_a_probar));
+    end
+    
+    % =========================================================================
     % 1) Número total de corridas
-    % totalRuns = numel(config.rangoElem) * numel(config.porcentajes);
-    % results    = repmat(template, totalRuns, 1);
-
-    nElem     = numel(config.rangoElem);
+    % =========================================================================
+    nElem     = numel(elementos_a_probar);  % Usar lista filtrada
     nDano     = numel(config.porcentajes);
-    totalRuns = nElem * nDano;  % o la fórmula de combinado…
+    totalRuns = nElem * nDano;
     
     % 2) Crear un "template" con los mismos campos que devuelve unaCorridaAG
     template = struct( ...
@@ -56,15 +109,21 @@ function resultsTable = runExperimentos( ...
     idx          = 1;
     
     % 5) Bucle de corridas…
+    fprintf('\n=== INICIANDO CORRIDAS DEL AG ===\n');
+    fprintf('Total de corridas: %d (%d elementos × %d niveles de daño)\n', ...
+        totalRuns, nElem, nDano);
+    fprintf('Tipo de daño: %s\n\n', tipo_dano);
+    
     switch config.tipo
       case 'simple'
-        for elem = config.rangoElem
+        for elem = elementos_a_probar  % Usar lista filtrada
           for dano = config.porcentajes
             % Ejecutar la corrida
             out = unaCorridaAG( ID_Ejecucion, elem, dano, ...
                 config.archivo_excel, tipo_dano, prop_geom, E, G, ...
                 DI_base, M_cond, mask, modos_intactos, Omega_intactos, conectividad, ...
-                ID, NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, vxz, config.outputFolder, config);
+                ID, NE, IDmax, NEn, elements, nodes, damele, eledent, A, Iy, Iz, J, vxz, config.outputFolder, config, ...
+                N_axial_global, rho_global, matriz_cell_secciones);
     
             % Guardar en el array pre‐alocado
             results(idx) = out;
