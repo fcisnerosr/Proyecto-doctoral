@@ -15,9 +15,18 @@ function [ke_d_total, ke_d, prop_geom_mat] = switch_case_danos( ...
     % prop_geom -> matriz numérica
     prop_geom_mat = coerce_numeric_prop_geom(prop_geom);
 
-    % columnas de D y t (ajusta si cambia tu layout)
-    DIAM_COL  = 11;
-    THICK_COL = 12;
+    % ────────────────────────────────────────────────────────────
+    % ESTRUCTURA DE prop_geom (según lectura_datos_modelo_ETABS):
+    % prop_geom = [prop_geom_cell,             cols 1-4: A, Iyy, Izz, J
+    %              E_columna_cell,             col 5: E [MPa]
+    %              G_columna_cell,             col 6: G [MPa]
+    %              tipo,                       col 7: 'circular'
+    %              wo_vector,                  col 8: 'wo'
+    %              diam_diam_thick_tube_sub_cell,  cols 9-11: D, D, t [mm]
+    %              gamma_beta_vector];         cols 12-13: gamma, beta
+    % ────────────────────────────────────────────────────────────
+    DIAM_COL  = 9;   % Diámetro exterior [mm] (duplicado en col 10)
+    THICK_COL = 11;  % Espesor de pared [mm]
 
     nElem = numel(no_elemento_a_danar);
     ke_d  = zeros(12,12,nElem);
@@ -61,69 +70,124 @@ function [ke_d_total, ke_d, prop_geom_mat] = switch_case_danos( ...
             case 'deformacion_inicial'
                 % NUEVO CASO: Daño por deformación inicial (bow imperfection)
                 
-                % Verificar que tenemos los datos necesarios
-                if isempty(N_axial_global) || isempty(matriz_cell_secciones)
+                % ─────────────────────────────────────────────────────────
+                % VERIFICACIÓN DE DATOS NECESARIOS
+                % ─────────────────────────────────────────────────────────
+                if isempty(N_axial_global)
                     error('switch_case_danos:DatosInsuficientes', ...
-                        'Daño tipo "deformacion_inicial" requiere N_axial_global y matriz_cell_secciones.');
+                        'Daño "deformacion_inicial" requiere N_axial_global (fuerzas axiales precalculadas).');
                 end
                 
-                % Fuerza axial en este elemento (precalculada)
-                N_comp = N_axial_global(idxElem);
+                % ─────────────────────────────────────────────────────────
+                % EXTRACCIÓN DE GEOMETRÍA (D, t) DESDE prop_geom
+                % ─────────────────────────────────────────────────────────
+                % prop_geom_mat tiene D [mm] en col 11 y t [mm] en col 12
+                D_mm = prop_geom_mat(idxElem, DIAM_COL);
+                t_mm = prop_geom_mat(idxElem, THICK_COL);
                 
-                % Verificar que está en compresión (signo negativo esperado)
+                % Convertir a metros
+                D = D_mm / 1000;  % mm → m
+                t = t_mm / 1000;  % mm → m
+                
+                % Validaciones geométricas
+                if ~isfinite(D) || D <= 0
+                    error('Diámetro D=%.2f mm inválido en elemento %d', D_mm, idxElem);
+                end
+                if ~isfinite(t) || t <= 0
+                    error('Espesor t=%.2f mm inválido en elemento %d', t_mm, idxElem);
+                end
+                if t >= D/2
+                    error('Espesor t=%.2f >= D/2=%.2f en elemento %d', t_mm, D_mm/2, idxElem);
+                end
+                
+                % ─────────────────────────────────────────────────────────
+                % FUERZA AXIAL Y VERIFICACIONES
+                % ─────────────────────────────────────────────────────────
+                N_comp = N_axial_global(idxElem);  % [N]
+                
+                % Advertencia si está en tensión (no es crítico, pero inusual)
                 if N_comp > 0
-                    warning('Elemento %d en tensión (N=%.2f kN). Deformación inicial aplica típicamente en compresión.', ...
+                    warning('Elemento %d en TENSIÓN (N=%.2f kN). Deformación inicial típicamente bajo COMPRESIÓN.', ...
                         idxElem, N_comp/1e3);
                 end
                 
-                % Extraer D y t desde matriz_cell_secciones
-                % Formato esperado: cell array con etiqueta, OD_mm, t_mm
-                seccion_elem = prop_geom(idxElem, :);  % Fila del elemento
-                etiqueta_seccion = seccion_elem{1};    % Primera columna: etiqueta
-                
-                % Buscar en matriz_cell_secciones
-                idx_seccion = find(strcmp({matriz_cell_secciones.Etiqueta}, etiqueta_seccion), 1);
-                if isempty(idx_seccion)
-                    error('No se encontró sección "%s" en matriz_cell_secciones', etiqueta_seccion);
-                end
-                
-                D = matriz_cell_secciones(idx_seccion).OD_mm / 1000;  % mm → m
-                t = matriz_cell_secciones(idx_seccion).t_mm / 1000;   % mm → m
-                
-                % Poisson y densidad (típicos para acero)
-                nu = 0.3;
-                rho_mat = 7850;  % kg/m³
-                
-                % Magnitud de deformación inicial (pctj es e0/L en %)
-                e0_sobre_L = pctj / 100;  % 2% → 0.02
-                
-                % Validación de parámetros
-                if abs(e0_sobre_L) > 0.05  % Límite 5%
-                    error('e0/L = %.2f%% excede límite razonable (5%%)', pctj);
-                end
-                
-                % Calcular ratio de carga
+                % Verificar ratio de carga si disponible
                 if ~isempty(rho_global)
                     rho_elem = rho_global(idxElem);
                     if rho_elem > 0.85
-                        warning('Elemento %d con ρ=%.4f > 0.85 (cerca de pandeo)', idxElem, rho_elem);
+                        warning('Elemento %d con ρ=%.4f > 0.85 (cercano a pandeo). Resultados pueden ser inestables.', ...
+                            idxElem, rho_elem);
                     end
                 end
                 
-                % Llamar a funcion_deformaciones para obtener Kt
-                nModos_temp = 5;  % Modos para análisis modal interno
-                verbose = false;
+                % ─────────────────────────────────────────────────────────
+                % PARÁMETROS DE MATERIAL
+                % ─────────────────────────────────────────────────────────
+                % Poisson consistente con E y G: nu = E/(2*G) - 1
+                nu = Ej / (2*Gj) - 1;
+                
+                % Densidad del acero [kg/m³]
+                rho_mat = 7850;
+                
+                % ─────────────────────────────────────────────────────────
+                % MAGNITUD DE DEFORMACIÓN INICIAL (e0/L)
+                % ─────────────────────────────────────────────────────────
+                % pctj viene como porcentaje: 2% → e0/L = 0.02
+                e0_sobre_L = pctj / 100;
+                
+                % Validación de límite físico razonable
+                if abs(e0_sobre_L) > 0.05  % Límite 5% de L
+                    error('e0/L = %.2f%% excede límite razonable (5%%). Reducir porcentaje.', pctj);
+                end
+                
+                % ─────────────────────────────────────────────────────────
+                % LLAMADA A funcion_deformaciones
+                % ─────────────────────────────────────────────────────────
+                % FIRMA CORRECTA: resultados = funcion_deformaciones(opciones)
+                % donde opciones es una estructura con campos:
+                %   .L          - Longitud [mm]
+                %   .D          - Diámetro [mm]  ← IMPORTANTE: debe estar en [mm]
+                %   .t          - Espesor [mm]   ← IMPORTANTE: debe estar en [mm]
+                %   .E          - Módulo Young [MPa]
+                %   .nu         - Poisson [-]
+                %   .rho_mat    - Densidad [kg/mm³] ← IMPORTANTE: conversión necesaria
+                %   .Ncomp      - Fuerza compresión [N]
+                %   .e0_sobre_L - Imperfección [-]
+                %   .nModos     - Número de modos (5)
+                %   .verbose    - false
+                %
+                % OUTPUT: estructura resultados con campo .Kt_equilibrio [N/mm]
+                
+                % Reconvertir D y t de [m] a [mm] (función espera [mm])
+                D_mm_func = D * 1000;  % [m] → [mm]
+                t_mm_func = t * 1000;  % [m] → [mm]
+                
+                % Convertir densidad de [kg/m³] a [kg/mm³]
+                rho_mat_kg_mm3 = rho_mat / 1e9;  % 7850 → 7.85e-6
+                
+                % Armar estructura de opciones
+                opciones = struct();
+                opciones.L = Lj;                    % [mm]
+                opciones.D = D_mm_func;             % [mm]
+                opciones.t = t_mm_func;             % [mm]
+                opciones.E = Ej;                    % [MPa]
+                opciones.nu = nu;                   % [-]
+                opciones.rho_mat = rho_mat_kg_mm3;  % [kg/mm³]
+                opciones.Ncomp = N_comp;            % [N]
+                opciones.e0_sobre_L = e0_sobre_L;   % [-]
+                opciones.nModos = 5;
+                opciones.verbose = false;
                 
                 try
-                    [~, Kt, ~, ~, ~, ~, ~, ~, ~] = funcion_deformaciones(...
-                        Lj, D, t, Ej, nu, rho_mat, ...
-                        N_comp, e0_sobre_L, nModos_temp, verbose);
+                    resultados = funcion_deformaciones(opciones);
                     
-                    ke_d(:,:,j) = Kt;  % Usar Kt (incluye Ke + Kg)
+                    % Extraer Kt_equilibrio (matriz tangente con P-δ)
+                    ke_d(:,:,j) = resultados.Kt_equilibrio;
                     
                 catch ME
                     error('switch_case_danos:ErrorDeformacion', ...
-                        'Error en funcion_deformaciones para elem %d: %s', idxElem, ME.message);
+                        'Error en funcion_deformaciones (elem %d, e0/L=%.2f%%): %s', ...
+                        idxElem, pctj, ME.message);
                 end
 
             otherwise

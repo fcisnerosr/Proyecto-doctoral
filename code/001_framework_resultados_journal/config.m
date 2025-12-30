@@ -4,11 +4,72 @@ function config = config()
   % CONFIGURACIÓN GENERAL DEL ANÁLISIS
   % ========================================================================
   config.tipo        = "simple";                                            % Tipo de análisis: "simple" = un elemento a la vez
-  % config.tipo_dano   = 'corrosion';                                       % Tipo de daño: corrosión uniforme en elemento tubular (comentar para usar abolladura)
-  config.tipo_dano   = 'abolladura';                                        % Tipo de daño: abolladura longitudinal en elemento tubular (activo por defecto)
-  config.ab          = struct('Nseg', 1000, 'Slong', 5, 'lim', 3e-3);      % Parámetros de abolladura: Nseg=segmentos, Slong=longitud, lim=límite
-  config.porcentajes = 5:5:20;                                              % Porcentajes de daño a evaluar [5%, 10%, 15%, ..., 45%]
-  config.rangoElem   = 1:5;                                               % Rango de elementos a evaluar (1 a 120)
+  
+  % ┌──────────────────────────────────────────────────────────────────────┐
+  % │ SELECCIÓN DE TIPO DE DAÑO                                            │
+  % └──────────────────────────────────────────────────────────────────────┘
+  % Opciones: 'corrosion', 'abolladura', 'deformacion_inicial'
+  % Descomentar SOLO UNA línea:
+  
+  % config.tipo_dano   = 'corrosion';                                       % Daño tipo 1: Corrosión uniforme en elemento tubular
+  % config.tipo_dano   = 'abolladura';                                      % Daño tipo 2: Abolladura longitudinal (denting)
+  config.tipo_dano   = 'deformacion_inicial';                               % Daño tipo 3: Deformación inicial (bow imperfection) bajo compresión
+  
+  % ┌──────────────────────────────────────────────────────────────────────┐
+  % │ PARÁMETROS ESPECÍFICOS POR TIPO DE DAÑO                              │
+  % └──────────────────────────────────────────────────────────────────────┘
+  % Los parámetros se configuran automáticamente según tipo_dano seleccionado
+  
+  switch config.tipo_dano
+      case 'corrosion'
+          % CORROSIÓN: Porcentaje de reducción de espesor (% depth/t)
+          config.porcentajes = 5:5:20;                                      % [5%, 10%, 15%, 20%] reducción espesor
+          
+      case 'abolladura'
+          % ABOLLADURA: Parámetros de segmentación y profundidad (% D)
+          config.ab = struct('Nseg', 1000, 'Slong', 5, 'lim', 3e-3);        % Nseg=segmentos integración, Slong=longitud abolladura, lim=límite convergencia
+          config.porcentajes = 5:5:20;                                      % [5%, 10%, 15%, 20%] profundidad/diámetro
+          
+      case 'deformacion_inicial'
+          % DEFORMACIÓN INICIAL: Magnitud de bow imperfection (e0/L en %)
+          % ──────────────────────────────────────────────────────────────
+          % QUÉ ES: Imperfección geométrica inicial en centro del elemento
+          %         (curvatura permanente tipo "bow" bajo compresión axial)
+          %
+          % RANGOS TÍPICOS:
+          %   0.1-0.5%  → Tolerancias de fabricación (API, ISO)
+          %   0.5-2.0%  → Daño moderado detectado en inspección
+          %   2.0-5.0%  → Daño severo (límite análisis lineal)
+          %
+          % EFECTO: Amplifica desplazamientos bajo compresión (P-δ effect)
+          %         Reduce frecuencias naturales proporcional a (1-ρ-g(e0))
+          %         donde ρ = |N|/Pcr (ratio carga crítica)
+          % ──────────────────────────────────────────────────────────────
+          config.porcentajes = [0.5, 1.0, 2.0, 3.0];                        % [0.5%, 1%, 2%, 3%] de e0/L
+          
+          % FILTROS DE SEGURIDAD: Seleccionar elementos con compresión óptima
+          % ──────────────────────────────────────────────────────────────
+          % RAZÓN: La detectabilidad del daño depende del ratio ρ = |N|/Pcr
+          %
+          % - Si ρ < 0.2  → Efecto P-δ despreciable, difícil detectar
+          % - Si ρ ∈ [0.3, 0.7] → Detectabilidad óptima (sensibilidad alta)
+          % - Si ρ > 0.85 → Cercano a pandeo (inestabilidad numérica)
+          %
+          % IMPLEMENTACIÓN: runExperimentos.m filtrará automáticamente
+          %                 elementos fuera de [rho_min, rho_max]
+          % ──────────────────────────────────────────────────────────────
+          config.rho_min = 0.20;                                            % Ratio mínimo |N|/Pcr para incluir elemento
+          config.rho_max = 0.75;                                            % Ratio máximo |N|/Pcr (margen vs pandeo)
+          config.filtrar_elementos_por_rho = true;                          % Activar filtrado automático
+          
+      otherwise
+          error('config:TipoDanoInvalido', 'tipo_dano "%s" no reconocido', config.tipo_dano);
+  end
+  
+  % ========================================================================
+  % ELEMENTOS A ANALIZAR
+  % ========================================================================
+  config.rangoElem   = 1:5;                                                 % Rango de elementos a evaluar (1 a 120 para subestructura)
   config.outputFolder = fullfile(pwd, "resultados_AG");                     % Carpeta de salida para resultados del AG
   
   % ========================================================================

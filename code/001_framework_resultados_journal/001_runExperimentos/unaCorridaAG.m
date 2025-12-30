@@ -26,8 +26,20 @@ function resultado = unaCorridaAG( ID_Ejecucion,...
     elem_con_dano_long_NE = vector_asignacion_danos(elem, NE);
 
     % 4) Aplicar daño local y ensamblar matrices locales
-    % MODIFICADO: Pasar N_axial y rho para daño tipo 'deformacion_inicial'
-    [ke_d_total,~,~] = switch_case_danos(elem, L_d, caso_dano, dano_porcentaje, prop_geom, E, G, ...
+    % ─────────────────────────────────────────────────────────────────────
+    % EXTRACCIÓN DE PARÁMETROS DE ABOLLADURA (si aplica)
+    % ─────────────────────────────────────────────────────────────────────
+    % Para tipo_dano = 'abolladura', config.ab contiene {Nseg, Slong, lim}
+    % Para otros tipos de daño, ab_opts = [] y switch_case_danos usa defaults
+    if isfield(config, 'ab')
+        ab_opts = config.ab;  % struct con Nseg, Slong, lim
+    else
+        ab_opts = [];  % switch_case_danos manejará defaults internos
+    end
+    
+    % Llamada a switch_case_danos con TODOS los parámetros
+    % NOTA: ab_opts debe pasarse ANTES de N_axial, rho, matriz_cell_secciones
+    [ke_d_total,~,~] = switch_case_danos(elem, L_d, caso_dano, dano_porcentaje, prop_geom, E, G, ab_opts, ...
         N_axial_global, rho_global, matriz_cell_secciones);
 
     % 5) Ensamble de matriz de rigidez global con daño
