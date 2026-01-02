@@ -69,7 +69,7 @@ function config = config()
   % ========================================================================
   % ELEMENTOS A ANALIZAR
   % ========================================================================
-  config.rangoElem   = 1:5;                                                 % Rango de elementos a evaluar (1 a 120 para subestructura)
+  config.rangoElem   = 1:120;                                               % Rango de elementos a evaluar (1 a 120 para subestructura)
   config.outputFolder = fullfile(pwd, "resultados_AG");                     % Carpeta de salida para resultados del AG
   
   % ========================================================================
