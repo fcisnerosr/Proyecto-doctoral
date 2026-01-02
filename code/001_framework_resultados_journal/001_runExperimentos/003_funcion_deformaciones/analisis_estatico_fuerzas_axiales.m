@@ -147,8 +147,10 @@ for i = 1:nElem
     vxzl = vxz(i, 2:end)';
     [cosalpha, sinalpha] = ejelocal(CX, CY, CZ, CXY, vxzl);
     
-    % Matriz de transformación 3D (solo necesita 5 argumentos)
-    [Gamma_gamma, Gamma_beta] = TransfM3Dframe_sym(CX, CY, CZ, CXY, i);
+    % Matriz de transformación 3D
+    % TransfM3Dframe_sym espera vectores, creamos temporales con índice 1
+    CX_vec = CX; CY_vec = CY; CZ_vec = CZ; CXY_vec = CXY;
+    [Gamma_gamma, Gamma_beta] = TransfM3Dframe_sym(CX_vec, CY_vec, CZ_vec, CXY_vec, 1);
     
     % Rigidez global del elemento
     kg = Gamma_gamma' * Gamma_beta' * ke * Gamma_beta * Gamma_gamma;
@@ -366,6 +368,10 @@ end
 % El peso propio de la estructura del techo ya está incluido en el análisis
 % de peso propio (Section 3.1)
 
+% Número total de nodos topside y lista completa
+n_topside = length(nodos_production) + length(nodos_utility);
+nodos_topside = [nodos_production; nodos_utility];
+
 % Guardar información de topside para diagnóstico
 diagnostico.topside = struct(...
     'W_production_total', W_production, ...
@@ -379,9 +385,13 @@ diagnostico.topside = struct(...
     'area_deck_m2', A_deck, ...
     'referencia_normativa', 'API RP 2A-WSD (22nd Ed.) Section 3.2.3, ISO 19902:2007 Section 8.2.2');
 
+% Carga promedio por nodo (topside)
+W_topside_aplicado = W_production + W_utility;
+W_por_nodo_promedio = W_topside_aplicado / n_topside;
+
 fprintf('    Peso topside: %.2f kN distribuido en %d nodos\n', ...
-    W_topside/1e3, n_topside);
-fprintf('    Carga por nodo: %.2f kN\n', abs(W_por_nodo)/1e3);
+    W_topside_aplicado/1e3, n_topside);
+fprintf('    Carga promedio/nodo: %.2f kN\n', abs(W_por_nodo_promedio)/1e3);
 
 % Verificación de carga total
 carga_total = sum(abs(F_global));
@@ -438,7 +448,10 @@ for i = 1:nElem
     % Transformación a coordenadas locales
     vxzl = vxz(i, 2:end)';
     [cosalpha, sinalpha] = ejelocal(CX, CY, CZ, CXY, vxzl);
-    [Gamma_gamma, Gamma_beta] = TransfM3Dframe_sym(CX, CY, CZ, CXY, i, cosalpha, sinalpha);
+    
+    % TransfM3Dframe_sym espera vectores, creamos temporales con índice 1
+    CX_vec = CX; CY_vec = CY; CZ_vec = CZ; CXY_vec = CXY;
+    [Gamma_gamma, Gamma_beta] = TransfM3Dframe_sym(CX_vec, CY_vec, CZ_vec, CXY_vec, 1);
     
     u_local = Gamma_beta * Gamma_gamma * u_global;
     
@@ -449,10 +462,12 @@ for i = 1:nElem
     N_axial(i) = E(i) * A(i) * delta_u / L_elem;
     
     % Carga crítica de Euler: Pcr = π²·E·Imin / L²
-    Imin = min(Iy(i), Iz(i));
-    Pcr(i) = (pi^2 * E(i) * Imin) / (L_elem^2);
+    % IMPORTANTE: E viene en [MPa], convertir a [Pa] para consistencia
+    E_Pa = E(i) * 1e6;  % [MPa] → [Pa]
+    Imin = min(Iy(i), Iz(i));  % [m⁴]
+    Pcr(i) = (pi^2 * E_Pa * Imin) / (L_elem^2);  % [N]
     
-    % Ratio de carga crítica
+    % Ratio de carga crítica (adimensional)
     rho(i) = abs(N_axial(i)) / Pcr(i);
 end
 
@@ -526,6 +541,10 @@ diagnostico.elem_mas_cargado = idx_max;
 diagnostico.peso_propio_total = peso_propio_total;
 diagnostico.peso_topside = W_topside;
 diagnostico.carga_total = carga_total;
+
+% Guardar resultados para comparación
+save('analisis_estatico_output.mat', 'N_axial', 'rho', 'Pcr', 'elementos_validos', ...
+    'diagnostico', 'idx_compresion', 'idx_tension');
 
 fprintf('\n=== ANÁLISIS COMPLETADO ===\n\n');
 
