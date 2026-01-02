@@ -45,6 +45,13 @@ added = {};
 if exist(projRoot,'dir')
     addpath(projRoot,'-begin');
     added{end+1} = projRoot; %#ok<AGROW>
+    
+    % También agregar carpeta PADRE (code/) donde están localkeframe3D_AG.m, TransfM3Dframe_sym.m, etc.
+    parentDir = fileparts(projRoot);
+    if exist(parentDir,'dir')
+        addpath(parentDir,'-begin');
+        added{end+1} = parentDir; %#ok<AGROW>
+    end
 else
     error('setupProjectPath:RootNotFound','No existe projRoot: %s',projRoot);
 end

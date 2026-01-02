@@ -36,16 +36,19 @@ function config = config()
           % QUÉ ES: Imperfección geométrica inicial en centro del elemento
           %         (curvatura permanente tipo "bow" bajo compresión axial)
           %
-          % RANGOS TÍPICOS:
-          %   0.1-0.5%  → Tolerancias de fabricación (API, ISO)
-          %   0.5-2.0%  → Daño moderado detectado en inspección
-          %   2.0-5.0%  → Daño severo (límite análisis lineal)
+          % RANGOS BASADOS EN INSPECCIONES IN SITU (WOAD, HSE, Casos Reales):
+          %   0.5-1.5%  → Daños leves a moderados (90% de casos)
+          %   1.5-2.5%  → Daños significativos a severos
+          %   2.5-3.0%  → Casos extremos límite (colapso inminente)
+          %
+          % FUENTE: Análisis Golfo Pérsico (δ/L=3.2%), submarino Oseberg B,
+          %         colisiones buques con bulbo de proa, objetos caídos.
           %
           % EFECTO: Amplifica desplazamientos bajo compresión (P-δ effect)
           %         Reduce frecuencias naturales proporcional a (1-ρ-g(e0))
           %         donde ρ = |N|/Pcr (ratio carga crítica)
           % ──────────────────────────────────────────────────────────────
-          config.porcentajes = [0.5, 1.0, 2.0, 3.0];                        % [0.5%, 1%, 2%, 3%] de e0/L
+          config.porcentajes = [0.5, 1.0, 1.5, 2.0, 2.5, 3.0];              % [0.5% - 3.0%] rango completo in situ
           
           % FILTROS DE SEGURIDAD: Seleccionar elementos con compresión óptima
           % ──────────────────────────────────────────────────────────────

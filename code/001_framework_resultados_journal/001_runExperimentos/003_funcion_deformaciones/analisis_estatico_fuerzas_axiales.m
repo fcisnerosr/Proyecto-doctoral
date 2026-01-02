@@ -99,7 +99,7 @@ function [N_axial, rho, Pcr, diagnostico] = analisis_estatico_fuerzas_axiales(..
 %% ========================================================================
 %  1. VALIDACIÓN DE ENTRADAS
 %  ========================================================================
-narginchk(11, 11);
+narginchk(12, 12);
 
 nNodos = size(nodes, 1);
 nElem = size(elements, 1);
@@ -147,8 +147,8 @@ for i = 1:nElem
     vxzl = vxz(i, 2:end)';
     [cosalpha, sinalpha] = ejelocal(CX, CY, CZ, CXY, vxzl);
     
-    % Matriz de transformación 3D
-    [Gamma_gamma, Gamma_beta] = TransfM3Dframe_sym(CX, CY, CZ, CXY, i, cosalpha, sinalpha);
+    % Matriz de transformación 3D (solo necesita 5 argumentos)
+    [Gamma_gamma, Gamma_beta] = TransfM3Dframe_sym(CX, CY, CZ, CXY, i);
     
     % Rigidez global del elemento
     kg = Gamma_gamma' * Gamma_beta' * ke * Gamma_beta * Gamma_gamma;
@@ -377,7 +377,7 @@ diagnostico.topside = struct(...
     'q_production_kPa', q_production/1e3, ...
     'q_utility_kPa', q_utility/1e3, ...
     'area_deck_m2', A_deck, ...
-    'referencia_normativa', 'API RP 2A-WSD (22nd Ed.) Section 3.2.3, ISO 19902:2007 Section 8.2.2' ...);
+    'referencia_normativa', 'API RP 2A-WSD (22nd Ed.) Section 3.2.3, ISO 19902:2007 Section 8.2.2');
 
 fprintf('    Peso topside: %.2f kN distribuido en %d nodos\n', ...
     W_topside/1e3, n_topside);
