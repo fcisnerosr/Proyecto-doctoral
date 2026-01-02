@@ -116,7 +116,8 @@ A = A / 1e6;          % mm² → m²
 Iy = Iy / 1e12;       % mm⁴ → m⁴
 Iz = Iz / 1e12;       % mm⁴ → m⁴
 J = J / 1e12;         % mm⁴ → m⁴
-% E y G se mantienen en MPa y se convierten a Pa cuando sea necesario
+E = E * 1e6;          % MPa → Pa (N/m²)
+G = G * 1e6;          % MPa → Pa (N/m²)
 
 % Densidad del acero (típica para estructuras offshore)
 rho_acero = 7850;  % kg/m³
