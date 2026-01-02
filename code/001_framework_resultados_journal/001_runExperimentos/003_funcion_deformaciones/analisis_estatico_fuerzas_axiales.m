@@ -105,6 +105,19 @@ nNodos = size(nodes, 1);
 nElem = size(elements, 1);
 IDmax = max(max(ID));
 
+% CONVERSIÓN DE UNIDADES desde Excel
+% El archivo Excel usa:
+%   - Áreas (A): mm²
+%   - Inercias (Iy, Iz, J): mm⁴
+%   - Longitudes (nodes): metros
+%   - E, G: MPa
+% Conversión a unidades SI consistentes (m, N, Pa):
+A = A / 1e6;          % mm² → m²
+Iy = Iy / 1e12;       % mm⁴ → m⁴
+Iz = Iz / 1e12;       % mm⁴ → m⁴
+J = J / 1e12;         % mm⁴ → m⁴
+% E y G se mantienen en MPa y se convierten a Pa cuando sea necesario
+
 % Densidad del acero (típica para estructuras offshore)
 rho_acero = 7850;  % kg/m³
 
