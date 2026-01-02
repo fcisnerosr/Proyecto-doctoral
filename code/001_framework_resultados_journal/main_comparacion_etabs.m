@@ -36,9 +36,9 @@ fprintf('Leyendo modelo desde Excel...\n');
 % Usar la misma función que main_launcher.m para obtener ruta
 excel_path = obtenerRutaMarco3Ddam0();  % ../../pruebas_excel/marco3Ddam0.xlsx
 
-% Leer datos del modelo
-[nodes, elements, A, Iy, Iz, J, E, G, rho_mat, D, t, fy, vxz, ID, ...
-    nodos_libres, nodos_empotrados] = lectura_hoja_excel(excel_path);
+% Leer datos del modelo (misma firma que main_launcher.m)
+[NE, IDmax, NEn, elements, nodes, damele, eledent, ...
+ A, Iy, Iz, J, E, G, vxz, ID, ~, ~] = lectura_hoja_excel(excel_path);
 
 nElem = size(elements, 1);
 nNodos = size(nodes, 1);
@@ -46,8 +46,8 @@ nNodos = size(nodes, 1);
 fprintf('  ✓ Modelo cargado:\n');
 fprintf('    - Elementos: %d\n', nElem);
 fprintf('    - Nodos: %d\n', nNodos);
-fprintf('    - Nodos libres: %d\n', length(nodos_libres));
-fprintf('    - Nodos empotrados: %d\n\n', length(nodos_empotrados));
+fprintf('    - DOF totales: %d\n', IDmax);
+fprintf('    - NE: %d\n\n', NE);
 
 %% 3. ANÁLISIS ESTÁTICO DE FUERZAS AXIALES
 fprintf('Ejecutando análisis estático...\n\n');
