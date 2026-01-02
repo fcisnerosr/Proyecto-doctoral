@@ -78,7 +78,7 @@ python comparar_con_etabs.py
 
 ## Archivos de Entrada Requeridos
 
-1. **Modelo Excel:** `../Tabla_Plataforma_fija_2.1_para_matlab.xlsx`
+1. **Modelo Excel:** `../../pruebas_excel/marco3Ddam0.xlsx` (obtenido automáticamente)
 2. **Datos ETABS:** `001_runExperimentos/003_funcion_deformaciones/P_etabs_promedio.csv`
 
 ## Nota Importante

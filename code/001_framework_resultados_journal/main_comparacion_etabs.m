@@ -33,8 +33,8 @@ fprintf('  ✓ Configuración cargada\n\n');
 %% 2. LECTURA DE DATOS DEL MODELO
 fprintf('Leyendo modelo desde Excel...\n');
 
-% Ruta al archivo Excel (ajustar según sea necesario)
-excel_path = '../Tabla_Plataforma_fija_2.1_para_matlab.xlsx';
+% Usar la misma función que main_launcher.m para obtener ruta
+excel_path = obtenerRutaMarco3Ddam0();  % ../../pruebas_excel/marco3Ddam0.xlsx
 
 % Leer datos del modelo
 [nodes, elements, A, Iy, Iz, J, E, G, rho_mat, D, t, fy, vxz, ID, ...
