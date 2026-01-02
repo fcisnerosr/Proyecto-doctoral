@@ -97,7 +97,7 @@ function [N_axial, rho, Pcr, diagnostico] = analisis_estatico_fuerzas_axiales(..
 % VERSIÓN: 1.0
 
 %% ========================================================================
-%  1. VALIDACIÓN DE ENTRADAS
+%  1. VALIDACIÓN DE ENTRADAS Y CONVERSIÓN DE UNIDADES
 %  ========================================================================
 narginchk(12, 12);
 
@@ -105,25 +105,29 @@ nNodos = size(nodes, 1);
 nElem = size(elements, 1);
 IDmax = max(max(ID));
 
-% CONVERSIÓN DE UNIDADES desde Excel
-% El archivo Excel usa:
-%   - Áreas (A): mm²
-%   - Inercias (Iy, Iz, J): mm⁴
-%   - Longitudes (nodes): metros
-%   - E, G: MPa
-% Conversión a unidades SI consistentes (m, N, Pa):
-A = A / 1e6;          % mm² → m²
-Iy = Iy / 1e12;       % mm⁴ → m⁴
-Iz = Iz / 1e12;       % mm⁴ → m⁴
-J = J / 1e12;         % mm⁴ → m⁴
-E = E * 1e6;          % MPa → Pa (N/m²)
-G = G * 1e6;          % MPa → Pa (N/m²)
+% CONVERSIÓN DE UNIDADES: Sistema N-mm
+% El archivo Excel tiene:
+%   - Coordenadas (nodes): metros [m]
+%   - Áreas (A): milímetros cuadrados [mm²]
+%   - Inercias (Iy, Iz, J): [mm⁴]
+%   - E, G: Mega-Pascales [MPa] = [N/mm²]
+%
+% El código trabaja en sistema N-mm consistente:
+%   - Longitudes: mm
+%   - Fuerzas: N
+%   - Áreas: mm²
+%   - Inercias: mm⁴
+%   - Tensiones: MPa = N/mm²
+%
+% CONVERSIÓN REQUERIDA:
+% Solo convertir coordenadas de metros a milímetros
+nodes(:, 2:4) = nodes(:, 2:4) * 1000;  % m → mm
 
-% Densidad del acero (típica para estructuras offshore)
-rho_acero = 7850;  % kg/m³
+% A, Iy, Iz, J, E, G ya están en unidades correctas (mm², mm⁴, MPa)
 
-% Gravedad
-g = 9.81;  % m/s²
+% Densidad del acero y gravedad
+rho_acero = 7850;  % kg/m³ = 7850e-9 kg/mm³
+g = 9.81;  % m/s² = 9810 mm/s²
 
 fprintf('\n=== ANÁLISIS ESTÁTICO: BAJADA DE CARGAS ===\n');
 fprintf('Estructura: %d nodos, %d elementos\n', nNodos, nElem);
@@ -202,9 +206,11 @@ if incluir_peso_propio
         nodo_j = elements(i, 3);
         xi = nodes(nodo_i, 2:4)';
         xj = nodes(nodo_j, 2:4)';
-        L_elem = norm(xj - xi);
+        L_elem = norm(xj - xi);  % mm (tras conversión de coordenadas)
         
-        W_elem = rho_acero * A(i) * L_elem * g;  % [N]
+        % Sistema N-mm: A[mm²] × L[mm] × rho[kg/m³] × g[m/s²]
+        % Volumen = A × L = mm³, convertir a m³: ÷1e9
+        W_elem = rho_acero * (A(i) * L_elem / 1e9) * g;  % [N]
         
         % Distribuir mitad a cada nodo (en dirección Z negativa)
         % DOF Z es el tercero: [Ux, Uy, Uz, Rx, Ry, Rz]
@@ -219,13 +225,13 @@ if incluir_peso_propio
         end
     end
     
-    peso_propio_total = sum(rho_acero * A .* arrayfun(@(i) ...
-        norm(nodes(elements(i,3),2:4) - nodes(elements(i,2),2:4)), (1:nElem)')) * g;
+    peso_propio_total = sum(rho_acero * (A .* arrayfun(@(i) ...
+        norm(nodes(elements(i,3),2:4) - nodes(elements(i,2),2:4)), (1:nElem)') / 1e9)) * g;
     fprintf('    Peso propio total: %.2f kN\n', peso_propio_total/1e3);
 else
     % Si no se incluye peso propio, calcularlo para referencia
-    peso_propio_total = sum(rho_acero * A .* arrayfun(@(i) ...
-        norm(nodes(elements(i,3),2:4) - nodes(elements(i,2),2:4)), (1:nElem)')) * g;
+    peso_propio_total = sum(rho_acero * (A .* arrayfun(@(i) ...
+        norm(nodes(elements(i,3),2:4) - nodes(elements(i,2),2:4)), (1:nElem)') / 1e9)) * g;
 end
 
 % =========================================================================
