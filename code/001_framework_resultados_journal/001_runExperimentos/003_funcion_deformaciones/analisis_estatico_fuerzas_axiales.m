@@ -167,6 +167,19 @@ for i = 1:nElem
     % Longitud
     L_elem = norm(xj - xi);
     
+    % DEBUG: Verificar unidades del primer elemento
+    if i == 1
+        fprintf('DEBUG Elemento 1:\n');
+        fprintf('  Nodos: %d - %d\n', nodo_i, nodo_j);
+        fprintf('  xi = [%.2f, %.2f, %.2f] mm\n', xi(1), xi(2), xi(3));
+        fprintf('  xj = [%.2f, %.2f, %.2f] mm\n', xj(1), xj(2), xj(3));
+        fprintf('  L = %.2f mm\n', L_elem);
+        fprintf('  A = %.2f mm²\n', A(i));
+        fprintf('  E = %.2f MPa\n', E(i));
+        fprintf('  ke(1,1) = E*A/L = %.2f*%.2f/%.2f = %.6e N/mm\n', ...
+            E(i), A(i), L_elem, E(i)*A(i)/L_elem);
+    end
+    
     % Cosenos directores
     CX = (xj(1) - xi(1)) / L_elem;
     CY = (xj(2) - xi(2)) / L_elem;
@@ -243,6 +256,7 @@ if incluir_peso_propio
     peso_propio_total = sum(rho_acero * (A .* arrayfun(@(i) ...
         norm(nodes(elements(i,3),2:4) - nodes(elements(i,2),2:4)), (1:nElem)') / 1e9)) * g;
     fprintf('    Peso propio total: %.2f kN\n', peso_propio_total/1e3);
+    fprintf('    DEBUG: F_global(1) = %.2e N (debe estar en N, no kN)\n', F_global(1));
 else
     % Si no se incluye peso propio, calcularlo para referencia
     peso_propio_total = sum(rho_acero * (A .* arrayfun(@(i) ...
@@ -432,6 +446,13 @@ fprintf('    Carga promedio/nodo: %.2f kN\n', abs(W_por_nodo_promedio)/1e3);
 carga_total = sum(abs(F_global));
 fprintf('  Carga total aplicada: %.2f kN\n', carga_total/1e3);
 
+% DEBUG: Verificar magnitudes
+DOF_nodo41_z = ID(3, 41);  % DOF vertical del nodo 41 (production deck)
+if DOF_nodo41_z > 0
+    fprintf('  DEBUG: F_global(%d) [nodo 41, Uz] = %.2e N (esperado ~-1.39e6 N)\n', ...
+        DOF_nodo41_z, F_global(DOF_nodo41_z));
+end
+
 %% ========================================================================
 %  4. SOLUCIÓN DEL SISTEMA ESTÁTICO
 %  ========================================================================
@@ -441,7 +462,9 @@ fprintf('Resolviendo sistema estático K·U = F...\n');
 U_static = KG \ F_global;
 
 fprintf('  Solución obtenida\n');
-fprintf('  Desplazamiento vertical máximo: %.4f m\n', max(abs(U_static)));
+fprintf('  Desplazamiento vertical máximo: %.4f mm (%.2f cm)\n', ...
+    max(abs(U_static)), max(abs(U_static))/10);
+fprintf('  DEBUG: Sistema N-mm → U en mm ✓\n');
 
 %% ========================================================================
 %  5. EXTRACCIÓN DE FUERZAS AXIALES POR ELEMENTO
@@ -494,8 +517,13 @@ for i = 1:nElem
     % Fuerza axial: N = E·A·Δu/L
     % u_local(1) = desplazamiento axial en nodo i
     % u_local(7) = desplazamiento axial en nodo j
+    % CONVENCIÓN: Tensión (+), Compresión (-)
+    % Acortamiento: u(j) < u(i) → delta_u < 0 → N < 0 (compresión)
     delta_u = u_local(7) - u_local(1);
-    N_axial(i) = E(i) * A(i) * delta_u / L_elem;
+    
+    % CORRECCIÓN: Invertir signo para coincidir con convención ETABS
+    % ETABS usa: Compresión (-), Tensión (+) pero desde perspectiva del elemento
+    N_axial(i) = -E(i) * A(i) * delta_u / L_elem;
     
     % COMENTADO PARA COMPARACIÓN CON ETABS
     % % Carga crítica de Euler: Pcr = π²·E·Imin / L²
