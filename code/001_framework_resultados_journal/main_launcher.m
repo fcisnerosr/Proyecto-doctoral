@@ -24,12 +24,30 @@ config.archivo      = 'datos_revision_5_jacket-subestructura_5NIVELES';
 config.archivo_excel = construirRutaExcel(config.carpeta, config.archivo);  % Ruta al Excel de modelo ETABS
 
 % -------------------------------------------------------------------------
-% 3) Preparación de carpeta de resultados
+% 3) Preparación de carpeta de resultados (con subcarpeta por tipo de daño)
 % -------------------------------------------------------------------------
-config.outputFolder = obtenerOutputFolder();                 % Ruta absoluta a Proyecto-doctoral/Resultados
-if ~exist(config.outputFolder,'dir')
-    mkdir(config.outputFolder);  % Crea carpeta si no existe
+% 3.1) Cargar configuración para obtener tipo_dano
+config_temp = config_deformacion_inicial();  % o config() según tu configuración activa
+
+% 3.2) Crear subcarpeta con formato: tipo_dano_YYYY-MM-DD_HH-MM-SS
+timestamp = datestr(now, 'yyyy-mm-dd_HH-MM-SS');
+subfolder_name = sprintf('%s_%s', config_temp.tipo_dano, timestamp);
+
+% 3.3) Ruta base de Resultados
+outputFolder_base = obtenerOutputFolder();  % Proyecto-doctoral/Resultados
+if ~exist(outputFolder_base,'dir')
+    mkdir(outputFolder_base);
 end
+
+% 3.4) Crear subcarpeta específica para esta corrida
+config.outputFolder = fullfile(outputFolder_base, subfolder_name);
+if ~exist(config.outputFolder,'dir')
+    mkdir(config.outputFolder);
+end
+
+fprintf('\n=== CARPETA DE RESULTADOS ===\n');
+fprintf('Tipo de daño: %s\n', config_temp.tipo_dano);
+fprintf('Carpeta: %s\n\n', config.outputFolder);
 
 % -------------------------------------------------------------------------
 % 4) PRE-CÁLCULOS ESTÁTICOS (solo una vez)
