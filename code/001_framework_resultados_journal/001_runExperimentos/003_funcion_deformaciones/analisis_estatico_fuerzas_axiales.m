@@ -520,10 +520,13 @@ for i = 1:nElem
     % CONVENCIÓN: Tensión (+), Compresión (-)
     % Acortamiento: u(j) < u(i) → delta_u < 0 → N < 0 (compresión)
     delta_u = u_local(7) - u_local(1);
+    N_axial(i) = E(i) * A(i) * delta_u / L_elem;
     
-    % CORRECCIÓN: Invertir signo para coincidir con convención ETABS
-    % ETABS usa: Compresión (-), Tensión (+) pero desde perspectiva del elemento
-    N_axial(i) = -E(i) * A(i) * delta_u / L_elem;
+    % DEBUG: Verificar signo y magnitud
+    if i == 1
+        fprintf('DEBUG N_axial: Elem 1 = %.2f kN, delta_u = %.4e mm, ETABS = -8366 kN\n', ...
+            N_axial(i)/1000, delta_u);
+    end
     
     % COMENTADO PARA COMPARACIÓN CON ETABS
     % % Carga crítica de Euler: Pcr = π²·E·Imin / L²
