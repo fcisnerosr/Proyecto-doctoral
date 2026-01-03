@@ -104,12 +104,16 @@ function [ke_d_total, ke_d, prop_geom_mat] = switch_case_danos( ...
                 % ─────────────────────────────────────────────────────────
                 % FUERZA AXIAL Y VERIFICACIONES
                 % ─────────────────────────────────────────────────────────
-                N_comp = N_axial_global(idxElem);  % [N]
+                % CONVENCIÓN DE SIGNOS:
+                %   - N_axial_global: Negativo = Compresión, Positivo = Tensión
+                %   - funcion_deformaciones espera: Ncomp > 0 (valor absoluto)
+                N_axial = N_axial_global(idxElem);  % [N] (con signo)
+                N_comp = abs(N_axial);              % [N] (valor absoluto para función)
                 
                 % Advertencia si está en tensión (no es crítico, pero inusual)
-                if N_comp > 0
+                if N_axial > 0
                     warning('Elemento %d en TENSIÓN (N=%.2f kN). Deformación inicial típicamente bajo COMPRESIÓN.', ...
-                        idxElem, N_comp/1e3);
+                        idxElem, N_axial/1e3);
                 end
                 
                 % Verificar ratio de carga si disponible
