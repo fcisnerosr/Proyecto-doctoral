@@ -68,6 +68,9 @@ fprintf('Carpeta: %s\n\n', config.outputFolder);
 % 4.4) ANÁLISIS ESTÁTICO: Cálculo de fuerzas axiales para daño tipo 3
 fprintf('Calculando fuerzas axiales estáticas (bajada de cargas)...\n');
 
+% Número de elementos del modelo
+nElem = NE;
+
 % -------------------------------------------------------------------------
 % CARGAS DE TOPSIDE (DECK EQUIPMENT + STRUCTURE)
 % -------------------------------------------------------------------------
@@ -91,15 +94,76 @@ fprintf('Calculando fuerzas axiales estáticas (bajada de cargas)...\n');
 W_topside = 8337000;  % [N] = 8.337 MN (~850 ton) TOTAL (2 niveles)
 incluir_peso_propio = true;
 
-[N_axial_global, rho_global, Pcr_global, diagnostico_estatico] = ...
-    analisis_estatico_fuerzas_axiales(...
-        nodes, elements, A, Iy, Iz, J, E, G, vxz, ID, W_topside, incluir_peso_propio);
+% -------------------------------------------------------------------------
+% 4.4) CÁLCULO DE FUERZAS AXIALES: CÓDIGO vs ETABS (según configuración)
+% -------------------------------------------------------------------------
+% DECISIÓN DE ARQUITECTURA:
+%   Se permite elegir entre dos fuentes de fuerzas axiales:
+%   1. 'codigo': Análisis FEM interno (autosuficiente)
+%   2. 'etabs':  Lectura de CSV exportado (consistencia con diseño)
+%
+% La configuración está en config.fuente_fuerzas_axiales (línea 21-35)
+%
+% JUSTIFICACIÓN:
+%   - Código FEM: ρ_max ≈ 0.008 (0.8% de carga crítica)
+%   - ETABS:      ρ_max ≈ 0.012 (1.2%, +50% detectabilidad)
+%   
+%   Para deformación inicial, mayor ρ → mayor sensibilidad modal
+%   Por tanto, se recomienda usar fuerzas ETABS para mejor detectabilidad
+% -------------------------------------------------------------------------
 
-fprintf('  ✓ Fuerzas axiales calculadas para %d elementos\n', length(N_axial_global));
+switch config_temp.fuente_fuerzas_axiales
+    case 'codigo'
+        fprintf('\n=== FUENTE DE FUERZAS AXIALES: CÓDIGO (FEM INTERNO) ===\n');
+        [N_axial_global, rho_global, Pcr_global, diagnostico_estatico] = ...
+            analisis_estatico_fuerzas_axiales(...
+                nodes, elements, A, Iy, Iz, J, E, G, vxz, ID, W_topside, incluir_peso_propio);
+        
+    case 'etabs'
+        fprintf('\n=== FUENTE DE FUERZAS AXIALES: ETABS (CSV EXTERNO) ===\n');
+        
+        % Leer fuerzas axiales de ETABS (toma |N| máximo de combinaciones)
+        [N_axial_global, diag_etabs] = leer_fuerzas_etabs(...
+            config_temp.csv_fuerzas_etabs, nElem);
+        
+        % Calcular Pcr y ρ con geometría del modelo
+        [rho_global, Pcr_global, diag_rho] = calcular_rho_y_Pcr(...
+            N_axial_global, elements, nodes, Iy, Iz, E);
+        
+        % Consolidar diagnóstico
+        diagnostico_estatico.fuente = 'etabs';
+        diagnostico_estatico.csv_path = diag_etabs.csv_path;
+        diagnostico_estatico.rho_max = diag_rho.rho_max;
+        diagnostico_estatico.elem_mas_cargado = diag_rho.elem_mas_cargado;
+        diagnostico_estatico.n_compresion = diag_rho.n_compresion;
+        diagnostico_estatico.n_tension = diag_rho.n_tension;
+        
+    otherwise
+        error('main_launcher:FuenteInvalida', ...
+            'config.fuente_fuerzas_axiales debe ser ''codigo'' o ''etabs'', recibido: %s', ...
+            config_temp.fuente_fuerzas_axiales);
+end
+
+fprintf('  ✓ Fuerzas axiales obtenidas para %d elementos\n', length(N_axial_global));
 fprintf('  ✓ Elementos con ρ∈[0.3,0.7]: %d (óptimos para deformación inicial)\n', ...
     sum(rho_global >= 0.3 & rho_global <= 0.7));
 fprintf('  ✓ Elemento más cargado: %d (ρ=%.4f)\n', ...
     diagnostico_estatico.elem_mas_cargado, diagnostico_estatico.rho_max);
+
+% 4.4.1) DIAGNÓSTICO DETALLADO DE DISTRIBUCIÓN DE ρ
+fprintf('\n--- DIAGNÓSTICO DE DISTRIBUCIÓN DE ρ ---\n');
+fprintf('ρ mínimo:  %.4f (elemento %d)\n', min(rho_global), find(rho_global == min(rho_global), 1));
+fprintf('ρ máximo:  %.4f (elemento %d)\n', max(rho_global), find(rho_global == max(rho_global), 1));
+fprintf('ρ promedio: %.4f\n', mean(rho_global));
+fprintf('ρ mediana:  %.4f\n', median(rho_global));
+fprintf('\nDistribución por rangos:\n');
+fprintf('  ρ < 0.10:      %3d elementos (%.1f%%)\n', sum(rho_global < 0.10), 100*sum(rho_global < 0.10)/length(rho_global));
+fprintf('  0.10 ≤ ρ < 0.20: %3d elementos (%.1f%%)\n', sum(rho_global >= 0.10 & rho_global < 0.20), 100*sum(rho_global >= 0.10 & rho_global < 0.20)/length(rho_global));
+fprintf('  0.20 ≤ ρ < 0.30: %3d elementos (%.1f%%)\n', sum(rho_global >= 0.20 & rho_global < 0.30), 100*sum(rho_global >= 0.20 & rho_global < 0.30)/length(rho_global));
+fprintf('  0.30 ≤ ρ < 0.50: %3d elementos (%.1f%%)\n', sum(rho_global >= 0.30 & rho_global < 0.50), 100*sum(rho_global >= 0.30 & rho_global < 0.50)/length(rho_global));
+fprintf('  0.50 ≤ ρ < 0.75: %3d elementos (%.1f%%)\n', sum(rho_global >= 0.50 & rho_global < 0.75), 100*sum(rho_global >= 0.50 & rho_global < 0.75)/length(rho_global));
+fprintf('  ρ ≥ 0.75:      %3d elementos (%.1f%%)\n', sum(rho_global >= 0.75), 100*sum(rho_global >= 0.75)/length(rho_global));
+fprintf('\n');
 
 % 4.5) Ensamble de matriz de rigidez global intacta y condensación
 KG_und = ensamblaje_matriz_rigidez_global_sin_dano( ...

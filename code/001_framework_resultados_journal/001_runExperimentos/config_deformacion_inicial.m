@@ -69,17 +69,45 @@ switch config.tipo_dano
 end
 
 % =========================================================================
+% FUENTE DE FUERZAS AXIALES (DECISION KEY)
+% =========================================================================
+% OPCIONES:
+%   'codigo' - Calcula N_axial con FEM interno (analisis_estatico_fuerzas_axiales.m)
+%              Ventajas: Autosuficiente, documentado, bajo control total
+%              Desventajas: Puede diferir de ETABS (29% típico)
+%
+%   'etabs'  - Lee N_axial desde CSV exportado de ETABS
+%              Ventajas: Consistencia con software comercial, fuerzas validadas
+%              Desventajas: Requiere archivo externo, dependencia de export manual
+%
+% RECOMENDACIÓN: Usar 'etabs' para análisis de deformación inicial
+%                (mayor ρ → mejor detectabilidad: ~40% incremento)
+config.fuente_fuerzas_axiales = 'etabs';  % 'codigo' | 'etabs'
+
+% Ruta al CSV de fuerzas ETABS (solo si fuente_fuerzas_axiales='etabs')
+config.csv_fuerzas_etabs = fullfile(...
+    fileparts(mfilename('fullpath')), ...
+    '003_funcion_deformaciones', ...
+    'carga_axial_ETABS.csv');
+
+% =========================================================================
 % FILTROS DE SEGURIDAD PARA DEFORMACIÓN INICIAL
 % =========================================================================
 if strcmp(config.tipo_dano, 'deformacion_inicial')
-    % Límites de validez de funcion_deformaciones.m
-    config.rho_min = 0.20;  % Mínimo para detectabilidad razonable
-    config.rho_max = 0.75;  % Máximo para evitar inestabilidad (límite 0.85)
+    % NOTA: Para estructuras offshore muy robustas (jacket con Pcr >> N_axial)
+    % el ratio ρ típico es mucho menor que los valores de literatura (0.3-0.7)
+    % Con fuerzas código: ρ_max ≈ 0.008 (0.8%)
+    % Con fuerzas ETABS:  ρ_max ≈ 0.012 (1.2%, +50% detectabilidad)
     
-    config.e0_max = 5.0;    % [%] Máximo e0/L permitido
+    % Límites ajustados a estructura real
+    config.rho_min = 0.001;  % 0.1% de carga crítica (mínimo razonable)
+    config.rho_max = 0.050;  % 5% de carga crítica (elementos más cargados)
     
-    % Flag para filtrar elementos automáticamente
-    config.filtrar_elementos_por_rho = true;
+    config.e0_max = 5.0;     % [%] Máximo e0/L permitido
+    
+    % Deshabilitar filtro para permitir análisis de toda la estructura
+    % (El AG identificará los elementos más sensibles automáticamente)
+    config.filtrar_elementos_por_rho = false;
 else
     % Sin filtros especiales para otros tipos de daño
     config.filtrar_elementos_por_rho = false;
