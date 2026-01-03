@@ -1,6 +1,14 @@
 % local stiffness matrix for 3D elements
 
 function ke = localkeframe3D(A,Iy,Iz,J,E,G,L)
+    % DEBUG: Verificar que esta función se está usando
+    persistent call_count;
+    if isempty(call_count)
+        call_count = 0;
+        fprintf('DEBUG: localkeframe3D (N-mm completa) cargada correctamente\n');
+    end
+    call_count = call_count + 1;
+    
     % dano = 'corrosion'
     % switch dano
     %     case 'corrosion'

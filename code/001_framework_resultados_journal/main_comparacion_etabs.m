@@ -17,6 +17,10 @@
 
 clear; clc; close all;
 
+% Forzar recarga de todas las funciones
+clear functions;
+rehash toolboxcache;
+
 fprintf('========================================\n');
 fprintf('  COMPARACIÓN CARGAS AXIALES: ETABS\n');
 fprintf('========================================\n\n');

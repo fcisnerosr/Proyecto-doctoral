@@ -2,6 +2,10 @@ function [N_axial, rho, Pcr, diagnostico] = analisis_estatico_fuerzas_axiales(..
     nodes, elements, A, Iy, Iz, J, E, G, vxz, ID, W_topside, incluir_peso_propio)
 % ANALISIS_ESTATICO_FUERZAS_AXIALES - Calcula fuerzas axiales en elementos por bajada de cargas
 %
+% IMPORTANTE: Asegurar que localkeframe3D.m local se usa (no otras versiones)
+current_dir = fileparts(mfilename('fullpath'));
+addpath(current_dir, '-begin');
+
 % DESCRIPCIÓN:
 %   Realiza análisis estático lineal de la estructura jacket bajo cargas
 %   permanentes (peso propio + topside) para obtener las fuerzas axiales
