@@ -49,6 +49,24 @@ fprintf('\n=== CARPETA DE RESULTADOS ===\n');
 fprintf('Tipo de daño: %s\n', config_temp.tipo_dano);
 fprintf('Carpeta: %s\n\n', config.outputFolder);
 
+% 3.5) FUSIONAR configuraciones: rutas + parámetros del AG
+% config      = rutas (pathfile, archivo_excel, outputFolder)
+% config_temp = parámetros (tipo_dano, rangoElem, porcentajes, filtros, etc.)
+% Se combinan para tener UNA config completa
+fields_temp = fieldnames(config_temp);
+for i = 1:length(fields_temp)
+    config.(fields_temp{i}) = config_temp.(fields_temp{i});
+end
+
+fprintf('=== CONFIGURACIÓN CONSOLIDADA ===\n');
+fprintf('Tipo de daño: %s\n', config.tipo_dano);
+fprintf('Fuente de fuerzas axiales: %s\n', config.fuente_fuerzas_axiales);
+fprintf('Filtrar por ρ: %s\n', mat2str(config.filtrar_elementos_por_rho));
+if config.filtrar_elementos_por_rho
+    fprintf('  Rango ρ: [%.3f, %.3f]\n', config.rho_min, config.rho_max);
+end
+fprintf('\n');
+
 % -------------------------------------------------------------------------
 % 4) PRE-CÁLCULOS ESTÁTICOS (solo una vez)
 % -------------------------------------------------------------------------
@@ -112,7 +130,7 @@ incluir_peso_propio = true;
 %   Por tanto, se recomienda usar fuerzas ETABS para mejor detectabilidad
 % -------------------------------------------------------------------------
 
-switch config_temp.fuente_fuerzas_axiales
+switch config.fuente_fuerzas_axiales
     case 'codigo'
         fprintf('\n=== FUENTE DE FUERZAS AXIALES: CÓDIGO (FEM INTERNO) ===\n');
         [N_axial_global, rho_global, Pcr_global, diagnostico_estatico] = ...
@@ -124,7 +142,7 @@ switch config_temp.fuente_fuerzas_axiales
         
         % Leer fuerzas axiales de ETABS (toma |N| máximo de combinaciones)
         [N_axial_global, diag_etabs] = leer_fuerzas_etabs(...
-            config_temp.csv_fuerzas_etabs, nElem);
+            config.csv_fuerzas_etabs, nElem);
         
         % Calcular Pcr y ρ con geometría del modelo
         [rho_global, Pcr_global, diag_rho] = calcular_rho_y_Pcr(...
@@ -141,7 +159,7 @@ switch config_temp.fuente_fuerzas_axiales
     otherwise
         error('main_launcher:FuenteInvalida', ...
             'config.fuente_fuerzas_axiales debe ser ''codigo'' o ''etabs'', recibido: %s', ...
-            config_temp.fuente_fuerzas_axiales);
+            config.fuente_fuerzas_axiales);
 end
 
 fprintf('  ✓ Fuerzas axiales obtenidas para %d elementos\n', length(N_axial_global));
