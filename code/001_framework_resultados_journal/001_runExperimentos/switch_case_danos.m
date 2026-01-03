@@ -17,16 +17,17 @@ function [ke_d_total, ke_d, prop_geom_mat] = switch_case_danos( ...
 
     % ────────────────────────────────────────────────────────────
     % ESTRUCTURA DE prop_geom (según lectura_datos_modelo_ETABS):
-    % prop_geom = [prop_geom_cell,             cols 1-4: A, Iyy, Izz, J
-    %              E_columna_cell,             col 5: E [MPa]
-    %              G_columna_cell,             col 6: G [MPa]
-    %              tipo,                       col 7: 'circular'
-    %              wo_vector,                  col 8: 'wo'
-    %              diam_diam_thick_tube_sub_cell,  cols 9-11: D, D, t [mm]
-    %              gamma_beta_vector];         cols 12-13: gamma, beta
+    % prop_geom = [elementos,                      col 1: ID elemento (string)
+    %              prop_geom_cell,                 cols 2-5: A, Iyy, Izz, J
+    %              E_columna_cell,                 col 6: E [MPa]
+    %              G_columna_cell,                 col 7: G [MPa]
+    %              tipo,                           col 8: 'circular'
+    %              wo_vector,                      col 9: 'wo'
+    %              diam_diam_thick_tube_sub_cell,  cols 10-12: D, D, t [mm]
+    %              gamma_beta_vector];             cols 13-14: gamma, beta
     % ────────────────────────────────────────────────────────────
-    DIAM_COL  = 9;   % Diámetro exterior [mm] (duplicado en col 10)
-    THICK_COL = 11;  % Espesor de pared [mm]
+    DIAM_COL  = 10;  % Diámetro exterior [mm] (duplicado en col 11)
+    THICK_COL = 12;  % Espesor de pared [mm]
 
     nElem = numel(no_elemento_a_danar);
     ke_d  = zeros(12,12,nElem);
