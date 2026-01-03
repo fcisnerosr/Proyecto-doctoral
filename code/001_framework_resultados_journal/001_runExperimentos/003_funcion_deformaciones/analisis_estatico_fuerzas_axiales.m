@@ -524,28 +524,25 @@ for i = 1:nElem
     
     % DEBUG: Verificar signo y magnitud
     if i == 1
-        fprintf('DEBUG N_axial: Elem 1 = %.2f kN, delta_u = %.4e mm, ETABS = -8366 kN\n', ...
+        fprintf('DEBUG N_axial: Elem 1 = %.2f kN, delta_u = %.4e mm\n', ...
             N_axial(i)/1000, delta_u);
     end
     
-    % COMENTADO PARA COMPARACIÓN CON ETABS
-    % % Carga crítica de Euler: Pcr = π²·E·Imin / L²
-    % % IMPORTANTE: E viene en [MPa], convertir a [Pa] para consistencia
-    % E_Pa = E(i) * 1e6;  % [MPa] → [Pa]
-    % Imin = min(Iy(i), Iz(i));  % [m⁴]
-    % Pcr(i) = (pi^2 * E_Pa * Imin) / (L_elem^2);  % [N]
-    % 
-    % % Ratio de carga crítica (adimensional)
-    % rho(i) = abs(N_axial(i)) / Pcr(i);
+    % Carga crítica de Euler: Pcr = π²·E·Imin / L²
+    % Sistema N-mm: E[MPa], Imin[mm⁴], L[mm]
+    Imin = min(Iy(i), Iz(i));  % [mm⁴]
+    Pcr(i) = (pi^2 * E(i) * Imin) / (L_elem^2);  % [N]
+    
+    % Ratio de carga crítica (adimensional)
+    if Pcr(i) > 0
+        rho(i) = abs(N_axial(i)) / Pcr(i);
+    else
+        rho(i) = 0;
+    end
 end
 
 %% ========================================================================
 %  6. ANÁLISIS Y DIAGNÓSTICO
-%  ========================================================================
-fprintf('\n--- RESULTADOS DEL ANÁLISIS ---\n');
-
-%% ========================================================================
-%  6. RESULTADOS Y GUARDADO (SOLO N_AXIAL PARA COMPARACIÓN CON ETABS)
 %  ========================================================================
 fprintf('\n--- RESULTADOS DEL ANÁLISIS ---\n');
 
@@ -572,79 +569,48 @@ if ~isempty(idx_tension)
     fprintf('  Media: %.2f kN\n', mean(N_axial(idx_tension))/1e3);
 end
 
-% GUARDAR RESULTADOS EN CSV PARA COMPARACIÓN CON ETABS
-elemento_ids = (1:nElem)';
-N_axial_kN = N_axial / 1000;  % Convertir N a kN para comparar con ETABS
+% Estadísticas de ratio de carga crítica
+[rho_max, idx_max] = max(rho);
+fprintf('\nRatio de carga crítica (ρ = |N|/Pcr):\n');
+fprintf('  Mínimo: %.4f\n', min(rho));
+fprintf('  Máximo: %.4f (elemento %d)\n', rho_max, idx_max);
+fprintf('  Media: %.4f\n', mean(rho));
 
-% Crear tabla
-T = table(elemento_ids, N_axial_kN, 'VariableNames', {'Elemento', 'N_axial_kN'});
+% Elementos en rangos de ρ
+rho_bajo = sum(rho < 0.2);
+rho_medio = sum(rho >= 0.2 & rho < 0.5);
+rho_alto = sum(rho >= 0.5 & rho < 0.75);
+rho_critico = sum(rho >= 0.75);
 
-% Guardar CSV
-writetable(T, 'N_axial_codigo.csv');
-fprintf('\n✓ Cargas axiales guardadas en: N_axial_codigo.csv\n');
-fprintf('  %d elementos calculados\n', nElem);
+fprintf('\nDistribución de elementos por ρ:\n');
+fprintf('  ρ < 0.2 (bajo):       %d elementos\n', rho_bajo);
+fprintf('  0.2 ≤ ρ < 0.5 (medio): %d elementos\n', rho_medio);
+fprintf('  0.5 ≤ ρ < 0.75 (alto): %d elementos\n', rho_alto);
+fprintf('  ρ ≥ 0.75 (crítico):    %d elementos\n', rho_critico);
 
-% Variables de salida vacías (compatibilidad con firma de función)
-rho = [];
-Pcr = [];
+% Advertencias
+if rho_max > 0.85
+    warning('Elemento %d tiene ρ=%.3f > 0.85 (cerca de pandeo)', idx_max, rho_max);
+end
+
+if rho_critico > 0
+    warning('%d elementos con ρ≥0.75 (verificar diseño)', rho_critico);
+end
+
+%% ========================================================================
+%  7. ESTRUCTURA DE DIAGNÓSTICO Y GUARDADO
+%  ========================================================================
 diagnostico = struct();
-diagnostico.idx_tension = idx_tension;
-diagnostico.idx_compresion = idx_compresion;
+diagnostico.F_total = F_global;
+diagnostico.U_static = U_static;
+diagnostico.elementos_tension = idx_tension;
+diagnostico.elementos_compresion = idx_compresion;
+diagnostico.rho_max = rho_max;
+diagnostico.elem_mas_cargado = idx_max;
+diagnostico.peso_propio_total = peso_propio_total;
+diagnostico.peso_topside = W_topside;
+diagnostico.carga_total = carga_total;
 
-fprintf('\n=== ANÁLISIS COMPLETADO (SOLO N_AXIAL) ===\n\n');
-
-% =========================================================================
-% TODO LO SIGUIENTE ESTÁ COMENTADO - SOLO PARA COMPARACIÓN CON ETABS
-% =========================================================================
-% 
-% % Estadísticas de ratio de carga
-% [rho_max, idx_max] = max(rho);
-% fprintf('\nRatio de carga crítica (ρ = |N|/Pcr):\n');
-% fprintf('  Mínimo: %.4f\n', min(rho));
-% fprintf('  Máximo: %.4f (elemento %d)\n', rho_max, idx_max);
-% fprintf('  Media: %.4f\n', mean(rho));
-% 
-% % Elementos en rangos de ρ
-% rho_bajo = sum(rho < 0.2);
-% rho_medio = sum(rho >= 0.2 & rho < 0.5);
-% rho_alto = sum(rho >= 0.5 & rho < 0.75);
-% rho_critico = sum(rho >= 0.75);
-% 
-% fprintf('\nDistribución de elementos por ρ:\n');
-% fprintf('  ρ < 0.2 (bajo):       %d elementos\n', rho_bajo);
-% fprintf('  0.2 ≤ ρ < 0.5 (medio): %d elementos\n', rho_medio);
-% fprintf('  0.5 ≤ ρ < 0.75 (alto): %d elementos\n', rho_alto);
-% fprintf('  ρ ≥ 0.75 (crítico):    %d elementos\n', rho_critico);
-% 
-% % Advertencias
-% if rho_max > 0.85
-%     warning('Elemento %d tiene ρ=%.3f > 0.85 (cerca de pandeo)', idx_max, rho_max);
-% end
-% 
-% if rho_critico > 0
-%     warning('%d elementos con ρ≥0.75 (verificar diseño)', rho_critico);
-% end
-% 
-% %% ========================================================================
-% %  7. ESTRUCTURA DE DIAGNÓSTICO
-% %  ========================================================================
-% diagnostico = struct();
-% diagnostico.nodos_topside = nodos_topside;
-% diagnostico.F_total = F_global;
-% diagnostico.U_static = U_static;
-% diagnostico.elementos_tension = idx_tension;
-% diagnostico.elementos_compresion = idx_compresion;
-% diagnostico.rho_max = rho_max;
-% diagnostico.elem_mas_cargado = idx_max;
-% diagnostico.peso_propio_total = peso_propio_total;
-% diagnostico.peso_topside = W_topside;
-% diagnostico.carga_total = carga_total;
-% 
-% % Guardar resultados para comparación
-% save('analisis_estatico_output.mat', 'N_axial', 'rho', 'Pcr', 'elementos_validos', ...
-%     'diagnostico', 'idx_compresion', 'idx_tension');
-% 
-% fprintf('\n=== ANÁLISIS COMPLETADO ===\n\n');
-
+fprintf('\n=== ANÁLISIS COMPLETADO ===\n\n');
 
 end  % function
