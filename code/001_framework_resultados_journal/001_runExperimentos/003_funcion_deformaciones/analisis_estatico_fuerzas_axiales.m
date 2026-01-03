@@ -119,15 +119,26 @@ IDmax = max(max(ID));
 %   - Inercias: mm⁴
 %   - Tensiones: MPa = N/mm²
 %
-% CONVERSIÓN REQUERIDA:
-% Solo convertir coordenadas de metros a milímetros
-nodes(:, 2:4) = nodes(:, 2:4) * 1000;  % m → mm
+% SISTEMA N-mm: Sistema consistente de unidades
+% El archivo Excel tiene todo en sistema N-mm:
+%   - Coordenadas (nodes): milímetros [mm]
+%   - Áreas (A): milímetros cuadrados [mm²]
+%   - Inercias (Iy, Iz, J): [mm⁴]
+%   - E, G: Mega-Pascales [MPa] = [N/mm²]
+%
+% El código trabaja en sistema N-mm consistente:
+%   - Longitudes: mm
+%   - Fuerzas: N
+%   - Áreas: mm²
+%   - Inercias: mm⁴
+%   - Tensiones: MPa = N/mm²
+%
+% NO SE REQUIERE CONVERSIÓN DE UNIDADES
+% Todos los datos ya están en el sistema correcto
 
-% A, Iy, Iz, J, E, G ya están en unidades correctas (mm², mm⁴, MPa)
-
-% Densidad del acero y gravedad
-rho_acero = 7850;  % kg/m³ = 7850e-9 kg/mm³
-g = 9.81;  % m/s² = 9810 mm/s²
+% Densidad del acero y gravedad para cálculo de peso
+rho_acero = 7850;  % kg/m³
+g = 9.81;  % m/s²
 
 fprintf('\n=== ANÁLISIS ESTÁTICO: BAJADA DE CARGAS ===\n');
 fprintf('Estructura: %d nodos, %d elementos\n', nNodos, nElem);
