@@ -1,0 +1,43 @@
+# --- MATLAB ---
+*.asv
+*.m~
+*.slxc
+*.mex*
+*.log
+
+# --- LaTeX (Plantilla Elsevier y Tesis) ---
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.gz
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+*.synctex.gz
+
+# --- Python & Jupyter Notebooks ---
+__pycache__/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints
+.virtualenv/
+venv/
+
+# --- OS & Editors ---
+.DS_Store
+Thumbs.db
+*.swp
+*.undo
+.vscode/
+.idea/
+*~
+
+# --- Resultados Pesados ---
+# Si tus archivos .mat en la carpeta outputs son muy grandes (>50MB), 
+# es mejor no subirlos a GitHub.
+outputs/**/*.mat
+outputs/**/*.zip

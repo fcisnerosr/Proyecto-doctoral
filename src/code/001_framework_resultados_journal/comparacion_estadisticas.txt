@@ -1,0 +1,16 @@
+================================================================================
+  ESTADÍSTICAS DE COMPARACIÓN: CÓDIGO MATLAB vs ETABS
+================================================================================
+
+Elementos analizados: 136
+
+Diferencia absoluta:
+  Media:        2131.79 kN
+  Desv. Est.:   2484.02 kN
+
+Diferencia porcentual:
+  Media:        327.51 %
+  Desv. Est.:   680.83 %
+
+VEREDICTO: ✗ REQUIERE REVISIÓN
+  Las fuerzas axiales tienen diferencias significativas con ETABS.
