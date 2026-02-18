@@ -1030,7 +1030,50 @@ config.export.saveFigs = false;  % Sin figuras
 └─────────────────────────────────────────────────────────────┘
 ```
 
-### 7.2 Secuencia Detallada de Ejecución
+### 7.2 Flujo de Ejecución Detallado
+
+#### Descripción del Pipeline de Procesamiento
+
+```
+1. main_launcher.m (PUNTO DE ENTRADA)
+   ├─ Carga config.m → tipo_dano, porcentajes, rangoElem
+   ├─ Lectura de datos ETABS (geometría, conectividad)
+   ├─ Análisis estático (N_axial, Pcr, ρ)
+   ├─ Cálculo de DI_base (modelo intacto)
+   └─ Llama a runExperimentos()
+
+2. runExperimentos.m (ORQUESTADOR)
+   ├─ Filtra elementos por ρ (si aplica)
+   ├─ Bucle: for elem in elementos → for pct in porcentajes
+   └─ Llama a unaCorridaAG() para cada combinación
+
+3. unaCorridaAG.m (CORRIDA INDIVIDUAL)
+   ├─ Aplica daño al modelo (switch_case_danos.m)
+   ├─ Recalcula modos y frecuencias del modelo dañado
+   ├─ Emparejamiento modal con MAC (Hungarian Algorithm)
+   ├─ Calcula 8 DIs del modelo dañado
+   ├─ Ejecuta GA() para encontrar pesos α óptimos
+   ├─ Combina DIs con α → P (predicción de daño)
+   ├─ Calcula falsos positivos (FP)
+   └─ Guarda resultados parciales (Excel, figuras)
+
+4. GA.m (ALGORITMO GENÉTICO)
+   ├─ Optimiza 8 pesos α para minimizar error (P - T)²
+   ├─ Usa objective_function.m como función objetivo
+   └─ Retorna optimal_alpha, fval
+
+5. objective_function.m (FUNCIÓN OBJETIVO)
+   └─ f = Σ(α·DI - T)² → minimiza diferencia entre predicción y verdad
+```
+
+**Notas importantes:**
+- El sistema procesa cada combinación de (elemento, porcentaje_daño, tipo_daño) de forma seriada
+- Cada corrida es independiente y puede tomar varios minutos
+- Para corrosión: 18 severidades (5-90% en pasos de 5%) × ~120 elementos
+- Para abolladura: 9 severidades (5-45% en pasos de 5%) × ~120 elementos
+- El Hungarian Algorithm en `matchModesMAC.m` previene errores por cruce modal (mode veering)
+
+### 7.3 Secuencia Detallada de Ejecución
 
 #### Paso 1: Inicialización (main_launcher.m)
 
@@ -2072,67 +2115,112 @@ grid on;
 proyecto_doctoral/
 │
 ├── README.md                           # Este archivo (documentación completa)
+├── MINUTA_SESION_2026-02-13.txt       # Planificación de redacción para AOR
 ├── 11_puntos_articulo.md               # Puntos clave para publicación
 │
-├── code/                                # Código principal
-│   ├── 001_framework_resultados_journal/
-│   │   ├── 000_framework/               # Núcleo del framework
-│   │   │   ├── config.m                 # ⭐ Configuración central
-│   │   │   ├── main_launcher.m          # Punto de entrada principal
-│   │   │   ├── calcularMatrizMAC.m      # Cálculo de matriz MAC
-│   │   │   └── matchModesMAC.m          # Emparejamiento modal óptimo
-│   │   │
-│   │   └── 001_runExperimentos/          # Ejecución de experimentos
-│   │       ├── runExperimentos.m         # Orquestador de corridas
-│   │       ├── unaCorridaAG.m            # Una corrida del AG
-│   │       ├── GA.m                      # Algoritmo genético
-│   │       └── RMSEfunction.m            # Función objetivo
-│   │
-│   ├── ensamblaje_matriz_rigidez_global_AG.m  # Ensamblaje K_global
-│   ├── matriz_de_masas.m                       # Construcción M_global
-│   ├── condensacion_estatica_AG.m              # Reducción Guyan
-│   ├── localkeframe3D_AG.m                     # Matriz rigidez local 3D
-│   ├── TransfM3Dframe_AG.m                     # Transformación local→global
-│   │
-│   ├── area_y_momento_polar_con_dano.m         # Corrosión: propiedades reducidas
-│   ├── corrosionlocal.m                        # Corrosión: aplicar daño
-│   ├── funcion_corrosion_completa_longitudinal.m  # Abolladura: rigidez modificada
-│   │
-│   ├── calcFlexibility.m                       # Matriz flexibilidad modal
-│   ├── calcularRMSEModales.m                   # RMSE entre modos
-│   ├── mac.m                                   # MAC entre dos modos
-│   │
-│   ├── my_initial_population.m                 # Población inicial GA
-│   ├── gaoutfun.m                              # Callback del GA
-│   │
-│   ├── check_symmetry.m                        # Verificación simetría matrices
-│   ├── reorganizar_vector.m                    # Utilidades de indexación
-│   └── ... (otros 40+ archivos auxiliares)
+├── code/                                # Código del framework principal
+│   └── 001_framework_resultados_journal/
+│       ├── config.m                     # ⭐ Configuración tipo_dano (corrosion/abolladura)
+│       ├── main_launcher.m              # ⭐ Punto de entrada principal
+│       ├── setupProjectPath.m           # Configuración de PATH de MATLAB
+│       │
+│       ├── 000_framework/               # Algoritmos de emparejamiento modal
+│       │   ├── calcularMatrizMAC.m      # Cálculo de matriz MAC
+│       │   └── matchModesMAC.m          # Hungarian Algorithm para matching
+│       │
+│       └── 001_runExperimentos/         # Pipeline de ejecución
+│           ├── runExperimentos.m        # Orquestador de corridas
+│           ├── unaCorridaAG.m           # Procesamiento de una corrida
+│           ├── GA.m                     # Algoritmo genético
+│           ├── objective_function.m     # Función objetivo del AG
+│           ├── switch_case_danos.m      # Aplica corrosión/abolladura
+│           ├── config_deformacion_inicial.m  # Config tipo daño 3 (descartado)
+│           │
+│           ├── 001_funcion_abolladura/  # Modelos de abolladura
+│           ├── 002_funcion_corrosion/   # Modelos de corrosión
+│           └── 003_funcion_deformaciones/  # Deformaciones iniciales (no usado)
 │
-├── excels_de_ing_Jaret/                 # Datos de entrada
-│   ├── Jacket_Offshore_Platform.xlsx    # ⭐ Modelo ETABS principal
-│   └── marco3Ddam0.xlsx                 # Propiedades adicionales
+├── src/                                 # Código fuente auxiliar
+│   ├── code/                            # Funciones FEM y utilidades
+│   │   ├── 001_framework_resultados_journal/  # Enlace simbólico a code/
+│   │   ├── ensamblaje_matriz_rigidez_global_AG.m  # Ensamblaje K_global
+│   │   ├── matriz_de_masas.m            # Construcción M_global
+│   │   ├── condensacion_estatica_AG.m   # Reducción Guyan
+│   │   ├── localkeframe3D_AG.m          # Matriz rigidez local 3D
+│   │   ├── TransfM3Dframe_AG.m          # Transformación local→global
+│   │   ├── RMSEfunction.m               # Función objetivo (legacy)
+│   │   ├── area_y_momento_polar_con_dano.m  # Corrosión: propiedades
+│   │   ├── corrosionlocal.m             # Corrosión: aplicar daño
+│   │   ├── calcFlexibility.m            # Matriz flexibilidad modal
+│   │   ├── calcDivFjR.m                 # Índice división flexibilidad
+│   │   ├── calcPercFjR.m                # Índice porcentaje flexibilidad
+│   │   ├── calcularRMSEModales.m        # RMSE entre modos
+│   │   ├── mac.m                        # MAC entre dos modos
+│   │   ├── my_initial_population.m      # Población inicial GA
+│   │   ├── gaoutfun.m                   # Callback del GA
+│   │   ├── check_symmetry.m             # Verificación simetría
+│   │   ├── reorganizar_vector.m         # Utilidades de indexación
+│   │   └── ... (otros archivos auxiliares)
+│   │
+│   └── legacy/                          # Código histórico de referencia
+│       └── codigo_AG_Ivan/              # Implementación Dr. Iván
 │
-├── Resultados/                          # ⭐ Salida de experimentos
-│   ├── todos_los_resultados.xlsx        # Tabla consolidada de métricas
-│   ├── DetalleTodasCorridas.xlsx        # Valores nodales P por experimento
-│   ├── workspace_completo.mat           # Workspace MATLAB completo
-│   └── checkpoint.mat                   # Checkpoints intermedios
+├── data/                                # Datos de entrada
+│   ├── excels_de_ing_Jaret/             # Modelos ETABS
+│   └── pruebas_excel/                   # Datos de prueba
 │
-├── fig/                                 # Figuras generadas (.fig, .png)
-│   ├── GA_E45_P30.fig                   # Evolución del GA
-│   ├── DIs_E45_P30.png                  # Distribución de DIs
-│   ├── P_E45_P30.png                    # Métrica combinada P
-│   └── MAC_E45_P30.png                  # Matriz MAC
+├── docs/                                # Documentación
+│   ├── pendientes_minimos_para_publicar_en_factor_de_impacto.txt
+│   ├── guia_redaccion_AOR.txt           # (vacío - revisar alternativas)
+│   └── 000_investigacion_profunda/      # Literatura y referencias
+│       ├── 00_ubicacion_reales_danos/
+│       ├── 01_corrosion/
+│       ├── 02_abolladura/
+│       └── 03_deform_excesivas/
 │
-├── svg/                                 # Figuras vectoriales (.svg)
+├── Resultados/                          # ⭐ SALIDA DE EXPERIMENTOS
+│   └── [tipo_dano]_[timestamp]/         # Carpeta por corrida (ver sección 9.3)
+│       ├── 00_configuracion.txt
+│       ├── 01_casos.csv
+│       ├── 02_vectores_alpha.csv        # ⭐ NUEVO: pesos α del AG
+│       ├── 03_metricas_clasificacion.csv# ⭐ NUEVO: TP, FP, Precision, Recall
+│       ├── 04_ICD_por_caso.csv          # ICD fusionado + baseline
+│       ├── 05_DI_individuales.csv       # 8 DIs por nodo (opcional)
+│       ├── 06_diagnostico_MAC.csv       # Diagnóstico emparejamiento modal
+│       ├── figuras/                     # Gráficas del AG (.png)
+│       │   ├── ID_0001.png
+│       │   └── ...
+│       └── matrices/                     # Datos pesados (.mat)
+│           ├── modos_intactos.mat
+│           └── K_M_condensadas.mat
+│
+├── outputs/                             # Salidas históricas
+│   ├── fig/                             # Figuras .fig (legacy)
+│   ├── jpgs/                            # Imágenes exportadas
+│   └── svg/                             # Gráficos vectoriales
+│
+├── els-cas-templates/                   # Plantillas Elsevier para paper
+│   ├── cas-sc-template.tex              # ⭐ Template para manuscrito
 │   └── ...
 │
-├── codigo_AG_Ivan/                      # Código de referencia (Dr. Iván)
-├── AG/                                  # Código antiguo del AG
-└── pruebas_excel/                       # Pruebas de I/O Excel
+├── manuscript_AOR/                      # Manuscrito en preparación
+│   ├── main.tex
+│   └── figures/
+│
+├── thesis/                              # Tesis doctoral
+│   └── chapters/
+│
+└── pruebas_excel/                       # Pruebas de lectura/escritura Excel
+    └── ETABS_modelo/
 
 ```
+
+**Notas sobre organización:**
+- El código principal está en `code/001_framework_resultados_journal/`
+- Las funciones auxiliares FEM están duplicadas en `src/code/` (estructura histórica)
+- `src/code/001_framework_resultados_journal/` es un enlace simbólico
+- Los resultados se guardan automáticamente en `Resultados/[tipo_dano]_[timestamp]/`
+- **FORMATO DE SALIDA DECLARADO:** CSV para todos los datos tabulares (compatibilidad Python/LLM)
 
 ### 9.2 Archivos Clave Detallados
 
@@ -2315,7 +2403,67 @@ RMSE = sqrt(mean((D_real - D_pred).^2));
 
 ### 9.3 Estructura de Datos de Salida
 
-#### todos_los_resultados.xlsx
+#### ⚠️ CAMBIO DE ARQUITECTURA: Nueva Estructura de Resultados/
+
+**DECLARACIÓN DE FORMATO:**
+- Todos los datos de salida se exportan en formato **CSV** (no .xlsx)
+- Razón: Interoperabilidad con Python, Git-friendly, compatible con LLMs
+- Matrices grandes (K, M, modos) se guardan en .mat
+
+**Estructura aprobada:**
+
+```
+Resultados/
+└── [tipo_dano]_YYYY-MM-DD_HH-MM-SS/     # Timestamp automático
+    ├── 00_configuracion.txt              # Config usada (tipo_dano, rangos, etc.)
+    ├── 01_casos.csv                      # ⭐ Punto 1 paper: registro de casos
+    ├── 02_vectores_alpha.csv             # ⭐ Punto 2 paper: α óptimos por caso
+    ├── 03_metricas_clasificacion.csv     # ⭐ Punto 5 paper: TP, FP, Precision, Recall, F1
+    ├── 04_ICD_por_caso.csv               # ICD fusionado + baseline
+    ├── 05_DI_individuales.csv            # 8 DIs por nodo por caso (opcional)
+    ├── 06_diagnostico_MAC.csv            # MAC_min, MAC_mean, cruces_modales
+    ├── figuras/                          # PNG de gráficas del AG
+    │   ├── ID_0001.png
+    │   ├── ID_0002.png
+    │   └── ...
+    └── matrices/                         # Datos pesados en .mat
+        ├── modos_intactos.mat
+        └── K_M_condensadas.mat
+```
+
+**Ejemplos de esquemas CSV:**
+
+**01_casos.csv:**
+```csv
+case_id,tipo_dano,elemento_id,severidad_pct,tipo_elemento,zona,seccion,N_axial,rho
+1,corrosion,10,5,brace,seabed,SECC04,1234567,0.008
+2,corrosion,10,10,brace,seabed,SECC04,1234567,0.008
+```
+
+**02_vectores_alpha.csv (⚠️ NUEVO - REQUERIDO PARA PAPER):**
+```csv
+case_id,alpha1,alpha2,alpha3,alpha4,alpha5,alpha6,alpha7,alpha8,fval,convergencia
+1,0.234,0.187,0.091,0.156,0.089,0.112,0.076,0.055,0.00234,success
+2,0.241,0.182,0.094,0.151,0.092,0.108,0.078,0.054,0.00198,success
+```
+
+**03_metricas_clasificacion.csv (⚠️ NUEVO - REQUERIDO PARA PAPER):**
+```csv
+case_id,TP,FP,TN,FN,Precision,Recall,F1_score,Accuracy
+1,2,3,45,0,0.666,1.000,0.800,0.940
+2,2,1,47,0,0.666,1.000,0.800,0.980
+```
+
+**04_ICD_por_caso.csv:**
+```csv
+case_id,ICD_fusionado,DI_mejor_individual,nombre_mejor_DI,mejora_pct
+1,0.856,0.623,DI2_Diff,37.4
+2,0.891,0.634,DI2_Diff,40.5
+```
+
+---
+
+#### todos_los_resultados.xlsx (LEGACY - SERÁ REEMPLAZADO POR CSVs)
 
 **Hoja: Resultados_AG**
 
