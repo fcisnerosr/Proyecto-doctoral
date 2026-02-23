@@ -20,14 +20,28 @@ ANTES de iniciar la redacción del manuscrito, es INDISPENSABLE cumplir con
 los 6 PUNTOS MÍNIMOS detallados en la sección 5.2. Sin estos puntos completados, 
 NO es posible escribir el artículo.
 
-ESTADO ACTUAL:
-- ICD (Índice de Calidad de Detección) ya está implementado en post-procesamiento
-- FALTA: Modificar código MATLAB para exportar variables clave como datos de salida:
-  • Vectores alpha (α)
-  • Verdaderos Positivos (TP) y Falsos Positivos (FP)
-  • Otras métricas que se identifiquen como necesarias
-- FALTA: Re-ejecutar todas las simulaciones con las modificaciones
-- FALTA: Generar todos los datos, tablas, figuras y métricas de los 6 puntos
+ESTADO ACTUAL (Actualizado: 2026-02-23):
+┌──────────────────────────────────────────────────────────────────────┐
+│ PROGRESO: 0/6 puntos completados (0%)                                │
+│ PRIORIDAD INMEDIATA: Punto 2 (exportar vectores α desde MATLAB)      │
+└──────────────────────────────────────────────────────────────────────┘
+
+✅ CONFIRMADO: ICD ya implementado en post-procesamiento Python
+   • Ubicación: outputs/Resultados/.../jupyter_notebooks/
+   • Fórmula: ICD = DetOK × ln(1+α×%)/ln(1+α×%_max) × e^(-β×N_FP)
+   • Parámetros: α=0.1, β=0.15, %_max={45% denting, 90% corrosión}
+
+⚠️ BLOQUEADOR CRÍTICO:
+   • Vectores alpha (α₁...α₈) NO se exportan como dato de salida
+   • Archivos a modificar: GA.m, unaCorridaAG.m, runExperimentos.m
+
+✅ PARCIALMENTE RESUELTO:
+   • N_FalsosPositivos ya se exporta en CSV actual
+   • DeteccionOK ya existe (permite calcular TP en post-procesamiento)
+
+📋 PENDIENTE:
+   • Re-ejecutar simulaciones después de modificar código
+   • Generar tablas, figuras y métricas de los 6 puntos (ver sección 5.2)
 
 ================================================================================
 2. ROL ASIGNADO Y PROTOCOLO DE TRABAJO
@@ -126,37 +140,178 @@ Los resultados actuales no tienen dicha implementación.
 Sin estos puntos completados, NO es posible redactar el artículo científico.
 Fuente: docs/pendientes_minimos_para_publicar_en_factor_de_impacto.txt
 
-1. Tabla/resumen de casos de daño (cuántos escenarios, elementos, severidades)
-   + Figura de colores de los elementos con sus secciones
-   ESTADO: [ ] PENDIENTE
-   
-2. Vector óptimo α reportado + dispersión entre corridas del AG
-   (identificar qué DIs son los mejores y su estabilidad)
-   ESTADO: [ ] PENDIENTE
-   
-   🚫 BLOQUEADOR: Es completamente necesario modificar los archivos .m 
-   correspondientes para que el proyecto en MATLAB pueda devolver los vectores 
-   alpha como DATOS DE SALIDA. Actualmente, aunque los calcula, NO los guarda 
-   como dato de salida, solo los usa para generar gráficas.
-   
-3. Comparación contra baseline: (mejor DI individual) vs (ICD fusionado)
-   ESTADO: [ ] PENDIENTE
+┌─────────────────────────────────────────────────────────────────┐
+│ PROGRESO GENERAL: 0/6 completados (0%)                          │
+│ █░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  0%   │
+│                                                                  │
+│ Última actualización: 2026-02-23                                │
+└─────────────────────────────────────────────────────────────────┘
 
-4. Simulación de ruido (aunque sea simple)
-   ESTADO: [ ] PENDIENTE
+────────────────────────────────────────────────────────────────────────────────
+📋 PUNTO 1: Tabla/resumen de casos de daño y figura de elementos
+────────────────────────────────────────────────────────────────────────────────
+ESTADO: [ ] PENDIENTE
+FECHA INICIO: _____  |  FECHA COMPLETADO: _____
+RESPONSABLE: Generar automáticamente desde CSVs existentes
 
-5. Métricas tipo: tasa de verdaderos positivos/falsos positivos 
-   (no solo curvas ICD)
-   ESTADO: [ ] PENDIENTE
-   
-   🚫 BLOQUEADOR: Los verdaderos positivos (TP) y los falsos positivos (FP) 
-   NO son generados como dato de salida actualmente. Solo se calculan 
-   internamente para obtener las gráficas ICD. Se requiere modificar el código 
-   para exportar estas métricas como datos de salida.
-   
-6. Referencias actualizadas (2023-2025)
-   ESTADO: [ ] PENDIENTE (se realizará mediante Gemini Deep Research)
-   TEMPORALMENTE: Usar marcadores [CITE_RECENT_2025]
+DESCRIPCIÓN:
+  • Tabla: cuántos escenarios, elementos, severidades (5-45% denting, 5-90% corrosión)
+  • Figura: diagrama coloreado mostrando elementos del jacket con sus secciones
+
+SUBTAREAS:
+  [ ] 1.1 Generar tabla resumen desde todos_los_resultados.csv
+  [ ] 1.2 Crear figura de elementos coloreados (Python/MATLAB)
+  [ ] 1.3 Exportar en formato publicable (EPS/PDF alta resolución)
+
+ARCHIVOS INVOLUCRADOS:
+  • outputs/Resultados/resultados_abolladuras/jupyter_notebooks/todos_los_resultados_csv_remapeado_final.csv
+  • outputs/Resultados/resultados_corrosion_JSV/jupyter_notebooks/todos_los_resultados_csv_remapeado_final.csv
+
+────────────────────────────────────────────────────────────────────────────────
+📋 PUNTO 2: Vector óptimo α + dispersión entre corridas del AG
+────────────────────────────────────────────────────────────────────────────────
+ESTADO: [ ] PENDIENTE (🚫 BLOQUEADOR CRÍTICO)
+FECHA INICIO: _____  |  FECHA COMPLETADO: _____
+RESPONSABLE: Modificar código MATLAB
+
+DESCRIPCIÓN:
+  • Reportar vector α óptimo (α₁...α₈) que identifica mejores DIs
+  • Calcular dispersión/estabilidad entre corridas del AG
+  • Demostrar convergencia y robustez del GA
+
+🚫 BLOQUEADOR: Los vectores alpha NO se exportan como dato de salida.
+   Actualmente se calculan pero solo se usan internamente.
+
+SUBTAREAS:
+  [ ] 2.1 Modificar GA.m para retornar Best_Variables como salida
+  [ ] 2.2 Modificar unaCorridaAG.m para recibir y almacenar alpha
+  [ ] 2.3 Modificar runExperimentos.m para exportar alpha al CSV
+  [ ] 2.4 Re-ejecutar simulaciones completas (abolladuras + corrosión)
+  [ ] 2.5 Calcular estadísticas: media, std, CV de α entre corridas
+  [ ] 2.6 Generar gráfica de dispersión/estabilidad de α
+
+ARCHIVOS A MODIFICAR:
+  • code/001_framework_resultados_journal/000_framework/GA.m
+  • code/001_framework_resultados_journal/001_runExperimentos/unaCorridaAG.m
+  • code/001_framework_resultados_journal/001_runExperimentos/runExperimentos.m
+
+────────────────────────────────────────────────────────────────────────────────
+📋 PUNTO 3: Comparación contra baseline (mejor DI individual vs ICD fusionado)
+────────────────────────────────────────────────────────────────────────────────
+ESTADO: [ ] PENDIENTE (⚠️ Requiere completar Punto 2 primero)
+FECHA INICIO: _____  |  FECHA COMPLETADO: _____
+RESPONSABLE: Post-procesamiento Python
+
+✅ HALLAZGO: ICD ya está implementado en notebooks Python
+   • Fórmula: ICD = DetOK × ln(1+α×%)/ln(1+α×%max) × e^(-β×N_FP)
+   • Ubicación: outputs/Resultados/.../jupyter_notebooks/analisis_datos_*.ipynb
+
+DESCRIPCIÓN:
+  • Comparar ICD fusionado vs mejor DI individual (baseline)
+  • Demostrar ventaja del enfoque de fusión multi-DI
+  • Calcular mejora porcentual en detección
+
+SUBTAREAS:
+  [ ] 3.1 Identificar mejor DI individual (máximo α₁...α₈ del Punto 2)
+  [ ] 3.2 Calcular curvas POD para ICD fusionado
+  [ ] 3.3 Calcular curvas POD para mejor DI individual
+  [ ] 3.4 Generar gráfica comparativa ICD vs baseline
+  [ ] 3.5 Calcular mejora estadísticamente significativa (test t/Wilcoxon)
+
+DEPENDENCIAS: Requiere Punto 2 completado (α para identificar mejor DI)
+
+────────────────────────────────────────────────────────────────────────────────
+📋 PUNTO 4: Simulación de ruido (condiciones realistas)
+────────────────────────────────────────────────────────────────────────────────
+ESTADO: [ ] PENDIENTE
+FECHA INICIO: _____  |  FECHA COMPLETADO: _____
+RESPONSABLE: Implementar en MATLAB o post-procesamiento
+
+DESCRIPCIÓN:
+  • Evaluar robustez del método bajo condiciones de ruido de medición
+  • Simular ruido gaussiano en modos de vibración (ej. SNR 20-40 dB)
+  • Demostrar que ICD sigue siendo efectivo con ruido realista
+
+SUBTAREAS:
+  [ ] 4.1 Definir niveles de ruido realistas (consultar literatura)
+  [ ] 4.2 Implementar inyección de ruido en modos (post-procesamiento)
+  [ ] 4.3 Re-calcular ICD con datos ruidosos
+  [ ] 4.4 Generar gráficas ICD vs SNR
+  [ ] 4.5 Calcular degradación de desempeño (% de pérdida por ruido)
+
+ENFOQUE RECOMENDADO: Post-procesamiento (más rápido que re-simular en MATLAB)
+
+────────────────────────────────────────────────────────────────────────────────
+📋 PUNTO 5: Métricas de clasificación (TP/FP/Precision/Recall/F1)
+────────────────────────────────────────────────────────────────────────────────
+ESTADO: [ ] PENDIENTE (⚠️ Parcialmente resuelto)
+FECHA INICIO: _____  |  FECHA COMPLETADO: _____
+RESPONSABLE: Post-procesamiento Python + posible modificación MATLAB
+
+✅ PARCIALMENTE RESUELTO:
+   • N_FalsosPositivos ya se exporta en CSV actual
+   • DeteccionOK (True Positive implícito) ya existe
+
+⚠️ FALTA:
+   • Calcular TP explícito (elemento correcto detectado)
+   • Calcular métricas derivadas: Precision, Recall, F1-score
+
+DESCRIPCIÓN:
+  • Reportar métricas estándar de clasificación binaria
+  • Demostrar precisión del método más allá de curvas ICD
+  • Comparar con benchmarks de literatura (si existen)
+
+SUBTAREAS:
+  [ ] 5.1 Verificar si TP ya existe en datos (revisar MATLAB)
+  [ ] 5.2 Calcular TP = (DeteccionOK == TRUE) en Python
+  [ ] 5.3 Calcular Precision = TP/(TP+FP)
+  [ ] 5.4 Calcular Recall = TP/(TP+FN)
+  [ ] 5.5 Calcular F1-score = 2×(Prec×Rec)/(Prec+Rec)
+  [ ] 5.6 Generar tabla de métricas por tipo de daño y severidad
+  [ ] 5.7 Generar gráficas de evolución de métricas vs %daño
+
+DECISIÓN PENDIENTE: ¿Calcular en Python o exportar desde MATLAB?
+
+────────────────────────────────────────────────────────────────────────────────
+📋 PUNTO 6: Referencias actualizadas (2023-2025)
+────────────────────────────────────────────────────────────────────────────────
+ESTADO: [ ] PENDIENTE
+FECHA INICIO: _____  |  FECHA COMPLETADO: _____
+RESPONSABLE: Búsqueda bibliográfica (Gemini Deep Research)
+
+DESCRIPCIÓN:
+  • Actualizar referencias con investigación reciente (2023-2025)
+  • Asegurar citas de papers Q1/Q2 relevantes
+  • Temporalmente usar marcadores [CITE_RECENT_2025]
+
+SUBTAREAS:
+  [ ] 6.1 Ejecutar Gemini Deep Research en tópicos clave:
+           - Offshore jacket SHM (2023-2025)
+           - Genetic algorithms for damage detection (2023-2025)
+           - Vibration-based SHM corrosion/denting (2023-2025)
+  [ ] 6.2 Filtrar papers Q1/Q2 de alto impacto
+  [ ] 6.3 Integrar referencias en manuscript_AOR/main.tex
+  [ ] 6.4 Reemplazar marcadores [CITE_RECENT_2025]
+
+NOTA: Este punto puede completarse DURANTE la redacción del manuscrito.
+
+════════════════════════════════════════════════════════════════════════════════
+📊 RESUMEN DE DEPENDENCIAS:
+════════════════════════════════════════════════════════════════════════════════
+Punto 1: Independiente → puede hacerse en paralelo
+Punto 2: 🚫 BLOQUEADOR CRÍTICO → debe completarse primero
+Punto 3: Depende de Punto 2 (necesita α para baseline)
+Punto 4: Independiente → puede hacerse en paralelo
+Punto 5: Parcialmente independiente (calcular desde datos actuales)
+Punto 6: Independiente → puede hacerse durante redacción
+
+RUTA CRÍTICA SUGERIDA:
+1. Punto 2 (exportar α) → PRIORIDAD MÁXIMA
+2. Punto 1 (tabla/figura) en paralelo
+3. Punto 5 (métricas) en paralelo con datos actuales
+4. Punto 3 (baseline) después de Punto 2
+5. Punto 4 (ruido) cuando se tenga tiempo
+6. Punto 6 (referencias) durante redacción
 
 ════════════════════════════════════════════════════════════════════════════════
 CONCLUSIÓN: La redacción del manuscrito NO puede iniciar hasta completar 
@@ -399,6 +554,113 @@ Estas validaciones deben realizarse durante la implementación de 8.1:
 - El modelo ETABS está documentado en pruebas_excel/ETABS_modelo/
 - Estructura de journal en code/001_framework_resultados_journal/ parece ser 
   el pipeline principal de análisis
+
+================================================================================
+11. REGISTRO DE AVANCES POR SESIÓN
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+SESIÓN 2026-02-23: Análisis de Pipeline Post-Procesamiento (ICD)
+────────────────────────────────────────────────────────────────────────────────
+RESPONSABLE: GitHub Copilot (Claude Sonnet 4.5)
+DURACIÓN: ~30 minutos
+OBJETIVO: Identificar dónde se calculan las métricas ICD y qué falta exportar
+
+🔍 HALLAZGOS CRÍTICOS:
+─────────────────────
+1. ✅ ICD YA ESTÁ IMPLEMENTADO EN POST-PROCESAMIENTO PYTHON
+   • Ubicación: outputs/Resultados/resultados_abolladuras/jupyter_notebooks/
+                analisis_datos_abolladura.ipynb (líneas 75-145, 2520-2550)
+   • Ubicación: outputs/Resultados/resultados_corrosion_JSV/jupyter_notebooks/
+                analisis_datos_corrosion.ipynb (líneas similares)
+   
+   • Fórmula confirmada:
+     ICD = DetOK × [ln(1 + α×Porcentaje) / ln(1 + α×Porcentaje_max)] × e^(-β×N_FP)
+     
+   • Parámetros configurados:
+     - ALPHA = 0.1 (escalado logarítmico)
+     - BETA = 0.15 (penalización gradual: 1 FP ≈ -14%, 5 FP ≈ -53%)
+     - PORCENTAJE_MAX = 45.0 (abolladuras) / 90.0 (corrosión)
+     - C_MAX = ln(1 + 0.1×45) ≈ 1.7047 (normalizador abolladuras)
+     - C_MAX = ln(1 + 0.1×90) ≈ 2.3026 (normalizador corrosión)
+   
+   • Implementación Python:
+     ```python
+     df["Factor_Confianza"] = np.log(1 + ALPHA * df["Porcentaje"]) / C_MAX
+     df["Factor_FP"] = np.exp(-BETA * df["N_FalsosPositivos"])
+     df["ICD"] = df["DetOK"] * df["Factor_Confianza"] * df["Factor_FP"]
+     ```
+
+2. ✅ VARIABLES YA EXPORTADAS DESDE MATLAB (CSV actual):
+   • DeteccionOK (valores: 0, 0.5, 1 después de remapeo)
+   • Porcentaje (5-45% abolladuras, 5-90% corrosión)
+   • N_FalsosPositivos
+   • MeanAbsDispersion, StdDispersion
+   • Tiempo_s, ObjFinal
+   • Elemento, Tipo_elemento_a_buscar, Story/nivel
+
+3. 🚫 BLOQUEADOR CONFIRMADO: VECTORES ALPHA NO SE EXPORTAN
+   • Los pesos α₁...α₈ del GA son la contribución metodológica clave
+   • Se calculan en GA.m pero NO se guardan como dato de salida
+   • Se requieren para el Punto 2 de los 6 mínimos
+   • Archivos a modificar:
+     - code/001_framework_resultados_journal/000_framework/GA.m
+     - code/001_framework_resultados_journal/001_runExperimentos/unaCorridaAG.m
+     - code/001_framework_resultados_journal/001_runExperimentos/runExperimentos.m
+
+4. ⚠️ PUNTO 5 (TP/FP) PARCIALMENTE RESUELTO:
+   • N_FalsosPositivos (FP) ya se exporta ✓
+   • DeteccionOK permite calcular True Positives en post-procesamiento ✓
+   • Precision = TP/(TP+FP) → calculable en Python
+   • Recall = TP/(TP+FN) → calculable en Python
+   • F1-score → calculable en Python
+   • NO requiere modificación MATLAB adicional
+
+5. 📊 PIPELINE POST-PROCESAMIENTO DOCUMENTADO:
+   • MATLAB → CSV → Python (remapeo beams/legs) → ICD calculation → graphics
+   • Remapeo: asigna 0.5 a elementos cercanos no directamente detectados
+   • 2160 casos de corrosión procesados (120 elementos × 18 severidades)
+   • 1080 casos de abolladuras procesados (120 elementos × 9 severidades)
+
+📋 ACCIONES COMPLETADAS:
+───────────────────────
+[✓] Explorar directorio outputs/Resultados/
+[✓] Leer documentación registro_pipeline_danos.md
+[✓] Analizar implementación ICD en notebooks Jupyter
+[✓] Confirmar fórmula ICD coincide con MINUTA (sección 4.2)
+[✓] Identificar variables ya exportadas vs faltantes
+[✓] Actualizar sección 5.2 de MINUTA con formato trackeable
+[✓] Agregar subtareas, fechas, dependencias a cada punto
+[✓] Documentar hallazgos en esta sesión
+
+📝 PLAN DE ACCIÓN RESULTANTE:
+────────────────────────────
+PRIORIDAD 1 (CRÍTICA - Bloqueador):
+  → Modificar GA.m para exportar vectores α (Punto 2)
+  
+PRIORIDAD 2 (Alta - Puede hacerse en paralelo):
+  → Generar tabla/figura de casos (Punto 1)
+  → Calcular métricas TP/Precision/Recall en Python (Punto 5)
+  
+PRIORIDAD 3 (Media - Depende de Punto 2):
+  → Comparación ICD vs mejor DI baseline (Punto 3)
+  
+PRIORIDAD 4 (Baja - Independiente):
+  → Simulación de ruido (Punto 4)
+  → Referencias 2023-2025 (Punto 6)
+
+🎯 SIGUIENTE PASO INMEDIATO:
+────────────────────────────
+Modificar GA.m para retornar Best_Variables (α₁...α₈) como dato de salida
+y propagar ese cambio a través de unaCorridaAG.m → runExperimentos.m → CSV.
+
+ESTADO AL FINAL DE SESIÓN:
+  • Sección 5.2 actualizada con formato trackeable ✓
+  • Hallazgos documentados ✓
+  • Plan de acción definido ✓
+  • Listo para iniciar modificaciones MATLAB
+
+────────────────────────────────────────────────────────────────────────────────
 
 ================================================================================
 FIN DE MINUTA
