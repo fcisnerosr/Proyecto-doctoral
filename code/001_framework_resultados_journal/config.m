@@ -12,8 +12,8 @@ function config = config()
   % Descomentar SOLO UNA línea:
   
   % config.tipo_dano   = 'corrosion';                                       % Daño tipo 1: Corrosión uniforme en elemento tubular
-  % config.tipo_dano   = 'abolladura';                                      % Daño tipo 2: Abolladura longitudinal (denting)
-  config.tipo_dano   = 'deformacion_inicial';                               % Daño tipo 3: Deformación inicial (bow imperfection) bajo compresión
+  config.tipo_dano   = 'abolladura';                                      % Daño tipo 2: Abolladura longitudinal (denting)
+  % config.tipo_dano   = 'deformacion_inicial';                               % Daño tipo 3: Deformación inicial (bow imperfection) bajo compresión
   
   % ┌──────────────────────────────────────────────────────────────────────┐
   % │ PARÁMETROS ESPECÍFICOS POR TIPO DE DAÑO                              │
@@ -28,7 +28,7 @@ function config = config()
       case 'abolladura'
           % ABOLLADURA: Parámetros de segmentación y profundidad (% D)
           config.ab = struct('Nseg', 1000, 'Slong', 5, 'lim', 3e-3);        % Nseg=segmentos integración, Slong=longitud abolladura, lim=límite convergencia
-          config.porcentajes = 5:5:20;                                      % [5%, 10%, 15%, 20%] profundidad/diámetro
+          config.porcentajes = 5:5:45;                                      % [5%, 10%, 15%, ..., 45%] profundidad/diámetro (9 niveles)
           
       case 'deformacion_inicial'
           % DEFORMACIÓN INICIAL: Magnitud de bow imperfection (e0/L en %)
