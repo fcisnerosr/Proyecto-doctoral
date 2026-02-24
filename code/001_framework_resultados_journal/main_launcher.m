@@ -6,6 +6,10 @@
 setupProjectPath(fileparts(mfilename('fullpath')));        % o:
 % setupProjectPath(fileparts(mfilename('fullpath')), [], true);  % limpia path antes
 
+% Refrescar caché de funciones (crítico para detectar nuevos archivos .m)
+rehash toolboxcache;
+rehash path;
+
 % Apaga todos los warnings
 oldState = warning;
 warning('off', 'all');

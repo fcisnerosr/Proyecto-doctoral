@@ -1,0 +1,29 @@
+function P = combinarDIs(w1, w2, w3, w4, w5, w6, w7, w8, ...
+                         DI1_COMAC, DI2_Diff, DI3_Div, DI4_Diff_Flex, ...
+                         DI5_Div_Flex, DI6_Perc_Flex, DI7_Zscore_Flex, DI8_Prob_Flex)
+% combinarDIs Combina los 8 índices de daño usando sus respectivos pesos w1 a w8.
+%
+% Entradas:
+%   w1-w8              - Pesos para cada índice de daño (DIs).
+%   DI1_COMAC          - Índice de daño COMAC.
+%   DI2_Diff           - Índice de daño por diferencia de formas modales.
+%   DI3_Div            - Índice de daño por división de formas modales.
+%   DI4_Diff_Flex      - Índice de daño por diferencia de flexibilidad.
+%   DI5_Div_Flex       - Índice de daño por división de flexibilidad.
+%   DI6_Perc_Flex      - Índice de daño por porcentaje de cambio en flexibilidad.
+%   DI7_Zscore_Flex    - Índice de daño Z-score basado en flexibilidad.
+%   DI8_Prob_Flex      - Índice de daño basado en la probabilidad (p-valor del Z-score).
+%
+% Salida:
+%   P - Vector combinado de daño ponderado.
+
+    P = w1 * DI1_COMAC       + ...
+        w2 * DI2_Diff        + ...
+        w3 * DI3_Div         + ...
+        w4 * DI4_Diff_Flex   + ...
+        w5 * DI5_Div_Flex    + ...
+        w6 * DI6_Perc_Flex   + ...
+        w7 * DI7_Zscore_Flex + ...
+        w8 * DI8_Prob_Flex;
+
+end
