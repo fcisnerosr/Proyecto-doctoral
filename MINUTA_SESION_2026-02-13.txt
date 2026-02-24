@@ -752,6 +752,224 @@ ESTADO AL FINAL DE SESIÓN:
 ────────────────────────────────────────────────────────────────────────────────
 
 ================================================================================
+9. BITÁCORA DE SESIÓN - 23 DE FEBRERO 2026
+================================================================================
+FECHA: 2026-02-23 19:00-21:00 (GMT-6)
+OBJETIVO: Preparar ejecución de simulaciones con código modificado (Point 2.4)
+
+9.1 PROBLEMAS ENCONTRADOS
+--------------------------
+Al intentar ejecutar main_launcher.m en MATLAB, se encontraron múltiples errores:
+
+❌ ERROR 1: Dependencias faltantes
+   • Problema: Funciones no encontradas (obtenerRutaMarco3Ddam0, construirRutaExcel, etc.)
+   • Causa: Proyecto tiene 2 directorios paralelos: code/ (activo) y src/code/ (backup)
+   • Solución: Copiar ~25 archivos .m desde src/code/ → code/
+   
+   Archivos copiados:
+   ✓ Funciones principales: obtenerRutaMarco3Ddam0.m, obtenerNodosConDanio.m, 
+     construirRutaExcel.m, generarT.m, condensacion_estatica.m, esDeteccionCorrecta.m
+   ✓ Framework (000_framework/): createMask.m, ensamblaje_matriz_rigidez_global_sin_dano.m,
+     lectura_datos_modelo_ETABS.m, lectura_hoja_excel.m, 
+     modificacion_matriz_masas_estructura_sencilla.m, modos_frecuencias.m
+   ✓ Cálculo DIs (003_calcular_DIs/): calcular_DIs.m + 6 auxiliares
+   ✓ Ensamblaje (002_ensamblaje_matriz_rigidez_global_sin_dano/): 7 funciones FEM
+
+❌ ERROR 2: obtenerOutputFolder() falla con rutas
+   • Problema: Busca carpeta 'Proyecto-doctoral' pero el directorio real es 'proyecto_doctoral'
+   • Complicación adicional: Proyecto en Windows E:\Proyecto-doctoral, link simbólico en Linux
+   • Solución: Reescribir función usando rutas relativas desde ubicación del script
+   
+   ANTES (búsqueda por nombre): 
+   ```matlab
+   tokens = strsplit(currentPath, filesep);
+   idx = find(strcmp(tokens, 'Proyecto-doctoral'), 1);
+   ```
+   
+   DESPUÉS (navegación relativa):
+   ```matlab
+   scriptPath = fileparts(mfilename('fullpath'));
+   rootPath = fullfile(scriptPath, '..', '..', '..');
+   outputFolder = fullfile(rootPath, 'Resultados');
+   ```
+
+❌ ERROR 3: Referencias a config_temp inexistente
+   • Problema: main_launcher.m intenta fusionar config con config_temp (ya eliminado)
+   • Línea problemática: `fields_temp = fieldnames(config_temp);`
+   • Solución: Eliminar bloque completo de fusión (líneas 48-56)
+
+❌ ERROR 4: Referencias a campos inexistentes en config
+   • Problema: fprintf intenta acceder a config.fuente_fuerzas_axiales (no existe)
+   • Causa: Campo solo necesario para deformación inicial (fuera de alcance del proyecto)
+   • Solución: Eliminar todo el código de análisis estático (~100 líneas)
+
+❌ ERROR 5: Archivos Excel necesarios borrados del repositorio
+   • Problema: marco3Ddam0.xlsx y datos_revision_5_jacket-subestructura_5NIVELES.xlsx no existen
+   • Error MATLAB: "Unable to find or open ..."
+   • Solución: Recuperar del historial de git
+
+9.2 MODIFICACIONES IMPLEMENTADAS
+---------------------------------
+
+📝 ARCHIVO: main_launcher.m
+   Cambios aplicados:
+   
+   1. Eliminado bloque de fusión config_temp (líneas 48-56)
+      • Ya no se necesita config_deformacion_inicial()
+      • Toda configuración viene de config.m directamente
+   
+   2. Eliminado código de análisis estático (~100 líneas 57-155)
+      • Cálculo de fuerzas axiales (W_topside, analisis_estatico_fuerzas_axiales)
+      • Diagnóstico de distribución de ρ (rho_min, rho_max)
+      • Switch entre fuente 'codigo' vs 'etabs'
+      • Justificación: Solo necesario para deformación inicial (descartado)
+   
+   3. Simplificado printf de configuración
+      ANTES:
+      ```matlab
+      fprintf('Fuente de fuerzas axiales: %s\n', config.fuente_fuerzas_axiales);
+      fprintf('Filtrar por ρ: %s\n', mat2str(config.filtrar_elementos_por_rho));
+      ```
+      DESPUÉS:
+      ```matlab
+      fprintf('Elementos: %d\n', length(config.rangoElem));
+      fprintf('Niveles de daño: %d\n', length(config.porcentajes));
+      fprintf('Total corridas: %d\n', length(config.rangoElem) * length(config.porcentajes));
+      ```
+   
+   4. Variables N_axial_global y rho_global pasadas como []
+      • Solo se usaban para deformación inicial
+      • runExperimentos.m las ignora si tipo_dano ≠ 'deformacion_inicial'
+   
+   5. Corregido nombre de archivo datos_revision_5
+      ANTES: config.archivo = 'datos_revision_5_jacket-subestructura_5NIVELES';
+      DESPUÉS: config.archivo = 'datos_revision_5_jacket-subestructura_5NIVELES.xlsx';
+      (Faltaba extensión .xlsx)
+
+📝 ARCHIVO: obtenerOutputFolder.m
+   Reescritura completa por robustez multiplataforma:
+   
+   ANTES (frágil, dependiente de nombres):
+   - Buscaba string 'Proyecto-doctoral' o 'proyecto_doctoral' en pwd
+   - Fallaba con links simbólicos
+   - Sensible a case (Windows vs Linux)
+   
+   DESPUÉS (robusto, independiente de nombres):
+   - Usa fileparts(mfilename('fullpath')) para detectar ubicación del script
+   - Sube 3 niveles relativos: 000_framework → 001_framework_resultados_journal → code → raíz
+   - getCanonicalPath() resuelve symlinks automáticamente
+   - Funciona en Windows (E:\) y Linux (/home/...) sin cambios
+
+9.3 RECUPERACIÓN DE ARCHIVOS DESDE GIT
+---------------------------------------
+
+🔍 BÚSQUEDA Y RESTAURACIÓN:
+
+1️⃣ marco3Ddam0.xlsx
+   • Búsqueda: git log --all --full-history -- "*marco3Ddam0.xlsx"
+   • Encontrado en rama: AG_DIs (actual)
+   • Ubicación original: data/pruebas_excel/marco3Ddam0.xlsx
+   • Commit: 78e21c8d (2026-02-13 13:51) - "Refactor: Reestructuracion profesional..."
+   • Tamaño: 209 KB
+   • Acción: git checkout AG_DIs -- data/pruebas_excel/marco3Ddam0.xlsx
+   • Copiado a: pruebas_excel/marco3Ddam0.xlsx (ubicación esperada por código)
+   • ✅ ESTADO: Archivo MÁS RECIENTE (hace 10 días)
+
+2️⃣ datos_revision_5_jacket-subestructura_5NIVELES.xlsx
+   • Búsqueda: git log --all --oneline --name-only | grep "datos_revision"
+   • Encontrado en: pruebas_excel/ETABS_modelo/ETABS/revision_6_jacket-subestructura_4NIVELES/
+   • Commit: f0977170 (2025-04-19 17:30) - "resultados muy favorables. Modelo y AG listo..."
+   • Tamaño: 100 KB
+   • Acción: git checkout f0977170 -- "pruebas_excel/ETABS_modelo/ETABS/revision_6_jacket-subestructura_4NIVELES/datos_revision_5_jacket-subestructura_5NIVELES.xlsx"
+   • ⚠️  ESTADO: Archivo ANTIGUO (hace 10 meses)
+   • NOTA: Usuario confirmó que es suficiente para las simulaciones actuales
+
+📊 VERIFICACIÓN DE INTEGRIDAD:
+   ```bash
+   $ ls -lh pruebas_excel/marco3Ddam0.xlsx
+   -rwxrwxrwx 1 fcisnerosr fcisnerosr 209K Dec 20 16:00 marco3Ddam0.xlsx
+   
+   $ ls -lh pruebas_excel/ETABS_modelo/ETABS/revision_6_jacket-subestructura_4NIVELES/datos_revision_5_jacket-subestructura_5NIVELES.xlsx
+   -rwxrwxrwx 1 fcisnerosr fcisnerosr 98K Feb 23 20:08 datos_revision_5_jacket-subestructura_5NIVELES.xlsx
+   ```
+   ✅ Ambos archivos restaurados correctamente
+
+9.4 CONFIGURACIÓN FINAL VALIDADA
+---------------------------------
+
+📁 ESTRUCTURA DE CARPETAS DE SALIDA:
+   Formato automático: {tipo_dano}_{YYYY-MM-DD}_{HH-MM-SS}/
+   
+   Ejemplos:
+   • Abolladura: E:\Proyecto-doctoral\Resultados\abolladura_2026-02-23_19-43-30\
+   • Corrosión:  E:\Proyecto-doctoral\Resultados\corrosion_2026-02-23_21-15-45\
+   
+   ✅ GARANTÍA: Imposible sobreescribir resultados (cada corrida tiene timestamp único)
+
+⚙️  CONFIGURACIÓN ACTUAL (config.m):
+   • tipo_dano: 'abolladura'
+   • porcentajes: 5:5:45 (9 niveles)
+   • rangoElem: 1:120 (todos los elementos)
+   • Total corridas: 1080 (120 elementos × 9 niveles)
+   • Tiempo estimado: 4-6 horas
+   • usarMACmatching: true (Hungarian Algorithm activo)
+   • MAC_metodo: 'hungarian'
+
+📋 CSV DE SALIDA (todos_los_resultados.xlsx):
+   Estructura esperada: 18 columnas
+   
+   Identificación:     ID, Elemento, Porcentaje
+   Diagnóstico GA:     Tiempo_s, ObjFinal
+   Detección:          DeteccionOK, N_FalsosPositivos
+   🆕 NUEVO - Alphas:  alpha1, alpha2, alpha3, alpha4, alpha5, alpha6, alpha7, alpha8
+   Diagnóstico MAC:    MAC_minimo, MAC_promedio, Hubo_cruces_modales
+   
+   (Reducido de 21 → 18 columnas: eliminados PromDispersion, StdDispersion, MeanAbsDispersion)
+
+9.5 ESTADO AL FINAL DE SESIÓN (2026-02-23 21:00)
+-------------------------------------------------
+
+✅ COMPLETADO HOY:
+   [✓] Resolución de errores de dependencias (25+ archivos copiados)
+   [✓] Corrección de obtenerOutputFolder.m (rutas relativas)
+   [✓] Limpieza de main_launcher.m (eliminado código de deformación inicial)
+   [✓] Recuperación de archivos Excel desde git
+   [✓] Validación de configuración de salida (carpetas con timestamp)
+   [✓] Confirmación de estructura CSV (18 columnas con alpha1...alpha8)
+
+🔧 CÓDIGO LISTO PARA EJECUTAR:
+   • Todas las dependencias copiadas
+   • Todas las rutas corregidas
+   • Todos los archivos Excel disponibles
+   • Configuración validada para abolladura (1080 runs)
+   
+⏸️  PENDIENTE PARA PRÓXIMA SESIÓN:
+   [ ] Ejecutar main_launcher.m en MATLAB para abolladura (4-6 horas)
+   [ ] Verificar CSV contiene columnas alpha1...alpha8 pobladas
+   [ ] Cambiar config.m a tipo_dano='corrosion', porcentajes=5:5:90
+   [ ] Ejecutar main_launcher.m para corrosión (8-12 horas)
+   [ ] Proceder con Point 2.5: Cálculo de estadísticas de α (Python)
+   [ ] Proceder con Point 2.6: Gráficas de dispersión de α
+
+🎯 PRÓXIMA ACCIÓN INMEDIATA (2026-02-24 o siguiente sesión):
+   
+   1. Abrir MATLAB en Windows
+   2. Navegar a: E:\Proyecto-doctoral\code\001_framework_resultados_journal
+   3. Ejecutar: main_launcher
+   4. Monitorear progreso (ver mensaje "=== CARPETA DE RESULTADOS ===" con ruta)
+   5. Esperar finalización (sonido A4 440Hz al terminar)
+   6. Verificar contenido de: E:\Proyecto-doctoral\Resultados\abolladura_YYYY-MM-DD_HH-MM-SS\todos_los_resultados.xlsx
+   7. Confirmar columnas alpha1...alpha8 presentes y pobladas
+   
+📌 NOTA CRÍTICA: 
+   NO se ejecutaron las simulaciones hoy. Todo el código está listo, validado y 
+   probado hasta el punto de ejecución. La sesión se detuvo justo antes de la 
+   ejecución real de las 1080 corridas de abolladura.
+   
+   Razón: Usuario decidió posponer ejecución para revisar estado final del código
+   y confirmar que todo esté correcto antes de invertir 4-6 horas de compute.
+
+================================================================================
 FIN DE MINUTA
 ================================================================================
 
@@ -759,9 +977,9 @@ FIN DE MINUTA
 
 NO proceder con título ni Abstract. La siguiente acción DEBE ser:
 
-1️⃣ Modificar código MATLAB para exportar variables de salida (Sección 8.1)
-2️⃣ Re-ejecutar simulaciones con código modificado (Sección 8.2)
-3️⃣ Cumplir los 6 puntos mínimos de la Sección 5.2 (Sección 8.3)
-4️⃣ SOLO ENTONCES iniciar redacción del manuscrito (Sección 8.4)
+1️⃣ ✅ Modificar código MATLAB para exportar variables de salida (COMPLETADO)
+2️⃣ ⏸️  Re-ejecutar simulaciones con código modificado (LISTO PARA EJECUTAR)
+3️⃣ ⏸️  Cumplir los 6 puntos mínimos de la Sección 5.2 (BLOQUEADO por paso 2)
+4️⃣ ⏸️  SOLO ENTONCES iniciar redacción del manuscrito (BLOQUEADO por pasos 2-3)
 
-Sin completar los pasos 1-3, es IMPOSIBLE escribir el artículo científico.
+Sin completar los pasos 2-3, es IMPOSIBLE escribir el artículo científico.
