@@ -152,20 +152,12 @@ function resultado = unaCorridaAG( ID_Ejecucion,...
            & ~isnan(P_scaled) ...   % excluye NaN
            & (T == 0);              % pero en verdad no tenían daño
     
-    falsePositiveNodes  = find(fpMask);        % índices (nodos) de falsos positivos
-    falsePositiveValues = P_scaled(fpMask);    % sus valores
-    n_falsos_positivos  = numel(falsePositiveNodes);
-
-    % 13) Calcular estadísticas de dispersión y falsos positivos
-    [prom_dispersion, std_dispersion, mean_abs_dispersion, n_falsos_positivos] = ...
-        calcularEstadisticasDispersion(P_scaled);
-
-    % 13.5) Falsos positivos
-    % nodos reales:
+    % 13) Calcular falsos positivos (nodos que el AG marcó como dañados pero no lo están)
+    % nodos reales dañados:
     fila       = conectividad(:,1)==elem;
     trueNodes  = conectividad(fila,2:3);
     
-    % máscara de falsos positivos
+    % máscara de falsos positivos: P_scaled>=50 pero no son nodos reales
     fpMask = (P_scaled >= 50) & ~isnan(P_scaled);
     fpMask(trueNodes) = false;
     
@@ -203,10 +195,24 @@ function resultado = unaCorridaAG( ID_Ejecucion,...
     resultado.Tiempo_s          = toc;
     resultado.ObjFinal          = fval;
     resultado.DeteccionOK       = esDeteccionCorrecta(conectividad, elem, P_scaled);
-    resultado.PromDispersion    = prom_dispersion;
-    resultado.StdDispersion     = std_dispersion;
-    resultado.MeanAbsDispersion = mean_abs_dispersion;
     resultado.N_FalsosPositivos = n_falsos_positivos;
+    
+    % =========================================================================
+    % VECTORES ALPHA OPTIMIZADOS POR EL GA (α₁...α₈)
+    % =========================================================================
+    % Estos pesos indican la importancia relativa de cada índice de daño (DI)
+    % en la función objetivo. Son la contribución metodológica clave del paper.
+    % Valores altos de α_i indican que DI_i fue seleccionado como más útil
+    % para localizar el daño en este escenario específico.
+    resultado.alpha1 = optimal_alpha(1);  % Peso de DI1 (COMAC)
+    resultado.alpha2 = optimal_alpha(2);  % Peso de DI2 (Diferencia modos)
+    resultado.alpha3 = optimal_alpha(3);  % Peso de DI3 (División modos)
+    resultado.alpha4 = optimal_alpha(4);  % Peso de DI4 (Diferencia flexibilidad)
+    resultado.alpha5 = optimal_alpha(5);  % Peso de DI5 (División flexibilidad)
+    resultado.alpha6 = optimal_alpha(6);  % Peso de DI6 (Porcentaje flexibilidad)
+    resultado.alpha7 = optimal_alpha(7);  % Peso de DI7 (Z-score flexibilidad)
+    resultado.alpha8 = optimal_alpha(8);  % Peso de DI8 (Probabilidad flexibilidad)
+    % =========================================================================
     
     % =========================================================================
     % OTROS DATOS DE SALIDA: Información sobre emparejamiento modal
