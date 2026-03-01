@@ -11,8 +11,8 @@ function config = config()
   % Opciones: 'corrosion', 'abolladura', 'deformacion_inicial'
   % Descomentar SOLO UNA línea:
   
-  % config.tipo_dano   = 'corrosion';                                       % Daño tipo 1: Corrosión uniforme en elemento tubular
-  config.tipo_dano   = 'abolladura';                                      % Daño tipo 2: Abolladura longitudinal (denting)
+  config.tipo_dano   = 'corrosion';                                       % Daño tipo 1: Corrosión uniforme en elemento tubular
+  % config.tipo_dano   = 'abolladura';                                      % Daño tipo 2: Abolladura longitudinal (denting)
   % config.tipo_dano   = 'deformacion_inicial';                               % Daño tipo 3: Deformación inicial (bow imperfection) bajo compresión
   
   % ┌──────────────────────────────────────────────────────────────────────┐
@@ -23,7 +23,7 @@ function config = config()
   switch config.tipo_dano
       case 'corrosion'
           % CORROSIÓN: Porcentaje de reducción de espesor (% depth/t)
-          config.porcentajes = 5:5:20;                                      % [5%, 10%, 15%, 20%] reducción espesor
+          config.porcentajes = 5:5:90;                                      % [5%, 10%, 15%, ..., 90%] reducción espesor (18 niveles)
           
       case 'abolladura'
           % ABOLLADURA: Parámetros de segmentación y profundidad (% D)
