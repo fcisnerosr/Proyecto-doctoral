@@ -37,6 +37,88 @@
 | **5** | Métricas de clasificación (TP/FP/Precision/Recall/F1) | ⏸️ PENDIENTE | 🔴 ALTA | Independiente |
 | **6** | Referencias actualizadas (2023-2025) | ⏸️ PENDIENTE | 🟢 BAJA | Durante redacción |
 
+---
+
+### Descripción Detallada de los Puntos
+
+#### Punto 2 — Análisis estadístico de vectores α (media, std, CV, gráficas)
+
+**Qué es:**  
+El Algoritmo Genético (AG) optimiza un vector de pesos α = [α₁, α₂, ..., α₈], donde cada αₖ representa la importancia relativa del k-ésimo Índice de Daño (DI) en el ICD. Tras las 3,240 corridas, se dispone de 3,240 vectores α distintos — uno por corrida.
+
+**Cómo se hace:**  
+Se calcula para cada componente αₖ: la media μ(αₖ), la desviación estándar σ(αₖ) y el coeficiente de variación CV(αₖ) = σ/μ. Se generan boxplots (distribución por componente) y heatmaps (correlación entre αₖ) separados por tipo de daño (abolladura vs corrosión) y por nivel de severidad.
+
+**Por qué es necesario:**  
+El manuscrito debe argumentar cuáles DIs son informativos y cuáles son redundantes o irrelevantes. Un CV alto indica que el AG no tiene consenso sobre ese DI → posible candidato a eliminar o re-analizar. Un CV bajo con media alta indica que ese DI siempre resulta importante → es el hallazgo clave del artículo.
+
+---
+
+#### Punto 3 — Comparación ICD vs mejor DI individual (baseline)
+
+**Qué es:**  
+Demostrar que el ICD (combinación ponderada de α₁…α₈) supera a cualquier DI individual usado de forma aislada. El "mejor DI individual" se identifica a partir del Punto 2 (el de mayor media y menor CV).
+
+**Cómo se hace:**  
+Se comparan las curvas de Probabilidad de Detección (POD) del ICD contra las curvas POD del mejor DI単独, en función del porcentaje de daño (5%, 15%, 25%, etc.). Se aplica un test estadístico (t-test o Wilcoxon) para verificar que la diferencia es significativa. Opcionalmente se puede graficar el AUC (Área Bajo la Curva ROC) de ambos métodos.
+
+**Por qué es necesario:**  
+Todo revisore de un journal Q1 preguntará: *"¿Por qué necesito una combinación de 8 índices si uno solo podría funcionar?"*. Este punto responde esa pregunta con evidencia cuantitativa. Sin este análisis, la aportación del ICD no está justificada.
+
+---
+
+#### Punto 4 — Simulación de ruido (SNR, robustez)
+
+**Qué es:**  
+Evaluar qué tan robusto es el ICD cuando los datos de vibración están contaminados con ruido de medición, que es lo que ocurre en condiciones reales de monitoreo offshore.
+
+**Cómo se hace:**  
+Se inyecta ruido gaussiano blanco a los vectores de desplazamiento modal con distintos niveles de SNR (por ejemplo, 40 dB, 30 dB, 20 dB, 10 dB). Para cada nivel se recalculan los DIs y el ICD, y se registra si la detección sigue siendo correcta. Se grafica la tasa de detección correcta vs SNR.
+
+**Por qué es necesario:**  
+Applied Ocean Research publica investigación orientada a aplicaciones industriales reales en plataformas offshore. Un método que solo funciona con datos perfectos (sin ruido) no es publicable en ese contexto. Este punto valida la viabilidad práctica del método.
+
+---
+
+#### Punto 5 — Métricas de clasificación (TP, FP, Precision, Recall, F1-score)
+
+**Qué es:**  
+Cuantificar el desempeño del sistema de detección usando el vocabulario estándar de evaluación de clasificadores binarios: el sistema dice "hay daño en el elemento X" → ¿acertó o no?
+
+**Cómo se hace:**  
+Para cada corrida se tiene: elemento real dañado (ground truth) y elementos detectados como dañados (predicción del AG). Primero se definen los cuatro casos posibles de la matriz de confusión:
+
+- **TP (True Positive — Verdadero Positivo):** el sistema detectó un elemento como dañado *y* realmente lo estaba. Es el acierto directo.
+- **FP (False Positive — Falso Positivo):** el sistema detectó un elemento como dañado *pero* en realidad estaba intacto. Es una alarma falsa — el costo industrial de este error es movilizar inspección innecesaria.
+- **FN (False Negative — Falso Negativo):** el sistema no detectó un elemento que *sí* estaba dañado. Es el error más peligroso en contextos estructurales reales.
+- **TN (True Negative — Verdadero Negativo):** el sistema correctamente identificó un elemento intacto como intacto.
+
+A partir de estos cuatro valores se calculan las métricas de desempeño:
+
+- **Precision** = TP / (TP + FP): de todos los elementos que el sistema reportó como dañados, ¿qué fracción realmente lo estaba? Mide cuánto se puede confiar en una alarma positiva.
+- **Recall** = TP / (TP + FN): de todos los elementos que realmente estaban dañados, ¿qué fracción detectó el sistema? Mide la capacidad de no dejar pasar daño real.
+- **F1-score** = 2 × (Precision × Recall) / (Precision + Recall): media armónica entre Precision y Recall. Sintetiza ambas métricas en un solo número; es útil cuando hay desbalance entre clases (muchos elementos intactos vs pocos dañados, como ocurre en este problema).
+
+Estas métricas se calculan por nivel de severidad (5%, 15%, 25%…) y por tipo de daño (abolladura vs corrosión).
+
+**Por qué es necesario:**  
+Son las métricas universalmente exigidas por reviewers en trabajos de SHM y detección de anomalías. Sin ellas, el artículo no puede compararse con el estado del arte, y los revisores lo señalarán directamente como una deficiencia mayor.
+
+---
+
+#### Punto 6 — Referencias actualizadas (2023–2025)
+
+**Qué es:**  
+Identificar y citar trabajos publicados en los últimos 2-3 años que sean relevantes para: SHM de plataformas jacket, índices de daño modales, algoritmos genéticos aplicados a detección de daño, y robustez ante ruido en sistemas de monitoreo.
+
+**Cómo se hace:**  
+Búsqueda sistemática en Scopus/Web of Science con términos: *"jacket platform SHM"*, *"damage index modal"*, *"genetic algorithm damage detection"*, *"offshore structural health monitoring 2023-2025"*. Se seleccionan los artículos de mayor relevancia (Q1 preferentemente) y se integran en la sección de Introduction y Discussion del manuscrito.
+
+**Por qué es necesario:**  
+Applied Ocean Research (CiteScore 5.3) exige que la Introduction demuestre conocimiento del estado del arte reciente. Referencias desactualizadas (anteriores a 2020) son señal de alerta para editores y revisores, y pueden derivar en rechazo sin revisión (desk rejection).
+
+---
+
 ### Estado Detallado
 
 #### ✅ Punto 2 (PARCIAL): Vector óptimo α + dispersión
