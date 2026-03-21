@@ -1,0 +1,41 @@
+\begin{table}[htbp]
+  \centering
+  \caption{Summary of classification performance at key severity levels. Avg~FP: average number of false alarms per run.}
+  \label{tab:metricas_compacta}
+  \small
+  \begin{tabular}{llrrrrr}
+    \toprule
+    Damage Type & Element & Severity & Precision & Recall & F1 & Avg FP \\
+    \midrule
+    Denting & Brace & 10\% & 0.404 & 0.952 & 0.567 & 1.4 \\
+    Denting & Brace & 20\% & 0.398 & 0.952 & 0.561 & 1.4 \\
+    Denting & Brace & 30\% & 0.365 & 0.952 & 0.528 & 1.7 \\
+    Denting & Brace & 45\% & 0.370 & 0.952 & 0.533 & 1.6 \\
+    \cmidrule{2-7}
+    Denting & Inclined Leg & 10\% & 0.152 & 0.600 & 0.242 & 3.4 \\
+    Denting & Inclined Leg & 20\% & 0.093 & 0.750 & 0.165 & 7.3 \\
+    Denting & Inclined Leg & 30\% & 0.122 & 1.000 & 0.217 & 7.2 \\
+    Denting & Inclined Leg & 45\% & 0.078 & 0.700 & 0.141 & 8.2 \\
+    \cmidrule{2-7}
+    Denting & Beam & 10\% & 0.084 & 1.000 & 0.155 & 10.9 \\
+    Denting & Beam & 20\% & 0.094 & 1.000 & 0.171 & 9.7 \\
+    Denting & Beam & 30\% & 0.116 & 1.000 & 0.208 & 7.6 \\
+    Denting & Beam & 45\% & 0.098 & 1.000 & 0.178 & 9.2 \\
+    \midrule
+    Corrosion & Brace & 20\% & 0.381 & 0.952 & 0.544 & 1.5 \\
+    Corrosion & Brace & 40\% & 0.377 & 0.952 & 0.541 & 1.6 \\
+    Corrosion & Brace & 60\% & 0.381 & 0.952 & 0.544 & 1.5 \\
+    Corrosion & Brace & 90\% & 0.319 & 0.905 & 0.472 & 1.9 \\
+    \cmidrule{2-7}
+    Corrosion & Inclined Leg & 20\% & 0.286 & 1.000 & 0.444 & 2.5 \\
+    Corrosion & Inclined Leg & 40\% & 0.263 & 1.000 & 0.417 & 2.8 \\
+    Corrosion & Inclined Leg & 60\% & 0.333 & 1.000 & 0.500 & 2.0 \\
+    Corrosion & Inclined Leg & 90\% & 0.339 & 1.000 & 0.506 & 1.9 \\
+    \cmidrule{2-7}
+    Corrosion & Beam & 20\% & 0.099 & 1.000 & 0.181 & 9.1 \\
+    Corrosion & Beam & 40\% & 0.105 & 1.000 & 0.190 & 8.5 \\
+    Corrosion & Beam & 60\% & 0.105 & 1.000 & 0.189 & 8.6 \\
+    Corrosion & Beam & 90\% & 0.121 & 1.000 & 0.216 & 7.2 \\
+    \bottomrule
+  \end{tabular}
+\end{table}

@@ -1,0 +1,121 @@
+element_id,Design_Type,zone,zone_label,height_m_approx
+1,Inclined_leg,mudline,Mudline,-50
+2,Brace,mudline,Mudline,-50
+3,Brace,mudline,Mudline,-50
+4,Brace,mudline,Mudline,-50
+5,Brace,mudline,Mudline,-50
+6,Inclined_leg,mudline,Mudline,-50
+7,Brace,mudline,Mudline,-50
+8,Brace,mudline,Mudline,-50
+9,Brace,mudline,Mudline,-50
+10,Brace,mudline,Mudline,-50
+11,Inclined_leg,mudline,Mudline,-50
+12,Brace,mudline,Mudline,-50
+13,Brace,mudline,Mudline,-50
+14,Brace,mudline,Mudline,-50
+15,Brace,mudline,Mudline,-50
+16,Inclined_leg,mudline,Mudline,-50
+17,Brace,mudline,Mudline,-50
+18,Brace,mudline,Mudline,-50
+19,Brace,mudline,Mudline,-50
+20,Brace,mudline,Mudline,-50
+21,Beam,mudline,Mudline,-50
+22,Beam,mudline,Mudline,-50
+23,Beam,mudline,Mudline,-50
+24,Beam,mudline,Mudline,-50
+25,Inclined_leg,sub1,Submerged (lower),-38
+26,Brace,sub1,Submerged (lower),-38
+27,Brace,sub1,Submerged (lower),-38
+28,Brace,sub1,Submerged (lower),-38
+29,Brace,sub1,Submerged (lower),-38
+30,Inclined_leg,sub1,Submerged (lower),-38
+31,Brace,sub1,Submerged (lower),-38
+32,Brace,sub1,Submerged (lower),-38
+33,Brace,sub1,Submerged (lower),-38
+34,Brace,sub1,Submerged (lower),-38
+35,Inclined_leg,sub1,Submerged (lower),-38
+36,Brace,sub1,Submerged (lower),-38
+37,Brace,sub1,Submerged (lower),-38
+38,Brace,sub1,Submerged (lower),-38
+39,Brace,sub1,Submerged (lower),-38
+40,Inclined_leg,sub1,Submerged (lower),-38
+41,Brace,sub1,Submerged (lower),-38
+42,Brace,sub1,Submerged (lower),-38
+43,Brace,sub1,Submerged (lower),-38
+44,Brace,sub1,Submerged (lower),-38
+45,Beam,sub1,Submerged (lower),-38
+46,Beam,sub1,Submerged (lower),-38
+47,Beam,sub1,Submerged (lower),-38
+48,Beam,sub1,Submerged (lower),-38
+49,Inclined_leg,sub2,Submerged (mid),-25
+50,Brace,sub2,Submerged (mid),-25
+51,Brace,sub2,Submerged (mid),-25
+52,Brace,sub2,Submerged (mid),-25
+53,Brace,sub2,Submerged (mid),-25
+54,Inclined_leg,sub2,Submerged (mid),-25
+55,Brace,sub2,Submerged (mid),-25
+56,Brace,sub2,Submerged (mid),-25
+57,Brace,sub2,Submerged (mid),-25
+58,Brace,sub2,Submerged (mid),-25
+59,Inclined_leg,sub2,Submerged (mid),-25
+60,Brace,sub2,Submerged (mid),-25
+61,Brace,sub2,Submerged (mid),-25
+62,Brace,sub2,Submerged (mid),-25
+63,Brace,sub2,Submerged (mid),-25
+64,Inclined_leg,sub2,Submerged (mid),-25
+65,Brace,sub2,Submerged (mid),-25
+66,Brace,sub2,Submerged (mid),-25
+67,Brace,sub2,Submerged (mid),-25
+68,Brace,sub2,Submerged (mid),-25
+69,Beam,sub2,Submerged (mid),-25
+70,Beam,sub2,Submerged (mid),-25
+71,Beam,sub2,Submerged (mid),-25
+72,Beam,sub2,Submerged (mid),-25
+73,Brace,sub3,Submerged (upper),-12
+74,Brace,sub3,Submerged (upper),-12
+75,Brace,sub3,Submerged (upper),-12
+76,Brace,sub3,Submerged (upper),-12
+77,Inclined_leg,sub3,Submerged (upper),-12
+78,Brace,sub3,Submerged (upper),-12
+79,Brace,sub3,Submerged (upper),-12
+80,Brace,sub3,Submerged (upper),-12
+81,Brace,sub3,Submerged (upper),-12
+82,Inclined_leg,sub3,Submerged (upper),-12
+83,Brace,sub3,Submerged (upper),-12
+84,Brace,sub3,Submerged (upper),-12
+85,Brace,sub3,Submerged (upper),-12
+86,Brace,sub3,Submerged (upper),-12
+87,Inclined_leg,sub3,Submerged (upper),-12
+88,Brace,sub3,Submerged (upper),-12
+89,Brace,sub3,Submerged (upper),-12
+90,Brace,sub3,Submerged (upper),-12
+91,Brace,sub3,Submerged (upper),-12
+92,Inclined_leg,sub3,Submerged (upper),-12
+93,Beam,sub3,Submerged (upper),-12
+94,Beam,sub3,Submerged (upper),-12
+95,Beam,sub3,Submerged (upper),-12
+96,Beam,sub3,Submerged (upper),-12
+97,Inclined_leg,splash,Splash Zone,0
+98,Brace,splash,Splash Zone,0
+99,Brace,splash,Splash Zone,0
+100,Brace,splash,Splash Zone,0
+101,Brace,splash,Splash Zone,0
+102,Inclined_leg,splash,Splash Zone,0
+103,Brace,splash,Splash Zone,0
+104,Brace,splash,Splash Zone,0
+105,Brace,splash,Splash Zone,0
+106,Brace,splash,Splash Zone,0
+107,Inclined_leg,splash,Splash Zone,0
+108,Brace,splash,Splash Zone,0
+109,Brace,splash,Splash Zone,0
+110,Brace,splash,Splash Zone,0
+111,Brace,splash,Splash Zone,0
+112,Inclined_leg,splash,Splash Zone,0
+113,Brace,splash,Splash Zone,0
+114,Brace,splash,Splash Zone,0
+115,Brace,splash,Splash Zone,0
+116,Brace,splash,Splash Zone,0
+117,Beam,splash,Splash Zone,0
+118,Beam,splash,Splash Zone,0
+119,Beam,splash,Splash Zone,0
+120,Beam,splash,Splash Zone,0
