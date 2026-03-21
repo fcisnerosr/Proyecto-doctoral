@@ -1,0 +1,23 @@
+\begin{table}[htbp]
+  \centering
+  \caption{Statistical comparison of the ICD framework versus the best single damage index baseline. POD values represent the mean detection rate across all severity levels. Wilcoxon signed-rank test, one-sided ($H_1$: ICD $>$ DI).}
+  \label{tab:wilcoxon_pod}
+  \begin{tabular}{llccccccc}
+    \toprule
+    Damage & Member & Best & \multicolumn{2}{c}{Mean POD} & \multicolumn{2}{c}{AUC-POD} & $W$ & $p$-value \\
+    Type & Type & DI & ICD & DI & ICD & DI & & \\
+    \midrule
+    Denting & Beam & DI6 & 1.000 & 0.250 & 0.903 & 0.298 & 9774.0 & 0.0000$^{***}$ \\
+     & Brace & DI6 & 0.944 & 0.524 & 0.928 & 0.523 & 191646.0 & 0.0000$^{***}$ \\
+     & Inclined leg & DI6 & 0.767 & 0.600 & 0.728 & 0.589 & 5362.5 & 0.0000$^{***}$ \\
+    \midrule
+    Corrosion & Beam & DI6 & 1.000 & 0.188 & 0.903 & 0.251 & 40131.0 & 0.0000$^{***}$ \\
+     & Brace & DI6 & 0.950 & 0.488 & 0.931 & 0.485 & 813050.0 & 0.0000$^{***}$ \\
+     & Inclined leg & DI6 & 1.000 & 0.800 & 0.919 & 0.752 & 23364.0 & 0.0000$^{***}$ \\
+    \bottomrule
+  \end{tabular}
+  \begin{tablenotes}\small
+    \item $^{***}$ $p < 0.05$ (one-sided Wilcoxon signed-rank test).
+    \item POD baseline threshold: median of $\alpha_k^{\text{norm}}$ per damage type.
+  \end{tablenotes}
+\end{table}

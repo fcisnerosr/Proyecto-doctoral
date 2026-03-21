@@ -1,9 +1,9 @@
 # RESUMEN EJECUTIVO - PROYECTO DOCTORAL
 **Manuscrito para Applied Ocean Research (Elsevier Q1)**
 
-**Fecha:** 03 de marzo de 2026  
+**Fecha creación:** 03 de marzo de 2026 — **Última actualización:** 21 de marzo de 2026  
 **Autor:** Francisco Javier Cisneros Ruiz  
-**Estado del Proyecto:** Simulaciones completas, fase de análisis de datos
+**Estado del Proyecto:** Análisis de datos en curso — 3/6 puntos completados
 
 ---
 
@@ -11,7 +11,7 @@
 
 ### Progreso General
 ```
-████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ 16.7% (1/6 puntos completados)
+█████████████████████████░░░░░░░░░░░░░░░░░░ 50.0% (3/6 puntos completados)
 ```
 
 ### Logros Completados ✅
@@ -22,6 +22,11 @@
 - **Vectores alpha (α₁-α₈)** exportados correctamente
 - **Código MATLAB** validado y funcional
 
+#### Puntos de análisis completados (sesiones 13-21 Mar 2026)
+- **Punto 1 ✅** — `07_tabla_resumen_casos.ipynb`: `cases.csv` (3,240 filas), `elements_catalog.csv` (120 elementos), 2 figuras distribución, 2 tablas LaTeX (`tabla_casos_experimentales.tex`, `tabla_desglose_casos.tex`)
+- **Punto 2 ✅** — `04_analisis_alpha.ipynb` + `05_alpha_dispersión.ipynb`: boxplots de α₁–α₈, heatmap correlación, CV por componente. Hallazgo: α₅ (COMAC) y α₈ (z-score flexibilidad) dominan. Tablas LaTeX exportadas.
+- **Punto 5 ✅** — `06_metricas_clasificacion.ipynb`: Precision/Recall/F1/ROC por tipo de elemento y severidad. Hallazgo: Recall = 0.95–1.0, Precision = 0.08–0.41. Mejor F1 = 0.57 (Brace/Abolladura 10%). 2 tablas LaTeX + 4 figuras exportadas.
+
 ---
 
 ## 🎯 6 PUNTOS MÍNIMOS PARA PUBLICACIÓN EN AOR
@@ -30,11 +35,11 @@
 
 | # | Punto | Estado | Prioridad | Dependencias |
 |---|-------|--------|-----------|--------------|
-| **1** | Tabla/resumen de casos + figura de elementos | ⏸️ PENDIENTE | 🔴 ALTA | Independiente |
-| **2** | Análisis vectores α (media, std, CV, gráficas) | ⏸️ PENDIENTE (2.5-2.6) | 🔴 CRÍTICA | Independiente |
-| **3** | Comparación ICD vs mejor DI individual (baseline) | ⏸️ PENDIENTE | 🟡 MEDIA | Requiere Punto 2 |
+| **1** | Tabla/resumen de casos + figura de elementos | ✅ COMPLETADO (21-Mar) | 🔴 ALTA | Independiente |
+| **2** | Análisis vectores α (media, std, CV, gráficas) | ✅ COMPLETADO (18-Mar) | 🔴 CRÍTICA | Independiente |
+| **3** | Comparación ICD vs mejor DI individual (baseline) | 🔄 EN PROGRESO (21-Mar) | 🟡 MEDIA | Requiere Punto 2 |
 | **4** | Simulación de ruido (SNR, robustez) | ⏸️ PENDIENTE | 🟡 MEDIA | Independiente |
-| **5** | Métricas de clasificación (TP/FP/Precision/Recall/F1) | ⏸️ PENDIENTE | 🔴 ALTA | Independiente |
+| **5** | Métricas de clasificación (TP/FP/Precision/Recall/F1) | ✅ COMPLETADO (21-Mar) | 🔴 ALTA | Independiente |
 | **6** | Referencias actualizadas (2023-2025) | ⏸️ PENDIENTE | 🟢 BAJA | Durante redacción |
 
 ---
