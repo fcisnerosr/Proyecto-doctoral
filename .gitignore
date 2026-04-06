@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+*.egg-info/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Outputs generados (no versionar HTMLs grandes)
+tools/viz_jacket/jacket_3d.html
