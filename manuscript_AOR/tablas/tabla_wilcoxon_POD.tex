@@ -1,7 +1,8 @@
 \begin{table}[htbp]
   \centering
   \caption{Statistical comparison of the ICD framework versus the best single damage index baseline. POD values represent the mean detection rate across all severity levels. Wilcoxon signed-rank test, one-sided ($H_1$: ICD $>$ DI).}
-  \label{tab:wilcoxon_pod}
+  \label{tab:wilcoxon_POD}
+  \begin{threeparttable}
   \begin{tabular}{llccccccc}
     \toprule
     Damage & Member & Best & \multicolumn{2}{c}{Mean POD} & \multicolumn{2}{c}{AUC-POD} & $W$ & $p$-value \\
@@ -16,8 +17,9 @@
      & Inclined leg & DI6 & 1.000 & 0.800 & 0.919 & 0.752 & 23364.0 & 0.0000$^{***}$ \\
     \bottomrule
   \end{tabular}
-  \begin{tablenotes}\small
+  \begin{tablenotes}[para]\small
     \item $^{***}$ $p < 0.05$ (one-sided Wilcoxon signed-rank test).
     \item POD baseline threshold: median of $\alpha_k^{\text{norm}}$ per damage type.
   \end{tablenotes}
+  \end{threeparttable}
 \end{table}

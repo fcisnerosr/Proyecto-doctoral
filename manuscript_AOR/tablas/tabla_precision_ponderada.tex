@@ -1,0 +1,98 @@
+\begin{table}[htbp]
+  \centering
+  \caption{Comparison of Classical and Topology-Weighted Precision. $\Delta$ = Weighted $-$ Classical (percentage points). Avg FP dist: mean topological distance (in structural members) between false-positive nodes and the damaged element. Weight function: $w(d)=d/(d+1)$.}
+  \label{tab:precision_ponderada}
+  \small
+  \begin{tabular}{llrrrrr}
+    \toprule
+    Damage Type & Element & Severity [\%] & Prec. Classical & Prec. Weighted & $\Delta$ [pp] & Avg FP dist [mbr] \\
+    \midrule
+    Denting & Brace & 5 & 0.396 & 0.662 & +26.7 & 2.20 \\
+    Denting & Brace & 10 & 0.404 & 0.655 & +25.1 & 2.16 \\
+    Denting & Brace & 15 & 0.408 & 0.669 & +26.1 & 2.07 \\
+    Denting & Brace & 20 & 0.398 & 0.632 & +23.4 & 4.40 \\
+    Denting & Brace & 25 & 0.374 & 0.592 & +21.8 & 4.09 \\
+    Denting & Brace & 30 & 0.365 & 0.577 & +21.2 & 4.01 \\
+    Denting & Brace & 35 & 0.379 & 0.597 & +21.8 & 4.22 \\
+    Denting & Brace & 40 & 0.346 & 0.551 & +20.4 & 3.66 \\
+    Denting & Brace & 45 & 0.370 & 0.586 & +21.6 & 4.04 \\
+    \cmidrule{2-7}
+    Denting & Inclined Leg & 5 & 0.142 & 0.238 & +9.7 & 1.51 \\
+    Denting & Inclined Leg & 10 & 0.152 & 0.232 & +8.0 & 1.52 \\
+    Denting & Inclined Leg & 15 & 0.106 & 0.156 & +5.0 & 1.71 \\
+    Denting & Inclined Leg & 20 & 0.093 & 0.135 & +4.3 & 1.73 \\
+    Denting & Inclined Leg & 25 & 0.108 & 0.159 & +5.0 & 1.59 \\
+    Denting & Inclined Leg & 30 & 0.122 & 0.170 & +4.8 & 1.57 \\
+    Denting & Inclined Leg & 35 & 0.080 & 0.123 & +4.3 & 1.70 \\
+    Denting & Inclined Leg & 40 & 0.078 & 0.119 & +4.1 & 1.74 \\
+    Denting & Inclined Leg & 45 & 0.078 & 0.112 & +3.4 & 1.79 \\
+    \cmidrule{2-7}
+    Denting & Beam & 5 & 0.082 & 0.117 & +3.5 & 1.70 \\
+    Denting & Beam & 10 & 0.084 & 0.123 & +3.8 & 1.71 \\
+    Denting & Beam & 15 & 0.086 & 0.125 & +3.9 & 1.60 \\
+    Denting & Beam & 20 & 0.094 & 0.138 & +4.4 & 1.47 \\
+    Denting & Beam & 25 & 0.084 & 0.123 & +3.9 & 1.58 \\
+    Denting & Beam & 30 & 0.116 & 0.168 & +5.2 & 1.45 \\
+    Denting & Beam & 35 & 0.114 & 0.160 & +4.6 & 1.48 \\
+    Denting & Beam & 40 & 0.107 & 0.163 & +5.6 & 1.38 \\
+    Denting & Beam & 45 & 0.098 & 0.142 & +4.4 & 1.47 \\
+    \midrule
+    Corrosion & Brace & 5 & 0.390 & 0.638 & +24.8 & 2.89 \\
+    Corrosion & Brace & 10 & 0.379 & 0.604 & +22.5 & 3.14 \\
+    Corrosion & Brace & 15 & 0.364 & 0.577 & +21.3 & 3.13 \\
+    Corrosion & Brace & 20 & 0.381 & 0.597 & +21.7 & 3.37 \\
+    Corrosion & Brace & 25 & 0.370 & 0.584 & +21.3 & 3.24 \\
+    Corrosion & Brace & 30 & 0.377 & 0.594 & +21.6 & 3.30 \\
+    Corrosion & Brace & 35 & 0.374 & 0.590 & +21.6 & 3.32 \\
+    Corrosion & Brace & 40 & 0.377 & 0.594 & +21.7 & 3.37 \\
+    Corrosion & Brace & 45 & 0.376 & 0.587 & +21.2 & 2.89 \\
+    Corrosion & Brace & 50 & 0.381 & 0.598 & +21.7 & 3.25 \\
+    Corrosion & Brace & 55 & 0.381 & 0.598 & +21.7 & 3.26 \\
+    Corrosion & Brace & 60 & 0.381 & 0.600 & +21.9 & 3.22 \\
+    Corrosion & Brace & 65 & 0.379 & 0.595 & +21.6 & 3.27 \\
+    Corrosion & Brace & 70 & 0.376 & 0.590 & +21.5 & 4.31 \\
+    Corrosion & Brace & 75 & 0.377 & 0.597 & +21.9 & 4.21 \\
+    Corrosion & Brace & 80 & 0.367 & 0.579 & +21.2 & 4.15 \\
+    Corrosion & Brace & 85 & 0.370 & 0.580 & +20.9 & 3.68 \\
+    Corrosion & Brace & 90 & 0.319 & 0.502 & +18.2 & 3.21 \\
+    \cmidrule{2-7}
+    Corrosion & Inclined Leg & 5 & 0.286 & 0.513 & +22.7 & 1.29 \\
+    Corrosion & Inclined Leg & 10 & 0.286 & 0.513 & +22.7 & 1.29 \\
+    Corrosion & Inclined Leg & 15 & 0.286 & 0.513 & +22.7 & 1.29 \\
+    Corrosion & Inclined Leg & 20 & 0.286 & 0.513 & +22.7 & 1.29 \\
+    Corrosion & Inclined Leg & 25 & 0.286 & 0.513 & +22.7 & 1.29 \\
+    Corrosion & Inclined Leg & 30 & 0.286 & 0.513 & +22.7 & 1.29 \\
+    Corrosion & Inclined Leg & 35 & 0.263 & 0.457 & +19.3 & 1.39 \\
+    Corrosion & Inclined Leg & 40 & 0.263 & 0.457 & +19.3 & 1.39 \\
+    Corrosion & Inclined Leg & 45 & 0.274 & 0.473 & +19.9 & 1.44 \\
+    Corrosion & Inclined Leg & 50 & 0.175 & 0.282 & +10.7 & 1.38 \\
+    Corrosion & Inclined Leg & 55 & 0.206 & 0.333 & +12.7 & 1.60 \\
+    Corrosion & Inclined Leg & 60 & 0.333 & 0.625 & +29.2 & 1.00 \\
+    Corrosion & Inclined Leg & 65 & 0.333 & 0.625 & +29.2 & 1.00 \\
+    Corrosion & Inclined Leg & 70 & 0.333 & 0.625 & +29.2 & 1.00 \\
+    Corrosion & Inclined Leg & 75 & 0.333 & 0.625 & +29.2 & 1.00 \\
+    Corrosion & Inclined Leg & 80 & 0.333 & 0.625 & +29.2 & 1.00 \\
+    Corrosion & Inclined Leg & 85 & 0.333 & 0.625 & +29.2 & 1.00 \\
+    Corrosion & Inclined Leg & 90 & 0.339 & 0.635 & +29.6 & 1.00 \\
+    \cmidrule{2-7}
+    Corrosion & Beam & 5 & 0.102 & 0.147 & +4.5 & 1.43 \\
+    Corrosion & Beam & 10 & 0.094 & 0.141 & +4.7 & 1.38 \\
+    Corrosion & Beam & 15 & 0.095 & 0.142 & +4.7 & 1.34 \\
+    Corrosion & Beam & 20 & 0.099 & 0.146 & +4.7 & 1.38 \\
+    Corrosion & Beam & 25 & 0.082 & 0.122 & +4.0 & 1.49 \\
+    Corrosion & Beam & 30 & 0.095 & 0.141 & +4.6 & 1.45 \\
+    Corrosion & Beam & 35 & 0.095 & 0.138 & +4.4 & 1.38 \\
+    Corrosion & Beam & 40 & 0.105 & 0.153 & +4.8 & 1.38 \\
+    Corrosion & Beam & 45 & 0.089 & 0.134 & +4.5 & 1.43 \\
+    Corrosion & Beam & 50 & 0.099 & 0.142 & +4.4 & 1.47 \\
+    Corrosion & Beam & 55 & 0.094 & 0.138 & +4.4 & 1.46 \\
+    Corrosion & Beam & 60 & 0.105 & 0.150 & +4.5 & 1.44 \\
+    Corrosion & Beam & 65 & 0.079 & 0.119 & +3.9 & 1.44 \\
+    Corrosion & Beam & 70 & 0.090 & 0.134 & +4.4 & 1.45 \\
+    Corrosion & Beam & 75 & 0.084 & 0.124 & +4.0 & 1.47 \\
+    Corrosion & Beam & 80 & 0.098 & 0.145 & +4.8 & 1.40 \\
+    Corrosion & Beam & 85 & 0.119 & 0.174 & +5.6 & 1.37 \\
+    Corrosion & Beam & 90 & 0.121 & 0.168 & +4.7 & 1.49 \\
+    \bottomrule
+  \end{tabular}
+\end{table}

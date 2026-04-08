@@ -1,14 +1,78 @@
+%% ─────────────────────────────────────────────────────────────────
+%% PREAMBLE
+%% ─────────────────────────────────────────────────────────────────
+\documentclass[a4paper,fleqn]{cas-dc}
+
+\usepackage[authoryear,longnamesfirst]{natbib}
+\usepackage{amsmath}      % displaystyle, equations
+\usepackage{booktabs}     % \toprule, \midrule, \bottomrule, \cmidrule
+\usepackage{subcaption}   % subfigure environment
+\usepackage{threeparttable} % tablenotes environment
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+%% ─────────────────────────────────────────────────────────────────
+\begin{document}
+\let\WriteBookmarks\relax
+\def\floatpagepagefraction{1}
+\def\textpagefraction{.001}
+
+%% ── Metadata ─────────────────────────────────────────────────────
+\shorttitle{ICD: Detección de Daño en Plataformas Jacket}
+\shortauthors{Cisneros-Reyes et al.}
+
+\title[mode = title]{%
+  Índice de Calidad de Detección (ICD): Metodología de
+  Optimización Inversa basada en Algoritmos Genéticos para
+  la Identificación de Daño en Plataformas Marinas Tipo Jacket}
+
+\author[1]{F.~Cisneros-Reyes}
+\cormark[1]
+\ead{fcisnerosr@unam.mx}
+\credit{Conceptualization, Methodology, Software, Formal analysis,
+        Writing -- Original Draft}
+
+\affiliation[1]{organization={Posgrado en Ingeniería, Universidad Nacional Autónoma de México (UNAM)},
+    city={Ciudad de México},
+    country={México}}
+
+\cortext[1]{Corresponding author}
+
+%% ── Abstract & Keywords ──────────────────────────────────────────
 \begin{abstract}
-\textbf{Resumen:} El envejecimiento de la infraestructura petrolera costa afuera y los elevados costos y riesgos asociados a las inspecciones submarinas tradicionales exigen nuevas estrategias de gestión de integridad. En este trabajo se propone una metodología de Monitoreo de Salud Estructural (SHM) basada en optimización inversa mediante Algoritmos Genéticos (AG) para la identificación de daño en plataformas tipo Jacket. Se introduce el Índice de Calidad de Detección (ICD), una nueva métrica objetivo diseñada para fusionar múltiples indicadores vibratorios y mitigar la incertidumbre numérica penalizando los falsos positivos. La validación se llevó a cabo mediante un modelo de elemento finito calibrado bajo escenarios de corrosión y abolladura. Los resultados cuantitativos demuestran un comportamiento estructural diferenciado: los elementos secundarios (diagonales) funcionan como "fusibles estructurales", siendo detectables por el ICD a partir de un 30\% de daño, mientras que los elementos principales (piernas) requieren niveles de severidad superiores al 50\% para ser identificados fiablemente. Estos hallazgos sugieren la implementación de una estrategia híbrida, donde el monitoreo automático continuo vigile los elementos secundarios, permitiendo enfocar las inspecciones visuales detalladas en los nodos y componentes principales.
-\\
-\textbf{Keywords:} Monitoreo de Salud Estructural, Algoritmos Genéticos, Plataformas Jacket, Índice de Calidad de Detección, Optimización Inversa.
+The aging of offshore oil infrastructure and the high costs and risks
+associated with traditional underwater inspections demand new integrity
+management strategies. This paper proposes a Structural Health Monitoring
+(SHM) methodology based on inverse optimization using Genetic Algorithms
+(GA) for damage identification in Jacket-type platforms. The Detection
+Quality Index (ICD) is introduced as a new objective metric designed to
+fuse multiple vibration indicators and mitigate numerical uncertainty by
+penalizing false positives. Validation was conducted over 3{,}240
+simulation runs on a calibrated finite-element model under corrosion and
+denting scenarios. Quantitative results demonstrate a differentiated
+structural behavior: secondary elements (braces) act as ``structural
+fuses'', detectable from 30\% damage severity with global detection rates
+of 92.2\% (denting) and 96.5\% (corrosion), while main elements (legs)
+require severity levels exceeding 50\%. A novel Topology-Weighted
+Precision metric is also proposed, correcting systematic underestimation
+of localization quality by the classical Precision metric, yielding gains
+of up to $+$22 percentage points for brace elements.
 \end{abstract}
 
-\begin{abstract}
-\textbf{Abstract:} The aging of offshore oil infrastructure and the high costs and risks associated with traditional underwater inspections demand new integrity management strategies. This paper proposes a Structural Health Monitoring (SHM) methodology based on inverse optimization using Genetic Algorithms (GA) for damage identification in Jacket-type platforms. The Detection Quality Index (DQI) is introduced, a new objective metric designed to fuse multiple vibration indicators and mitigate numerical uncertainty by penalizing false positives. Validation was performed using a finite element model calibrated under corrosion and denting scenarios. Quantitative results demonstrate a differentiated structural behavior: secondary elements (braces) act as "structural fuses", being detectable by the DQI starting from 30\% damage, while main elements (legs) require severity levels exceeding 50\% to be reliably identified. These findings suggest the implementation of a hybrid strategy, where continuous automatic monitoring surveils secondary elements, allowing detailed visual inspections to focus on main nodes and components.
-\\
-\textbf{Keywords:} Structural Health Monitoring, Genetic Algorithms, Jacket Platforms, Detection Quality Index, Inverse Optimization
-\end{abstract}
+\begin{keywords}
+  Structural Health Monitoring \sep
+  Genetic Algorithms \sep
+  Jacket Platforms \sep
+  Detection Quality Index \sep
+  Inverse Optimization \sep
+  Topology-Weighted Precision
+\end{keywords}
+
+\maketitle
+
+%% ── Spanish abstract (for informational purposes) ────────────────
+% \textbf{Resumen (español):} El envejecimiento de la infraestructura
+% petrolera costa afuera ... [traducción completa omitida en preprint]
 
 \section{Introducción}
 
@@ -48,7 +112,7 @@ La masa adherida representa el efecto del volumen de agua circundante que se ace
 
 Adicionalmente, se considera la \textbf{masa atrapada}, que corresponde al agua contenida dentro de los elementos tubulares inundados (pilotes y piernas principales). La Figura~\ref{fig:masa_adherida} ilustra la diferencia conceptual entre estos componentes inerciales.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.7\textwidth]{figs/001_modelo_plataforma_con_elemento_tubular_masa_adherida_y_masa_atrapada.png}
     \caption{Esquematización de la masa atrapada (volumen interno) y masa adherida (volumen hidrodinámico externo).}
@@ -59,7 +123,7 @@ Adicionalmente, se considera la \textbf{masa atrapada}, que corresponde al agua 
 
 En la Sonda de Campeche, la acumulación de organismos marinos  sobre los elementos estructurales altera significativamente la respuesta dinámica al incrementar el diámetro efectivo e hidrodinámico de los tubos. Este fenómeno no es uniforme; varía en función de la profundidad y la penetración de luz solar.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.9\textwidth]{figs/001_modelo_plataforma_con_elemento_tubular_masa_de_crecimiento_marino.png}
     \caption{Influencia del espesor de crecimiento marino en el diámetro efectivo del elemento estructural.}
@@ -75,7 +139,7 @@ A diferencia de los modelos de caja negra, esta investigación utiliza un enfoqu
 \subsubsection{Corrosión Uniforme}
 La corrosión se modela como una reducción uniforme del espesor de pared ($t$) del elemento tubular a lo largo de una longitud afectada ($L_D$). Esto impacta directamente el área de la sección transversal ($A$) y los momentos de inercia ($I$), manteniendo constante el módulo de elasticidad ($E$), como se observa en evidencia experimental de acero corroído \citep{CardenasArias2019_article}.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.6\textwidth]{figs/004_caracterizacion_de_como_se_reduce_el_espesor_elemento_tubular_por_corrosion.png}
     \caption{Caracterización de la reducción de espesor en un elemento tubular por corrosión uniforme.}
@@ -85,7 +149,7 @@ La corrosión se modela como una reducción uniforme del espesor de pared ($t$) 
 \subsubsection{Abolladuras}
 Las abolladuras representan un daño local crítico causado por impactos accidentales. Este daño se modela asumiendo una distorsión de la sección transversal que aplana la cara impactada y ensancha los laterales, conservando el perímetro pero reduciendo drásticamente el momento de inercia local ($I_{red}$) (Figura~\ref{fig:abolladura_seccion}).
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.4\textwidth]{figs/004_seccion_transversal_de_elemento_tubular_parametros_abolladura.png}
     \caption{Parametrización de la sección transversal abollada.}
@@ -94,7 +158,7 @@ Las abolladuras representan un daño local crítico causado por impactos acciden
 
 Para evitar discontinuidades numéricas abruptas en la matriz de rigidez, la variación de la inercia a lo largo de la zona abollada se suaviza mediante funciones de interpolación polinómica de cuarto grado, asegurando una transición representativa de la pérdida de rigidez local.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.95\textwidth]{figs/004_modelo_elemento_tubular_seccion_longitudinal_parametros_abolladura_con_funciones_de_interpolacion.png}
     \caption{Interpolación longitudinal de la inercia en la zona de la abolladura para suavizado numérico.}
@@ -105,7 +169,7 @@ Para evitar discontinuidades numéricas abruptas en la matriz de rigidez, la var
 
 La metodología se valida en un modelo numérico de una plataforma marina fija de tipo Jacket de 4 piernas, representativa de las estructuras instaladas en aguas someras e intermedias del Golfo de México. El modelo, resuelto mediante el método de elementos finitos, incluye la superestructura completa y el sistema de cimentación por pilotes (simulados mediante longitud equivalente al punto de empotramiento aparente).
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     % Aumenté un poco el tamaño (0.4 y 0.35) para que luzcan más
     \includegraphics[width=0.4\textwidth]{figs/007_modeo_vista_3d_de_plataforma_tipo_jacket_de_caso_de_estudio.png}
@@ -123,7 +187,7 @@ Para abordar el problema de identificación de daño estructural en plataformas 
 
 La metodología se estructura fundamentalmente en dos etapas acopladas: la simulación mecánica de los escenarios de daño y la optimización estocástica de la detección. El flujo operativo general se detalla en la Figura~\ref{fig:metodologia_general}, donde se observa cómo los datos vibratorios alimentan el proceso de decisión.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.95\textwidth]{figs/005_metogologia_propuesta_para_identificar_daños_en_plataformas_reales.jpg}
     \caption{Esquema general de la metodología propuesta para la identificación de daño.}
@@ -188,7 +252,7 @@ Transforma el puntaje Z en probabilidad asumiendo distribución Gaussiana:
 
 El AG se configura como el motor de optimización del sistema. Su función no es modificar la estructura física, sino encontrar la combinación lineal óptima ($\boldsymbol{\alpha}$) de los índices vibratorios descritos anteriormente para minimizar el error de localización respecto a un estado de daño conocido. La arquitectura computacional diseñada para este propósito se presenta en la Figura~\ref{fig:metodologia_AG}.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.9\textwidth]{figs/006_metodología_del_AG_para_localizar_daños_a_nivel_computacional.jpg}
     \caption{Arquitectura computacional del AG configurado para la fusión de datos.}
@@ -209,7 +273,7 @@ Para garantizar un equilibrio entre la exploración del espacio de soluciones y 
 
 El ciclo detallado de estos operadores se ilustra en la Figura~\ref{fig:detalle_AG}.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.85\textwidth]{figs/015_diagrama_como_funciona_el_AG_para_la_sumas_funcion_P_y_como_se_relaciona_con_operadores_geneticos_del_AG.jpg}
     \caption{Detalle del ciclo evolutivo y operadores del AG.}
@@ -254,9 +318,9 @@ En esta sección se presentan los hallazgos obtenidos al aplicar la metodología
 
 La corrosión se simuló como una pérdida uniforme de sección transversal. La Figura \ref{fig:corrosion_element_type} ilustra la evolución del ICD en función del porcentaje de daño, desglosado por tipo de elemento: vigas (\textit{beams}), diagonales (\textit{braces}) y piernas (\textit{legs}).
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.9\textwidth]{figs/resultados/corrosion/004_corrosion_tipo_de_elemeneto_beam_brace_inclined_led_ICD_vs_porcentaje_de_daño.png}
+    \includegraphics[width=0.9\textwidth]{../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by_element_type_corrosion.png}
     \caption{Curvas de sensibilidad del ICD por tipo de elemento bajo escenarios de corrosión progresiva.}
     \label{fig:corrosion_element_type}
 \end{figure}
@@ -269,9 +333,9 @@ Por el contrario, las piernas principales (\textit{legs}) muestran una curva de 
 
 La Figura \ref{fig:abolladura_element_type} presenta los resultados para daños por impacto (abolladuras), los cuales generan una reducción drástica pero localizada del momento de inercia.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.9\textwidth]{figs/resultados/abolladura/004_abolladura_tipo_de_elemeneto_beam_brace_inclined_led_ICD_vs_porcentaje_de_daño.png}
+    \includegraphics[width=0.9\textwidth]{../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_element_type_abolladura.png}
     \caption{Comparativa de sensibilidad del ICD por tipo de elemento bajo escenarios de abolladura.}
     \label{fig:abolladura_element_type}
 \end{figure}
@@ -282,11 +346,11 @@ Aunque la naturaleza física del daño difiere de la corrosión, la tendencia de
 
 Para determinar si la profundidad afecta la confiabilidad del diagnóstico, se segmentó la estructura en tres regiones: Zona de Salpicadura (\textit{Splash Zone}), Zona Media y Línea de Lodo (\textit{Mudline}). Las Figuras \ref{fig:corrosion_zone} y \ref{fig:abolladura_zone} comparan el desempeño del ICD en estas regiones.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \begin{subfigure}[b]{1.0\textwidth}
         \centering
-        \includegraphics[width=0.95\textwidth]{figs/resultados/corrosion/006_corrosion_ICD_por_zona_desglozadp_por_tipo_de_elemento_desde_mudline_medio_y_splash_zone.png}
+        \includegraphics[width=0.95\textwidth]{../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by_zone_corrosion.png}
         \caption{Desempeño en Escenarios de Corrosión.}
         \label{fig:corrosion_zone}
     \end{subfigure}
@@ -295,7 +359,7 @@ Para determinar si la profundidad afecta la confiabilidad del diagnóstico, se s
     
     \begin{subfigure}[b]{1.0\textwidth}
         \centering
-        \includegraphics[width=0.95\textwidth]{figs/resultados/abolladura/006_abolladura_ICD_por_zona_desglozadp_por_tipo_de_elemento_desde_mudline_medio_y_splash_zone.png}
+        \includegraphics[width=0.95\textwidth]{../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_zone_abolladura.png}
         \caption{Desempeño en Escenarios de Abolladura.}
         \label{fig:abolladura_zone}
     \end{subfigure}
@@ -305,11 +369,215 @@ Para determinar si la profundidad afecta la confiabilidad del diagnóstico, se s
 
 El análisis revela una ligera ventaja en la detectabilidad de daños ubicados en la \textit{Splash Zone} y Zona Media en comparación con el \textit{Mudline}. Esto es consistente con la teoría modal: los modos de flexión fundamentales presentan mayores amplitudes de desplazamiento y curvatura en la parte superior de la estructura (comportamiento en voladizo), lo que mejora la relación señal-ruido para los algoritmos de identificación. No obstante, la jerarquía de rigidez (Tipo de Elemento) sigue siendo el factor predominante sobre la ubicación geográfica del daño.
 
+% ─────────────────────────────────────────────────────────────────────────────
+% §4.4  DISEÑO EXPERIMENTAL
+% ─────────────────────────────────────────────────────────────────────────────
+\subsection{Diseño Experimental y Cobertura de Casos}
+\label{subsec:disenio_experimental}
+
+La validación estadística se apoya en un total de 3{,}240 corridas del AG: 1{,}080 para abolladura
+(120 elementos $\times$ 9 niveles de severidad: 5\%--45\%) y 2{,}160 para corrosión
+(120 elementos $\times$ 18 niveles de severidad: 5\%--90\%). La Tabla~\ref{tab:casos_experimentales}
+resume la distribución de ensayos por tipo de daño y tipo de elemento.
+
+\input{tablas/tabla_casos_experimentales.tex}
+
+La distribución de casos por elemento y severidad se presenta en la
+Figura~\ref{fig:distribucion_experimental}, donde se observa la cobertura uniforme de todos
+los elementos del modelo por tipo (Brace, Inclined Leg, Beam) en ambas campañas de simulación.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.95\textwidth]{../outputs/resultados_nuevos/heatmap_casos_elemento_severidad.png}
+    \caption{Mapa de calor del diseño experimental: distribución de corridas por elemento y nivel
+             de severidad para ambos tipos de daño.}
+    \label{fig:distribucion_experimental}
+\end{figure}
+
+% ─────────────────────────────────────────────────────────────────────────────
+% §4.5  MÉTRICAS DE CLASIFICACIÓN
+% ─────────────────────────────────────────────────────────────────────────────
+\subsection{Métricas de Clasificación: Precision, Recall y F\textsubscript{1}}
+\label{subsec:metricas_clasificacion}
+
+Para cuantificar el desempeño del sistema más allá del ICD, se calcularon las métricas
+estándar de clasificación binaria. La Tabla~\ref{tab:metricas_compacta} reporta los valores
+medios por tipo de elemento y escenario de daño.
+
+\input{tablas/tabla_metricas_compacta.tex}
+
+La Figura~\ref{fig:F1_comparison} compara las curvas de F\textsubscript{1} en función de la
+severidad para ambas campañas. Los \textit{braces} alcanzan sistemáticamente los valores de
+F\textsubscript{1} más elevados ($> 0.85$ a partir del 30\%), mientras que los elementos
+de mayor rigidez (\textit{beams} y piernas inclinadas) muestran valores inferiores por su menor
+sensibilidad modal.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.95\textwidth]{../outputs/resultados_nuevos/F1_comparison_denting_corrosion.png}
+    \caption{Evolución del F\textsubscript{1}-score en función de la severidad del daño para
+             cada tipo de elemento: Abolladura (izq.) y Corrosión (der.).}
+    \label{fig:F1_comparison}
+\end{figure}
+
+Las curvas ROC de la Figura~\ref{fig:ROC_curves} sintetizan la relación entre la tasa de
+verdaderos positivos (Recall) y la de falsos positivos (1$-$Especificidad) para el clasificador
+binario resultante. Los valores de AUC-ROC obtenidos ($> 0.90$ para abolladura y $> 0.94$ para
+corrosión) confirman la alta capacidad discriminativa del sistema.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\textwidth]{../outputs/resultados_nuevos/ROC_curve_denting_corrosion.png}
+    \caption{Curvas ROC para el clasificador de daño mediante ICD: Abolladura (izq.)
+             y Corrosión (der.). Área bajo la curva (AUC) reportada en cada panel.}
+    \label{fig:ROC_curves}
+\end{figure}
+
+% ─────────────────────────────────────────────────────────────────────────────
+% §4.6  CURVAS POD (PROBABILITY OF DETECTION)
+% ─────────────────────────────────────────────────────────────────────────────
+\subsection{Curvas de Probabilidad de Detección (POD)}
+\label{subsec:POD}
+
+La Probabilidad de Detección (POD) mide la fracción de ensayos exitosos en función de la
+severidad, siguiendo la metodología de prueba no paramétrica de Wilcoxon. La prueba confirma
+a nivel de significancia $\alpha = 0.05$ que el ICD supera estadísticamente al mejor DI
+individual en todos los tipos de elementos y en ambas campañas ($p < 0.001$).
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.95\textwidth]{../outputs/resultados_nuevos/POD_curves_ICD_vs_bestDI.png}
+    \caption{Curvas POD del ICD frente al mejor DI individual por tipo de elemento.
+             Abolladura (fila superior) y Corrosión (fila inferior).}
+    \label{fig:POD_curves}
+\end{figure}
+
+La Tabla~\ref{tab:wilcoxon_POD} resume los estadísticos de la prueba de Wilcoxon y las áreas
+bajo la curva POD (AUC-POD) para cada combinación de tipo de elemento y escenario de daño.
+
+\input{tablas/tabla_wilcoxon_POD.tex}
+
+% ─────────────────────────────────────────────────────────────────────────────
+% §4.7  ROBUSTEZ ANTE RUIDO GAUSSIANO
+% ─────────────────────────────────────────────────────────────────────────────
+\subsection{Robustez ante Ruido Gaussiano (SNR)}
+\label{subsec:SNR}
+
+Para evaluar la aplicabilidad del método en condiciones reales de medición, se inyectó ruido
+gaussiano aditivo controlado con niveles de SNR entre 5 y 50~dB sobre los vectores modales
+antes de la evaluación del ICD. La Figura~\ref{fig:SNR_degradation} muestra la degradación
+del AUC-ROC como función del nivel de SNR para los tres tipos de elementos.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.95\textwidth]{../outputs/resultados_nuevos/AUC_ROC_vs_SNR_degradation.png}
+    \caption{Degradación del AUC-ROC en función del nivel de ruido (SNR) para Abolladura (izq.)
+             y Corrosión (der.). Línea punteada = umbral de AUC~$=$ 0.80.}
+    \label{fig:SNR_degradation}
+\end{figure}
+
+Los resultados evidencian que el ICD mantiene un AUC-ROC~$> 0.80$ hasta niveles de ruido de
+SNR~$= 20$~dB para los \textit{braces}, lo que corresponde a condiciones de medición
+moderadamente ruidosas típicas de sistemas MEMS instalados en plataformas marinas. La
+Tabla~\ref{tab:snr_robustness} sintetiza los valores de AUC-ROC para los puntos clave de SNR.
+
+\input{tablas/tabla_snr_robustness.tex}
+
+% ─────────────────────────────────────────────────────────────────────────────
+% §4.8  PRECISION PONDERADA POR DISTANCIA TOPOLÓGICA  [CONTRIBUCIÓN NOVEDOSA]
+% ─────────────────────────────────────────────────────────────────────────────
+\subsection{Precision Ponderada por Distancia Topológica}
+\label{subsec:precision_ponderada}
+
+\subsubsection{Limitación de la Precision Clásica}
+
+La Precision clásica trata todos los Falsos Positivos (FP) con igual penalización,
+independientemente de su proximidad espacial al elemento realmente dañado:
+
+\begin{equation}
+    \label{eq:precision_clasica}
+    \text{Precision} = \frac{TP}{TP + FP}
+\end{equation}
+
+Esta formulación es inadecuada en sistemas reticulares donde un nodo FP adyacente
+al elemento dañado (distancia topológica $d=1$) tiene una interpretación ingenieril muy
+distinta a uno ubicado en el extremo opuesto de la estructura ($d = 8$).
+
+\subsubsection{Formulación de la Precision Ponderada}
+
+Se propone una métrica novedosa que asigna un peso $w(d) \in [0, 1)$ a cada FP en función
+de su distancia topológica $d$ al elemento dañado, medida en número de miembros estructurales
+mediante búsqueda BFS sobre el grafo de conectividad:
+
+\begin{equation}
+    \label{eq:weight_fn}
+    w(d) = \frac{d}{d + 1}
+\end{equation}
+
+de modo que nodos adyacentes ($d=1$) reciben solo el 50\% de la penalización, mientras que
+nodos lejanos ($d \to \infty$) se aproximan a la penalización completa. La \textbf{Precision
+Ponderada} resulta:
+
+\begin{equation}
+    \label{eq:precision_ponderada}
+    \text{Precision}_w = \frac{TP}{TP + \displaystyle\sum_{i \in FP} w(d_i)}
+\end{equation}
+
+\subsubsection{Distribución de Distancias de los FP}
+
+La Figura~\ref{fig:FP_distancias} revela que aproximadamente el 40\% de todos los nodos FP
+son directamente adyacentes al elemento dañado ($d = 1$), con una distancia media de
+$\bar{d} \approx 2.2$ miembros. Este hallazgo justifica la necesidad de la corrección
+topológica: la Precision clásica subestima sistemáticamente la calidad de localización
+del AG.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.95\textwidth]{../outputs/resultados_nuevos/FP_distancia_topologica_distribucion.png}
+    \caption{Distribución de distancias topológicas de los nodos FP al elemento dañado para
+             Abolladura (izq.) y Corrosión (der.). La curva roja muestra la función de peso
+             $w(d) = d/(d+1)$.}
+    \label{fig:FP_distancias}
+\end{figure}
+
+\subsubsection{Comparación Cuantitativa}
+
+La Figura~\ref{fig:precision_global} cuantifica la mejora en Precision para cada tipo de
+elemento al pasar de la métrca clásica a la ponderada. Los \textit{braces} muestran la mayor
+ganancia ($\Delta \approx +22$ puntos porcentuales) tanto en abolladura como en corrosión,
+lo que confirma que su señal de FP es estructuralmente coherente con el daño localizado.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.95\textwidth]{../outputs/resultados_nuevos/Precision_global_clasica_vs_ponderada.png}
+    \caption{Comparación global de Precision Clásica vs.\ Ponderada por tipo de elemento.
+             Las anotaciones indican el incremento $\Delta$ en puntos porcentuales.}
+    \label{fig:precision_global}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.95\textwidth]{../outputs/resultados_nuevos/Precision_clasica_vs_ponderada_por_elemento.png}
+    \caption{Evolución de la Precision Clásica (línea punteada) y Ponderada (línea sólida)
+             en función de la severidad del daño. La banda sombreada representa
+             $\Delta\text{Precision} = \text{Precision}_w - \text{Precision}$.}
+    \label{fig:precision_vs_severidad}
+\end{figure}
+
+La Tabla~\ref{tab:precision_ponderada} reporta los valores numéricos completos por
+escenario, tipo de elemento y severidad, incluyendo la distancia media de los FP.
+
+\input{tablas/tabla_precision_ponderada.tex}
+
 \section{Conclusiones y Trabajo Futuro}
 
-La presente investigación ha validado la eficacia del Índice de Calidad de Detección (ICD) como una métrica robusta para la identificación de daño estructural en plataformas marinas tipo Jacket. A diferencia de los métodos tradicionales de actualización de modelo (\textit{model updating}), la estrategia propuesta de optimización inversa mediante Algoritmos Genéticos (AG) y fusión de datos permite localizar anomalías sin requerir un modelo calibrado perfecto, reduciendo la carga computacional y la dependencia de condiciones iniciales exactas.
+La presente investigación ha validado la eficacia del Índice de Calidad de Detección (ICD) como una métrica robusta para la identificación de daño estructural en plataformas marinas tipo Jacket. A diferencia de los métodos tradicionales de actualización de modelo (\textit{model updating}), la estrategia propuesta de optimización inversa mediante Algoritmos Genéticos (AG) y fusión de datos permite localizar anomalías sin requerir un modelo calibrado perfecto, reduciendo la carga computacional y la dependencia de condiciones iniciales exactas. La campaña de 3{,}240 corridas (1{,}080 abolladura $+$ 2{,}160 corrosión) sobre 120 elementos del modelo ETABS proporciona respaldo estadístico exhaustivo a los resultados reportados.
 
-El hallazgo más relevante del estudio confirma el comportamiento de los elementos secundarios (diagonales o \textit{braces}) como "fusibles estructurales". Los resultados demuestran que el ICD es altamente sensible a daños en estos elementos, detectando reducciones de rigidez a partir del 30\% de severidad (ya sea por corrosión o abolladura). En contraste, los elementos principales (piernas) mostraron una redundancia significativa, requiriendo daños superiores al 50\% para ser detectables por el sistema. Esto tiene una implicación operativa directa para la gestión de integridad costa afuera: mientras que el monitoreo automático basado en vibraciones es ideal para la vigilancia continua de las diagonales, las inspecciones visuales submarinas deben seguir priorizando los nodos y piernas principales, donde los cambios modales son más sutiles en etapas tempranas.
+El hallazgo más relevante del estudio confirma el comportamiento de los elementos secundarios (diagonales o \textit{braces}) como ``fusibles estructurales''. Los resultados demuestran que el ICD es altamente sensible a daños en estos elementos, detectando reducciones de rigidez a partir del 30\% de severidad (ya sea por corrosión o abolladura) con tasas de detección globales del \textbf{92.2\%} (abolladura) y \textbf{96.5\%} (corrosión) y valores de AUC-ROC superiores a 0.90 para todos los tipos de elementos. Las pruebas de Wilcoxon confirman la superioridad estadística del ICD sobre el mejor DI individual en todos los escenarios evaluados ($p < 0.001$). En contraste, los elementos principales (piernas) mostraron una redundancia significativa, requiriendo daños superiores al 50\% para ser detectables por el sistema. Esto tiene una implicación operativa directa para la gestión de integridad costa afuera: mientras que el monitoreo automático basado en vibraciones es ideal para la vigilancia continua de las diagonales, las inspecciones visuales submarinas deben seguir priorizando los nodos y piernas principales, donde los cambios modales son más sutiles en etapas tempranas.
+
+Un análisis de robustez ante ruido Gaussiano demuestra que el AUC-ROC se mantiene por encima de 0.80 hasta un nivel de SNR de 20~dB para los \textit{braces}, lo que es compatible con las condiciones de medición de sistemas MEMS instalados en plataformas en operación.
+
+Como contribución metodológica novedosa, se propone la \textbf{Precision Ponderada por Distancia Topológica} ($\text{Precision}_w$), que corrige la penalización uniforme de los FP asignando un peso $w(d) = d/(d+1)$ en función de la distancia en el grafo estructural. El análisis muestra que aproximadamente el 40\% de los nodos FP son adyacentes al elemento dañado ($d = 1$), lo que implica que la Precision clásica subestima sistemáticamente la calidad de localización. La nueva métrica eleva la Precision de los \textit{braces} en hasta \textbf{$+$22 puntos porcentuales}, ofreciendo una evaluación más justa del desempeño del localizador en redes estructurales.
 
 Asimismo, la formulación del ICD demostró ser eficaz en la penalización de falsos positivos, un atributo crítico para evitar alarmas innecesarias que incrementan los costos operativos en instalaciones costa afuera.
 
@@ -322,3 +590,9 @@ Para consolidar la aplicabilidad industrial de este método, se proponen las sig
     \item \textbf{Incertidumbre Ambiental:} Incorporar variables estocásticas que simulen el ruido ambiental (oleaje, viento) en las señales de entrada, evaluando la robustez del ICD ante datos contaminados.
     \item \textbf{Extensión Tipológica:} Adaptar la función objetivo y los indicadores vibratorios para otras tipologías de soporte de energía eólica marina, como trípodes o \textit{monopiles}, que presentan dinámicas modales distintas a las estructuras reticulares tipo Jacket.
 \end{itemize}
+
+%% ─────────────────────────────────────────────────────────────────
+\bibliographystyle{cas-model2-names}
+\bibliography{refs}
+
+\end{document}

@@ -2,21 +2,22 @@
   \centering
   \caption{AUC-ROC of the ICD framework under additive white Gaussian noise (AWGN) at decreasing SNR levels. Ground truth: strict criterion (\texttt{DeteccionOK}=1.0). Monte Carlo estimation with $N_{\text{MC}}=500$ repetitions per SNR level.}
   \label{tab:snr_robustness}
+  \begin{threeparttable}
   \begin{tabular}{llccccc}
     \toprule
     Damage & Member & \multicolumn{4}{c}{AUC-ROC at SNR level} & Degradation \\
     Type & Type & Clean & 20~dB & 10~dB & 5~dB & Clean$\to$5~dB \\
     \midrule
-    Denting & Beam & N/A* & N/A* & N/A* & N/A* & N/A* \\
-     & Brace & 1.000 & 1.000 & 0.992 & 0.965 & +3.5% \\
-     & Inclined leg & 0.966 & 0.964 & 0.947 & 0.912 & +5.6% \\
+    Denting & Beam & N/A$^*$ & N/A$^*$ & N/A$^*$ & N/A$^*$ & N/A$^*$ \\
+     & Brace & 1.000 & 1.000 & 0.992 & 0.965 & +3.5\% \\
+     & Inclined leg & 0.966 & 0.964 & 0.947 & 0.912 & +5.6\% \\
     \midrule
-    Corrosion & Beam & N/A* & N/A* & N/A* & N/A* & N/A* \\
-     & Brace & 1.000 & 1.000 & 0.992 & 0.971 & +2.9% \\
-     & Inclined leg & 0.969 & 0.965 & 0.947 & 0.911 & +6.0% \\
+    Corrosion & Beam & N/A$^*$ & N/A$^*$ & N/A$^*$ & N/A$^*$ & N/A$^*$ \\
+     & Brace & 1.000 & 1.000 & 0.992 & 0.971 & +2.9\% \\
+     & Inclined leg & 0.969 & 0.965 & 0.947 & 0.911 & +6.0\% \\
     \bottomrule
   \end{tabular}
-  \begin{tablenotes}\small
+  \begin{tablenotes}[para]\small
     \item SNR: Signal-to-Noise Ratio in decibels. AUC-ROC: Area Under the Receiver
     Operating Characteristic curve (range [0.5, 1.0], higher is better).
     \item Degradation (\%): relative AUC-ROC loss from clean to 5~dB SNR.
@@ -25,4 +26,5 @@
     detection occurs but is attributed to the wrong element). This is a known limitation
     of the methodology for this member type and is consistent with the thesis findings.
   \end{tablenotes}
+  \end{threeparttable}
 \end{table}
