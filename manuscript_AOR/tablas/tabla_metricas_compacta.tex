@@ -1,8 +1,9 @@
-\begin{table}[htbp]
+\begin{table}[H]
   \centering
   \caption{Summary of classification performance at key severity levels. Avg~FP: average number of false alarms per run.}
   \label{tab:metricas_compacta}
   \small
+  \resizebox{\linewidth}{!}{%
   \begin{tabular}{llrrrrr}
     \toprule
     Damage Type & Element & Severity & Precision & Recall & F1 & Avg FP \\
@@ -37,5 +38,5 @@
     Corrosion & Beam & 60\% & 0.105 & 1.000 & 0.189 & 8.6 \\
     Corrosion & Beam & 90\% & 0.121 & 1.000 & 0.216 & 7.2 \\
     \bottomrule
-  \end{tabular}
+  \end{tabular}}
 \end{table}

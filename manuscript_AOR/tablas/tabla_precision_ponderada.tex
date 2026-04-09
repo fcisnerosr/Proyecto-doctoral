@@ -1,12 +1,19 @@
-\begin{table}[htbp]
-  \centering
-  \caption{Comparison of Classical and Topology-Weighted Precision. $\Delta$ = Weighted $-$ Classical (percentage points). Avg FP dist: mean topological distance (in structural members) between false-positive nodes and the damaged element. Weight function: $w(d)=d/(d+1)$.}
-  \label{tab:precision_ponderada}
-  \small
-  \begin{tabular}{llrrrrr}
-    \toprule
-    Damage Type & Element & Severity [\%] & Prec. Classical & Prec. Weighted & $\Delta$ [pp] & Avg FP dist [mbr] \\
-    \midrule
+\begin{longtable}{llrrrrr}
+  \caption{Comparison of Classical and Topology-Weighted Precision. $\Delta$ = Weighted $-$ Classical (percentage points). Avg FP dist: mean topological distance (in structural members) between false-positive nodes and the damaged element. Weight function: $w(d)=d/(d+1)$.}\label{tab:precision_ponderada} \\
+  \toprule
+  Type & Element & Sev.[\%] & Prec.\ Cl. & Prec.\ Wgt. & $\Delta$ [pp] & FP dist \\
+  \midrule
+  \endfirsthead
+  \multicolumn{7}{c}{\small\textit{Table continued from previous page}} \\[2pt]
+  \toprule
+  Type & Element & Sev.[\%] & Prec.\ Cl. & Prec.\ Wgt. & $\Delta$ [pp] & FP dist \\
+  \midrule
+  \endhead
+  \midrule
+  \multicolumn{7}{r}{\small\textit{Continued on next page}} \\
+  \endfoot
+  \bottomrule
+  \endlastfoot
     Denting & Brace & 5 & 0.396 & 0.662 & +26.7 & 2.20 \\
     Denting & Brace & 10 & 0.404 & 0.655 & +25.1 & 2.16 \\
     Denting & Brace & 15 & 0.408 & 0.669 & +26.1 & 2.07 \\
@@ -93,6 +100,4 @@
     Corrosion & Beam & 80 & 0.098 & 0.145 & +4.8 & 1.40 \\
     Corrosion & Beam & 85 & 0.119 & 0.174 & +5.6 & 1.37 \\
     Corrosion & Beam & 90 & 0.121 & 0.168 & +4.7 & 1.49 \\
-    \bottomrule
-  \end{tabular}
-\end{table}
+\end{longtable}

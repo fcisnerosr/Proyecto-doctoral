@@ -8,6 +8,9 @@
 \usepackage{booktabs}     % \toprule, \midrule, \bottomrule, \cmidrule
 \usepackage{subcaption}   % subfigure environment
 \usepackage{threeparttable} % tablenotes environment
+\usepackage{placeins}     % \FloatBarrier to keep floats within sections
+\usepackage{float}        % [H] placement specifier
+\usepackage{longtable}    % tablas multi-página
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 
@@ -18,22 +21,44 @@
 \def\textpagefraction{.001}
 
 %% ── Metadata ─────────────────────────────────────────────────────
-\shorttitle{ICD: Detección de Daño en Plataformas Jacket}
-\shortauthors{Cisneros-Reyes et al.}
+\shorttitle{ICD: Damage Detection in Jacket Offshore Platforms}
+\shortauthors{Cisneros-Ruiz et al.}
 
 \title[mode = title]{%
-  Índice de Calidad de Detección (ICD): Metodología de
-  Optimización Inversa basada en Algoritmos Genéticos para
-  la Identificación de Daño en Plataformas Marinas Tipo Jacket}
+  Detection Quality Index (ICD): Inverse Optimization Methodology
+  Based on Genetic Algorithms for Damage Identification
+  in Jacket-Type Offshore Platforms}
 
-\author[1]{F.~Cisneros-Reyes}
+%% ── Author 1 ─────────────────────────────────────────────────────
+\author[1]{Francisco~Javier Cisneros-Ruiz}[orcid=0009-0005-7017-4027]
 \cormark[1]
-\ead{fcisnerosr@unam.mx}
+\ead{fcisnerosr@outlook.es}
 \credit{Conceptualization, Methodology, Software, Formal analysis,
         Writing -- Original Draft}
 
-\affiliation[1]{organization={Posgrado en Ingeniería, Universidad Nacional Autónoma de México (UNAM)},
+\affiliation[1]{organization={Programa de Posgrado,
+                Instituto Mexicano del Petróleo},
+    addressline={Eje Central Lázaro Cárdenas Norte 152},
     city={Ciudad de México},
+    country={México}}
+
+%% ── Author 2 ─────────────────────────────────────────────────────
+\author[2]{Iván~Félix-González}
+\credit{Supervision, Resources, Writing -- Review \& Editing}
+
+\affiliation[2]{organization={Instituto Mexicano del Petróleo},
+    addressline={Eje Central Lázaro Cárdenas Norte 152},
+    city={Ciudad de México},
+    country={México}}
+
+%% ── Author 3 ─────────────────────────────────────────────────────
+\author[3]{Rolando~Salgado-Estrada}
+\credit{Supervision, Writing -- Review \& Editing}
+
+\affiliation[3]{organization={Facultad de Ingeniería de la
+                Construcción y el Hábitat,
+                Universidad Veracruzana},
+    city={Veracruz},
     country={México}}
 
 \cortext[1]{Corresponding author}
@@ -105,16 +130,13 @@ Para representar con fidelidad la física de una plataforma Jacket en operación
 \subsubsection{Masa Hidrodinámica y Coeficientes (\texorpdfstring{$C_m$}{Cm})}
 La masa adherida representa el efecto del volumen de agua circundante que se acelera solidariamente con la vibración de la estructura. Este fenómeno se cuantifica mediante el coeficiente de masa ($C_m$), cuyo valor depende de la rugosidad superficial del elemento tubular. De acuerdo con la normativa internacional \citep{API2014_manual}, se adoptan los siguientes valores para el modelo:
 
-\begin{align}
-  C_m &= 1.6, \quad \text{para elementos rugosos (con crecimiento marino)}, \\
-  C_m &= 1.2, \quad \text{para elementos lisos (sin crecimiento marino)}.
-\end{align}
+Los valores adoptados son $C_m = 1.6$ para elementos rugosos (con crecimiento marino) y $C_m = 1.2$ para elementos lisos (sin crecimiento marino).
 
 Adicionalmente, se considera la \textbf{masa atrapada}, que corresponde al agua contenida dentro de los elementos tubulares inundados (pilotes y piernas principales). La Figura~\ref{fig:masa_adherida} ilustra la diferencia conceptual entre estos componentes inerciales.
 
-\begin{figure}[htbp]
+\begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.7\textwidth]{figs/001_modelo_plataforma_con_elemento_tubular_masa_adherida_y_masa_atrapada.png}
+    \includegraphics[width=0.9\columnwidth]{figs/001_modelo_plataforma_con_elemento_tubular_masa_adherida_y_masa_atrapada.png}
     \caption{Esquematización de la masa atrapada (volumen interno) y masa adherida (volumen hidrodinámico externo).}
     \label{fig:masa_adherida}
 \end{figure}
@@ -123,15 +145,16 @@ Adicionalmente, se considera la \textbf{masa atrapada}, que corresponde al agua 
 
 En la Sonda de Campeche, la acumulación de organismos marinos  sobre los elementos estructurales altera significativamente la respuesta dinámica al incrementar el diámetro efectivo e hidrodinámico de los tubos. Este fenómeno no es uniforme; varía en función de la profundidad y la penetración de luz solar.
 
-\begin{figure}[htbp]
+\begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.9\textwidth]{figs/001_modelo_plataforma_con_elemento_tubular_masa_de_crecimiento_marino.png}
+    \includegraphics[width=0.9\columnwidth]{figs/001_modelo_plataforma_con_elemento_tubular_masa_de_crecimiento_marino.png}
     \caption{Influencia del espesor de crecimiento marino en el diámetro efectivo del elemento estructural.}
     \label{fig:crecimiento_marino}
 \end{figure}
 
 Para el modelo numérico, se implementó un perfil de espesores variable por zonas de profundidad (Zona de Marea vs. Fondo Marino), aumentando consecuentemente los coeficientes de masa e inercia en las regiones más afectadas.
 
+\FloatBarrier
 \subsection{Mecánica del Daño Simulado}
 
 A diferencia de los modelos de caja negra, esta investigación utiliza un enfoque basado en física para simular el daño. Se modifican las propiedades geométricas de la sección transversal de los elementos finitos y se reensamblan las matrices globales para obtener las nuevas propiedades modales (problema directo).
@@ -139,9 +162,9 @@ A diferencia de los modelos de caja negra, esta investigación utiliza un enfoqu
 \subsubsection{Corrosión Uniforme}
 La corrosión se modela como una reducción uniforme del espesor de pared ($t$) del elemento tubular a lo largo de una longitud afectada ($L_D$). Esto impacta directamente el área de la sección transversal ($A$) y los momentos de inercia ($I$), manteniendo constante el módulo de elasticidad ($E$), como se observa en evidencia experimental de acero corroído \citep{CardenasArias2019_article}.
 
-\begin{figure}[htbp]
+\begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.6\textwidth]{figs/004_caracterizacion_de_como_se_reduce_el_espesor_elemento_tubular_por_corrosion.png}
+    \includegraphics[width=0.40\textwidth]{figs/004_caracterizacion_de_como_se_reduce_el_espesor_elemento_tubular_por_corrosion.png}
     \caption{Caracterización de la reducción de espesor en un elemento tubular por corrosión uniforme.}
     \label{fig:modelo_corrosion}
 \end{figure}
@@ -149,18 +172,18 @@ La corrosión se modela como una reducción uniforme del espesor de pared ($t$) 
 \subsubsection{Abolladuras}
 Las abolladuras representan un daño local crítico causado por impactos accidentales. Este daño se modela asumiendo una distorsión de la sección transversal que aplana la cara impactada y ensancha los laterales, conservando el perímetro pero reduciendo drásticamente el momento de inercia local ($I_{red}$) (Figura~\ref{fig:abolladura_seccion}).
 
-\begin{figure}[htbp]
+\begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.4\textwidth]{figs/004_seccion_transversal_de_elemento_tubular_parametros_abolladura.png}
+    \includegraphics[width=0.4\textwidth]{figs/004_modelo_elemento_tubula_seccion_longitudinal_parametros_abolladura.png}
     \caption{Parametrización de la sección transversal abollada.}
     \label{fig:abolladura_seccion}
 \end{figure}
 
 Para evitar discontinuidades numéricas abruptas en la matriz de rigidez, la variación de la inercia a lo largo de la zona abollada se suaviza mediante funciones de interpolación polinómica de cuarto grado, asegurando una transición representativa de la pérdida de rigidez local.
 
-\begin{figure}[htbp]
+\begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.95\textwidth]{figs/004_modelo_elemento_tubular_seccion_longitudinal_parametros_abolladura_con_funciones_de_interpolacion.png}
+    \includegraphics[width=0.9\columnwidth]{figs/004_modelo_elemento_tubular_seccion_longitudinal_parametros_abolladura_con_funciones_de_interpolacion.png}
     \caption{Interpolación longitudinal de la inercia en la zona de la abolladura para suavizado numérico.}
     \label{fig:interpolacion_abolladura}
 \end{figure}
@@ -169,12 +192,12 @@ Para evitar discontinuidades numéricas abruptas en la matriz de rigidez, la var
 
 La metodología se valida en un modelo numérico de una plataforma marina fija de tipo Jacket de 4 piernas, representativa de las estructuras instaladas en aguas someras e intermedias del Golfo de México. El modelo, resuelto mediante el método de elementos finitos, incluye la superestructura completa y el sistema de cimentación por pilotes (simulados mediante longitud equivalente al punto de empotramiento aparente).
 
-\begin{figure}[htbp]
+\begin{figure}[!ht]
     \centering
-    % Aumenté un poco el tamaño (0.4 y 0.35) para que luzcan más
-    \includegraphics[width=0.4\textwidth]{figs/007_modeo_vista_3d_de_plataforma_tipo_jacket_de_caso_de_estudio.png}
+    % Ajusto tamaño para evitar solapamientos en columna
+    \includegraphics[width=0.28\textwidth]{figs/007_modeo_vista_3d_de_plataforma_tipo_jacket_de_caso_de_estudio.png}
     \hspace{0.5cm} % <--- ESTO define la separación fija (medio centímetro)
-    \includegraphics[width=0.35\textwidth]{figs/007_modelo_vista_fronta_de_plataforma_tipo_jacket_de_caso_de_estudio.png}
+    \includegraphics[width=0.24\textwidth]{figs/007_modelo_vista_fronta_de_plataforma_tipo_jacket_de_caso_de_estudio.png}
     \caption{Modelo numérico de la plataforma de estudio: Vista 3D isométrica y vista frontal.}
     \label{fig:caso_estudio}
 \end{figure}
@@ -187,9 +210,9 @@ Para abordar el problema de identificación de daño estructural en plataformas 
 
 La metodología se estructura fundamentalmente en dos etapas acopladas: la simulación mecánica de los escenarios de daño y la optimización estocástica de la detección. El flujo operativo general se detalla en la Figura~\ref{fig:metodologia_general}, donde se observa cómo los datos vibratorios alimentan el proceso de decisión.
 
-\begin{figure}[htbp]
+\begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.95\textwidth]{figs/005_metogologia_propuesta_para_identificar_daños_en_plataformas_reales.jpg}
+    \includegraphics[width=0.9\columnwidth]{figs/005_metogologia_propuesta_para_identificar_daños_en_plataformas_reales.jpg}
     \caption{Esquema general de la metodología propuesta para la identificación de daño.}
     \label{fig:metodologia_general}
 \end{figure}
@@ -252,9 +275,9 @@ Transforma el puntaje Z en probabilidad asumiendo distribución Gaussiana:
 
 El AG se configura como el motor de optimización del sistema. Su función no es modificar la estructura física, sino encontrar la combinación lineal óptima ($\boldsymbol{\alpha}$) de los índices vibratorios descritos anteriormente para minimizar el error de localización respecto a un estado de daño conocido. La arquitectura computacional diseñada para este propósito se presenta en la Figura~\ref{fig:metodologia_AG}.
 
-\begin{figure}[htbp]
+\begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.9\textwidth]{figs/006_metodología_del_AG_para_localizar_daños_a_nivel_computacional.jpg}
+    \includegraphics[width=0.9\columnwidth]{figs/006_metodología_del_AG_para_localizar_daños_a_nivel_computacional.jpg}
     \caption{Arquitectura computacional del AG configurado para la fusión de datos.}
     \label{fig:metodologia_AG}
 \end{figure}
@@ -273,9 +296,9 @@ Para garantizar un equilibrio entre la exploración del espacio de soluciones y 
 
 El ciclo detallado de estos operadores se ilustra en la Figura~\ref{fig:detalle_AG}.
 
-\begin{figure}[htbp]
+\begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.85\textwidth]{figs/015_diagrama_como_funciona_el_AG_para_la_sumas_funcion_P_y_como_se_relaciona_con_operadores_geneticos_del_AG.jpg}
+    \includegraphics[width=0.85\columnwidth]{figs/015_diagrama_como_funciona_el_AG_para_la_sumas_funcion_P_y_como_se_relaciona_con_operadores_geneticos_del_AG.jpg}
     \caption{Detalle del ciclo evolutivo y operadores del AG.}
     \label{fig:detalle_AG}
 \end{figure}
@@ -318,9 +341,9 @@ En esta sección se presentan los hallazgos obtenidos al aplicar la metodología
 
 La corrosión se simuló como una pérdida uniforme de sección transversal. La Figura \ref{fig:corrosion_element_type} ilustra la evolución del ICD en función del porcentaje de daño, desglosado por tipo de elemento: vigas (\textit{beams}), diagonales (\textit{braces}) y piernas (\textit{legs}).
 
-\begin{figure}[htbp]
+\begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.9\textwidth]{../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by_element_type_corrosion.png}
+    \includegraphics[width=0.9\columnwidth]{../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by_element_type_corrosion.png}
     \caption{Curvas de sensibilidad del ICD por tipo de elemento bajo escenarios de corrosión progresiva.}
     \label{fig:corrosion_element_type}
 \end{figure}
@@ -333,9 +356,9 @@ Por el contrario, las piernas principales (\textit{legs}) muestran una curva de 
 
 La Figura \ref{fig:abolladura_element_type} presenta los resultados para daños por impacto (abolladuras), los cuales generan una reducción drástica pero localizada del momento de inercia.
 
-\begin{figure}[htbp]
+\begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.9\textwidth]{../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_element_type_abolladura.png}
+    \includegraphics[width=0.9\columnwidth]{../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_element_type_abolladura.png}
     \caption{Comparativa de sensibilidad del ICD por tipo de elemento bajo escenarios de abolladura.}
     \label{fig:abolladura_element_type}
 \end{figure}
@@ -346,20 +369,20 @@ Aunque la naturaleza física del daño difiere de la corrosión, la tendencia de
 
 Para determinar si la profundidad afecta la confiabilidad del diagnóstico, se segmentó la estructura en tres regiones: Zona de Salpicadura (\textit{Splash Zone}), Zona Media y Línea de Lodo (\textit{Mudline}). Las Figuras \ref{fig:corrosion_zone} y \ref{fig:abolladura_zone} comparan el desempeño del ICD en estas regiones.
 
-\begin{figure}[htbp]
+\begin{figure}[!ht]
     \centering
-    \begin{subfigure}[b]{1.0\textwidth}
+    \begin{subfigure}[b]{\columnwidth}
         \centering
-        \includegraphics[width=0.95\textwidth]{../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by_zone_corrosion.png}
+        \includegraphics[width=0.9\columnwidth]{../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by_zone_corrosion.png}
         \caption{Desempeño en Escenarios de Corrosión.}
         \label{fig:corrosion_zone}
     \end{subfigure}
     
     \vspace{0.5cm} % Espacio para que no se peguen
     
-    \begin{subfigure}[b]{1.0\textwidth}
+    \begin{subfigure}[b]{\columnwidth}
         \centering
-        \includegraphics[width=0.95\textwidth]{../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_zone_abolladura.png}
+        \includegraphics[width=0.9\columnwidth]{../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_zone_abolladura.png}
         \caption{Desempeño en Escenarios de Abolladura.}
         \label{fig:abolladura_zone}
     \end{subfigure}
@@ -386,9 +409,9 @@ La distribución de casos por elemento y severidad se presenta en la
 Figura~\ref{fig:distribucion_experimental}, donde se observa la cobertura uniforme de todos
 los elementos del modelo por tipo (Brace, Inclined Leg, Beam) en ambas campañas de simulación.
 
-\begin{figure}[htbp]
+\begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.95\textwidth]{../outputs/resultados_nuevos/heatmap_casos_elemento_severidad.png}
+    \includegraphics[width=0.9\columnwidth]{../outputs/resultados_nuevos/heatmap_casos_elemento_severidad.png}
     \caption{Mapa de calor del diseño experimental: distribución de corridas por elemento y nivel
              de severidad para ambos tipos de daño.}
     \label{fig:distribucion_experimental}
@@ -412,9 +435,9 @@ F\textsubscript{1} más elevados ($> 0.85$ a partir del 30\%), mientras que los 
 de mayor rigidez (\textit{beams} y piernas inclinadas) muestran valores inferiores por su menor
 sensibilidad modal.
 
-\begin{figure}[htbp]
+\begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.95\textwidth]{../outputs/resultados_nuevos/F1_comparison_denting_corrosion.png}
+    \includegraphics[width=0.9\columnwidth]{../outputs/resultados_nuevos/F1_comparison_denting_corrosion.png}
     \caption{Evolución del F\textsubscript{1}-score en función de la severidad del daño para
              cada tipo de elemento: Abolladura (izq.) y Corrosión (der.).}
     \label{fig:F1_comparison}
@@ -425,9 +448,9 @@ verdaderos positivos (Recall) y la de falsos positivos (1$-$Especificidad) para 
 binario resultante. Los valores de AUC-ROC obtenidos ($> 0.90$ para abolladura y $> 0.94$ para
 corrosión) confirman la alta capacidad discriminativa del sistema.
 
-\begin{figure}[htbp]
+\begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.9\textwidth]{../outputs/resultados_nuevos/ROC_curve_denting_corrosion.png}
+    \includegraphics[width=0.9\columnwidth]{../outputs/resultados_nuevos/ROC_curve_denting_corrosion.png}
     \caption{Curvas ROC para el clasificador de daño mediante ICD: Abolladura (izq.)
              y Corrosión (der.). Área bajo la curva (AUC) reportada en cada panel.}
     \label{fig:ROC_curves}
@@ -444,9 +467,9 @@ severidad, siguiendo la metodología de prueba no paramétrica de Wilcoxon. La p
 a nivel de significancia $\alpha = 0.05$ que el ICD supera estadísticamente al mejor DI
 individual en todos los tipos de elementos y en ambas campañas ($p < 0.001$).
 
-\begin{figure}[htbp]
+\begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.95\textwidth]{../outputs/resultados_nuevos/POD_curves_ICD_vs_bestDI.png}
+    \includegraphics[width=0.9\columnwidth]{../outputs/resultados_nuevos/POD_curves_ICD_vs_bestDI.png}
     \caption{Curvas POD del ICD frente al mejor DI individual por tipo de elemento.
              Abolladura (fila superior) y Corrosión (fila inferior).}
     \label{fig:POD_curves}
@@ -468,9 +491,9 @@ gaussiano aditivo controlado con niveles de SNR entre 5 y 50~dB sobre los vector
 antes de la evaluación del ICD. La Figura~\ref{fig:SNR_degradation} muestra la degradación
 del AUC-ROC como función del nivel de SNR para los tres tipos de elementos.
 
-\begin{figure}[htbp]
+\begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.95\textwidth]{../outputs/resultados_nuevos/AUC_ROC_vs_SNR_degradation.png}
+    \includegraphics[width=0.9\columnwidth]{../outputs/resultados_nuevos/AUC_ROC_vs_SNR_degradation.png}
     \caption{Degradación del AUC-ROC en función del nivel de ruido (SNR) para Abolladura (izq.)
              y Corrosión (der.). Línea punteada = umbral de AUC~$=$ 0.80.}
     \label{fig:SNR_degradation}
@@ -531,9 +554,9 @@ $\bar{d} \approx 2.2$ miembros. Este hallazgo justifica la necesidad de la corre
 topológica: la Precision clásica subestima sistemáticamente la calidad de localización
 del AG.
 
-\begin{figure}[htbp]
+\begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.95\textwidth]{../outputs/resultados_nuevos/FP_distancia_topologica_distribucion.png}
+    \includegraphics[width=0.9\columnwidth]{../outputs/resultados_nuevos/FP_distancia_topologica_distribucion.png}
     \caption{Distribución de distancias topológicas de los nodos FP al elemento dañado para
              Abolladura (izq.) y Corrosión (der.). La curva roja muestra la función de peso
              $w(d) = d/(d+1)$.}
@@ -547,17 +570,17 @@ elemento al pasar de la métrca clásica a la ponderada. Los \textit{braces} mue
 ganancia ($\Delta \approx +22$ puntos porcentuales) tanto en abolladura como en corrosión,
 lo que confirma que su señal de FP es estructuralmente coherente con el daño localizado.
 
-\begin{figure}[htbp]
+\begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.95\textwidth]{../outputs/resultados_nuevos/Precision_global_clasica_vs_ponderada.png}
+    \includegraphics[width=0.9\columnwidth]{../outputs/resultados_nuevos/Precision_global_clasica_vs_ponderada.png}
     \caption{Comparación global de Precision Clásica vs.\ Ponderada por tipo de elemento.
              Las anotaciones indican el incremento $\Delta$ en puntos porcentuales.}
     \label{fig:precision_global}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.95\textwidth]{../outputs/resultados_nuevos/Precision_clasica_vs_ponderada_por_elemento.png}
+    \includegraphics[width=0.9\columnwidth]{../outputs/resultados_nuevos/Precision_clasica_vs_ponderada_por_elemento.png}
     \caption{Evolución de la Precision Clásica (línea punteada) y Ponderada (línea sólida)
              en función de la severidad del daño. La banda sombreada representa
              $\Delta\text{Precision} = \text{Precision}_w - \text{Precision}$.}
@@ -567,7 +590,13 @@ lo que confirma que su señal de FP es estructuralmente coherente con el daño l
 La Tabla~\ref{tab:precision_ponderada} reporta los valores numéricos completos por
 escenario, tipo de elemento y severidad, incluyendo la distancia media de los FP.
 
+\clearpage
+\onecolumn
+{\footnotesize
 \input{tablas/tabla_precision_ponderada.tex}
+}
+\clearpage
+\twocolumn
 
 \section{Conclusiones y Trabajo Futuro}
 

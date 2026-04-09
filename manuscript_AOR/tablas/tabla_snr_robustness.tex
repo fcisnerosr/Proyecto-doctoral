@@ -1,8 +1,8 @@
-\begin{table}[htbp]
+\begin{table}[H]
   \centering
   \caption{AUC-ROC of the ICD framework under additive white Gaussian noise (AWGN) at decreasing SNR levels. Ground truth: strict criterion (\texttt{DeteccionOK}=1.0). Monte Carlo estimation with $N_{\text{MC}}=500$ repetitions per SNR level.}
   \label{tab:snr_robustness}
-  \begin{threeparttable}
+  \resizebox{\linewidth}{!}{%
   \begin{tabular}{llccccc}
     \toprule
     Damage & Member & \multicolumn{4}{c}{AUC-ROC at SNR level} & Degradation \\
@@ -16,15 +16,16 @@
      & Brace & 1.000 & 1.000 & 0.992 & 0.971 & +2.9\% \\
      & Inclined leg & 0.969 & 0.965 & 0.947 & 0.911 & +6.0\% \\
     \bottomrule
-  \end{tabular}
-  \begin{tablenotes}[para]\small
-    \item SNR: Signal-to-Noise Ratio in decibels. AUC-ROC: Area Under the Receiver
-    Operating Characteristic curve (range [0.5, 1.0], higher is better).
-    \item Degradation (\%): relative AUC-ROC loss from clean to 5~dB SNR.
-    \item[$*$] N/A: AUC-ROC is undefined for Beam members because the ICD never achieves
-    correct element localisation (\texttt{DeteccionOK}$=0.5$ in all Beam cases, i.e.,
-    detection occurs but is attributed to the wrong element). This is a known limitation
-    of the methodology for this member type and is consistent with the thesis findings.
-  \end{tablenotes}
-  \end{threeparttable}
+  \end{tabular}}%
+  \begin{minipage}{\linewidth}
+  \footnotesize
+  \smallskip
+  SNR: Signal-to-Noise Ratio in decibels. AUC-ROC: Area Under the Receiver
+  Operating Characteristic curve (range [0.5, 1.0], higher is better).
+  Degradation (\%): relative AUC-ROC loss from clean to 5~dB SNR.
+  $^*$~N/A: AUC-ROC is undefined for Beam members because the ICD never achieves
+  correct element localisation (\texttt{DeteccionOK}$=0.5$ in all Beam cases, i.e.,
+  detection occurs but is attributed to the wrong element). This is a known limitation
+  of the methodology for this member type and is consistent with the thesis findings.
+  \end{minipage}
 \end{table}

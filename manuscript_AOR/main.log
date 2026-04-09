@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.3.16)  6 APR 2026 18:51
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.3.16)  11 APR 2026 20:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -572,48 +572,78 @@ Package caption Info: New subtype `subtable' on input line 238.
 Package: threeparttable 2003/06/13  v 3.0
 \@tempboxb=\box65
 )
+(/usr/share/texlive/texmf-dist/tex/latex/placeins/placeins.sty
+Package: placeins 2005/04/18  v 2.2
+)
+(/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count336
+\float@exts=\toks33
+\float@box=\box66
+\@float@everytoks=\toks34
+\@floatcapt=\box67
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/longtable.sty
+Package: longtable 2023-11-01 v4.19 Multi-page Table package (DPC)
+\LTleft=\skip72
+\LTright=\skip73
+\LTpre=\skip74
+\LTpost=\skip75
+\LTchunksize=\count337
+\LTcapwidth=\dimen273
+\LT@head=\box68
+\LT@firsthead=\box69
+\LT@foot=\box70
+\LT@lastfoot=\box71
+\LT@gbox=\box72
+\LT@cols=\count338
+\LT@rows=\count339
+\c@LT@tables=\count340
+\c@LT@chunks=\count341
+\LT@p@ftn=\toks35
+)
 (/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2021/02/14 v1.3d Input encoding file
-\inpenc@prehook=\toks33
-\inpenc@posthook=\toks34
+\inpenc@prehook=\toks36
+\inpenc@posthook=\toks37
 )
 (/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
 ) (./main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count336
-\scratchdimen=\dimen273
-\scratchbox=\box66
-\nofMPsegments=\count337
-\nofMParguments=\count338
-\everyMPshowfont=\toks35
-\MPscratchCnt=\count339
-\MPscratchDim=\dimen274
-\MPnumerator=\count340
-\makeMPintoPDFobject=\count341
-\everyMPtoPDFconversion=\toks36
+\scratchcounter=\count342
+\scratchdimen=\dimen274
+\scratchbox=\box73
+\nofMPsegments=\count343
+\nofMParguments=\count344
+\everyMPshowfont=\toks38
+\MPscratchCnt=\count345
+\MPscratchDim=\dimen275
+\MPnumerator=\count346
+\makeMPintoPDFobject=\count347
+\everyMPtoPDFconversion=\toks39
 ) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 
@@ -631,7 +661,7 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Package hyperref Info: Link coloring ON on input line 15.
+Package hyperref Info: Link coloring ON on input line 18.
 
 (./main.out) (./main.out)
 \@outlinefile=\write3
@@ -673,58 +703,54 @@ Package hyperref Info: Link coloring ON on input line 15.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: float package is loaded.
+Package caption Info: longtable package is loaded.
+(/usr/share/texlive/texmf-dist/tex/latex/caption/ltcaption.sty
+Package: ltcaption 2021/01/08 v1.4c longtable captions (AR)
+)
 Package caption Info: threeparttable package is loaded.
 Package caption Info: End \AtBeginDocument code.
 \verbatim@out=\write4
 \openout4 = `main.abs'.
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 71.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 96.
+
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 71.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 96.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Overfull \hbox (123.62721pt too wide) detected at line 71
+Overfull \hbox (123.62721pt too wide) detected at line 96
 []
  []
 
 (./main.abs)
 
-Package hyperref Warning: Ignoring empty anchor on input line 71.
+Package hyperref Warning: Ignoring empty anchor on input line 96.
 
 
-Package hyperref Warning: Ignoring empty anchor on input line 71.
+Package hyperref Warning: Ignoring empty anchor on input line 96.
 
 <thumbnails/cas-email.jpeg, id=4, 225.84375pt x 225.84375pt>
 File: thumbnails/cas-email.jpeg Graphic file (type jpg)
 <use thumbnails/cas-email.jpeg>
-Package pdftex.def Info: thumbnails/cas-email.jpeg  used on input line 71.
+Package pdftex.def Info: thumbnails/cas-email.jpeg  used on input line 96.
 (pdftex.def)             Requested size: 7.99838pt x 8.0pt.
-LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 7
-1.
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 9
+6.
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2023/04/13 v2.5m Standard LaTeX font definitions
 )
 
-Package hyperref Warning: Ignoring empty anchor on input line 71.
+Package hyperref Warning: Ignoring empty anchor on input line 96.
 
-
-Overfull \hbox (0.72777pt too wide) in paragraph at lines 87--88
-\T1/cmr/m/n/10 metodolog�a basada en AG y la for-mu-laci�n matem�tica
- []
-
-
-Underfull \hbox (badness 1331) in paragraph at lines 87--88
-\T1/cmr/m/n/10 del ICD. La Sec-ci�n 4 pre-senta los re-sul-ta-dos y
- []
-
-LaTeX Font Info:    Trying to load font information for T1+cmss on input line 8
-8.
+LaTeX Font Info:    Trying to load font information for T1+cmss on input line 1
+11.
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmss.fd
 File: t1cmss.fd 2023/04/13 v2.5m Standard LaTeX font definitions
 ) [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
@@ -732,425 +758,319 @@ File: t1cmss.fd 2023/04/13 v2.5m Standard LaTeX font definitions
 
  </usr/share/texlive/texmf-dist/tex/latex/els-cas-templates/thumbnails/cas-emai
 l.jpeg>]
+Overfull \hbox (0.72777pt too wide) in paragraph at lines 112--113
+\T1/cmr/m/n/10 metodolog�a basada en AG y la for-mu-laci�n matem�tica
+ []
+
+
+Underfull \hbox (badness 1331) in paragraph at lines 112--113
+\T1/cmr/m/n/10 del ICD. La Sec-ci�n 4 pre-senta los re-sul-ta-dos y
+ []
+
 
 LaTeX Font Warning: Font shape `T1/cmr/b/it' undefined
-(Font)              using `T1/cmr/b/n' instead on input line 105.
+(Font)              using `T1/cmr/b/n' instead on input line 130.
 
 
 LaTeX Font Warning: Font shape `T1/cmr/b/n' in size <10.5> not available
-(Font)              size <10.95> substituted on input line 105.
+(Font)              size <10.95> substituted on input line 130.
 
-LaTeX Font Info:    Calculating math sizes for size <10.5> on input line 105.
+LaTeX Font Info:    Calculating math sizes for size <10.5> on input line 130.
 
 LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <10.5> not available
-(Font)              size <10.95> substituted on input line 105.
+(Font)              size <10.95> substituted on input line 130.
 
 
 LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <10.5> not available
-(Font)              size <10.95> substituted on input line 105.
+(Font)              size <10.95> substituted on input line 130.
 
 
 LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <10.5> not available
-(Font)              size <10.95> substituted on input line 105.
+(Font)              size <10.95> substituted on input line 130.
 
 
 LaTeX Font Warning: Font shape `OT1/cmr/bx/n' in size <10.5> not available
-(Font)              size <10.95> substituted on input line 105.
-
-
-Overfull \hbox (58.9341pt too wide) detected at line 111
-[]
- []
+(Font)              size <10.95> substituted on input line 130.
 
 <figs/001_modelo_plataforma_con_elemento_tubular_masa_adherida_y_masa_atrapada.
-png, id=56, 401.5pt x 301.125pt>
+png, id=56, 573.14125pt x 278.03876pt>
 File: figs/001_modelo_plataforma_con_elemento_tubular_masa_adherida_y_masa_atra
 pada.png Graphic file (type png)
 <use figs/001_modelo_plataforma_con_elemento_tubular_masa_adherida_y_masa_atrap
 ada.png>
 Package pdftex.def Info: figs/001_modelo_plataforma_con_elemento_tubular_masa_a
-dherida_y_masa_atrapada.png  used on input line 117.
-(pdftex.def)             Requested size: 346.1547pt x 259.63329pt.
-
-Overfull \hbox (107.90025pt too wide) in paragraph at lines 117--118
- [][] 
- []
-
+dherida_y_masa_atrapada.png  used on input line 139.
+(pdftex.def)             Requested size: 214.42754pt x 104.02245pt.
 
 LaTeX Font Warning: Font shape `T1/cmr/b/it' in size <10.5> not available
-(Font)              size <10.95> substituted on input line 122.
+(Font)              size <10.95> substituted on input line 144.
 
 <figs/001_modelo_plataforma_con_elemento_tubular_masa_de_crecimiento_marino.png
-, id=57, 401.5pt x 301.125pt>
+, id=58, 654.445pt x 333.245pt>
 File: figs/001_modelo_plataforma_con_elemento_tubular_masa_de_crecimiento_marin
 o.png Graphic file (type png)
 <use figs/001_modelo_plataforma_con_elemento_tubular_masa_de_crecimiento_marino
 .png>
 Package pdftex.def Info: figs/001_modelo_plataforma_con_elemento_tubular_masa_d
-e_crecimiento_marino.png  used on input line 128.
-(pdftex.def)             Requested size: 445.05496pt x 333.8162pt.
-
-Overfull \hbox (206.80052pt too wide) in paragraph at lines 128--129
- [][] 
- []
-
+e_crecimiento_marino.png  used on input line 150.
+(pdftex.def)             Requested size: 214.42754pt x 109.18301pt.
+[2 <./figs/001_modelo_plataforma_con_elemento_tubular_masa_adherida_y_masa_atra
+pada.png> <./figs/001_modelo_plataforma_con_elemento_tubular_masa_de_crecimient
+o_marino.png>]
 <figs/004_caracterizacion_de_como_se_reduce_el_espesor_elemento_tubular_por_cor
-rosion.png, id=60, 401.5pt x 301.125pt>
+rosion.png, id=86, 406.51875pt x 256.96pt>
 File: figs/004_caracterizacion_de_como_se_reduce_el_espesor_elemento_tubular_po
 r_corrosion.png Graphic file (type png)
 <use figs/004_caracterizacion_de_como_se_reduce_el_espesor_elemento_tubular_por
 _corrosion.png>
 Package pdftex.def Info: figs/004_caracterizacion_de_como_se_reduce_el_espesor_
-elemento_tubular_por_corrosion.png  used on input line 144.
-(pdftex.def)             Requested size: 296.70834pt x 222.54413pt.
-
-Overfull \hbox (58.4539pt too wide) in paragraph at lines 144--145
- [][] 
- []
-
-[2 <./figs/001_modelo_plataforma_con_elemento_tubular_masa_adherida_y_masa_atra
-pada.png (PNG copy)>]
-<figs/004_seccion_transversal_de_elemento_tubular_parametros_abolladura.png, id
-=88, 401.5pt x 301.125pt>
-File: figs/004_seccion_transversal_de_elemento_tubular_parametros_abolladura.pn
-g Graphic file (type png)
-<use figs/004_seccion_transversal_de_elemento_tubular_parametros_abolladura.png
->
-Package pdftex.def Info: figs/004_seccion_transversal_de_elemento_tubular_param
-etros_abolladura.png  used on input line 154.
-(pdftex.def)             Requested size: 197.80052pt x 148.35202pt.
+elemento_tubular_por_corrosion.png  used on input line 167.
+(pdftex.def)             Requested size: 197.80052pt x 125.0293pt.
+<figs/004_modelo_elemento_tubula_seccion_longitudinal_parametros_abolladura.png
+, id=88, 1036.87375pt x 861.2175pt>
+File: figs/004_modelo_elemento_tubula_seccion_longitudinal_parametros_abolladur
+a.png Graphic file (type png)
+<use figs/004_modelo_elemento_tubula_seccion_longitudinal_parametros_abolladura
+.png>
+Package pdftex.def Info: figs/004_modelo_elemento_tubula_seccion_longitudinal_p
+arametros_abolladura.png  used on input line 177.
+(pdftex.def)             Requested size: 197.80052pt x 164.29007pt.
 <figs/004_modelo_elemento_tubular_seccion_longitudinal_parametros_abolladura_co
-n_funciones_de_interpolacion.png, id=89, 401.5pt x 301.125pt>
+n_funciones_de_interpolacion.png, id=89, 380.01974pt x 85.5195pt>
 File: figs/004_modelo_elemento_tubular_seccion_longitudinal_parametros_abolladu
 ra_con_funciones_de_interpolacion.png Graphic file (type png)
 <use figs/004_modelo_elemento_tubular_seccion_longitudinal_parametros_abolladur
 a_con_funciones_de_interpolacion.png>
 Package pdftex.def Info: figs/004_modelo_elemento_tubular_seccion_longitudinal_
-parametros_abolladura_con_funciones_de_interpolacion.png  used on input line 16
-3.
-(pdftex.def)             Requested size: 469.78192pt x 352.36076pt.
-
-Overfull \hbox (231.52748pt too wide) in paragraph at lines 163--164
- [][] 
- []
-
+parametros_abolladura_con_funciones_de_interpolacion.png  used on input line 18
+6.
+(pdftex.def)             Requested size: 214.42754pt x 48.25465pt.
 <figs/007_modeo_vista_3d_de_plataforma_tipo_jacket_de_caso_de_estudio.png, id=9
-0, 401.5pt x 301.125pt>
+0, 302.63063pt x 650.43pt>
 File: figs/007_modeo_vista_3d_de_plataforma_tipo_jacket_de_caso_de_estudio.png 
 Graphic file (type png)
 <use figs/007_modeo_vista_3d_de_plataforma_tipo_jacket_de_caso_de_estudio.png>
 Package pdftex.def Info: figs/007_modeo_vista_3d_de_plataforma_tipo_jacket_de_c
-aso_de_estudio.png  used on input line 175.
-(pdftex.def)             Requested size: 197.80052pt x 148.35202pt.
+aso_de_estudio.png  used on input line 198.
+(pdftex.def)             Requested size: 138.46187pt x 297.59361pt.
 <figs/007_modelo_vista_fronta_de_plataforma_tipo_jacket_de_caso_de_estudio.png,
- id=91, 401.5pt x 301.125pt>
+ id=91, 281.55188pt x 674.52pt>
 File: figs/007_modelo_vista_fronta_de_plataforma_tipo_jacket_de_caso_de_estudio
 .png Graphic file (type png)
 <use figs/007_modelo_vista_fronta_de_plataforma_tipo_jacket_de_caso_de_estudio.
 png>
 Package pdftex.def Info: figs/007_modelo_vista_fronta_de_plataforma_tipo_jacket
-_de_caso_de_estudio.png  used on input line 177.
-(pdftex.def)             Requested size: 173.08112pt x 129.81204pt.
-[3 <./figs/001_modelo_plataforma_con_elemento_tubular_masa_de_crecimiento_marin
-o.png (PNG copy)> <./figs/004_caracterizacion_de_como_se_reduce_el_espesor_elem
-ento_tubular_por_corrosion.png (PNG copy)> <./figs/004_seccion_transversal_de_e
-lemento_tubular_parametros_abolladura.png (PNG copy)>]
+_de_caso_de_estudio.png  used on input line 200.
+(pdftex.def)             Requested size: 118.68484pt x 284.336pt.
 <figs/005_metogologia_propuesta_para_identificar_daños_en_plataformas_reales.j
-pg, id=103, 401.5pt x 301.125pt>
+pg, id=93, 1419.3025pt x 709.65125pt>
 File: figs/005_metogologia_propuesta_para_identificar_daños_en_plataformas_rea
 les.jpg Graphic file (type jpg)
 <use figs/005_metogologia_propuesta_para_identificar_daños_en_plataformas_real
 es.jpg>
 Package pdftex.def Info: figs/005_metogologia_propuesta_para_identificar_daños
-_en_plataformas_reales.jpg  used on input line 192.
-(pdftex.def)             Requested size: 469.78192pt x 352.36076pt.
+_en_plataformas_reales.jpg  used on input line 215.
+(pdftex.def)             Requested size: 214.42754pt x 107.2119pt.
+ [3 <./figs/004_caracterizacion_de_como_se_reduce_el_espesor_elemento_tubular_p
+or_corrosion.png> <./figs/004_modelo_elemento_tubula_seccion_longitudinal_param
+etros_abolladura.png> <./figs/004_modelo_elemento_tubular_seccion_longitudinal_
+parametros_abolladura_con_funciones_de_interpolacion.png>]
+Overfull \vbox (9.9322pt too high) has occurred while \output is active []
 
-Overfull \hbox (231.52748pt too wide) in paragraph at lines 192--193
- [][] 
- []
-
-[4 <./figs/004_modelo_elemento_tubular_seccion_longitudinal_parametros_abolladu
-ra_con_funciones_de_interpolacion.png (PNG copy)> <./figs/007_modeo_vista_3d_de
-_plataforma_tipo_jacket_de_caso_de_estudio.png (PNG copy)> <./figs/007_modelo_v
-ista_fronta_de_plataforma_tipo_jacket_de_caso_de_estudio.png (PNG copy)>]
 <figs/006_metodología_del_AG_para_localizar_daños_a_nivel_computacional.jpg, 
-id=125, 401.5pt x 301.125pt>
+id=117, 1502.61375pt x 669.50125pt>
 File: figs/006_metodología_del_AG_para_localizar_daños_a_nivel_computacional.
 jpg Graphic file (type jpg)
 <use figs/006_metodología_del_AG_para_localizar_daños_a_nivel_computacional.j
 pg>
 Package pdftex.def Info: figs/006_metodología_del_AG_para_localizar_daños_a_n
-ivel_computacional.jpg  used on input line 257.
-(pdftex.def)             Requested size: 445.05496pt x 333.8162pt.
+ivel_computacional.jpg  used on input line 280.
+(pdftex.def)             Requested size: 214.42754pt x 95.53772pt.
 
-Overfull \hbox (206.80052pt too wide) in paragraph at lines 257--258
- [][] 
- []
-
-[5 <./figs/005_metogologia_propuesta_para_identificar_daños_en_plataformas_rea
-les.jpg> <./figs/006_metodología_del_AG_para_localizar_daños_a_nivel_computac
-ional.jpg>]
+[4 <./figs/007_modeo_vista_3d_de_plataforma_tipo_jacket_de_caso_de_estudio.png>
+ <./figs/007_modelo_vista_fronta_de_plataforma_tipo_jacket_de_caso_de_estudio.p
+ng> <./figs/005_metogologia_propuesta_para_identificar_daños_en_plataformas_re
+ales.jpg>]
 <figs/015_diagrama_como_funciona_el_AG_para_la_sumas_funcion_P_y_como_se_relaci
-ona_con_operadores_geneticos_del_AG.jpg, id=140, 401.5pt x 301.125pt>
+ona_con_operadores_geneticos_del_AG.jpg, id=138, 840.13875pt x 1197.47375pt>
 File: figs/015_diagrama_como_funciona_el_AG_para_la_sumas_funcion_P_y_como_se_r
 elaciona_con_operadores_geneticos_del_AG.jpg Graphic file (type jpg)
 <use figs/015_diagrama_como_funciona_el_AG_para_la_sumas_funcion_P_y_como_se_re
 laciona_con_operadores_geneticos_del_AG.jpg>
 Package pdftex.def Info: figs/015_diagrama_como_funciona_el_AG_para_la_sumas_fu
 ncion_P_y_como_se_relaciona_con_operadores_geneticos_del_AG.jpg  used on input 
-line 278.
-(pdftex.def)             Requested size: 420.33556pt x 315.2716pt.
-
-Overfull \hbox (182.08112pt too wide) in paragraph at lines 278--279
- [][] 
- []
-
+line 301.
+(pdftex.def)             Requested size: 202.51772pt x 288.64206pt.
+ [5 <./figs/006_metodología_del_AG_para_localizar_daños_a_nivel_computacional
+.jpg> <./figs/015_diagrama_como_funciona_el_AG_para_la_sumas_funcion_P_y_como_s
+e_relaciona_con_operadores_geneticos_del_AG.jpg>]
 <../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by_element_type_corros
-ion.png, id=142, 713.7867pt x 424.2249pt>
+ion.png, id=155, 713.7867pt x 424.2249pt>
 File: ../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by_element_type_c
 orrosion.png Graphic file (type png)
 <use ../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by_element_type_co
 rrosion.png>
 Package pdftex.def Info: ../outputs/resultados_nuevos/corrosion_2026/figures/IC
-D_by_element_type_corrosion.png  used on input line 323.
-(pdftex.def)             Requested size: 445.05496pt x 264.50552pt.
-
-Overfull \hbox (206.80052pt too wide) in paragraph at lines 323--324
- [][] 
- []
-
-[6 <./figs/015_diagrama_como_funciona_el_AG_para_la_sumas_funcion_P_y_como_se_r
-elaciona_con_operadores_geneticos_del_AG.jpg>]
+D_by_element_type_corrosion.png  used on input line 346.
+(pdftex.def)             Requested size: 214.42754pt x 127.43674pt.
 <../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_element_type_abol
-ladura.png, id=161, 713.7867pt x 424.2249pt>
+ladura.png, id=157, 713.7867pt x 424.2249pt>
 File: ../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_element_type
 _abolladura.png Graphic file (type png)
 <use ../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_element_type_
 abolladura.png>
 Package pdftex.def Info: ../outputs/resultados_nuevos/abolladuras_2026/figures/
-ICD_by_element_type_abolladura.png  used on input line 338.
-(pdftex.def)             Requested size: 445.05496pt x 264.50552pt.
-
-Overfull \hbox (206.80052pt too wide) in paragraph at lines 338--339
- [][] 
- []
-
+ICD_by_element_type_abolladura.png  used on input line 361.
+(pdftex.def)             Requested size: 214.42754pt x 127.43674pt.
 <../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by_zone_corrosion.png,
- id=164, 1291.9467pt x 1297.4874pt>
+ id=160, 1291.9467pt x 1297.4874pt>
 File: ../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by_zone_corrosion
 .png Graphic file (type png)
 <use ../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by_zone_corrosion.
 png>
 Package pdftex.def Info: ../outputs/resultados_nuevos/corrosion_2026/figures/IC
-D_by_zone_corrosion.png  used on input line 353.
-(pdftex.def)             Requested size: 469.78192pt x 471.78725pt.
-
-Overfull \hbox (256.25444pt too wide) in paragraph at lines 351--357
- [][] 
- []
-
+D_by_zone_corrosion.png  used on input line 376.
+(pdftex.def)             Requested size: 214.42754pt x 215.34326pt.
 <../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_zone_abolladura.p
-ng, id=165, 1291.9467pt x 1297.4874pt>
+ng, id=161, 1291.9467pt x 1297.4874pt>
 File: ../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_zone_abollad
 ura.png Graphic file (type png)
 <use ../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_zone_abolladu
 ra.png>
 Package pdftex.def Info: ../outputs/resultados_nuevos/abolladuras_2026/figures/
-ICD_by_zone_abolladura.png  used on input line 362.
-(pdftex.def)             Requested size: 469.78192pt x 471.78725pt.
+ICD_by_zone_abolladura.png  used on input line 385.
+(pdftex.def)             Requested size: 214.42754pt x 215.34326pt.
 
-Overfull \hbox (256.25444pt too wide) in paragraph at lines 360--366
- [][] 
- []
-
-
-LaTeX Warning: Float too large for page by 336.1662pt on input line 368.
-
-(./tablas/tabla_casos_experimentales.tex
-Overfull \hbox (104.70576pt too wide) in paragraph at lines 5--15
- [][] 
- []
-
-)
-<../outputs/resultados_nuevos/heatmap_casos_elemento_severidad.png, id=168, 100
+(./tablas/tabla_casos_experimentales.tex) [6 <../outputs/resultados_nuevos/corr
+osion_2026/figures/ICD_by_element_type_corrosion.png> <../outputs/resultados_nu
+evos/abolladuras_2026/figures/ICD_by_element_type_abolladura.png>]
+<../outputs/resultados_nuevos/heatmap_casos_elemento_severidad.png, id=181, 100
 2.6258pt x 356.7729pt>
 File: ../outputs/resultados_nuevos/heatmap_casos_elemento_severidad.png Graphic
  file (type png)
 <use ../outputs/resultados_nuevos/heatmap_casos_elemento_severidad.png>
 Package pdftex.def Info: ../outputs/resultados_nuevos/heatmap_casos_elemento_se
-veridad.png  used on input line 391.
-(pdftex.def)             Requested size: 469.78192pt x 167.1661pt.
-
-Overfull \hbox (231.52748pt too wide) in paragraph at lines 391--393
- [][] 
- []
-
-[7 <../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by_element_type_cor
-rosion.png> <../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_eleme
-nt_type_abolladura.png>]
-LaTeX Font Info:    Calculating math sizes for size <11> on input line 400.
+veridad.png  used on input line 414.
+(pdftex.def)             Requested size: 214.42754pt x 76.30182pt.
+LaTeX Font Info:    Calculating math sizes for size <11> on input line 423.
 
 
 LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <5.5> not available
-(Font)              size <5> substituted on input line 400.
+(Font)              size <5> substituted on input line 423.
 
 
 LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <5.5> not available
-(Font)              size <5> substituted on input line 400.
+(Font)              size <5> substituted on input line 423.
 
 
 LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <5.5> not available
-(Font)              size <5> substituted on input line 400.
+(Font)              size <5> substituted on input line 423.
 
 
 LaTeX Font Warning: Font shape `OT1/cmr/bx/n' in size <5.5> not available
-(Font)              size <5> substituted on input line 400.
+(Font)              size <5> substituted on input line 423.
 
-(./tablas/tabla_metricas_compacta.tex
-Overfull \hbox (84.06642pt too wide) in paragraph at lines 6--41
- [][] 
- []
-
-)
-<../outputs/resultados_nuevos/F1_comparison_denting_corrosion.png, id=186, 1003
+(./tablas/tabla_metricas_compacta.tex)
+<../outputs/resultados_nuevos/F1_comparison_denting_corrosion.png, id=184, 1003
 .1076pt x 357.7365pt>
 File: ../outputs/resultados_nuevos/F1_comparison_denting_corrosion.png Graphic 
 file (type png)
 <use ../outputs/resultados_nuevos/F1_comparison_denting_corrosion.png>
 Package pdftex.def Info: ../outputs/resultados_nuevos/F1_comparison_denting_cor
-rosion.png  used on input line 417.
-(pdftex.def)             Requested size: 469.78192pt x 167.53572pt.
-
-Overfull \hbox (231.52748pt too wide) in paragraph at lines 417--419
- [][] 
- []
-
-<../outputs/resultados_nuevos/ROC_curve_denting_corrosion.png, id=188, 1003.107
+rosion.png  used on input line 440.
+(pdftex.def)             Requested size: 214.42754pt x 76.4697pt.
+ [7 <../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by_zone_corrosion.
+png> <../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_zone_abollad
+ura.png> <../outputs/resultados_nuevos/heatmap_casos_elemento_severidad.png> <.
+./outputs/resultados_nuevos/F1_comparison_denting_corrosion.png>]
+<../outputs/resultados_nuevos/ROC_curve_denting_corrosion.png, id=201, 1003.107
 6pt x 428.5611pt>
 File: ../outputs/resultados_nuevos/ROC_curve_denting_corrosion.png Graphic file
  (type png)
 <use ../outputs/resultados_nuevos/ROC_curve_denting_corrosion.png>
 Package pdftex.def Info: ../outputs/resultados_nuevos/ROC_curve_denting_corrosi
-on.png  used on input line 430.
-(pdftex.def)             Requested size: 445.05496pt x 190.14343pt.
-
-Overfull \hbox (206.80052pt too wide) in paragraph at lines 430--432
- [][] 
- []
-
-[8 <../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by_zone_corrosion.p
-ng> <../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_zone_abolladu
-ra.png> <../outputs/resultados_nuevos/heatmap_casos_elemento_severidad.png>]
-<../outputs/resultados_nuevos/POD_curves_ICD_vs_bestDI.png, id=203, 1147.1658pt
+on.png  used on input line 453.
+(pdftex.def)             Requested size: 214.42754pt x 91.60915pt.
+<../outputs/resultados_nuevos/POD_curves_ICD_vs_bestDI.png, id=202, 1147.1658pt
  x 733.5405pt>
 File: ../outputs/resultados_nuevos/POD_curves_ICD_vs_bestDI.png Graphic file (t
 ype png)
 <use ../outputs/resultados_nuevos/POD_curves_ICD_vs_bestDI.png>
 Package pdftex.def Info: ../outputs/resultados_nuevos/POD_curves_ICD_vs_bestDI.
-png  used on input line 449.
-(pdftex.def)             Requested size: 469.78192pt x 300.39537pt.
-
-Overfull \hbox (231.52748pt too wide) in paragraph at lines 449--451
- [][] 
- []
-
-(./tablas/tabla_wilcoxon_POD.tex
+png  used on input line 472.
+(pdftex.def)             Requested size: 214.42754pt x 137.11317pt.
+ (./tablas/tabla_wilcoxon_POD.tex
 Overfull \hbox (123.73636pt too wide) in paragraph at lines 6--25
  [] 
  []
 
 )
-<../outputs/resultados_nuevos/AUC_ROC_vs_SNR_degradation.png, id=206, 1002.6258
+<../outputs/resultados_nuevos/AUC_ROC_vs_SNR_degradation.png, id=205, 1002.6258
 pt x 357.4956pt>
 File: ../outputs/resultados_nuevos/AUC_ROC_vs_SNR_degradation.png Graphic file 
 (type png)
 <use ../outputs/resultados_nuevos/AUC_ROC_vs_SNR_degradation.png>
 Package pdftex.def Info: ../outputs/resultados_nuevos/AUC_ROC_vs_SNR_degradatio
-n.png  used on input line 473.
-(pdftex.def)             Requested size: 469.78192pt x 167.50473pt.
-
-Overfull \hbox (231.52748pt too wide) in paragraph at lines 473--475
- [][] 
+n.png  used on input line 496.
+(pdftex.def)             Requested size: 214.42754pt x 76.45639pt.
+ (./tablas/tabla_snr_robustness.tex
+Overfull \hbox (238.25279pt too wide) in paragraph at lines 5--31
+ [][]$[]$ 
  []
 
-[9 <../outputs/resultados_nuevos/F1_comparison_denting_corrosion.png> <../outpu
-ts/resultados_nuevos/ROC_curve_denting_corrosion.png> <../outputs/resultados_nu
-evos/POD_curves_ICD_vs_bestDI.png>] (./tablas/tabla_snr_robustness.tex
-Overfull \hbox (64.95032pt too wide) in paragraph at lines 6--30
- [] 
- []
-
-)
-<../outputs/resultados_nuevos/FP_distancia_topologica_distribucion.png, id=220,
+) [8 <../outputs/resultados_nuevos/ROC_curve_denting_corrosion.png> <../outputs
+/resultados_nuevos/POD_curves_ICD_vs_bestDI.png> <../outputs/resultados_nuevos/
+AUC_ROC_vs_SNR_degradation.png>]
+<../outputs/resultados_nuevos/FP_distancia_topologica_distribucion.png, id=231,
  1001.4213pt x 357.7365pt>
 File: ../outputs/resultados_nuevos/FP_distancia_topologica_distribucion.png Gra
 phic file (type png)
 <use ../outputs/resultados_nuevos/FP_distancia_topologica_distribucion.png>
 Package pdftex.def Info: ../outputs/resultados_nuevos/FP_distancia_topologica_d
-istribucion.png  used on input line 536.
-(pdftex.def)             Requested size: 469.78192pt x 167.81956pt.
-
-Overfull \hbox (231.52748pt too wide) in paragraph at lines 536--539
- [][] 
- []
-
-[10 <../outputs/resultados_nuevos/AUC_ROC_vs_SNR_degradation.png>]
-<../outputs/resultados_nuevos/Precision_global_clasica_vs_ponderada.png, id=245
+istribucion.png  used on input line 559.
+(pdftex.def)             Requested size: 214.42754pt x 76.59525pt.
+<../outputs/resultados_nuevos/Precision_global_clasica_vs_ponderada.png, id=233
 , 1002.6258pt x 357.2547pt>
 File: ../outputs/resultados_nuevos/Precision_global_clasica_vs_ponderada.png Gr
 aphic file (type png)
 <use ../outputs/resultados_nuevos/Precision_global_clasica_vs_ponderada.png>
 Package pdftex.def Info: ../outputs/resultados_nuevos/Precision_global_clasica_
-vs_ponderada.png  used on input line 552.
-(pdftex.def)             Requested size: 469.78192pt x 167.39185pt.
-
-Overfull \hbox (231.52748pt too wide) in paragraph at lines 552--554
- [][] 
- []
-
+vs_ponderada.png  used on input line 575.
+(pdftex.def)             Requested size: 214.42754pt x 76.40486pt.
 <../outputs/resultados_nuevos/Precision_clasica_vs_ponderada_por_elemento.png, 
-id=246, 1147.1658pt x 740.7675pt>
+id=234, 1147.1658pt x 740.7675pt>
 File: ../outputs/resultados_nuevos/Precision_clasica_vs_ponderada_por_elemento.
 png Graphic file (type png)
 <use ../outputs/resultados_nuevos/Precision_clasica_vs_ponderada_por_elemento.p
 ng>
 Package pdftex.def Info: ../outputs/resultados_nuevos/Precision_clasica_vs_pond
-erada_por_elemento.png  used on input line 560.
-(pdftex.def)             Requested size: 469.78192pt x 303.35493pt.
-
-Overfull \hbox (231.52748pt too wide) in paragraph at lines 560--563
- [][] 
- []
-
-(./tablas/tabla_precision_ponderada.tex
-Overfull \hbox (202.53369pt too wide) in paragraph at lines 6--98
- [][] 
- []
+erada_por_elemento.png  used on input line 583.
+(pdftex.def)             Requested size: 214.42754pt x 138.46404pt.
+ [9 <../outputs/resultados_nuevos/FP_distancia_topologica_distribucion.png> <..
+/outputs/resultados_nuevos/Precision_global_clasica_vs_ponderada.png> <../outpu
+ts/resultados_nuevos/Precision_clasica_vs_ponderada_por_elemento.png>] (./tabla
+s/tabla_precision_ponderada.tex [10
 
 
-LaTeX Warning: Float too large for page by 322.78145pt on input line 98.
-
-) [11 <../outputs/resultados_nuevos/FP_distancia_topologica_distribucion.png> <
-../outputs/resultados_nuevos/Precision_global_clasica_vs_ponderada.png> <../out
-puts/resultados_nuevos/Precision_clasica_vs_ponderada_por_elemento.png>]
-Overfull \hbox (12.52043pt too wide) in paragraph at lines 580--581
+]) [11]
+Overfull \hbox (12.52043pt too wide) in paragraph at lines 609--610
 \T1/cmr/m/n/10 pone la \T1/cmr/bx/n/10 Pre-ci-sion Pon-der-ada por Dis-tan-cia 
 Topol�g-
  []
 
 
-Overfull \hbox (11.77036pt too wide) in paragraph at lines 589--590
+Overfull \hbox (11.77036pt too wide) in paragraph at lines 618--619
 []\T1/cmr/bx/n/10 Validaci�n Ex-per-i-men-tal: \T1/cmr/m/n/10 Aplicar la metodo
 log�a
  []
 
 
-Underfull \hbox (badness 1917) in paragraph at lines 591--592
+Underfull \hbox (badness 1917) in paragraph at lines 620--621
 []\T1/cmr/bx/n/10 Extensi�n Tipol�g-ica: \T1/cmr/m/n/10 Adap-tar la fun-ci�n
  []
 
 
-Overfull \hbox (0.30563pt too wide) in paragraph at lines 591--592
+Overfull \hbox (0.30563pt too wide) in paragraph at lines 620--621
 \T1/cmr/m/n/10 como tr�podes o \T1/cmr/m/it/10 monopiles\T1/cmr/m/n/10 , que pr
 e-sen-tan din�mi-
  []
@@ -1166,7 +1086,10 @@ Underfull \hbox (badness 1237) in paragraph at lines 79--88
 m/n/8 10 . 1007 /
  []
 
-) [12] [13
+[12
+
+
+]) [13
 
 ] (./main.aux)
  ***********
@@ -1185,60 +1108,62 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 15775 strings out of 476047
- 261013 string characters out of 5792075
- 1979975 words of memory out of 5000000
- 37393 multiletter control sequences out of 15000+600000
- 595254 words of font info for 131 fonts, out of 8000000 for 9000
+ 16010 strings out of 476047
+ 265166 string characters out of 5792075
+ 1977975 words of memory out of 5000000
+ 37618 multiletter control sequences out of 15000+600000
+ 596013 words of font info for 132 fonts, out of 8000000 for 9000
  85 hyphenation exceptions out of 8191
- 90i,13n,93p,1239b,663s stack positions out of 10000i,1000n,20000p,200000b,200000s
- </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt090
+ 90i,13n,93p,1239b,661s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecss080
 0.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/e
-css0800.450pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappe
-n/ec/ecbx0800.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/j
-knappen/ec/ecrm0900.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/lj
-four/jknappen/ec/ecrm0500.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts
-/pk/ljfour/jknappen/ec/ecrb0700.600pk> </home/fcisnerosr/.texlive2023/texmf-var
-/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk> </home/fcisnerosr/.texlive2023/tex
-mf-var/fonts/pk/ljfour/jknappen/ec/ecrm0700.600pk> </home/fcisnerosr/.texlive20
-23/texmf-var/fonts/pk/ljfour/jknappen/ec/ecsx0900.600pk> </home/fcisnerosr/.tex
-live2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk> </home/fcisneros
-r/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrb1095.600pk> </home/fci
-snerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1095.600pk> </ho
-me/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecti0900.600pk
-> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecss0900
+ctt0900.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappe
+n/ec/ecss0800.450pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/j
+knappen/ec/ecbx0800.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/lj
+four/jknappen/ec/ecrm0900.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts
+/pk/ljfour/jknappen/ec/ecrm0500.600pk> </home/fcisnerosr/.texlive2023/texmf-var
+/fonts/pk/ljfour/jknappen/ec/ecrb0700.600pk> </home/fcisnerosr/.texlive2023/tex
+mf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk> </home/fcisnerosr/.texlive20
+23/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0700.600pk> </home/fcisnerosr/.tex
+live2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecsx0900.600pk> </home/fcisneros
+r/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk> </home/fci
+snerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrb1095.600pk> </ho
+me/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1095.600pk
+> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecti0900
 .600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ec
-ti1000.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen
-/ec/eccc0800.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jk
-nappen/ec/ectt0800.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljf
-our/jknappen/ec/ecbx1200.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/
-pk/ljfour/jknappen/ec/ecrm1000.600pk> </home/fcisnerosr/.texlive2023/texmf-var/
-fonts/pk/ljfour/jknappen/ec/ecti0600.600pk> </home/fcisnerosr/.texlive2023/texm
-f-var/fonts/pk/ljfour/jknappen/ec/ecrm0800.600pk> </home/fcisnerosr/.texlive202
-3/texmf-var/fonts/pk/ljfour/jknappen/ec/ecti0800.600pk> </home/fcisnerosr/.texl
-ive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/fcisnerosr
-/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1728.600pk></usr/share/
-texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmmib10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb
-></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/tex
-live/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmsy9.pfb>
-Output written on main.pdf (13 pages, 5270336 bytes).
+ss0900.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen
+/ec/ecti1000.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jk
+nappen/ec/eccc0800.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljf
+our/jknappen/ec/ectt0800.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/
+pk/ljfour/jknappen/ec/ecbx1200.600pk> </home/fcisnerosr/.texlive2023/texmf-var/
+fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </home/fcisnerosr/.texlive2023/texm
+f-var/fonts/pk/ljfour/jknappen/ec/ecti0600.600pk> </home/fcisnerosr/.texlive202
+3/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0800.600pk> </home/fcisnerosr/.texl
+ive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecti0800.600pk> </home/fcisnerosr
+/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/fcis
+nerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1728.600pk></usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/
+texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmmib10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+r10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb>
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmsy9.pfb>
+Output written on main.pdf (13 pages, 6087940 bytes).
 PDF statistics:
- 1128 PDF objects out of 1200 (max. 8388607)
- 360 compressed objects within 4 object streams
- 103 named destinations out of 1000 (max. 500000)
+ 1228 PDF objects out of 1440 (max. 8388607)
+ 363 compressed objects within 4 object streams
+ 100 named destinations out of 1000 (max. 500000)
  116 words of extra memory for PDF output out of 10000 (max. 10000000)
 
