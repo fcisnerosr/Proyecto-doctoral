@@ -174,7 +174,7 @@ Las abolladuras representan un daño local crítico causado por impactos acciden
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.4\textwidth]{figs/004_modelo_elemento_tubula_seccion_longitudinal_parametros_abolladura.png}
+    \includegraphics[width=0.2\textwidth]{figs/004_modelo_elemento_tubula_seccion_longitudinal_parametros_abolladura.png}
     \caption{Parametrización de la sección transversal abollada.}
     \label{fig:abolladura_seccion}
 \end{figure}
@@ -194,11 +194,9 @@ La metodología se valida en un modelo numérico de una plataforma marina fija d
 
 \begin{figure}[!ht]
     \centering
-    % Ajusto tamaño para evitar solapamientos en columna
-    \includegraphics[width=0.28\textwidth]{figs/007_modeo_vista_3d_de_plataforma_tipo_jacket_de_caso_de_estudio.png}
-    \hspace{0.5cm} % <--- ESTO define la separación fija (medio centímetro)
-    \includegraphics[width=0.24\textwidth]{figs/007_modelo_vista_fronta_de_plataforma_tipo_jacket_de_caso_de_estudio.png}
-    \caption{Modelo numérico de la plataforma de estudio: Vista 3D isométrica y vista frontal.}
+    % Mantengo solo la vista isométrica y amplio su tamaño
+    \includegraphics[width=0.4\columnwidth]{figs/007_modeo_vista_3d_de_plataforma_tipo_jacket_de_caso_de_estudio.png}
+    \caption{Modelo numérico de la plataforma de estudio: Vista 3D isométrica.}
     \label{fig:caso_estudio}
 \end{figure}
 
@@ -367,7 +365,7 @@ Aunque la naturaleza física del daño difiere de la corrosión, la tendencia de
 
 \subsection{Análisis de Influencia por Zona (Profundidad)}
 
-Para determinar si la profundidad afecta la confiabilidad del diagnóstico, se segmentó la estructura en tres regiones: Zona de Salpicadura (\textit{Splash Zone}), Zona Media y Línea de Lodo (\textit{Mudline}). Las Figuras \ref{fig:corrosion_zone} y \ref{fig:abolladura_zone} comparan el desempeño del ICD en estas regiones.
+Para determinar si la profundidad afecta la confiabilidad del diagnóstico, se segmentó la estructura en las cinco zonas verticales definidas en la Figura~\ref{fig:zonas_plataforma}: Zona de Salpicadura (\textit{Splash Zone}), tres tramos sumergidos intermedios (Sub\,1, Sub\,2 y Sub\,3) y la Línea de Lodo (\textit{Mudline}). Las Figuras~\ref{fig:corrosion_zone} y \ref{fig:abolladura_zone} comparan el desempeño del ICD en estas regiones.
 
 \begin{figure}[!ht]
     \centering
@@ -405,16 +403,41 @@ resume la distribución de ensayos por tipo de daño y tipo de elemento.
 
 \input{tablas/tabla_casos_experimentales.tex}
 
-La distribución de casos por elemento y severidad se presenta en la
-Figura~\ref{fig:distribucion_experimental}, donde se observa la cobertura uniforme de todos
-los elementos del modelo por tipo (Brace, Inclined Leg, Beam) en ambas campañas de simulación.
+La Figura~\ref{fig:distribucion_experimental} resume el diseño experimental desde tres
+perspectivas complementarias. El panel~(a) confirma la asimetría intencional en el número de
+corridas: 2{,}160 para corrosión frente a 1{,}080 para abolladura, diferencia que refleja el
+mayor rango de severidades exploradas (18 vs.\ 9 niveles de daño). El panel~(b) muestra que
+los elementos tipo \textit{Brace} (diagonales en~X) constituyen el \textbf{67\%} del total
+de 120~miembros estructurales (80~elementos), proporción que otorga mayor representatividad
+estadística a los resultados de este tipo de elemento ---precisamente los que muestran el
+mejor desempeño de detección en el análisis posterior. El panel~(c) confirma que cada nivel
+vertical del modelo cuenta con una composición tipológica equivalente, garantizando la
+comparabilidad interzonal del análisis.
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.9\columnwidth]{../outputs/resultados_nuevos/heatmap_casos_elemento_severidad.png}
-    \caption{Mapa de calor del diseño experimental: distribución de corridas por elemento y nivel
-             de severidad para ambos tipos de daño.}
+    \includegraphics[width=0.9\columnwidth]{../outputs/resultados_nuevos/experimental_design_distribution.png}
+    \caption{Diseño experimental: (a)~corridas de simulación por tipo de daño (Corrosión:
+             2{,}160; Abolladura: 1{,}080); (b)~composición tipológica de los 120~elementos
+             del modelo (\textit{Braces}: 67\%, \textit{Beams}: 17\%,
+             \textit{Inclined legs}: 17\%); (c)~distribución de elementos por zona
+             estructural vertical.}
     \label{fig:distribucion_experimental}
+\end{figure}
+
+La delimitación geométrica de dichas zonas se ilustra en la Figura~\ref{fig:zonas_plataforma}.
+La plataforma queda dividida en cinco niveles verticales: el \textit{Mudline} (base) y tres
+tramos sumergidos intermedios (Sub\,1, Sub\,2 y Sub\,3) de 20~m cada uno, más la
+\textit{Splash Zone} en la interfaz agua--aire, resultando en un calado total sumergido de
+85~m referido al Nivel Medio del Mar.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.75\columnwidth]{figs/008_nombres_zonas_estudio_modelo_plataforma_marina_splashzone_subs_y_mudline_en_una_sola_grafica.png}
+    \caption{Zonificación vertical de la plataforma tipo Jacket: delimitación de las zonas de
+             estudio por profundidad. Las cotas están expresadas en metros referidas al
+             Nivel Medio del Mar (MSL: \textit{Mean Sea Level}).}
+    \label{fig:zonas_plataforma}
 \end{figure}
 
 % ─────────────────────────────────────────────────────────────────────────────
@@ -504,6 +527,7 @@ SNR~$= 20$~dB para los \textit{braces}, lo que corresponde a condiciones de medi
 moderadamente ruidosas típicas de sistemas MEMS instalados en plataformas marinas. La
 Tabla~\ref{tab:snr_robustness} sintetiza los valores de AUC-ROC para los puntos clave de SNR.
 
+\clearpage
 \input{tablas/tabla_snr_robustness.tex}
 
 % ─────────────────────────────────────────────────────────────────────────────
