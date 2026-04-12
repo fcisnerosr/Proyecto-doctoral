@@ -1,13 +1,11 @@
 # Fdb version 4
-["bibtex main"] 1775966639.98206 "main.aux" "main.bbl" "main" 1775966649.68145 0
-  "./refs.bib" 1775522995.44808 3506 fa9d2db20fac7a5488557a1de6b850ee ""
-  "/usr/share/texlive/texmf-dist/bibtex/bst/els-cas-templates/cas-model2-names.bst" 1620849479 31800 50c9da7327ed431cce3c915c6982e987 ""
-  "main.aux" 1775966649.5071 20458 4ea80490a5818527dad35c07fd20d056 "pdflatex"
+["bibtex main"] 1775976831.14508 "main.aux" "main.bbl" "main" 1775976831.16723 2
+  "main.aux" 0 -1 0 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1775966640.00729 "/home/fcisnerosr/github/Proyecto-doctoral/manuscript_AOR/main.tex" "main.pdf" "main" 1775966649.68166 0
+["pdflatex"] 1775976821.03276 "/home/fcisnerosr/github/Proyecto-doctoral/manuscript_AOR/main.tex" "main.pdf" "main" 1775976831.16738 2
   "../outputs/resultados_nuevos/AUC_ROC_vs_SNR_degradation.png" 1774195927.4102 221853 626b6e0fea0d89a85458a853ff45ae3f ""
   "../outputs/resultados_nuevos/F1_comparison_denting_corrosion.png" 1774130252.93503 219432 cfcc7f34ff6f2918ca832721cc6be0f8 ""
   "../outputs/resultados_nuevos/FP_distancia_topologica_distribucion.png" 1775516194.99151 220117 33cd5d2993fe7270bb9cc9efb3f3aec3 ""
@@ -47,7 +45,7 @@
   "/home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt0800.600pk" 1775522799.67143 15172 de66385f85b275db21fd114c45bfe09d ""
   "/home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt0900.600pk" 1775522793.63948 17492 0585b9ab2ae48b2551418ed81d2a0a13 ""
   "/home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk" 1775522795.85969 11524 0470cc6de82c63b044e413907d8b78e4 ""
-  "/home/fcisnerosr/github/Proyecto-doctoral/manuscript_AOR/main.tex" 1775966367.56796 47460 c3e5ffd2c16996afb0a83a8763858da3 ""
+  "/home/fcisnerosr/github/Proyecto-doctoral/manuscript_AOR/main.tex" 1775976829.47705 53225 d37873ebafdcde1c1f6b0a3344cede8d ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecbx0800.tfm" 1136768653 3584 269b66e921ba58750c12f7f1c8ea3ebd ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecbx1000.tfm" 1136768653 3584 2d666ecf6d466d8b007246bc2f94d9da ""
@@ -239,16 +237,12 @@
   "figs/007_modeo_vista_3d_de_plataforma_tipo_jacket_de_caso_de_estudio.png" 1775678301.29899 77294 4a616a60d5d2920afdd589ad4a283bc2 ""
   "figs/008_nombres_zonas_estudio_modelo_plataforma_marina_splashzone_subs_y_mudline_en_una_sola_grafica.png" 1775963514.07685 375724 e5ee23ecc4b3308625a6919f5175d4f5 ""
   "figs/015_diagrama_como_funciona_el_AG_para_la_sumas_funcion_P_y_como_se_relaciona_con_operadores_geneticos_del_AG.jpg" 1775745022.35383 77383 1816db3abf514ed868c6e365d2ddc73d ""
-  "main.abs" 1775966640.47774 1193 78519c546e5986399ea98b673d1c6ec3 "pdflatex"
-  "main.aux" 1775966649.5071 20458 4ea80490a5818527dad35c07fd20d056 "pdflatex"
-  "main.bbl" 1775966640.00119 5074 754c5fe4e5f2351889bc4b7adf492110 "bibtex main"
-  "main.out" 1775966640.46018 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "main.tex" 1775966367.56796 47460 c3e5ffd2c16996afb0a83a8763858da3 ""
-  "tablas/tabla_casos_experimentales.tex" 1775774341.88479 535 38d27e39dcebad72406af995f34f5974 ""
-  "tablas/tabla_metricas_compacta.tex" 1775774341.88479 1997 7dd0d5fbe63c081c7ea093b799c6a9f5 ""
+  "main.abs" 1775976822.93209 1193 78519c546e5986399ea98b673d1c6ec3 "pdflatex"
+  "main.aux" 0 -1 0 "pdflatex"
+  "main.bbl" 1775976831.16502 0 d41d8cd98f00b204e9800998ecf8427e "bibtex main"
+  "main.out" 0 -1 0 "pdflatex"
+  "main.tex" 1775976829.47705 53225 d37873ebafdcde1c1f6b0a3344cede8d ""
   "tablas/tabla_precision_ponderada.tex" 1775959260.83923 5879 58b99ef36f656ba415157adf2bc903e5 ""
-  "tablas/tabla_snr_robustness.tex" 1775966629.67328 1587 875748e57e4338593f76e54ea76442a9 ""
-  "tablas/tabla_wilcoxon_POD.tex" 1775772354.56528 1329 e3cc8c48e94e462008cfd3cbb4694702 ""
   (generated)
   "main.abs"
   "main.aux"

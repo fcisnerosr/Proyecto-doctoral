@@ -208,12 +208,12 @@ Para abordar el problema de identificación de daño estructural en plataformas 
 
 La metodología se estructura fundamentalmente en dos etapas acopladas: la simulación mecánica de los escenarios de daño y la optimización estocástica de la detección. El flujo operativo general se detalla en la Figura~\ref{fig:metodologia_general}, donde se observa cómo los datos vibratorios alimentan el proceso de decisión.
 
-\begin{figure}[!ht]
+\begin{figure*}[!t]
     \centering
-    \includegraphics[width=0.9\columnwidth]{figs/005_metogologia_propuesta_para_identificar_daños_en_plataformas_reales.jpg}
+    \includegraphics[width=0.9\textwidth]{figs/005_metogologia_propuesta_para_identificar_daños_en_plataformas_reales.jpg}
     \caption{Esquema general de la metodología propuesta para la identificación de daño.}
     \label{fig:metodologia_general}
-\end{figure}
+\end{figure*}
 
 \subsection{Formulación de Indicadores Vibratorios}
 El sistema de detección se alimenta de un conjunto de indicadores de daño (DIs) derivados de las propiedades modales y de la matriz de flexibilidad de la estructura. A continuación, se definen los ocho indicadores matemáticos utilizados como entradas para el algoritmo, donde $u$ representa el estado "sin daño" y $d$ el estado "dañado".
@@ -273,12 +273,12 @@ Transforma el puntaje Z en probabilidad asumiendo distribución Gaussiana:
 
 El AG se configura como el motor de optimización del sistema. Su función no es modificar la estructura física, sino encontrar la combinación lineal óptima ($\boldsymbol{\alpha}$) de los índices vibratorios descritos anteriormente para minimizar el error de localización respecto a un estado de daño conocido. La arquitectura computacional diseñada para este propósito se presenta en la Figura~\ref{fig:metodologia_AG}.
 
-\begin{figure}[!ht]
+\begin{figure*}[!t]
     \centering
-    \includegraphics[width=0.9\columnwidth]{figs/006_metodología_del_AG_para_localizar_daños_a_nivel_computacional.jpg}
+    \includegraphics[width=0.9\textwidth]{figs/006_metodología_del_AG_para_localizar_daños_a_nivel_computacional.jpg}
     \caption{Arquitectura computacional del AG configurado para la fusión de datos.}
     \label{fig:metodologia_AG}
-\end{figure}
+\end{figure*}
 
 \subsubsection{Configuración de los Operadores Genéticos}
 
@@ -367,26 +367,23 @@ Aunque la naturaleza física del daño difiere de la corrosión, la tendencia de
 
 Para determinar si la profundidad afecta la confiabilidad del diagnóstico, se segmentó la estructura en las cinco zonas verticales definidas en la Figura~\ref{fig:zonas_plataforma}: Zona de Salpicadura (\textit{Splash Zone}), tres tramos sumergidos intermedios (Sub\,1, Sub\,2 y Sub\,3) y la Línea de Lodo (\textit{Mudline}). Las Figuras~\ref{fig:corrosion_zone} y \ref{fig:abolladura_zone} comparan el desempeño del ICD en estas regiones.
 
-\begin{figure}[!ht]
+\begin{figure*}[!t]
     \centering
-    \begin{subfigure}[b]{\columnwidth}
+    \begin{subfigure}[b]{0.48\textwidth}
         \centering
-        \includegraphics[width=0.9\columnwidth]{../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by_zone_corrosion.png}
+        \includegraphics[width=\linewidth]{../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by_zone_corrosion.png}
         \caption{Desempeño en Escenarios de Corrosión.}
         \label{fig:corrosion_zone}
-    \end{subfigure}
-    
-    \vspace{0.5cm} % Espacio para que no se peguen
-    
-    \begin{subfigure}[b]{\columnwidth}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
         \centering
-        \includegraphics[width=0.9\columnwidth]{../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_zone_abolladura.png}
+        \includegraphics[width=\linewidth]{../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_zone_abolladura.png}
         \caption{Desempeño en Escenarios de Abolladura.}
         \label{fig:abolladura_zone}
     \end{subfigure}
     \caption{Influencia de la ubicación vertical del daño en la calidad de detección (ICD).}
     \label{fig:zone_analysis}
-\end{figure}
+\end{figure*}
 
 El análisis revela una ligera ventaja en la detectabilidad de daños ubicados en la \textit{Splash Zone} y Zona Media en comparación con el \textit{Mudline}. Esto es consistente con la teoría modal: los modos de flexión fundamentales presentan mayores amplitudes de desplazamiento y curvatura en la parte superior de la estructura (comportamiento en voladizo), lo que mejora la relación señal-ruido para los algoritmos de identificación. No obstante, la jerarquía de rigidez (Tipo de Elemento) sigue siendo el factor predominante sobre la ubicación geográfica del daño.
 
@@ -401,7 +398,21 @@ La validación estadística se apoya en un total de 3{,}240 corridas del AG: 1{,
 (120 elementos $\times$ 18 niveles de severidad: 5\%--90\%). La Tabla~\ref{tab:casos_experimentales}
 resume la distribución de ensayos por tipo de daño y tipo de elemento.
 
-\input{tablas/tabla_casos_experimentales.tex}
+\begin{table*}[!ht]
+  \centering
+  \caption{Summary of the numerical experiment: damage scenarios evaluated with the ICD+GA framework.}
+  \label{tab:casos_experimentales}
+  \begin{tabular}{lrrrrr}
+    \toprule
+    Damage Type & N Elements & Severity Range [\%] & Step [\%] & Levels & Total Runs \\
+    \midrule
+    Denting & 120 & 5--45 & 5 & 9 & 1,080 \\
+    Corrosion & 120 & 5--90 & 5 & 18 & 2,160 \\
+    \midrule
+    \textbf{Total} & & & & & \textbf{3,240} \\
+    \bottomrule
+  \end{tabular}
+\end{table*}
 
 La Figura~\ref{fig:distribucion_experimental} resume el diseño experimental desde tres
 perspectivas complementarias. El panel~(a) confirma la asimetría intencional en el número de
@@ -414,16 +425,16 @@ mejor desempeño de detección en el análisis posterior. El panel~(c) confirma 
 vertical del modelo cuenta con una composición tipológica equivalente, garantizando la
 comparabilidad interzonal del análisis.
 
-\begin{figure}[!ht]
+\begin{figure*}[!t]
     \centering
-    \includegraphics[width=0.9\columnwidth]{../outputs/resultados_nuevos/experimental_design_distribution.png}
+    \includegraphics[width=0.9\textwidth]{../outputs/resultados_nuevos/experimental_design_distribution.png}
     \caption{Diseño experimental: (a)~corridas de simulación por tipo de daño (Corrosión:
              2{,}160; Abolladura: 1{,}080); (b)~composición tipológica de los 120~elementos
              del modelo (\textit{Braces}: 67\%, \textit{Beams}: 17\%,
              \textit{Inclined legs}: 17\%); (c)~distribución de elementos por zona
              estructural vertical.}
     \label{fig:distribucion_experimental}
-\end{figure}
+\end{figure*}
 
 La delimitación geométrica de dichas zonas se ilustra en la Figura~\ref{fig:zonas_plataforma}.
 La plataforma queda dividida en cinco niveles verticales: el \textit{Mudline} (base) y tres
@@ -433,7 +444,7 @@ tramos sumergidos intermedios (Sub\,1, Sub\,2 y Sub\,3) de 20~m cada uno, más l
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.75\columnwidth]{figs/008_nombres_zonas_estudio_modelo_plataforma_marina_splashzone_subs_y_mudline_en_una_sola_grafica.png}
+    \includegraphics[width=0.55\columnwidth]{figs/008_nombres_zonas_estudio_modelo_plataforma_marina_splashzone_subs_y_mudline_en_una_sola_grafica.png}
     \caption{Zonificación vertical de la plataforma tipo Jacket: delimitación de las zonas de
              estudio por profundidad. Las cotas están expresadas en metros referidas al
              Nivel Medio del Mar (MSL: \textit{Mean Sea Level}).}
@@ -450,7 +461,46 @@ Para cuantificar el desempeño del sistema más allá del ICD, se calcularon las
 estándar de clasificación binaria. La Tabla~\ref{tab:metricas_compacta} reporta los valores
 medios por tipo de elemento y escenario de daño.
 
-\input{tablas/tabla_metricas_compacta.tex}
+\begin{table*}[!ht]
+  \centering
+  \caption{Summary of classification performance at key severity levels. Avg~FP: average number of false alarms per run.}
+  \label{tab:metricas_compacta}
+  \begin{tabular}{llrrrrr}
+    \toprule
+    Damage Type & Element & Severity & Precision & Recall & F1 & Avg FP \\
+    \midrule
+    Denting & Brace & 10\% & 0.404 & 0.952 & 0.567 & 1.4 \\
+    Denting & Brace & 20\% & 0.398 & 0.952 & 0.561 & 1.4 \\
+    Denting & Brace & 30\% & 0.365 & 0.952 & 0.528 & 1.7 \\
+    Denting & Brace & 45\% & 0.370 & 0.952 & 0.533 & 1.6 \\
+    \cmidrule{2-7}
+    Denting & Inclined Leg & 10\% & 0.152 & 0.600 & 0.242 & 3.4 \\
+    Denting & Inclined Leg & 20\% & 0.093 & 0.750 & 0.165 & 7.3 \\
+    Denting & Inclined Leg & 30\% & 0.122 & 1.000 & 0.217 & 7.2 \\
+    Denting & Inclined Leg & 45\% & 0.078 & 0.700 & 0.141 & 8.2 \\
+    \cmidrule{2-7}
+    Denting & Beam & 10\% & 0.084 & 1.000 & 0.155 & 10.9 \\
+    Denting & Beam & 20\% & 0.094 & 1.000 & 0.171 & 9.7 \\
+    Denting & Beam & 30\% & 0.116 & 1.000 & 0.208 & 7.6 \\
+    Denting & Beam & 45\% & 0.098 & 1.000 & 0.178 & 9.2 \\
+    \midrule
+    Corrosion & Brace & 20\% & 0.381 & 0.952 & 0.544 & 1.5 \\
+    Corrosion & Brace & 40\% & 0.377 & 0.952 & 0.541 & 1.6 \\
+    Corrosion & Brace & 60\% & 0.381 & 0.952 & 0.544 & 1.5 \\
+    Corrosion & Brace & 90\% & 0.319 & 0.905 & 0.472 & 1.9 \\
+    \cmidrule{2-7}
+    Corrosion & Inclined Leg & 20\% & 0.286 & 1.000 & 0.444 & 2.5 \\
+    Corrosion & Inclined Leg & 40\% & 0.263 & 1.000 & 0.417 & 2.8 \\
+    Corrosion & Inclined Leg & 60\% & 0.333 & 1.000 & 0.500 & 2.0 \\
+    Corrosion & Inclined Leg & 90\% & 0.339 & 1.000 & 0.506 & 1.9 \\
+    \cmidrule{2-7}
+    Corrosion & Beam & 20\% & 0.099 & 1.000 & 0.181 & 9.1 \\
+    Corrosion & Beam & 40\% & 0.105 & 1.000 & 0.190 & 8.5 \\
+    Corrosion & Beam & 60\% & 0.105 & 1.000 & 0.189 & 8.6 \\
+    Corrosion & Beam & 90\% & 0.121 & 1.000 & 0.216 & 7.2 \\
+    \bottomrule
+  \end{tabular}
+\end{table*}
 
 La Figura~\ref{fig:F1_comparison} compara las curvas de F\textsubscript{1} en función de la
 severidad para ambas campañas. Los \textit{braces} alcanzan sistemáticamente los valores de
@@ -458,26 +508,29 @@ F\textsubscript{1} más elevados ($> 0.85$ a partir del 30\%), mientras que los 
 de mayor rigidez (\textit{beams} y piernas inclinadas) muestran valores inferiores por su menor
 sensibilidad modal.
 
-\begin{figure}[!ht]
+\begin{figure*}[!t]
     \centering
-    \includegraphics[width=0.9\columnwidth]{../outputs/resultados_nuevos/F1_comparison_denting_corrosion.png}
+    \includegraphics[width=0.9\textwidth]{../outputs/resultados_nuevos/F1_comparison_denting_corrosion.png}
     \caption{Evolución del F\textsubscript{1}-score en función de la severidad del daño para
              cada tipo de elemento: Abolladura (izq.) y Corrosión (der.).}
     \label{fig:F1_comparison}
-\end{figure}
+\end{figure*}
 
 Las curvas ROC de la Figura~\ref{fig:ROC_curves} sintetizan la relación entre la tasa de
 verdaderos positivos (Recall) y la de falsos positivos (1$-$Especificidad) para el clasificador
 binario resultante. Los valores de AUC-ROC obtenidos ($> 0.90$ para abolladura y $> 0.94$ para
 corrosión) confirman la alta capacidad discriminativa del sistema.
 
-\begin{figure}[!ht]
+\begin{figure*}[!t]
     \centering
-    \includegraphics[width=0.9\columnwidth]{../outputs/resultados_nuevos/ROC_curve_denting_corrosion.png}
+    \includegraphics[width=0.9\textwidth]{../outputs/resultados_nuevos/ROC_curve_denting_corrosion.png}
     \caption{Curvas ROC para el clasificador de daño mediante ICD: Abolladura (izq.)
-             y Corrosión (der.). Área bajo la curva (AUC) reportada en cada panel.}
+             y Corrosión (der.). Valores resumen: AUC--ROC (Abolladura) $>$ 0.90; AUC--ROC
+             (Corrosión) $>$ 0.94. Punto operativo sugerido: si se prioriza baja tasa de
+             falsas alarmas seleccione el umbral cercano al marcador 'Brace (5\%)' (TPR
+             $\approx$ 0.90, FPR $\approx$ 0.01).}
     \label{fig:ROC_curves}
-\end{figure}
+\end{figure*}
 
 % ─────────────────────────────────────────────────────────────────────────────
 % §4.6  CURVAS POD (PROBABILITY OF DETECTION)
@@ -490,18 +543,42 @@ severidad, siguiendo la metodología de prueba no paramétrica de Wilcoxon. La p
 a nivel de significancia $\alpha = 0.05$ que el ICD supera estadísticamente al mejor DI
 individual en todos los tipos de elementos y en ambas campañas ($p < 0.001$).
 
-\begin{figure}[!ht]
+\begin{figure*}[!t]
     \centering
-    \includegraphics[width=0.9\columnwidth]{../outputs/resultados_nuevos/POD_curves_ICD_vs_bestDI.png}
+    \includegraphics[width=0.9\textwidth]{../outputs/resultados_nuevos/POD_curves_ICD_vs_bestDI.png}
     \caption{Curvas POD del ICD frente al mejor DI individual por tipo de elemento.
              Abolladura (fila superior) y Corrosión (fila inferior).}
     \label{fig:POD_curves}
-\end{figure}
+\end{figure*}
 
 La Tabla~\ref{tab:wilcoxon_POD} resume los estadísticos de la prueba de Wilcoxon y las áreas
 bajo la curva POD (AUC-POD) para cada combinación de tipo de elemento y escenario de daño.
 
-\input{tablas/tabla_wilcoxon_POD.tex}
+\begin{table*}[!ht]
+  \centering
+  \caption{Statistical comparison of the ICD framework versus the best single damage index baseline. POD values represent the mean detection rate across all severity levels. Wilcoxon signed-rank test, one-sided ($H_1$: ICD $>$ DI).}
+  \label{tab:wilcoxon_POD}
+  \begin{threeparttable}
+  \begin{tabular}{llccccccc}
+    \toprule
+    Damage & Member & Best & \multicolumn{2}{c}{Mean POD} & \multicolumn{2}{c}{AUC-POD} & $W$ & $p$-value \\
+    Type & Type & DI & ICD & DI & ICD & DI & & \\
+    \midrule
+    Denting & Beam & DI6 & 1.000 & 0.250 & 0.903 & 0.298 & 9774.0 & 0.0000$^{***}$ \\
+     & Brace & DI6 & 0.944 & 0.524 & 0.928 & 0.523 & 191646.0 & 0.0000$^{***}$ \\
+     & Inclined leg & DI6 & 0.767 & 0.600 & 0.728 & 0.589 & 5362.5 & 0.0000$^{***}$ \\
+    \midrule
+    Corrosion & Beam & DI6 & 1.000 & 0.188 & 0.903 & 0.251 & 40131.0 & 0.0000$^{***}$ \\
+     & Brace & DI6 & 0.950 & 0.488 & 0.931 & 0.485 & 813050.0 & 0.0000$^{***}$ \\
+     & Inclined leg & DI6 & 1.000 & 0.800 & 0.919 & 0.752 & 23364.0 & 0.0000$^{***}$ \\
+    \bottomrule
+  \end{tabular}
+  \begin{tablenotes}
+    \item $^{***}$ $p < 0.05$ (one-sided Wilcoxon signed-rank test).
+    \item POD baseline threshold: median of $\alpha_k^{\text{norm}}$ per damage type.
+  \end{tablenotes}
+  \end{threeparttable}
+\end{table*}
 
 % ─────────────────────────────────────────────────────────────────────────────
 % §4.7  ROBUSTEZ ANTE RUIDO GAUSSIANO
@@ -514,13 +591,13 @@ gaussiano aditivo controlado con niveles de SNR entre 5 y 50~dB sobre los vector
 antes de la evaluación del ICD. La Figura~\ref{fig:SNR_degradation} muestra la degradación
 del AUC-ROC como función del nivel de SNR para los tres tipos de elementos.
 
-\begin{figure}[!ht]
+\begin{figure*}[!t]
     \centering
-    \includegraphics[width=0.9\columnwidth]{../outputs/resultados_nuevos/AUC_ROC_vs_SNR_degradation.png}
+    \includegraphics[width=0.9\textwidth]{../outputs/resultados_nuevos/AUC_ROC_vs_SNR_degradation.png}
     \caption{Degradación del AUC-ROC en función del nivel de ruido (SNR) para Abolladura (izq.)
              y Corrosión (der.). Línea punteada = umbral de AUC~$=$ 0.80.}
     \label{fig:SNR_degradation}
-\end{figure}
+\end{figure*}
 
 Los resultados evidencian que el ICD mantiene un AUC-ROC~$> 0.80$ hasta niveles de ruido de
 SNR~$= 20$~dB para los \textit{braces}, lo que corresponde a condiciones de medición
@@ -528,7 +605,35 @@ moderadamente ruidosas típicas de sistemas MEMS instalados en plataformas marin
 Tabla~\ref{tab:snr_robustness} sintetiza los valores de AUC-ROC para los puntos clave de SNR.
 
 \clearpage
-\input{tablas/tabla_snr_robustness.tex}
+\begin{table*}[!ht]
+  \centering
+  \caption{AUC-ROC of the ICD framework under additive white Gaussian noise (AWGN) at decreasing SNR levels. Ground truth: strict criterion (\texttt{DeteccionOK}=1.0). Monte Carlo estimation with $N_{\text{MC}}=500$ repetitions per SNR level.}
+  \label{tab:snr_robustness}
+  \begin{tabular}{llccccc}
+    \toprule
+    Damage & Member & \multicolumn{4}{c}{AUC-ROC at SNR level} & Degradation \\
+    Type & Type & Clean & 20~dB & 10~dB & 5~dB & Clean$\to$5~dB \\
+    \midrule
+    Denting & Beam & N/A$^*$ & N/A$^*$ & N/A$^*$ & N/A$^*$ & N/A$^*$ \\
+     & Brace & 1.000 & 1.000 & 0.992 & 0.965 & +3.5\% \\
+     & Inclined leg & 0.966 & 0.964 & 0.947 & 0.912 & +5.6\% \\
+    \midrule
+    Corrosion & Beam & N/A$^*$ & N/A$^*$ & N/A$^*$ & N/A$^*$ & N/A$^*$ \\
+     & Brace & 1.000 & 1.000 & 0.992 & 0.971 & +2.9\% \\
+     & Inclined leg & 0.969 & 0.965 & 0.947 & 0.911 & +6.0\% \\
+    \bottomrule
+  \end{tabular}
+  \par\smallskip
+  {\footnotesize\raggedright
+  SNR: Signal-to-Noise Ratio in decibels. AUC-ROC: Area Under the Receiver
+  Operating Characteristic curve (range [0.5, 1.0], higher is better).
+  Degradation (\%): relative AUC-ROC loss from clean to 5~dB SNR.
+  $^*$~N/A: AUC-ROC is undefined for Beam members because the ICD never achieves
+  correct element localisation (\texttt{DeteccionOK}$=0.5$ in all Beam cases, i.e.,
+  detection occurs but is attributed to the wrong element). This is a known limitation
+  of the methodology for this member type and is consistent with the thesis findings.
+  \par}
+\end{table*}
 
 % ─────────────────────────────────────────────────────────────────────────────
 % §4.8  PRECISION PONDERADA POR DISTANCIA TOPOLÓGICA  [CONTRIBUCIÓN NOVEDOSA]
@@ -578,47 +683,50 @@ $\bar{d} \approx 2.2$ miembros. Este hallazgo justifica la necesidad de la corre
 topológica: la Precision clásica subestima sistemáticamente la calidad de localización
 del AG.
 
-\begin{figure}[!ht]
+\begin{figure*}[!t]
     \centering
-    \includegraphics[width=0.9\columnwidth]{../outputs/resultados_nuevos/FP_distancia_topologica_distribucion.png}
+    \includegraphics[width=0.9\textwidth]{../outputs/resultados_nuevos/FP_distancia_topologica_distribucion.png}
     \caption{Distribución de distancias topológicas de los nodos FP al elemento dañado para
              Abolladura (izq.) y Corrosión (der.). La curva roja muestra la función de peso
              $w(d) = d/(d+1)$.}
     \label{fig:FP_distancias}
-\end{figure}
+\end{figure*}
 
 \subsubsection{Comparación Cuantitativa}
 
 La Figura~\ref{fig:precision_global} cuantifica la mejora en Precision para cada tipo de
-elemento al pasar de la métrca clásica a la ponderada. Los \textit{braces} muestran la mayor
+elemento al pasar de la métrica clásica a la ponderada. Los \textit{braces} muestran la mayor
 ganancia ($\Delta \approx +22$ puntos porcentuales) tanto en abolladura como en corrosión,
 lo que confirma que su señal de FP es estructuralmente coherente con el daño localizado.
+La Figura~\ref{fig:precision_vs_severidad} muestra, en detalle, la evolución de la Precision
+clásica y de la Precision ponderada en función de la severidad del daño.
 
-\begin{figure}[!ht]
+\begin{figure*}[!t]
     \centering
-    \includegraphics[width=0.9\columnwidth]{../outputs/resultados_nuevos/Precision_global_clasica_vs_ponderada.png}
-    \caption{Comparación global de Precision Clásica vs.\ Ponderada por tipo de elemento.
-             Las anotaciones indican el incremento $\Delta$ en puntos porcentuales.}
-    \label{fig:precision_global}
-\end{figure}
-
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=0.9\columnwidth]{../outputs/resultados_nuevos/Precision_clasica_vs_ponderada_por_elemento.png}
-    \caption{Evolución de la Precision Clásica (línea punteada) y Ponderada (línea sólida)
-             en función de la severidad del daño. La banda sombreada representa
-             $\Delta\text{Precision} = \text{Precision}_w - \text{Precision}$.}
-    \label{fig:precision_vs_severidad}
-\end{figure}
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../outputs/resultados_nuevos/Precision_global_clasica_vs_ponderada.png}
+        \caption{Comparación global por tipo de elemento.}
+        \label{fig:precision_global}
+    \end{subfigure}\hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{../outputs/resultados_nuevos/Precision_clasica_vs_ponderada_por_elemento.png}
+        \caption{Evolución por severidad.}
+        \label{fig:precision_vs_severidad}
+    \end{subfigure}
+    \caption{(a) Comparación global de Precision Clásica vs. Ponderada por tipo de elemento; (b)
+    Evolución de la Precision Clásica (línea punteada) y Ponderada (línea sólida) en función de la
+    severidad del daño. La banda sombreada representa $\Delta\text{Precision} = \text{Precision}_w - \text{Precision}$.}
+    \label{fig:precision_combined}
+\end{figure*}
 
 La Tabla~\ref{tab:precision_ponderada} reporta los valores numéricos completos por
 escenario, tipo de elemento y severidad, incluyendo la distancia media de los FP.
 
 \clearpage
 \onecolumn
-{\footnotesize
 \input{tablas/tabla_precision_ponderada.tex}
-}
 \clearpage
 \twocolumn
 

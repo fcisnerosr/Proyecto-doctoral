@@ -13,58 +13,91 @@
 \ifx\xfnm\relax \def\xfnm[#1]{\unskip,\space#1}\fi
 %Type = Article
 \bibitem[{Aghaeidoost and Sharbatdar(2023)}]{aghaeidoost2023generalized}
-\bibinfo{author}{Aghaeidoost, V.}, \bibinfo{author}{Sharbatdar, M.}, \bibinfo{year}{2023}.
-\newblock \bibinfo{title}{A generalized framework for structural damage identification using response-based indicators and evolutionary optimization}.
-\newblock \bibinfo{journal}{Engineering Structures} \bibinfo{volume}{276}, \bibinfo{pages}{115356}.
+\bibinfo{author}{Aghaeidoost, V.}, \bibinfo{author}{Sharbatdar, M.},
+  \bibinfo{year}{2023}.
+\newblock \bibinfo{title}{A generalized framework for structural damage
+  identification using response-based indicators and evolutionary
+  optimization}.
+\newblock \bibinfo{journal}{Engineering Structures} \bibinfo{volume}{276},
+  \bibinfo{pages}{115356}.
 \newblock \DOIprefix\doi{10.1016/j.engstruct.2022.115356}.
 %Type = Manual
 \bibitem[{{American Petroleum Institute}(2014)}]{API2014_manual}
 \bibinfo{author}{{American Petroleum Institute}}, \bibinfo{year}{2014}.
-\newblock \bibinfo{title}{{API RP 2A-WSD}: Recommended Practice for Planning, Designing and Constructing Fixed Offshore Platforms --- Working Stress Design}. \bibinfo{edition}{22nd} ed.
-\newblock \bibinfo{organization}{American Petroleum Institute}. \bibinfo{address}{Washington, D.C.}
+\newblock \bibinfo{title}{{API RP 2A-WSD}: Recommended Practice for Planning,
+  Designing and Constructing Fixed Offshore Platforms --- Working Stress
+  Design}. \bibinfo{edition}{22nd} ed.
+\newblock \bibinfo{organization}{American Petroleum Institute}.
+  \bibinfo{address}{Washington, D.C.}
 %Type = Article
-\bibitem[{C{\'a}rdenas-Arias and Maldonado-Zepeda(2019)}]{CardenasArias2019_article}
-\bibinfo{author}{C{\'a}rdenas-Arias, A.}, \bibinfo{author}{Maldonado-Zepeda, C.}, \bibinfo{year}{2019}.
-\newblock \bibinfo{title}{Experimental characterization of the elastic modulus of corroded tubular steel elements}.
-\newblock \bibinfo{journal}{Revista de la Construcción} \bibinfo{volume}{18}, \bibinfo{pages}{312--325}.
+\bibitem[{C{\'a}rdenas-Arias and
+  Maldonado-Zepeda(2019)}]{CardenasArias2019_article}
+\bibinfo{author}{C{\'a}rdenas-Arias, A.}, \bibinfo{author}{Maldonado-Zepeda,
+  C.}, \bibinfo{year}{2019}.
+\newblock \bibinfo{title}{Experimental characterization of the elastic modulus
+  of corroded tubular steel elements}.
+\newblock \bibinfo{journal}{Revista de la Construcción} \bibinfo{volume}{18},
+  \bibinfo{pages}{312--325}.
 \newblock \DOIprefix\doi{10.7764/RDLC.18.2.312}.
 %Type = Techreport
-\bibitem[{Doebling et~al.(1996)Doebling, Farrar, Prime and Shevitz}]{doebling1996damage}
-\bibinfo{author}{Doebling, S.W.}, \bibinfo{author}{Farrar, C.R.}, \bibinfo{author}{Prime, M.B.}, \bibinfo{author}{Shevitz, D.W.}, \bibinfo{year}{1996}.
-\newblock \bibinfo{title}{Damage Identification and Health Monitoring of Structural and Mechanical Systems from Changes in Their Vibration Characteristics: A Literature Review}.
-\newblock \bibinfo{type}{Technical Report} \bibinfo{number}{LA-13070-MS}. Los Alamos National Laboratory.
+\bibitem[{Doebling et~al.(1996)Doebling, Farrar, Prime and
+  Shevitz}]{doebling1996damage}
+\bibinfo{author}{Doebling, S.W.}, \bibinfo{author}{Farrar, C.R.},
+  \bibinfo{author}{Prime, M.B.}, \bibinfo{author}{Shevitz, D.W.},
+  \bibinfo{year}{1996}.
+\newblock \bibinfo{title}{Damage Identification and Health Monitoring of
+  Structural and Mechanical Systems from Changes in Their Vibration
+  Characteristics: A Literature Review}.
+\newblock \bibinfo{type}{Technical Report} \bibinfo{number}{LA-13070-MS}. Los
+  Alamos National Laboratory.
 %Type = Article
 \bibitem[{Ghsoub and Siriwardane(2018)}]{ghsoub2018structural}
-\bibinfo{author}{Ghsoub, M.}, \bibinfo{author}{Siriwardane, S.C.}, \bibinfo{year}{2018}.
-\newblock \bibinfo{title}{Structural health monitoring of offshore jacket platforms using modal analysis and damage indices}.
-\newblock \bibinfo{journal}{Ocean Engineering} \bibinfo{volume}{165}, \bibinfo{pages}{101--113}.
+\bibinfo{author}{Ghsoub, M.}, \bibinfo{author}{Siriwardane, S.C.},
+  \bibinfo{year}{2018}.
+\newblock \bibinfo{title}{Structural health monitoring of offshore jacket
+  platforms using modal analysis and damage indices}.
+\newblock \bibinfo{journal}{Ocean Engineering} \bibinfo{volume}{165},
+  \bibinfo{pages}{101--113}.
 \newblock \DOIprefix\doi{10.1016/j.oceaneng.2018.07.032}.
 %Type = Book
 \bibitem[{Goldberg(1989)}]{goldberg1989genetic}
 \bibinfo{author}{Goldberg, D.E.}, \bibinfo{year}{1989}.
-\newblock \bibinfo{title}{Genetic Algorithms in Search, Optimization, and Machine Learning}.
-\newblock \bibinfo{publisher}{Addison-Wesley}, \bibinfo{address}{Reading, Massachusetts}.
+\newblock \bibinfo{title}{Genetic Algorithms in Search, Optimization, and
+  Machine Learning}.
+\newblock \bibinfo{publisher}{Addison-Wesley}, \bibinfo{address}{Reading,
+  Massachusetts}.
 %Type = Techreport
 \bibitem[{{Instituto Mexicano del Petróleo}(2020)}]{instituto2020tech}
 \bibinfo{author}{{Instituto Mexicano del Petróleo}}, \bibinfo{year}{2020}.
-\newblock \bibinfo{title}{Evaluación Tecnológica de Sistemas de Inspección Submarina para Plataformas Costa Afuera}.
-\newblock \bibinfo{type}{Technical Report}. Instituto Mexicano del Petróleo. \bibinfo{address}{Ciudad de México, México}.
+\newblock \bibinfo{title}{Evaluación Tecnológica de Sistemas de Inspección
+  Submarina para Plataformas Costa Afuera}.
+\newblock \bibinfo{type}{Technical Report}. Instituto Mexicano del Petróleo.
+  \bibinfo{address}{Ciudad de México, México}.
 %Type = Article
-\bibitem[{Malekzadeh et~al.(2013)Malekzadeh, Atia and Catbas}]{malekzadeh2013damage}
-\bibinfo{author}{Malekzadeh, M.}, \bibinfo{author}{Atia, G.}, \bibinfo{author}{Catbas, F.N.}, \bibinfo{year}{2013}.
-\newblock \bibinfo{title}{Performance-based structural health monitoring through an innovative hybrid data interpretation framework}.
-\newblock \bibinfo{journal}{Journal of Civil Structural Health Monitoring} \bibinfo{volume}{3}, \bibinfo{pages}{251--276}.
+\bibitem[{Malekzadeh et~al.(2013)Malekzadeh, Atia and
+  Catbas}]{malekzadeh2013damage}
+\bibinfo{author}{Malekzadeh, M.}, \bibinfo{author}{Atia, G.},
+  \bibinfo{author}{Catbas, F.N.}, \bibinfo{year}{2013}.
+\newblock \bibinfo{title}{Performance-based structural health monitoring
+  through an innovative hybrid data interpretation framework}.
+\newblock \bibinfo{journal}{Journal of Civil Structural Health Monitoring}
+  \bibinfo{volume}{3}, \bibinfo{pages}{251--276}.
 \newblock \DOIprefix\doi{10.1007/s13349-013-0054-7}.
 %Type = Article
-\bibitem[{Mubarak et~al.(2020)Mubarak, Ahmad and Kamaruddin}]{mubarak2020condition}
-\bibinfo{author}{Mubarak, A.}, \bibinfo{author}{Ahmad, R.}, \bibinfo{author}{Kamaruddin, S.}, \bibinfo{year}{2020}.
-\newblock \bibinfo{title}{Condition monitoring of offshore structures: A review of current technologies and challenges}.
-\newblock \bibinfo{journal}{Ocean Engineering} \bibinfo{volume}{198}, \bibinfo{pages}{106995}.
+\bibitem[{Mubarak et~al.(2020)Mubarak, Ahmad and
+  Kamaruddin}]{mubarak2020condition}
+\bibinfo{author}{Mubarak, A.}, \bibinfo{author}{Ahmad, R.},
+  \bibinfo{author}{Kamaruddin, S.}, \bibinfo{year}{2020}.
+\newblock \bibinfo{title}{Condition monitoring of offshore structures: A review
+  of current technologies and challenges}.
+\newblock \bibinfo{journal}{Ocean Engineering} \bibinfo{volume}{198},
+  \bibinfo{pages}{106995}.
 \newblock \DOIprefix\doi{10.1016/j.oceaneng.2020.106995}.
 %Type = Misc
 \bibitem[{{Sinergia Informativa}(2024)}]{sinergia2024recorte}
 \bibinfo{author}{{Sinergia Informativa}}, \bibinfo{year}{2024}.
-\newblock \bibinfo{title}{Recortes presupuestales afectan el mantenimiento de plataformas petroleras en el golfo de méxico}.
+\newblock \bibinfo{title}{Recortes presupuestales afectan el mantenimiento de
+  plataformas petroleras en el golfo de méxico}.
 \newblock \bibinfo{howpublished}{Nota periodística}.
 \newblock \bibinfo{note}{Consultado el 6 de abril de 2026}.
 

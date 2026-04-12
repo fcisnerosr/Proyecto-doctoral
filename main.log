@@ -1,13 +1,13 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.3.16)  12 APR 2026 01:20
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.3.16)  12 APR 2026 00:19
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**main.tex
-(./main.tex
+**/home/fcisnerosr/github/Proyecto-doctoral/manuscript_AOR/main.tex
+(/home/fcisnerosr/github/Proyecto-doctoral/manuscript_AOR/main.tex
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
-(./cas-dc.cls
-Document Class: cas-dc 2024/05/04, 2.4: Formatting class for CAS double column 
+(/usr/share/texlive/texmf-dist/tex/latex/els-cas-templates/cas-dc.cls
+Document Class: cas-dc 2021/05/11, 2.3: Formatting class for CAS double column 
 articles
 \c@blind=\count187
 \@bls=\dimen140
@@ -414,7 +414,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip59
 )
-(./cas-common.sty
+(/usr/share/texlive/texmf-dist/tex/latex/els-cas-templates/cas-common.sty
 \l_stm_title_before_dim=\dimen177
 \l_stm_title_after_dim=\dimen178
 \g_ead_int=\count298
@@ -609,7 +609,8 @@ Package: inputenc 2021/02/14 v1.3d Input encoding file
 )
 (/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
-) (./main.aux)
+)
+No file main.aux.
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 18.
@@ -630,7 +631,6 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 18.
 LaTeX Font Info:    ... okay on input line 18.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 18.
 LaTeX Font Info:    ... okay on input line 18.
-
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count342
@@ -662,8 +662,6 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 Package hyperref Info: Link coloring ON on input line 18.
-
-(./main.out) (./main.out)
 \@outlinefile=\write3
 \openout3 = `main.out'.
 
@@ -736,28 +734,39 @@ Package hyperref Warning: Ignoring empty anchor on input line 96.
 
 Package hyperref Warning: Ignoring empty anchor on input line 96.
 
-<thumbnails/cas-email.jpeg, id=4, 225.84375pt x 225.84375pt>
-File: thumbnails/cas-email.jpeg Graphic file (type jpg)
-<use thumbnails/cas-email.jpeg>
-Package pdftex.def Info: thumbnails/cas-email.jpeg  used on input line 96.
-(pdftex.def)             Requested size: 7.99838pt x 8.0pt.
-LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 9
-6.
-(/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
-File: t1cmtt.fd 2023/04/13 v2.5m Standard LaTeX font definitions
-)
 
-Package hyperref Warning: Ignoring empty anchor on input line 96.
-
-LaTeX Font Info:    Trying to load font information for T1+cmss on input line 1
-11.
-(/usr/share/texlive/texmf-dist/tex/latex/base/t1cmss.fd
-File: t1cmss.fd 2023/04/13 v2.5m Standard LaTeX font definitions
-) [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
+Package natbib Warning: Citation `mubarak2020condition' on page 1 undefined on 
+input line 104.
 
 
- </usr/share/texlive/texmf-dist/tex/latex/els-cas-templates/thumbnails/cas-emai
-l.jpeg>]
+Package natbib Warning: Citation `instituto2020tech' on page 1 undefined on inp
+ut line 104.
+
+
+Package natbib Warning: Citation `sinergia2024recorte' on page 1 undefined on i
+nput line 104.
+
+
+Package natbib Warning: Citation `ghsoub2018structural' on page 1 undefined on 
+input line 106.
+
+
+Package natbib Warning: Citation `doebling1996damage' on page 1 undefined on in
+put line 106.
+
+
+Package natbib Warning: Citation `aghaeidoost2023generalized' on page 1 undefin
+ed on input line 106.
+
+
+Package natbib Warning: Citation `goldberg1989genetic' on page 1 undefined on i
+nput line 108.
+
+
+Package natbib Warning: Citation `malekzadeh2013damage' on page 1 undefined on 
+input line 108.
+
+
 Overfull \hbox (0.72777pt too wide) in paragraph at lines 112--113
 \T1/cmr/m/n/10 metodolog�a basada en AG y la for-mu-laci�n matem�tica
  []
@@ -767,6 +776,14 @@ Underfull \hbox (badness 1331) in paragraph at lines 112--113
 \T1/cmr/m/n/10 del ICD. La Sec-ci�n 4 pre-senta los re-sul-ta-dos y
  []
 
+LaTeX Font Info:    Trying to load font information for T1+cmss on input line 1
+13.
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1cmss.fd
+File: t1cmss.fd 2023/04/13 v2.5m Standard LaTeX font definitions
+) [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
+
+
+]
 
 LaTeX Font Warning: Font shape `T1/cmr/b/it' undefined
 (Font)              using `T1/cmr/b/n' instead on input line 130.
@@ -792,367 +809,318 @@ LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <10.5> not available
 LaTeX Font Warning: Font shape `OT1/cmr/bx/n' in size <10.5> not available
 (Font)              size <10.95> substituted on input line 130.
 
-<figs/001_modelo_plataforma_con_elemento_tubular_masa_adherida_y_masa_atrapada.
-png, id=56, 573.14125pt x 278.03876pt>
-File: figs/001_modelo_plataforma_con_elemento_tubular_masa_adherida_y_masa_atra
-pada.png Graphic file (type png)
-<use figs/001_modelo_plataforma_con_elemento_tubular_masa_adherida_y_masa_atrap
-ada.png>
-Package pdftex.def Info: figs/001_modelo_plataforma_con_elemento_tubular_masa_a
-dherida_y_masa_atrapada.png  used on input line 139.
-(pdftex.def)             Requested size: 214.42754pt x 104.02245pt.
+
+Package natbib Warning: Citation `API2014_manual' on page 2 undefined on input 
+line 131.
+
+
+LaTeX Warning: Reference `fig:masa_adherida' on page 2 undefined on input line 
+135.
+
+
+LaTeX Warning: File `figs/001_modelo_plataforma_con_elemento_tubular_masa_adher
+ida_y_masa_atrapada.png' not found on input line 139.
+
+
+! Package pdftex.def Error: File `figs/001_modelo_plataforma_con_elemento_tubul
+ar_masa_adherida_y_masa_atrapada.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.139 ...ubular_masa_adherida_y_masa_atrapada.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 1
+39.
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
+File: t1cmtt.fd 2023/04/13 v2.5m Standard LaTeX font definitions
+)
 
 LaTeX Font Warning: Font shape `T1/cmr/b/it' in size <10.5> not available
 (Font)              size <10.95> substituted on input line 144.
 
-<figs/001_modelo_plataforma_con_elemento_tubular_masa_de_crecimiento_marino.png
-, id=58, 654.445pt x 333.245pt>
-File: figs/001_modelo_plataforma_con_elemento_tubular_masa_de_crecimiento_marin
-o.png Graphic file (type png)
-<use figs/001_modelo_plataforma_con_elemento_tubular_masa_de_crecimiento_marino
-.png>
-Package pdftex.def Info: figs/001_modelo_plataforma_con_elemento_tubular_masa_d
-e_crecimiento_marino.png  used on input line 150.
-(pdftex.def)             Requested size: 214.42754pt x 109.18301pt.
-[2 <./figs/001_modelo_plataforma_con_elemento_tubular_masa_adherida_y_masa_atra
-pada.png> <./figs/001_modelo_plataforma_con_elemento_tubular_masa_de_crecimient
-o_marino.png>]
-<figs/004_caracterizacion_de_como_se_reduce_el_espesor_elemento_tubular_por_cor
-rosion.png, id=86, 406.51875pt x 256.96pt>
-File: figs/004_caracterizacion_de_como_se_reduce_el_espesor_elemento_tubular_po
-r_corrosion.png Graphic file (type png)
-<use figs/004_caracterizacion_de_como_se_reduce_el_espesor_elemento_tubular_por
-_corrosion.png>
-Package pdftex.def Info: figs/004_caracterizacion_de_como_se_reduce_el_espesor_
-elemento_tubular_por_corrosion.png  used on input line 167.
-(pdftex.def)             Requested size: 197.80052pt x 125.0293pt.
-<figs/004_modelo_elemento_tubula_seccion_longitudinal_parametros_abolladura.png
-, id=88, 1036.87375pt x 861.2175pt>
-File: figs/004_modelo_elemento_tubula_seccion_longitudinal_parametros_abolladur
-a.png Graphic file (type png)
-<use figs/004_modelo_elemento_tubula_seccion_longitudinal_parametros_abolladura
-.png>
-Package pdftex.def Info: figs/004_modelo_elemento_tubula_seccion_longitudinal_p
-arametros_abolladura.png  used on input line 177.
-(pdftex.def)             Requested size: 98.90025pt x 82.14503pt.
-<figs/004_modelo_elemento_tubular_seccion_longitudinal_parametros_abolladura_co
-n_funciones_de_interpolacion.png, id=89, 380.01974pt x 85.5195pt>
-File: figs/004_modelo_elemento_tubular_seccion_longitudinal_parametros_abolladu
-ra_con_funciones_de_interpolacion.png Graphic file (type png)
-<use figs/004_modelo_elemento_tubular_seccion_longitudinal_parametros_abolladur
-a_con_funciones_de_interpolacion.png>
-Package pdftex.def Info: figs/004_modelo_elemento_tubular_seccion_longitudinal_
-parametros_abolladura_con_funciones_de_interpolacion.png  used on input line 18
-6.
-(pdftex.def)             Requested size: 214.42754pt x 48.25465pt.
-<figs/007_modeo_vista_3d_de_plataforma_tipo_jacket_de_caso_de_estudio.png, id=9
-0, 302.63063pt x 650.43pt>
-File: figs/007_modeo_vista_3d_de_plataforma_tipo_jacket_de_caso_de_estudio.png 
-Graphic file (type png)
-<use figs/007_modeo_vista_3d_de_plataforma_tipo_jacket_de_caso_de_estudio.png>
-Package pdftex.def Info: figs/007_modeo_vista_3d_de_plataforma_tipo_jacket_de_c
-aso_de_estudio.png  used on input line 198.
-(pdftex.def)             Requested size: 95.30031pt x 204.82698pt.
-<figs/005_metogologia_propuesta_para_identificar_daños_en_plataformas_reales.j
-pg, id=92, 1419.3025pt x 709.65125pt>
-File: figs/005_metogologia_propuesta_para_identificar_daños_en_plataformas_rea
-les.jpg Graphic file (type jpg)
-<use figs/005_metogologia_propuesta_para_identificar_daños_en_plataformas_real
-es.jpg>
-Package pdftex.def Info: figs/005_metogologia_propuesta_para_identificar_daños
-_en_plataformas_reales.jpg  used on input line 213.
-(pdftex.def)             Requested size: 445.05496pt x 222.52345pt.
- [3 <./figs/004_caracterizacion_de_como_se_reduce_el_espesor_elemento_tubular_p
-or_corrosion.png> <./figs/004_modelo_elemento_tubula_seccion_longitudinal_param
-etros_abolladura.png> <./figs/004_modelo_elemento_tubular_seccion_longitudinal_
-parametros_abolladura_con_funciones_de_interpolacion.png> <./figs/007_modeo_vis
-ta_3d_de_plataforma_tipo_jacket_de_caso_de_estudio.png>]
-<figs/006_metodología_del_AG_para_localizar_daños_a_nivel_computacional.jpg, 
-id=112, 1502.61375pt x 669.50125pt>
-File: figs/006_metodología_del_AG_para_localizar_daños_a_nivel_computacional.
-jpg Graphic file (type jpg)
-<use figs/006_metodología_del_AG_para_localizar_daños_a_nivel_computacional.j
-pg>
-Package pdftex.def Info: figs/006_metodología_del_AG_para_localizar_daños_a_n
-ivel_computacional.jpg  used on input line 278.
-(pdftex.def)             Requested size: 445.05496pt x 198.29799pt.
- [4 <./figs/005_metogologia_propuesta_para_identificar_daños_en_plataformas_re
-ales.jpg>]
-<figs/015_diagrama_como_funciona_el_AG_para_la_sumas_funcion_P_y_como_se_relaci
-ona_con_operadores_geneticos_del_AG.jpg, id=137, 840.13875pt x 1197.47375pt>
-File: figs/015_diagrama_como_funciona_el_AG_para_la_sumas_funcion_P_y_como_se_r
-elaciona_con_operadores_geneticos_del_AG.jpg Graphic file (type jpg)
-<use figs/015_diagrama_como_funciona_el_AG_para_la_sumas_funcion_P_y_como_se_re
-laciona_con_operadores_geneticos_del_AG.jpg>
-Package pdftex.def Info: figs/015_diagrama_como_funciona_el_AG_para_la_sumas_fu
-ncion_P_y_como_se_relaciona_con_operadores_geneticos_del_AG.jpg  used on input 
-line 299.
-(pdftex.def)             Requested size: 202.51772pt x 288.64206pt.
- [5 <./figs/006_metodología_del_AG_para_localizar_daños_a_nivel_computacional
-.jpg> <./figs/015_diagrama_como_funciona_el_AG_para_la_sumas_funcion_P_y_como_s
-e_relaciona_con_operadores_geneticos_del_AG.jpg>]
-<../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by_element_type_corros
-ion.png, id=148, 713.7867pt x 424.2249pt>
-File: ../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by_element_type_c
-orrosion.png Graphic file (type png)
-<use ../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by_element_type_co
-rrosion.png>
-Package pdftex.def Info: ../outputs/resultados_nuevos/corrosion_2026/figures/IC
-D_by_element_type_corrosion.png  used on input line 344.
-(pdftex.def)             Requested size: 214.42754pt x 127.43674pt.
-<../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_element_type_abol
-ladura.png, id=150, 713.7867pt x 424.2249pt>
-File: ../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_element_type
-_abolladura.png Graphic file (type png)
-<use ../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_element_type_
-abolladura.png>
-Package pdftex.def Info: ../outputs/resultados_nuevos/abolladuras_2026/figures/
-ICD_by_element_type_abolladura.png  used on input line 359.
-(pdftex.def)             Requested size: 214.42754pt x 127.43674pt.
- [6 <../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by_element_type_co
-rrosion.png> <../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_elem
-ent_type_abolladura.png>]
-<../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by_zone_corrosion.png,
- id=171, 1291.9467pt x 1297.4874pt>
-File: ../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by_zone_corrosion
-.png Graphic file (type png)
-<use ../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by_zone_corrosion.
-png>
-Package pdftex.def Info: ../outputs/resultados_nuevos/corrosion_2026/figures/IC
-D_by_zone_corrosion.png  used on input line 374.
-(pdftex.def)             Requested size: 237.36214pt x 238.36838pt.
-<../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_zone_abolladura.p
-ng, id=172, 1291.9467pt x 1297.4874pt>
-File: ../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_zone_abollad
-ura.png Graphic file (type png)
-<use ../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_zone_abolladu
-ra.png>
-Package pdftex.def Info: ../outputs/resultados_nuevos/abolladuras_2026/figures/
-ICD_by_zone_abolladura.png  used on input line 380.
-(pdftex.def)             Requested size: 237.36214pt x 238.36838pt.
-<../outputs/resultados_nuevos/experimental_design_distribution.png, id=175, 114
-7.6476pt x 372.1905pt>
-File: ../outputs/resultados_nuevos/experimental_design_distribution.png Graphic
- file (type png)
-<use ../outputs/resultados_nuevos/experimental_design_distribution.png>
-Package pdftex.def Info: ../outputs/resultados_nuevos/experimental_design_distr
-ibution.png  used on input line 430.
-(pdftex.def)             Requested size: 445.05496pt x 144.3359pt.
-<figs/008_nombres_zonas_estudio_modelo_plataforma_marina_splashzone_subs_y_mudl
-ine_en_una_sola_grafica.png, id=177, 848.16875pt x 1187.43625pt>
-File: figs/008_nombres_zonas_estudio_modelo_plataforma_marina_splashzone_subs_y
-_mudline_en_una_sola_grafica.png Graphic file (type png)
-<use figs/008_nombres_zonas_estudio_modelo_plataforma_marina_splashzone_subs_y_
-mudline_en_una_sola_grafica.png>
-Package pdftex.def Info: figs/008_nombres_zonas_estudio_modelo_plataforma_marin
-a_splashzone_subs_y_mudline_en_una_sola_grafica.png  used on input line 447.
-(pdftex.def)             Requested size: 131.04066pt x 183.45279pt.
-LaTeX Font Info:    Calculating math sizes for size <11> on input line 457.
+
+LaTeX Warning: File `figs/001_modelo_plataforma_con_elemento_tubular_masa_de_cr
+ecimiento_marino.png' not found on input line 150.
 
 
-LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <5.5> not available
-(Font)              size <5> substituted on input line 457.
+! Package pdftex.def Error: File `figs/001_modelo_plataforma_con_elemento_tubul
+ar_masa_de_crecimiento_marino.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.150 ...o_tubular_masa_de_crecimiento_marino.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <5.5> not available
-(Font)              size <5> substituted on input line 457.
+Package natbib Warning: Citation `CardenasArias2019_article' on page 2 undefine
+d on input line 163.
+
+[2]
+
+LaTeX Warning: File `figs/004_caracterizacion_de_como_se_reduce_el_espesor_elem
+ento_tubular_por_corrosion.png' not found on input line 167.
 
 
-LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <5.5> not available
-(Font)              size <5> substituted on input line 457.
+! Package pdftex.def Error: File `figs/004_caracterizacion_de_como_se_reduce_el
+_espesor_elemento_tubular_por_corrosion.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.167 ...pesor_elemento_tubular_por_corrosion.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Font Warning: Font shape `OT1/cmr/bx/n' in size <5.5> not available
-(Font)              size <5> substituted on input line 457.
-
-[7 <../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by_zone_corrosion.p
-ng> <../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_zone_abolladu
-ra.png>]
-<../outputs/resultados_nuevos/F1_comparison_denting_corrosion.png, id=199, 1003
-.1076pt x 357.7365pt>
-File: ../outputs/resultados_nuevos/F1_comparison_denting_corrosion.png Graphic 
-file (type png)
-<use ../outputs/resultados_nuevos/F1_comparison_denting_corrosion.png>
-Package pdftex.def Info: ../outputs/resultados_nuevos/F1_comparison_denting_cor
-rosion.png  used on input line 513.
-(pdftex.def)             Requested size: 445.05496pt x 158.72006pt.
-<../outputs/resultados_nuevos/ROC_curve_denting_corrosion.png, id=201, 1003.107
-6pt x 428.5611pt>
-File: ../outputs/resultados_nuevos/ROC_curve_denting_corrosion.png Graphic file
- (type png)
-<use ../outputs/resultados_nuevos/ROC_curve_denting_corrosion.png>
-Package pdftex.def Info: ../outputs/resultados_nuevos/ROC_curve_denting_corrosi
-on.png  used on input line 526.
-(pdftex.def)             Requested size: 445.05496pt x 190.14343pt.
-<../outputs/resultados_nuevos/POD_curves_ICD_vs_bestDI.png, id=202, 1147.1658pt
- x 733.5405pt>
-File: ../outputs/resultados_nuevos/POD_curves_ICD_vs_bestDI.png Graphic file (t
-ype png)
-<use ../outputs/resultados_nuevos/POD_curves_ICD_vs_bestDI.png>
-Package pdftex.def Info: ../outputs/resultados_nuevos/POD_curves_ICD_vs_bestDI.
-png  used on input line 548.
-(pdftex.def)             Requested size: 445.05496pt x 284.57979pt.
-<../outputs/resultados_nuevos/AUC_ROC_vs_SNR_degradation.png, id=205, 1002.6258
-pt x 357.4956pt>
-File: ../outputs/resultados_nuevos/AUC_ROC_vs_SNR_degradation.png Graphic file 
-(type png)
-<use ../outputs/resultados_nuevos/AUC_ROC_vs_SNR_degradation.png>
-Package pdftex.def Info: ../outputs/resultados_nuevos/AUC_ROC_vs_SNR_degradatio
-n.png  used on input line 596.
-(pdftex.def)             Requested size: 445.05496pt x 158.68954pt.
- [8 <../outputs/resultados_nuevos/experimental_design_distribution.png> <./figs
-/008_nombres_zonas_estudio_modelo_plataforma_marina_splashzone_subs_y_mudline_e
-n_una_sola_grafica.png>] [9 <../outputs/resultados_nuevos/F1_comparison_denting
-_corrosion.png>] [10 <../outputs/resultados_nuevos/ROC_curve_denting_corrosion.
-png> <../outputs/resultados_nuevos/POD_curves_ICD_vs_bestDI.png>]
-[11 <../outputs/resultados_nuevos/AUC_ROC_vs_SNR_degradation.png>]
-<../outputs/resultados_nuevos/FP_distancia_topologica_distribucion.png, id=245,
- 1001.4213pt x 357.7365pt>
-File: ../outputs/resultados_nuevos/FP_distancia_topologica_distribucion.png Gra
-phic file (type png)
-<use ../outputs/resultados_nuevos/FP_distancia_topologica_distribucion.png>
-Package pdftex.def Info: ../outputs/resultados_nuevos/FP_distancia_topologica_d
-istribucion.png  used on input line 688.
-(pdftex.def)             Requested size: 445.05496pt x 158.98753pt.
-<../outputs/resultados_nuevos/Precision_global_clasica_vs_ponderada.png, id=248
-, 1002.6258pt x 357.2547pt>
-File: ../outputs/resultados_nuevos/Precision_global_clasica_vs_ponderada.png Gr
-aphic file (type png)
-<use ../outputs/resultados_nuevos/Precision_global_clasica_vs_ponderada.png>
-Package pdftex.def Info: ../outputs/resultados_nuevos/Precision_global_clasica_
-vs_ponderada.png  used on input line 708.
-(pdftex.def)             Requested size: 237.36214pt x 84.5763pt.
-<../outputs/resultados_nuevos/Precision_clasica_vs_ponderada_por_elemento.png, 
-id=249, 1147.1658pt x 740.7675pt>
-File: ../outputs/resultados_nuevos/Precision_clasica_vs_ponderada_por_elemento.
-png Graphic file (type png)
-<use ../outputs/resultados_nuevos/Precision_clasica_vs_ponderada_por_elemento.p
-ng>
-Package pdftex.def Info: ../outputs/resultados_nuevos/Precision_clasica_vs_pond
-erada_por_elemento.png  used on input line 714.
-(pdftex.def)             Requested size: 237.36214pt x 153.27121pt.
- [12
-
-]
-[13 <../outputs/resultados_nuevos/FP_distancia_topologica_distribucion.png> <..
-/outputs/resultados_nuevos/Precision_global_clasica_vs_ponderada.png> <../outpu
-ts/resultados_nuevos/Precision_clasica_vs_ponderada_por_elemento.png>]
-(./tablas/tabla_precision_ponderada.tex [14
+LaTeX Warning: Reference `fig:abolladura_seccion' on page 3 undefined on input 
+line 173.
 
 
-]) [15]
-Overfull \hbox (12.52043pt too wide) in paragraph at lines 741--742
-\T1/cmr/m/n/10 pone la \T1/cmr/bx/n/10 Pre-ci-sion Pon-der-ada por Dis-tan-cia 
-Topol�g-
- []
+LaTeX Warning: File `figs/004_modelo_elemento_tubula_seccion_longitudinal_param
+etros_abolladura.png' not found on input line 177.
 
 
-Overfull \hbox (11.77036pt too wide) in paragraph at lines 750--751
-[]\T1/cmr/bx/n/10 Validaci�n Ex-per-i-men-tal: \T1/cmr/m/n/10 Aplicar la metodo
-log�a
- []
+! Package pdftex.def Error: File `figs/004_modelo_elemento_tubula_seccion_longi
+tudinal_parametros_abolladura.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.177 ...n_longitudinal_parametros_abolladura.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
 
 
-Underfull \hbox (badness 1917) in paragraph at lines 752--753
-[]\T1/cmr/bx/n/10 Extensi�n Tipol�g-ica: \T1/cmr/m/n/10 Adap-tar la fun-ci�n
- []
+LaTeX Warning: File `figs/004_modelo_elemento_tubular_seccion_longitudinal_para
+metros_abolladura_con_funciones_de_interpolacion.png' not found on input line 1
+86.
 
 
-Overfull \hbox (0.30563pt too wide) in paragraph at lines 752--753
-\T1/cmr/m/n/10 como tr�podes o \T1/cmr/m/it/10 monopiles\T1/cmr/m/n/10 , que pr
-e-sen-tan din�mi-
- []
+! Package pdftex.def Error: File `figs/004_modelo_elemento_tubular_seccion_long
+itudinal_parametros_abolladura_con_funciones_de_interpolacion.png' not found: u
+sing draft setting.
 
-(./main.bbl
-Underfull \hbox (badness 1033) in paragraph at lines 79--88
-\T1/cmr/m/n/8 hy-brid data in-ter-pre-ta-tion frame-work.  Jour-nal of Civil
- []
-
-
-Underfull \hbox (badness 1237) in paragraph at lines 79--88
-\T1/cmr/m/n/8 Struc-tural Health Mon-i-tor-ing 3, 251--276.  doi:[][]$\T1/cmtt/
-m/n/8 10 . 1007 /
- []
-
-[16
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.186 ...adura_con_funciones_de_interpolacion.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
 
 
-]) [17
-
-] (./main.aux)
- ***********
-LaTeX2e <2023-11-01> patch level 1
-L3 programming layer <2024-01-22>
- ***********
+LaTeX Warning: File `figs/007_modeo_vista_3d_de_plataforma_tipo_jacket_de_caso_
+de_estudio.png' not found on input line 198.
 
 
-LaTeX Font Warning: Size substitutions with differences
-(Font)              up to 0.5pt have occurred.
+! Package pdftex.def Error: File `figs/007_modeo_vista_3d_de_plataforma_tipo_ja
+cket_de_caso_de_estudio.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.198 ...forma_tipo_jacket_de_caso_de_estudio.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[3]
+
+LaTeX Warning: Reference `fig:metodologia_general' on page 4 undefined on input
+ line 209.
 
 
-LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+LaTeX Warning: File `figs/005_metogologia_propuesta_para_identificar_daños_en_
+plataformas_reales.jpg' not found on input line 213.
 
-Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
- ) 
+
+! Package pdftex.def Error: File `figs/005_metogologia_propuesta_para_identific
+ar_daños_en_plataformas_reales.jpg' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.213 ...tificar_daños_en_plataformas_reales.jpg}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: Reference `fig:metodologia_AG' on page 4 undefined on input line
+ 274.
+
+
+LaTeX Warning: File `figs/006_metodología_del_AG_para_localizar_daños_a_nivel
+_computacional.jpg' not found on input line 278.
+
+
+! Package pdftex.def Error: File `figs/006_metodología_del_AG_para_localizar_d
+años_a_nivel_computacional.jpg' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.278 ...calizar_daños_a_nivel_computacional.jpg}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[4]
+
+LaTeX Warning: Reference `fig:detalle_AG' on page 5 undefined on input line 295
+.
+
+
+LaTeX Warning: File `figs/015_diagrama_como_funciona_el_AG_para_la_sumas_funcio
+n_P_y_como_se_relaciona_con_operadores_geneticos_del_AG.jpg' not found on input
+ line 299.
+
+
+! Package pdftex.def Error: File `figs/015_diagrama_como_funciona_el_AG_para_la
+_sumas_funcion_P_y_como_se_relaciona_con_operadores_geneticos_del_AG.jpg' not f
+ound: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.299 ...iona_con_operadores_geneticos_del_AG.jpg}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[5]
+
+LaTeX Warning: Reference `fig:corrosion_element_type' on page 6 undefined on in
+put line 340.
+
+
+LaTeX Warning: File `../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by
+_element_type_corrosion.png' not found on input line 344.
+
+
+! Package pdftex.def Error: File `../outputs/resultados_nuevos/corrosion_2026/f
+igures/ICD_by_element_type_corrosion.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.344 ...igures/ICD_by_element_type_corrosion.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: Reference `fig:abolladura_element_type' on page 6 undefined on i
+nput line 355.
+
+
+LaTeX Warning: File `../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_
+by_element_type_abolladura.png' not found on input line 359.
+
+
+! Package pdftex.def Error: File `../outputs/resultados_nuevos/abolladuras_2026
+/figures/ICD_by_element_type_abolladura.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.359 ...gures/ICD_by_element_type_abolladura.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: Reference `fig:zonas_plataforma' on page 6 undefined on input li
+ne 368.
+
+
+LaTeX Warning: Reference `fig:corrosion_zone' on page 6 undefined on input line
+ 368.
+
+
+LaTeX Warning: Reference `fig:abolladura_zone' on page 6 undefined on input lin
+e 368.
+
+
+LaTeX Warning: File `../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by
+_zone_corrosion.png' not found on input line 374.
+
+
+! Package pdftex.def Error: File `../outputs/resultados_nuevos/corrosion_2026/f
+igures/ICD_by_zone_corrosion.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.374 ...n_2026/figures/ICD_by_zone_corrosion.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_
+by_zone_abolladura.png' not found on input line 383.
+
+
+! Package pdftex.def Error: File `../outputs/resultados_nuevos/abolladuras_2026
+/figures/ICD_by_zone_abolladura.png' not found: using draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.383 ..._2026/figures/ICD_by_zone_abolladura.png}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+[6]
+
+LaTeX Warning: Reference `tab:casos_experimentales' on page 7 undefined on inpu
+t line 401.
+
+
+! LaTeX Error: File `tablas/tabla_casos_experimentales.tex' not found.
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: tex)
+
+Enter file name: 
+! Emergency stop.
+<read *> 
+         
+l.404 ...ut{tablas/tabla_casos_experimentales.tex}
+                                                  ^^M
+*** (cannot \read from terminal in nonstop modes)
+
+ 
 Here is how much of TeX's memory you used:
- 15997 strings out of 476047
- 264698 string characters out of 5792075
- 1976975 words of memory out of 5000000
- 37612 multiletter control sequences out of 15000+600000
- 596837 words of font info for 133 fonts, out of 8000000 for 9000
+ 15977 strings out of 476047
+ 284297 string characters out of 5792075
+ 1949975 words of memory out of 5000000
+ 37667 multiletter control sequences out of 15000+600000
+ 588254 words of font info for 109 fonts, out of 8000000 for 9000
  85 hyphenation exceptions out of 8191
- 90i,13n,93p,1239b,668s stack positions out of 10000i,1000n,20000p,200000b,200000s
- </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecss080
-0.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/e
-ctt0900.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappe
-n/ec/ecss0800.450pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/j
-knappen/ec/ecsi0900.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/lj
-four/jknappen/ec/ecbx0800.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts
-/pk/ljfour/jknappen/ec/ecrm0900.600pk> </home/fcisnerosr/.texlive2023/texmf-var
-/fonts/pk/ljfour/jknappen/ec/ecrm0500.600pk> </home/fcisnerosr/.texlive2023/tex
-mf-var/fonts/pk/ljfour/jknappen/ec/ecrb0700.600pk> </home/fcisnerosr/.texlive20
-23/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk> </home/fcisnerosr/.tex
-live2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0700.600pk> </home/fcisneros
-r/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecsx0900.600pk> </home/fci
-snerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk> </ho
-me/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrb1095.600pk
-> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1095
-.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ec
-ti0900.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen
-/ec/ecss0900.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jk
-nappen/ec/ecti1000.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljf
-our/jknappen/ec/eccc0800.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/
-pk/ljfour/jknappen/ec/ectt0800.600pk> </home/fcisnerosr/.texlive2023/texmf-var/
-fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </home/fcisnerosr/.texlive2023/texm
-f-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </home/fcisnerosr/.texlive202
-3/texmf-var/fonts/pk/ljfour/jknappen/ec/ecti0600.600pk> </home/fcisnerosr/.texl
-ive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0800.600pk> </home/fcisnerosr
-/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecti0800.600pk> </home/fcis
-nerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> </hom
-e/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1728.600pk>
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/
-share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/
-texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf
--dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmmib10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
-6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></
-usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmsy9.pfb>
-Output written on main.pdf (17 pages, 6602370 bytes).
-PDF statistics:
- 1279 PDF objects out of 1440 (max. 8388607)
- 383 compressed objects within 4 object streams
- 104 named destinations out of 1000 (max. 500000)
- 116 words of extra memory for PDF output out of 10000 (max. 10000000)
-
+ 90i,10n,93p,986b,661s stack positions out of 10000i,1000n,20000p,200000b,200000s
+!  ==> Fatal error occurred, no output PDF file produced!
