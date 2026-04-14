@@ -1,16 +1,15 @@
 # Fdb version 4
-["bibtex main"] 1776167726.2999 "main.aux" "main.bbl" "main" 1776167987.58046 0
+["bibtex main"] 1776169194.18138 "main.aux" "main.bbl" "main" 1776169202.15237 0
   "./refs.bib" 1776079902.64993 7683 00ce01207baf57f2f47ddadf488b56a7 ""
   "/usr/share/texlive/texmf-dist/bibtex/bst/els-cas-templates/cas-model2-names.bst" 1620849479 31800 50c9da7327ed431cce3c915c6982e987 ""
-  "main.aux" 1776167987.40198 20420 a8cc7b31683bd9ae8b797794ccab06f9 "pdflatex"
+  "main.aux" 1776169201.9822 19124 259ff70599b04b97cfdb3e8cd5037042 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1776167978.68648 "/home/fcisnerosr/github/Proyecto-doctoral/manuscript_AOR/main.tex" "main.pdf" "main" 1776167987.58067 0
+["pdflatex"] 1776169194.20869 "/home/fcisnerosr/github/Proyecto-doctoral/manuscript_AOR/main.tex" "main.pdf" "main" 1776169202.15264 0
   "../outputs/resultados_nuevos/AUC_ROC_vs_SNR_degradation.png" 1774195927.4102 221853 626b6e0fea0d89a85458a853ff45ae3f ""
   "../outputs/resultados_nuevos/FP_distancia_topologica_distribucion.png" 1775516194.99151 220117 33cd5d2993fe7270bb9cc9efb3f3aec3 ""
-  "../outputs/resultados_nuevos/POD_curves_ICD_vs_bestDI.png" 1774134879.916 586476 878a4240b381f1577d372fafeaff506b ""
   "../outputs/resultados_nuevos/Precision_clasica_vs_ponderada_por_elemento.png" 1775516176.71967 554961 fa843ba6f0681496124815c1bf84e0ba ""
   "../outputs/resultados_nuevos/Precision_global_clasica_vs_ponderada.png" 1775516203.68343 224094 675992542007d150e3f04947c3667a86 ""
   "../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_element_type_abolladura.png" 1774093857.66112 92861 26b992a5220c6826926f8b28963c940a ""
@@ -44,7 +43,7 @@
   "/home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt0800.600pk" 1775522799.67143 15172 de66385f85b275db21fd114c45bfe09d ""
   "/home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt0900.600pk" 1775522793.63948 17492 0585b9ab2ae48b2551418ed81d2a0a13 ""
   "/home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk" 1775522795.85969 11524 0470cc6de82c63b044e413907d8b78e4 ""
-  "/home/fcisnerosr/github/Proyecto-doctoral/manuscript_AOR/main.tex" 1776167978.34757 62445 54d7fa826caeafcaf40783045771abff ""
+  "/home/fcisnerosr/github/Proyecto-doctoral/manuscript_AOR/main.tex" 1776169183.10603 58891 25a4f2fdea7dfc80f103e17a55e5fc2d ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecbx1000.tfm" 1136768653 3584 2d666ecf6d466d8b007246bc2f94d9da ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecbx1095.tfm" 1136768653 3584 21b378cca2e40816b0e6d74a4dc98f04 ""
@@ -120,7 +119,6 @@
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb" 1248133631 36094 798f80770b3b148ceedd006d487db67c ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb" 1248133631 36912 b448ef9ad9d7228ec3c6e71005136d55 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1248133631 35752 024fb6c41858982481f6968b5fc26508 ""
-  "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb" 1248133631 32734 69e00a6b65cedb993666e42eedb3d48f ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb" 1248133631 32762 224316ccc9ad3ca0423a14971cfa7fc1 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1248133631 32726 0a1aea6fcd6468ee2cf64d891f5c43c8 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb" 1248133631 33993 9b89b85fd2d9df0482bd47194d1d3bf3 ""
@@ -232,11 +230,11 @@
   "figs/007_modeo_vista_3d_de_plataforma_tipo_jacket_de_caso_de_estudio.png" 1775678301.29899 77294 4a616a60d5d2920afdd589ad4a283bc2 ""
   "figs/008_nombres_zonas_estudio_modelo_plataforma_marina_splashzone_subs_y_mudline_en_una_sola_grafica.png" 1775963514.07685 375724 e5ee23ecc4b3308625a6919f5175d4f5 ""
   "figs/015_diagrama_como_funciona_el_AG_para_la_sumas_funcion_P_y_como_se_relaciona_con_operadores_geneticos_del_AG.jpg" 1776081729.92764 106442 24cdbcabedd6c7aa811dee18b17c8d4c ""
-  "main.abs" 1776167979.21007 1193 78519c546e5986399ea98b673d1c6ec3 "pdflatex"
-  "main.aux" 1776167987.40198 20420 a8cc7b31683bd9ae8b797794ccab06f9 "pdflatex"
-  "main.bbl" 1776167726.32072 10530 b5e976b85f5d2a5530444f99d3fe88dc "bibtex main"
-  "main.out" 1776167979.19601 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "main.tex" 1776167978.34757 62445 54d7fa826caeafcaf40783045771abff ""
+  "main.abs" 1776169194.72339 1193 78519c546e5986399ea98b673d1c6ec3 "pdflatex"
+  "main.aux" 1776169201.9822 19124 259ff70599b04b97cfdb3e8cd5037042 "pdflatex"
+  "main.bbl" 1776169194.20194 10530 b5e976b85f5d2a5530444f99d3fe88dc "bibtex main"
+  "main.out" 1776169194.70796 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "main.tex" 1776169183.10603 58891 25a4f2fdea7dfc80f103e17a55e5fc2d ""
   "tablas/tabla_precision_ponderada.tex" 1775959260.83923 5879 58b99ef36f656ba415157adf2bc903e5 ""
   (generated)
   "main.abs"
