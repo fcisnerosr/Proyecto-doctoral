@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.3.16)  12 APR 2026 01:20
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.3.16)  14 APR 2026 05:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -713,371 +713,315 @@ Package caption Info: End \AtBeginDocument code.
 \verbatim@out=\write4
 \openout4 = `main.abs'.
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 96.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 76.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 96.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 76.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Overfull \hbox (123.62721pt too wide) detected at line 96
+Overfull \hbox (123.62721pt too wide) detected at line 76
 []
  []
 
 (./main.abs)
 
-Package hyperref Warning: Ignoring empty anchor on input line 96.
+Package hyperref Warning: Ignoring empty anchor on input line 76.
 
 
-Package hyperref Warning: Ignoring empty anchor on input line 96.
+Package hyperref Warning: Ignoring empty anchor on input line 76.
 
 <thumbnails/cas-email.jpeg, id=4, 225.84375pt x 225.84375pt>
 File: thumbnails/cas-email.jpeg Graphic file (type jpg)
 <use thumbnails/cas-email.jpeg>
-Package pdftex.def Info: thumbnails/cas-email.jpeg  used on input line 96.
+Package pdftex.def Info: thumbnails/cas-email.jpeg  used on input line 76.
 (pdftex.def)             Requested size: 7.99838pt x 8.0pt.
-LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 9
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 7
 6.
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2023/04/13 v2.5m Standard LaTeX font definitions
 )
 
-Package hyperref Warning: Ignoring empty anchor on input line 96.
+Package hyperref Warning: Ignoring empty anchor on input line 76.
 
-LaTeX Font Info:    Trying to load font information for T1+cmss on input line 1
-11.
+LaTeX Font Info:    Trying to load font information for T1+cmss on input line 8
+7.
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmss.fd
 File: t1cmss.fd 2023/04/13 v2.5m Standard LaTeX font definitions
 ) [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
  </usr/share/texlive/texmf-dist/tex/latex/els-cas-templates/thumbnails/cas-emai
-l.jpeg>]
-Overfull \hbox (0.72777pt too wide) in paragraph at lines 112--113
-\T1/cmr/m/n/10 metodología basada en AG y la for-mu-lación matemática
- []
-
-
-Underfull \hbox (badness 1331) in paragraph at lines 112--113
-\T1/cmr/m/n/10 del ICD. La Sec-ción 4 pre-senta los re-sul-ta-dos y
- []
-
+l.jpeg>] [2]
 
 LaTeX Font Warning: Font shape `T1/cmr/b/it' undefined
-(Font)              using `T1/cmr/b/n' instead on input line 130.
+(Font)              using `T1/cmr/b/n' instead on input line 122.
 
 
 LaTeX Font Warning: Font shape `T1/cmr/b/n' in size <10.5> not available
-(Font)              size <10.95> substituted on input line 130.
+(Font)              size <10.95> substituted on input line 122.
 
-LaTeX Font Info:    Calculating math sizes for size <10.5> on input line 130.
+LaTeX Font Info:    Calculating math sizes for size <10.5> on input line 122.
 
 LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <10.5> not available
-(Font)              size <10.95> substituted on input line 130.
+(Font)              size <10.95> substituted on input line 122.
 
 
 LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <10.5> not available
-(Font)              size <10.95> substituted on input line 130.
+(Font)              size <10.95> substituted on input line 122.
 
 
 LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <10.5> not available
-(Font)              size <10.95> substituted on input line 130.
+(Font)              size <10.95> substituted on input line 122.
 
 
 LaTeX Font Warning: Font shape `OT1/cmr/bx/n' in size <10.5> not available
-(Font)              size <10.95> substituted on input line 130.
+(Font)              size <10.95> substituted on input line 122.
 
-<figs/001_modelo_plataforma_con_elemento_tubular_masa_adherida_y_masa_atrapada.
-png, id=56, 573.14125pt x 278.03876pt>
-File: figs/001_modelo_plataforma_con_elemento_tubular_masa_adherida_y_masa_atra
-pada.png Graphic file (type png)
-<use figs/001_modelo_plataforma_con_elemento_tubular_masa_adherida_y_masa_atrap
-ada.png>
-Package pdftex.def Info: figs/001_modelo_plataforma_con_elemento_tubular_masa_a
-dherida_y_masa_atrapada.png  used on input line 139.
-(pdftex.def)             Requested size: 214.42754pt x 104.02245pt.
 
 LaTeX Font Warning: Font shape `T1/cmr/b/it' in size <10.5> not available
-(Font)              size <10.95> substituted on input line 144.
+(Font)              size <10.95> substituted on input line 125.
 
-<figs/001_modelo_plataforma_con_elemento_tubular_masa_de_crecimiento_marino.png
-, id=58, 654.445pt x 333.245pt>
-File: figs/001_modelo_plataforma_con_elemento_tubular_masa_de_crecimiento_marin
-o.png Graphic file (type png)
-<use figs/001_modelo_plataforma_con_elemento_tubular_masa_de_crecimiento_marino
-.png>
-Package pdftex.def Info: figs/001_modelo_plataforma_con_elemento_tubular_masa_d
-e_crecimiento_marino.png  used on input line 150.
-(pdftex.def)             Requested size: 214.42754pt x 109.18301pt.
-[2 <./figs/001_modelo_plataforma_con_elemento_tubular_masa_adherida_y_masa_atra
-pada.png> <./figs/001_modelo_plataforma_con_elemento_tubular_masa_de_crecimient
-o_marino.png>]
-<figs/004_caracterizacion_de_como_se_reduce_el_espesor_elemento_tubular_por_cor
-rosion.png, id=86, 406.51875pt x 256.96pt>
-File: figs/004_caracterizacion_de_como_se_reduce_el_espesor_elemento_tubular_po
-r_corrosion.png Graphic file (type png)
-<use figs/004_caracterizacion_de_como_se_reduce_el_espesor_elemento_tubular_por
-_corrosion.png>
-Package pdftex.def Info: figs/004_caracterizacion_de_como_se_reduce_el_espesor_
-elemento_tubular_por_corrosion.png  used on input line 167.
-(pdftex.def)             Requested size: 197.80052pt x 125.0293pt.
+[3]
 <figs/004_modelo_elemento_tubula_seccion_longitudinal_parametros_abolladura.png
-, id=88, 1036.87375pt x 861.2175pt>
+, id=145, 1036.87375pt x 861.2175pt>
 File: figs/004_modelo_elemento_tubula_seccion_longitudinal_parametros_abolladur
 a.png Graphic file (type png)
 <use figs/004_modelo_elemento_tubula_seccion_longitudinal_parametros_abolladura
 .png>
 Package pdftex.def Info: figs/004_modelo_elemento_tubula_seccion_longitudinal_p
-arametros_abolladura.png  used on input line 177.
+arametros_abolladura.png  used on input line 142.
 (pdftex.def)             Requested size: 98.90025pt x 82.14503pt.
 <figs/004_modelo_elemento_tubular_seccion_longitudinal_parametros_abolladura_co
-n_funciones_de_interpolacion.png, id=89, 380.01974pt x 85.5195pt>
+n_funciones_de_interpolacion.png, id=148, 380.01974pt x 85.5195pt>
 File: figs/004_modelo_elemento_tubular_seccion_longitudinal_parametros_abolladu
 ra_con_funciones_de_interpolacion.png Graphic file (type png)
 <use figs/004_modelo_elemento_tubular_seccion_longitudinal_parametros_abolladur
 a_con_funciones_de_interpolacion.png>
 Package pdftex.def Info: figs/004_modelo_elemento_tubular_seccion_longitudinal_
-parametros_abolladura_con_funciones_de_interpolacion.png  used on input line 18
-6.
+parametros_abolladura_con_funciones_de_interpolacion.png  used on input line 15
+1.
 (pdftex.def)             Requested size: 214.42754pt x 48.25465pt.
-<figs/007_modeo_vista_3d_de_plataforma_tipo_jacket_de_caso_de_estudio.png, id=9
-0, 302.63063pt x 650.43pt>
+<figs/007_modeo_vista_3d_de_plataforma_tipo_jacket_de_caso_de_estudio.png, id=1
+50, 302.63063pt x 650.43pt>
 File: figs/007_modeo_vista_3d_de_plataforma_tipo_jacket_de_caso_de_estudio.png 
 Graphic file (type png)
 <use figs/007_modeo_vista_3d_de_plataforma_tipo_jacket_de_caso_de_estudio.png>
 Package pdftex.def Info: figs/007_modeo_vista_3d_de_plataforma_tipo_jacket_de_c
-aso_de_estudio.png  used on input line 198.
+aso_de_estudio.png  used on input line 163.
 (pdftex.def)             Requested size: 95.30031pt x 204.82698pt.
+ [4 <./figs/004_modelo_elemento_tubula_seccion_longitudinal_parametros_abolladu
+ra.png> <./figs/004_modelo_elemento_tubular_seccion_longitudinal_parametros_abo
+lladura_con_funciones_de_interpolacion.png> <./figs/007_modeo_vista_3d_de_plata
+forma_tipo_jacket_de_caso_de_estudio.png>]
 <figs/005_metogologia_propuesta_para_identificar_daÃ±os_en_plataformas_reales.j
-pg, id=92, 1419.3025pt x 709.65125pt>
+pg, id=175, 1419.3025pt x 709.65125pt>
 File: figs/005_metogologia_propuesta_para_identificar_daÃ±os_en_plataformas_rea
 les.jpg Graphic file (type jpg)
 <use figs/005_metogologia_propuesta_para_identificar_daÃ±os_en_plataformas_real
 es.jpg>
 Package pdftex.def Info: figs/005_metogologia_propuesta_para_identificar_daÃ±os
-_en_plataformas_reales.jpg  used on input line 213.
+_en_plataformas_reales.jpg  used on input line 178.
 (pdftex.def)             Requested size: 445.05496pt x 222.52345pt.
- [3 <./figs/004_caracterizacion_de_como_se_reduce_el_espesor_elemento_tubular_p
-or_corrosion.png> <./figs/004_modelo_elemento_tubula_seccion_longitudinal_param
-etros_abolladura.png> <./figs/004_modelo_elemento_tubular_seccion_longitudinal_
-parametros_abolladura_con_funciones_de_interpolacion.png> <./figs/007_modeo_vis
-ta_3d_de_plataforma_tipo_jacket_de_caso_de_estudio.png>]
+ [5 <./figs/005_metogologia_propuesta_para_identificar_daÃ±os_en_plataformas_re
+ales.jpg>]
 <figs/006_metodologÃ­a_del_AG_para_localizar_daÃ±os_a_nivel_computacional.jpg, 
-id=112, 1502.61375pt x 669.50125pt>
+id=200, 1502.61375pt x 669.50125pt>
 File: figs/006_metodologÃ­a_del_AG_para_localizar_daÃ±os_a_nivel_computacional.
 jpg Graphic file (type jpg)
 <use figs/006_metodologÃ­a_del_AG_para_localizar_daÃ±os_a_nivel_computacional.j
 pg>
 Package pdftex.def Info: figs/006_metodologÃ­a_del_AG_para_localizar_daÃ±os_a_n
-ivel_computacional.jpg  used on input line 278.
+ivel_computacional.jpg  used on input line 243.
 (pdftex.def)             Requested size: 445.05496pt x 198.29799pt.
- [4 <./figs/005_metogologia_propuesta_para_identificar_daÃ±os_en_plataformas_re
-ales.jpg>]
+ [6]
 <figs/015_diagrama_como_funciona_el_AG_para_la_sumas_funcion_P_y_como_se_relaci
-ona_con_operadores_geneticos_del_AG.jpg, id=137, 840.13875pt x 1197.47375pt>
+ona_con_operadores_geneticos_del_AG.jpg, id=220, 840.13875pt x 1197.47375pt>
 File: figs/015_diagrama_como_funciona_el_AG_para_la_sumas_funcion_P_y_como_se_r
 elaciona_con_operadores_geneticos_del_AG.jpg Graphic file (type jpg)
 <use figs/015_diagrama_como_funciona_el_AG_para_la_sumas_funcion_P_y_como_se_re
 laciona_con_operadores_geneticos_del_AG.jpg>
 Package pdftex.def Info: figs/015_diagrama_como_funciona_el_AG_para_la_sumas_fu
 ncion_P_y_como_se_relaciona_con_operadores_geneticos_del_AG.jpg  used on input 
-line 299.
+line 265.
 (pdftex.def)             Requested size: 202.51772pt x 288.64206pt.
- [5 <./figs/006_metodologÃ­a_del_AG_para_localizar_daÃ±os_a_nivel_computacional
+ [7 <./figs/006_metodologÃ­a_del_AG_para_localizar_daÃ±os_a_nivel_computacional
 .jpg> <./figs/015_diagrama_como_funciona_el_AG_para_la_sumas_funcion_P_y_como_s
 e_relaciona_con_operadores_geneticos_del_AG.jpg>]
 <../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by_element_type_corros
-ion.png, id=148, 713.7867pt x 424.2249pt>
+ion.png, id=234, 713.7867pt x 424.2249pt>
 File: ../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by_element_type_c
 orrosion.png Graphic file (type png)
 <use ../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by_element_type_co
 rrosion.png>
 Package pdftex.def Info: ../outputs/resultados_nuevos/corrosion_2026/figures/IC
-D_by_element_type_corrosion.png  used on input line 344.
+D_by_element_type_corrosion.png  used on input line 310.
 (pdftex.def)             Requested size: 214.42754pt x 127.43674pt.
 <../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_element_type_abol
-ladura.png, id=150, 713.7867pt x 424.2249pt>
+ladura.png, id=236, 713.7867pt x 424.2249pt>
 File: ../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_element_type
 _abolladura.png Graphic file (type png)
 <use ../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_element_type_
 abolladura.png>
 Package pdftex.def Info: ../outputs/resultados_nuevos/abolladuras_2026/figures/
-ICD_by_element_type_abolladura.png  used on input line 359.
+ICD_by_element_type_abolladura.png  used on input line 325.
 (pdftex.def)             Requested size: 214.42754pt x 127.43674pt.
- [6 <../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by_element_type_co
-rrosion.png> <../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_elem
-ent_type_abolladura.png>]
 <../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by_zone_corrosion.png,
- id=171, 1291.9467pt x 1297.4874pt>
+ id=240, 1291.9467pt x 1297.4874pt>
 File: ../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by_zone_corrosion
 .png Graphic file (type png)
 <use ../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by_zone_corrosion.
 png>
 Package pdftex.def Info: ../outputs/resultados_nuevos/corrosion_2026/figures/IC
-D_by_zone_corrosion.png  used on input line 374.
+D_by_zone_corrosion.png  used on input line 341.
 (pdftex.def)             Requested size: 237.36214pt x 238.36838pt.
 <../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_zone_abolladura.p
-ng, id=172, 1291.9467pt x 1297.4874pt>
+ng, id=241, 1291.9467pt x 1297.4874pt>
 File: ../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_zone_abollad
 ura.png Graphic file (type png)
 <use ../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_zone_abolladu
 ra.png>
 Package pdftex.def Info: ../outputs/resultados_nuevos/abolladuras_2026/figures/
-ICD_by_zone_abolladura.png  used on input line 380.
+ICD_by_zone_abolladura.png  used on input line 347.
 (pdftex.def)             Requested size: 237.36214pt x 238.36838pt.
-<../outputs/resultados_nuevos/experimental_design_distribution.png, id=175, 114
-7.6476pt x 372.1905pt>
-File: ../outputs/resultados_nuevos/experimental_design_distribution.png Graphic
- file (type png)
-<use ../outputs/resultados_nuevos/experimental_design_distribution.png>
-Package pdftex.def Info: ../outputs/resultados_nuevos/experimental_design_distr
-ibution.png  used on input line 430.
-(pdftex.def)             Requested size: 445.05496pt x 144.3359pt.
+ [8 <../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by_element_type_co
+rrosion.png> <../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_elem
+ent_type_abolladura.png>]
 <figs/008_nombres_zonas_estudio_modelo_plataforma_marina_splashzone_subs_y_mudl
-ine_en_una_sola_grafica.png, id=177, 848.16875pt x 1187.43625pt>
+ine_en_una_sola_grafica.png, id=255, 848.16875pt x 1187.43625pt>
 File: figs/008_nombres_zonas_estudio_modelo_plataforma_marina_splashzone_subs_y
 _mudline_en_una_sola_grafica.png Graphic file (type png)
 <use figs/008_nombres_zonas_estudio_modelo_plataforma_marina_splashzone_subs_y_
 mudline_en_una_sola_grafica.png>
 Package pdftex.def Info: figs/008_nombres_zonas_estudio_modelo_plataforma_marin
-a_splashzone_subs_y_mudline_en_una_sola_grafica.png  used on input line 447.
+a_splashzone_subs_y_mudline_en_una_sola_grafica.png  used on input line 358.
 (pdftex.def)             Requested size: 131.04066pt x 183.45279pt.
-LaTeX Font Info:    Calculating math sizes for size <11> on input line 457.
-
-
-LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <5.5> not available
-(Font)              size <5> substituted on input line 457.
-
-
-LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <5.5> not available
-(Font)              size <5> substituted on input line 457.
-
-
-LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <5.5> not available
-(Font)              size <5> substituted on input line 457.
-
-
-LaTeX Font Warning: Font shape `OT1/cmr/bx/n' in size <5.5> not available
-(Font)              size <5> substituted on input line 457.
-
-[7 <../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by_zone_corrosion.p
-ng> <../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_zone_abolladu
-ra.png>]
-<../outputs/resultados_nuevos/F1_comparison_denting_corrosion.png, id=199, 1003
-.1076pt x 357.7365pt>
-File: ../outputs/resultados_nuevos/F1_comparison_denting_corrosion.png Graphic 
-file (type png)
-<use ../outputs/resultados_nuevos/F1_comparison_denting_corrosion.png>
-Package pdftex.def Info: ../outputs/resultados_nuevos/F1_comparison_denting_cor
-rosion.png  used on input line 513.
-(pdftex.def)             Requested size: 445.05496pt x 158.72006pt.
-<../outputs/resultados_nuevos/ROC_curve_denting_corrosion.png, id=201, 1003.107
-6pt x 428.5611pt>
-File: ../outputs/resultados_nuevos/ROC_curve_denting_corrosion.png Graphic file
- (type png)
-<use ../outputs/resultados_nuevos/ROC_curve_denting_corrosion.png>
-Package pdftex.def Info: ../outputs/resultados_nuevos/ROC_curve_denting_corrosi
-on.png  used on input line 526.
-(pdftex.def)             Requested size: 445.05496pt x 190.14343pt.
-<../outputs/resultados_nuevos/POD_curves_ICD_vs_bestDI.png, id=202, 1147.1658pt
+<../outputs/resultados_nuevos/experimental_design_distribution.png, id=258, 114
+7.6476pt x 372.1905pt>
+File: ../outputs/resultados_nuevos/experimental_design_distribution.png Graphic
+ file (type png)
+<use ../outputs/resultados_nuevos/experimental_design_distribution.png>
+Package pdftex.def Info: ../outputs/resultados_nuevos/experimental_design_distr
+ibution.png  used on input line 407.
+(pdftex.def)             Requested size: 445.05496pt x 144.3359pt.
+ [9 <../outputs/resultados_nuevos/corrosion_2026/figures/ICD_by_zone_corrosion.
+png> <../outputs/resultados_nuevos/abolladuras_2026/figures/ICD_by_zone_abollad
+ura.png> <./figs/008_nombres_zonas_estudio_modelo_plataforma_marina_splashzone_
+subs_y_mudline_en_una_sola_grafica.png>]
+<../outputs/resultados_nuevos/POD_curves_ICD_vs_bestDI.png, id=274, 1147.1658pt
  x 733.5405pt>
 File: ../outputs/resultados_nuevos/POD_curves_ICD_vs_bestDI.png Graphic file (t
 ype png)
 <use ../outputs/resultados_nuevos/POD_curves_ICD_vs_bestDI.png>
 Package pdftex.def Info: ../outputs/resultados_nuevos/POD_curves_ICD_vs_bestDI.
-png  used on input line 548.
+png  used on input line 511.
 (pdftex.def)             Requested size: 445.05496pt x 284.57979pt.
-<../outputs/resultados_nuevos/AUC_ROC_vs_SNR_degradation.png, id=205, 1002.6258
+<../outputs/resultados_nuevos/AUC_ROC_vs_SNR_degradation.png, id=277, 1002.6258
 pt x 357.4956pt>
 File: ../outputs/resultados_nuevos/AUC_ROC_vs_SNR_degradation.png Graphic file 
 (type png)
 <use ../outputs/resultados_nuevos/AUC_ROC_vs_SNR_degradation.png>
 Package pdftex.def Info: ../outputs/resultados_nuevos/AUC_ROC_vs_SNR_degradatio
-n.png  used on input line 596.
+n.png  used on input line 559.
 (pdftex.def)             Requested size: 445.05496pt x 158.68954pt.
- [8 <../outputs/resultados_nuevos/experimental_design_distribution.png> <./figs
-/008_nombres_zonas_estudio_modelo_plataforma_marina_splashzone_subs_y_mudline_e
-n_una_sola_grafica.png>] [9 <../outputs/resultados_nuevos/F1_comparison_denting
-_corrosion.png>] [10 <../outputs/resultados_nuevos/ROC_curve_denting_corrosion.
-png> <../outputs/resultados_nuevos/POD_curves_ICD_vs_bestDI.png>]
-[11 <../outputs/resultados_nuevos/AUC_ROC_vs_SNR_degradation.png>]
-<../outputs/resultados_nuevos/FP_distancia_topologica_distribucion.png, id=245,
+ [10 <../outputs/resultados_nuevos/experimental_design_distribution.png>] [11 <
+../outputs/resultados_nuevos/POD_curves_ICD_vs_bestDI.png>]
+[12
+
+ <../outputs/resultados_nuevos/AUC_ROC_vs_SNR_degradation.png>]
+<../outputs/resultados_nuevos/FP_distancia_topologica_distribucion.png, id=312,
  1001.4213pt x 357.7365pt>
 File: ../outputs/resultados_nuevos/FP_distancia_topologica_distribucion.png Gra
 phic file (type png)
 <use ../outputs/resultados_nuevos/FP_distancia_topologica_distribucion.png>
 Package pdftex.def Info: ../outputs/resultados_nuevos/FP_distancia_topologica_d
-istribucion.png  used on input line 688.
+istribucion.png  used on input line 651.
 (pdftex.def)             Requested size: 445.05496pt x 158.98753pt.
-<../outputs/resultados_nuevos/Precision_global_clasica_vs_ponderada.png, id=248
+<../outputs/resultados_nuevos/Precision_global_clasica_vs_ponderada.png, id=315
 , 1002.6258pt x 357.2547pt>
 File: ../outputs/resultados_nuevos/Precision_global_clasica_vs_ponderada.png Gr
 aphic file (type png)
 <use ../outputs/resultados_nuevos/Precision_global_clasica_vs_ponderada.png>
 Package pdftex.def Info: ../outputs/resultados_nuevos/Precision_global_clasica_
-vs_ponderada.png  used on input line 708.
+vs_ponderada.png  used on input line 671.
 (pdftex.def)             Requested size: 237.36214pt x 84.5763pt.
 <../outputs/resultados_nuevos/Precision_clasica_vs_ponderada_por_elemento.png, 
-id=249, 1147.1658pt x 740.7675pt>
+id=316, 1147.1658pt x 740.7675pt>
 File: ../outputs/resultados_nuevos/Precision_clasica_vs_ponderada_por_elemento.
 png Graphic file (type png)
 <use ../outputs/resultados_nuevos/Precision_clasica_vs_ponderada_por_elemento.p
 ng>
 Package pdftex.def Info: ../outputs/resultados_nuevos/Precision_clasica_vs_pond
-erada_por_elemento.png  used on input line 714.
+erada_por_elemento.png  used on input line 677.
 (pdftex.def)             Requested size: 237.36214pt x 153.27121pt.
- [12
+ [13
 
 ]
-[13 <../outputs/resultados_nuevos/FP_distancia_topologica_distribucion.png> <..
+[14 <../outputs/resultados_nuevos/FP_distancia_topologica_distribucion.png> <..
 /outputs/resultados_nuevos/Precision_global_clasica_vs_ponderada.png> <../outpu
 ts/resultados_nuevos/Precision_clasica_vs_ponderada_por_elemento.png>]
-(./tablas/tabla_precision_ponderada.tex [14
+(./tablas/tabla_precision_ponderada.tex [15
 
 
-]) [15]
-Overfull \hbox (12.52043pt too wide) in paragraph at lines 741--742
+]) [16]
+Overfull \hbox (12.52043pt too wide) in paragraph at lines 704--705
 \T1/cmr/m/n/10 pone la \T1/cmr/bx/n/10 Pre-ci-sion Pon-der-ada por Dis-tan-cia 
 Topológ-
  []
 
 
-Overfull \hbox (11.77036pt too wide) in paragraph at lines 750--751
+Overfull \hbox (11.77036pt too wide) in paragraph at lines 713--714
 []\T1/cmr/bx/n/10 Validación Ex-per-i-men-tal: \T1/cmr/m/n/10 Aplicar la metodo
 logía
  []
 
 
-Underfull \hbox (badness 1917) in paragraph at lines 752--753
+Underfull \hbox (badness 1917) in paragraph at lines 715--716
 []\T1/cmr/bx/n/10 Extensión Tipológ-ica: \T1/cmr/m/n/10 Adap-tar la fun-ción
  []
 
 
-Overfull \hbox (0.30563pt too wide) in paragraph at lines 752--753
+Overfull \hbox (0.30563pt too wide) in paragraph at lines 715--716
 \T1/cmr/m/n/10 como trípodes o \T1/cmr/m/it/10 monopiles\T1/cmr/m/n/10 , que pr
 e-sen-tan dinámi-
  []
 
-(./main.bbl
-Underfull \hbox (badness 1033) in paragraph at lines 79--88
+(./main.bbl [17
+
+
+]
+Underfull \hbox (badness 1033) in paragraph at lines 88--93
 \T1/cmr/m/n/8 hy-brid data in-ter-pre-ta-tion frame-work.  Jour-nal of Civil
  []
 
 
-Underfull \hbox (badness 1237) in paragraph at lines 79--88
+Underfull \hbox (badness 1237) in paragraph at lines 88--93
 \T1/cmr/m/n/8 Struc-tural Health Mon-i-tor-ing 3, 251--276.  doi:[][]$\T1/cmtt/
 m/n/8 10 . 1007 /
  []
 
-[16
+
+Underfull \hbox (badness 1226) in paragraph at lines 100--105
+[]\T1/cmr/m/n/8 Petroleum Safety Au-thor-ity Nor-way, 2022.  Bruk av dig-
+ []
 
 
-]) [17
+Underfull \hbox (badness 6364) in paragraph at lines 100--105
+\T1/cmr/m/n/8 i-tale løs-ninger for å overvåke kon-struk-sjon-ers sikker-
+ []
+
+
+Underfull \hbox (badness 1286) in paragraph at lines 100--105
+\T1/cmr/m/n/8 thor-ity Nor-way.  [][]$\T1/cmtt/m/n/8 https : / / www . havtil .
+ no / contentassets /
+ []
+
+) [18
 
 ] (./main.aux)
  ***********
@@ -1087,7 +1031,7 @@ L3 programming layer <2024-01-22>
 
 
 LaTeX Font Warning: Size substitutions with differences
-(Font)              up to 0.5pt have occurred.
+(Font)              up to 0.45pt have occurred.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
@@ -1096,63 +1040,62 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 15997 strings out of 476047
- 264698 string characters out of 5792075
+ 15993 strings out of 476047
+ 262684 string characters out of 5792075
  1976975 words of memory out of 5000000
- 37612 multiletter control sequences out of 15000+600000
- 596837 words of font info for 133 fonts, out of 8000000 for 9000
+ 37599 multiletter control sequences out of 15000+600000
+ 594142 words of font info for 123 fonts, out of 8000000 for 9000
  85 hyphenation exceptions out of 8191
- 90i,13n,93p,1239b,668s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 90i,13n,93p,1948b,668s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecss080
 0.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/e
 ctt0900.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappe
 n/ec/ecss0800.450pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/j
 knappen/ec/ecsi0900.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/lj
-four/jknappen/ec/ecbx0800.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts
-/pk/ljfour/jknappen/ec/ecrm0900.600pk> </home/fcisnerosr/.texlive2023/texmf-var
-/fonts/pk/ljfour/jknappen/ec/ecrm0500.600pk> </home/fcisnerosr/.texlive2023/tex
-mf-var/fonts/pk/ljfour/jknappen/ec/ecrb0700.600pk> </home/fcisnerosr/.texlive20
-23/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk> </home/fcisnerosr/.tex
-live2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0700.600pk> </home/fcisneros
-r/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecsx0900.600pk> </home/fci
-snerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk> </ho
-me/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrb1095.600pk
-> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1095
+four/jknappen/ec/ecrm0900.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts
+/pk/ljfour/jknappen/ec/ecrm0500.600pk> </home/fcisnerosr/.texlive2023/texmf-var
+/fonts/pk/ljfour/jknappen/ec/ecrb0700.600pk> </home/fcisnerosr/.texlive2023/tex
+mf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk> </home/fcisnerosr/.texlive20
+23/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0700.600pk> </home/fcisnerosr/.tex
+live2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecsx0900.600pk> </home/fcisneros
+r/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrb1095.600pk> </home/fci
+snerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1095.600pk> </ho
+me/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk
+> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecti0900
 .600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ec
-ti0900.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen
-/ec/ecss0900.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jk
-nappen/ec/ecti1000.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljf
-our/jknappen/ec/eccc0800.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/
-pk/ljfour/jknappen/ec/ectt0800.600pk> </home/fcisnerosr/.texlive2023/texmf-var/
-fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </home/fcisnerosr/.texlive2023/texm
-f-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </home/fcisnerosr/.texlive202
-3/texmf-var/fonts/pk/ljfour/jknappen/ec/ecti0600.600pk> </home/fcisnerosr/.texl
-ive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0800.600pk> </home/fcisnerosr
-/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecti0800.600pk> </home/fcis
-nerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> </hom
-e/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1728.600pk>
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/
-share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/
-texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf
--dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmmib10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
-6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></
-usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmsy9.pfb>
-Output written on main.pdf (17 pages, 6602370 bytes).
+ss0900.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen
+/ec/eccc0800.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jk
+nappen/ec/ectt0800.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/pk/ljf
+our/jknappen/ec/ecti1000.600pk> </home/fcisnerosr/.texlive2023/texmf-var/fonts/
+pk/ljfour/jknappen/ec/ecbx1200.600pk> </home/fcisnerosr/.texlive2023/texmf-var/
+fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </home/fcisnerosr/.texlive2023/texm
+f-var/fonts/pk/ljfour/jknappen/ec/ecti0600.600pk> </home/fcisnerosr/.texlive202
+3/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0800.600pk> </home/fcisnerosr/.texl
+ive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecti0800.600pk> </home/fcisnerosr
+/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/fcis
+nerosr/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1728.600pk></usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/
+texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmmib10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+r10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb>
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmsy9.pfb>
+Output written on main.pdf (18 pages, 5910780 bytes).
 PDF statistics:
- 1279 PDF objects out of 1440 (max. 8388607)
- 383 compressed objects within 4 object streams
- 104 named destinations out of 1000 (max. 500000)
- 116 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1370 PDF objects out of 1440 (max. 8388607)
+ 472 compressed objects within 5 object streams
+ 114 named destinations out of 1000 (max. 500000)
+ 91 words of extra memory for PDF output out of 10000 (max. 10000000)
 

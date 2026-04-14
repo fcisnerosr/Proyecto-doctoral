@@ -33,33 +33,13 @@
 \author[1]{Francisco~Javier Cisneros-Ruiz}[orcid=0009-0005-7017-4027]
 \cormark[1]
 \ead{fcisnerosr@outlook.es}
-\credit{Conceptualization, Methodology, Software, Formal analysis,
-        Writing -- Original Draft}
-
-\affiliation[1]{organization={Programa de Posgrado,
-                Instituto Mexicano del Petróleo},
-    addressline={Eje Central Lázaro Cárdenas Norte 152},
-    city={Ciudad de México},
-    country={México}}
-
-%% ── Author 2 ─────────────────────────────────────────────────────
-\author[2]{Iván~Félix-González}
-\credit{Supervision, Resources, Writing -- Review \& Editing}
-
-\affiliation[2]{organization={Instituto Mexicano del Petróleo},
-    addressline={Eje Central Lázaro Cárdenas Norte 152},
-    city={Ciudad de México},
-    country={México}}
-
-%% ── Author 3 ─────────────────────────────────────────────────────
-\author[3]{Rolando~Salgado-Estrada}
-\credit{Supervision, Writing -- Review \& Editing}
-
-\affiliation[3]{organization={Facultad de Ingeniería de la
-                Construcción y el Hábitat,
-                Universidad Veracruzana},
+\credit{Conceptualization, Methodology, Software, Formal analysis, Writing -- Original Draft}
+\affiliation[1]{
+    organization={Programa de Posgrado, Instituto Mexicano del Petroleo},
+    addressline={Eje Central Lazaro Cardenas Norte 152},
     city={Veracruz},
-    country={México}}
+    country={Mexico}
+}
 
 \cortext[1]{Corresponding author}
 
@@ -101,15 +81,27 @@ of up to $+$22 percentage points for brace elements.
 
 \section{Introducción}
 
-La infraestructura energética global enfrenta un desafío crítico relacionado con el envejecimiento de sus activos costa afuera. En regiones estratégicas como el Golfo de México, una gran proporción de las plataformas tipo Jacket ha superado su vida útil de diseño, operando bajo condiciones de deterioro acelerado por corrosión y fatiga \cite{mubarak2020condition}. La gestión de integridad de estas estructuras depende tradicionalmente de inspecciones visuales periódicas realizadas por buzos industriales o vehículos operados remotamente (ROV). Sin embargo, estos métodos no solo representan costos operativos exorbitantes y riesgos elevados para el personal \cite{instituto2020tech}, sino que a menudo resultan insuficientes para detectar daños internos o localizados en etapas tempranas, exacerbados por recortes presupuestales en mantenimiento \cite{sinergia2024recorte}.
+La transición energética global y la creciente presión sobre los operadores de activos\textit{offshore} para extender la vida útil de sus instalaciones han convertido la gestión de integridad estructural en una prioridad estratégica de primera magnitud \cite{hlaing2024lifecycle}. Las plataformas tipo \textit{jacket}, caracterizadas por su configuración de celosía espacial de acero, constituyen la columna vertebral de las instalaciones de producción de hidrocarburos en aguas someras e intermedias, y desempeñan un papel creciente como soporte de aerogeneradores \textit{offshore} \citep{mdpi2024shm_wind}. Estas estructuras deben soportar simultáneamente el peso de la cubierta de producción, cargas hidrodinámicas estocásticas de oleaje y corrientes, y, en el caso de turbinas eólicas, las fuerzas inerciales transmitidas desde la góndola y las palas. En regiones estratégicas como el Golfo de México, una proporción significativa de la infraestructura fija ha superado su vida útil de diseño original ---típicamente de 20 a 25 años---, operando bajo condiciones de deterioro acelerado por corrosión y fatiga \cite{mubarak2020condition}. La gestión de integridad de estas estructuras ha dependido históricamente de inspecciones visuales periódicas realizadas por buzos industriales o vehículos operados remotamente (ROV), métodos que no solo representan costos operativos exorbitantes y riesgos significativos para el personal \cite{instituto2020tech}, sino que resultan sistemáticamente insuficientes para detectar daños internos o localizados en etapas tempranas, una limitación que se agrava ante los recortes presupuestales en mantenimiento que afectan al sector \cite{sinergia2024recorte}.
 
-Para mitigar estas limitaciones, el Monitoreo de Salud Estructural (SHM, por sus siglas en inglés) ha emergido como una solución tecnológica viable, permitiendo la evaluación continua del estado estructural a partir de la respuesta dinámica \cite{ghsoub2018structural}. No obstante, la identificación de daño basada en vibraciones plantea un problema matemático inverso complejo y mal condicionado. Los datos experimentales suelen ser incompletos (pocos sensores) y estar contaminados por ruido, lo que dificulta la convergencia de los métodos clásicos de actualización de modelo (\textit{model updating}) \cite{doebling1996damage}. Intentar ajustar paramétricamente toda la matriz de rigidez de una estructura compleja con información modal limitada conduce frecuentemente a soluciones no únicas o físicamente inconsistentes \cite{aghaeidoost2023generalized}.
+El entorno marino impone sobre las estructuras \textit{jacket} una convergencia de mecanismos de degradación de naturaleza estocástica y electroquímica que comprometen simultáneamente su resistencia y respuesta dinámica. La corrosión, exacerbada por la salinidad, la humedad y las variaciones de temperatura del agua de mar, no actúa de forma uniforme a lo largo de la estructura: estudios de integridad en entornos tropicales documentan tasas de corrosión en la \textit{Splash Zone} (zona de salpicadura) de entre 0.28 y 0.35~mm/año, valores entre un 140\% y un 175\% superiores a los considerados en el diseño original, con picaduras localizadas de hasta 4.8~mm registradas en apenas 18 meses de operación \cite{birci2020integrity}. Esta reducción de sección transversal eleva el índice de aprovechamiento \textit{Unity Check} (UC) ---relación entre el esfuerzo actuante y la capacidad resistente del miembro---, cuyo umbral operativo crítico se sitúa en UC~$=~0.8$ conforme a las guías de integridad estructural vigentes \citep{API2014_manual, salama2020shm}. Paralelamente, la acumulación de organismos marinos sobre los elementos tubulares incrementa su diámetro efectivo e hidrodinámico, amplificando las fuerzas de arrastre según la ecuación de Morison y desplazando las frecuencias naturales de la estructura de modo que pueden enmascarar los cambios modales causados por la pérdida de rigidez estructural \cite{salama2020shm}. A estos mecanismos se suma el agrietamiento por fatiga, originado por la naturaleza cíclica del oleaje y las vibraciones operativas, que se inicia preferentemente en el pie de la soldadura (\textit{weld toe}) de las juntas tubulares en configuraciones T, K e Y ---puntos de alta concentración de esfuerzos--- y se propaga de manera silenciosa con cambios globales de rigidez inicialmente imperceptibles para sensores distribuidos \cite{raza2021fatigue}.
 
-En este contexto, la presente investigación propone una estrategia de Optimización Inversa basada en Inteligencia Artificial, utilizando Algoritmos Genéticos (AG) como motor de búsqueda global \cite{goldberg1989genetic}. A diferencia de los enfoques deterministas, los AG permiten explorar vastos espacios de búsqueda sin requerir derivadas del modelo, siendo particularmente robustos ante mínimos locales. La aportación central de este trabajo es la formulación del Índice de Calidad de Detección (ICD), una nueva métrica objetivo diseñada para fusionar múltiples indicadores de daño y penalizar severamente los falsos positivos, mejorando la confiabilidad del diagnóstico en entornos costa afuera ruidosos \cite{malekzadeh2013damage}.
+Ante estas limitaciones, el Monitoreo de Salud Estructural (SHM, \textit{Structural Health Monitoring}) ha experimentado entre 2018 y 2026 una transformación paradigmática, migrando de inspecciones periódicas hacia sistemas de diagnóstico en tiempo real basados en respuesta vibratoria e inteligencia artificial \cite{ghsoub2018structural, mdpi2024shm_wind}. La identificación de daño basada en vibraciones explota la relación física entre las propiedades modales ---frecuencias naturales y formas modales--- y el estado de rigidez de la estructura: una reducción local de rigidez modifica las propiedades modales globales de manera que, en principio, puede invertirse para localizar y cuantificar el daño. Este enfoque se formaliza como un problema de \textit{actualización de modelo} (\textit{model updating}): dados los parámetros modales experimentales, se calibran los parámetros del modelo de elementos finitos para minimizar la discrepancia entre la respuesta simulada y la medida \cite{doebling1996damage}. Sin embargo, la solución de este problema inverso es inherentemente mal condicionada ---no única y sensible a perturbaciones--- cuando se intenta ajustar paramétricamente una estructura con cientos de miembros a partir de un número reducido de modos identificados experimentalmente, lo que conduce con frecuencia a soluciones físicamente inconsistentes \cite{aghaeidoost2023generalized}.
 
-El estudio se centra en validar una hipótesis operativa clave: se investiga si los elementos secundarios (diagonales o \textit{braces}) actúan como "fusibles estructurales", manifestando cambios modales detectables a través del ICD antes de que se comprometa la integridad global de las piernas principales (\textit{legs}). Confirmar este comportamiento permitiría reorientar las estrategias de inspección, priorizando el monitoreo automático para los elementos fusibles y reservando la inspección visual para los componentes críticos de mayor redundancia.
+Las metodologías de actualización de modelo más avanzadas, propuestas entre 2022 y 2024, abordan este problema de alta dimensionalidad mediante el \textit{agrupamiento basado en sensibilidad} (\textit{sensitivity clustering}), que categoriza los miembros estructurales en grupos homogéneos de comportamiento dinámico para reducir el número efectivo de parámetros a optimizar \cite{jiang2024model}. Como funciones objetivo se adoptan simultáneamente el error en frecuencias naturales y la discrepancia en formas modales, evaluada a través del Criterio de Aseguramiento Modal (MAC, \textit{Modal Assurance Criterion}), cuyo valor unitario indica correlación vectorial perfecta entre los autovectores experimental y numérico \cite{jiang2024model}. Resolver ambas funciones de error de manera concurrente configura un problema de optimización multiobjetivo para el cual los métodos basados en gradientes resultan inadecuados dada la no linealidad del modelo y la multiplicidad de mínimos locales.
 
-El artículo se organiza de la siguiente manera: la Sección 2 describe el modelado numérico de la plataforma Jacket, incorporando efectos de masa añadida y crecimiento marino. La Sección 3 detalla la metodología basada en AG y la formulación matemática del ICD. La Sección 4 presenta los resultados y discusión sobre escenarios de corrosión y abolladura, evaluando la sensibilidad del método. Finalmente, la Sección 5 ofrece las conclusiones y líneas de trabajo futuro.
+En este contexto, los Algoritmos Genéticos (AG) se han consolidado como el motor de búsqueda de referencia para la optimización inversa en SHM de estructuras \textit{offshore} \cite{goldberg1989genetic}. Su principal ventaja reside en la capacidad para explorar espacios de búsqueda de alta dimensionalidad sin requerir información de gradientes, manteniendo una robustez notable ante mínimos locales y ante ruido en los datos de entrada. Investigaciones previas en plataformas \textit{jacket} han demostrado que los AG son capaces de identificar la ubicación y severidad del daño con errores de estimación de entre el 3\% y el 5\% cuando los datos modales se contaminan con ruido aleatorio de hasta el 3\%, validando su aplicabilidad bajo condiciones de medición realistas en alta mar \cite{rahmani2013ga}. No obstante, la efectividad de estos algoritmos depende críticamente de la formulación de la función objetivo: una función que fusione múltiples indicadores de daño y penalice eficazmente los falsos positivos constituye el elemento diferenciador clave para sistemas de diagnóstico confiables en operaciones \textit{offshore} \cite{malekzadeh2013damage}.
+
+Un aspecto que ha recibido atención renovada en el periodo 2022--2026 es la evaluación cuantitativa de la calidad de localización del daño. La métrica de Precisión clásica penaliza todos los falsos positivos (FP) de forma idéntica, independientemente de su proximidad espacial al elemento realmente dañado, lo cual resulta inadecuado en redes estructurales reticulares donde un FP adyacente (distancia topológica $d=1$) tiene una interpretación ingenieril radicalmente distinta a uno en el extremo opuesto de la estructura. Trabajos recientes han propuesto métricas ponderadas por distancia ---como la MASDWP (	extit{Mean Average Spatial Distance-Weighted Precision})--- que ofrecen una evaluación más honesta del rendimiento del localizador en estructuras de gran escala \cite{li2024reliability}. En paralelo, el marco de Aprendizaje Automático en Grafos Espacio-Temporales (TVML) permite caracterizar la red de sensores mediante métricas de centralidad ---\textit{TopoScore}---, seleccionando nodos representativos de cada clúster modal para reducir el costo instrumental sin sacrificar fidelidad diagnóstica \cite{ma2024tvml}.
+
+La validación estadística de las metodologías de detección de daño se sustenta en marcos complementarios de reconocida solidez. Las curvas de Probabilidad de Detección (POD) cuantifican la fracción de ensayos exitosos como función de la severidad del daño, y las curvas de Característica Operativa del Receptor (ROC) permiten comparar visualmente el compromiso entre la tasa de verdaderos positivos y la de falsas alarmas entre algoritmos alternativos \cite{li2024reliability}. El test de rangos con signo de Wilcoxon, no paramétrico y unilateral, complementa este análisis mediante la validación de la superioridad estadística de un método frente a una línea base, independientemente de la distribución subyacente de los errores, lo cual es especialmente relevante en métricas de detección de daño con distribuciones no gaussianas. A pesar de esta madurez científica, persiste una brecha normativa significativa: los estándares internacionales vigentes ---ISO~19902, API~RP~2SIM, DNV-RP-C210 y NORSOK~N-005--- proporcionan directrices generales para la gestión de integridad sin que el uso de gemelos digitales y la detección automática de daños hayan alcanzado el estatus de requisito regulatorio \cite{ramboll2022digital}.
+
+El trabajo más próximo al presente es el de Ervin y Zeng \cite{ervin2022index}, quienes propusieron combinar múltiples DIs mediante un AG y demostraron que la combinación óptima supera a cualquier indicador individual, alcanzando tasas de detección del 94\% para reducciones del 60\% en el módulo de Young bajo condiciones de ruido del 5\%. No obstante, su formulación utilizó un vector objetivo binario y se validó en marcos de acero planos, sin incorporar penalización de falsos positivos ni extenderse a las complejidades hidrodinámicas, redundancia estructural y diversidad de mecanismos de daño (corrosión~+~abolladura) propias de las plataformas \textit{jacket} offshore.
+
+La revisión del estado del arte evidencia, en consecuencia, tres brechas técnicas que motivan la presente investigación. Primera: la ausencia de una función objetivo unificada que fusione múltiples indicadores vibratorios y penalice exponencialmente los falsos positivos, adaptada a las condiciones de ruido propias de plataformas en operación. Segunda: la carencia de una métrica de localización que corrija la subestimación sistemática de la calidad diagnóstica ocasionada por la Precisión clásica en redes estructurales con redundancia topológica. Tercera: la falta de validación estadística exhaustiva de la hipótesis operativa que postula un comportamiento diferenciado entre los elementos secundarios (\textit{braces} o diagonales) y los elementos primarios (piernas) de la celosía frente a daño progresivo por corrosión y abolladura.
+
+Esta investigación propone una estrategia de Optimización Inversa basada en Algoritmos Genéticos para la identificación de daño en plataformas \textit{jacket}. La aportación central es el \textbf{Índice de Calidad de Detección} (ICD), una nueva métrica objetivo diseñada para fusionar múltiples indicadores de daño y penalizar exponencialmente los falsos positivos, mejorando la confiabilidad del diagnóstico en entornos operativos ruidosos \cite{malekzadeh2013damage}. Como segunda contribución metodológica, se propone la \textbf{Precisión Ponderada por Distancia Topológica} ($\text{Precision}_w$), que asigna un peso $w(d) = d/(d+1)$ a cada falso positivo en función de su distancia al elemento dañado en el grafo de conectividad estructural, corrección que —como se demuestra en la Sección~\ref{sec:resultados}— conduce a ganancias de hasta $+22$~puntos porcentuales en la evaluación del localizador para los \textit{braces}. La validación se realizó sobre 3{,}240 corridas del algoritmo en un modelo de elementos finitos calibrado de una plataforma \textit{jacket} de 4~piernas, sometida a escenarios de corrosión (5\%--90\% de severidad) y abolladura (5\%--45\%), con verificación estadística mediante curvas POD y la prueba de Wilcoxon ($\alpha = 0.05$).
+
+El artículo se organiza de la siguiente manera: la Sección~\ref{sec:modelado} describe el modelado numérico de la plataforma, incorporando efectos de masa añadida y crecimiento marino. La Sección~\ref{sec:metodologia} detalla la metodología basada en AG y la formulación matemática del ICD. La Sección~\ref{sec:resultados} presenta los resultados y discusión sobre los escenarios de corrosión y abolladura, evaluando la sensibilidad del método. Finalmente, la Sección~5 ofrece las conclusiones y líneas de trabajo futuro.
 
 \section{Modelado Numérico y Formulación del Daño}
 \label{sec:modelado}
@@ -128,31 +120,11 @@ El comportamiento dinámico de la plataforma marina se modela discretizando la e
 Para representar con fidelidad la física de una plataforma Jacket en operación, la matriz de masa se construye como la superposición de tres componentes: masa estructural ($M_s$), masa adherida ($M_a$) y masa atrapada ($M_t$).
 
 \subsubsection{Masa Hidrodinámica y Coeficientes (\texorpdfstring{$C_m$}{Cm})}
-La masa adherida representa el efecto del volumen de agua circundante que se acelera solidariamente con la vibración de la estructura. Este fenómeno se cuantifica mediante el coeficiente de masa ($C_m$), cuyo valor depende de la rugosidad superficial del elemento tubular. De acuerdo con la normativa internacional \citep{API2014_manual}, se adoptan los siguientes valores para el modelo:
-
-Los valores adoptados son $C_m = 1.6$ para elementos rugosos (con crecimiento marino) y $C_m = 1.2$ para elementos lisos (sin crecimiento marino).
-
-Adicionalmente, se considera la \textbf{masa atrapada}, que corresponde al agua contenida dentro de los elementos tubulares inundados (pilotes y piernas principales). La Figura~\ref{fig:masa_adherida} ilustra la diferencia conceptual entre estos componentes inerciales.
-
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=0.9\columnwidth]{figs/001_modelo_plataforma_con_elemento_tubular_masa_adherida_y_masa_atrapada.png}
-    \caption{Esquematización de la masa atrapada (volumen interno) y masa adherida (volumen hidrodinámico externo).}
-    \label{fig:masa_adherida}
-\end{figure}
+La masa adherida representa el volumen de fluido que oscila solidariamente con el elemento tubular y se modela mediante el coeficiente de masa $C_m$, dependiente de la rugosidad superficial y del crecimiento biológico. Conforme a prácticas de diseño e informes técnicos \citep{API2014_manual,CardenasArias2019_article}, en este estudio se adoptan valores de referencia $C_m=1.6$ para superficies con crecimiento marino significativo y $C_m=1.2$ para superficies lisas. Además, la masa atrapada (agua contenida en secciones tubulares inundadas) se incorpora como masa añadida interna en el ensamblaje del modelo; los detalles experimentales y esquemáticos sobre la definición y la parametrización de ambos términos se encuentran en \cite{CardenasArias2019_article}.
 
 \subsubsection{Modelado del Crecimiento Marino}
 
-En la Sonda de Campeche, la acumulación de organismos marinos  sobre los elementos estructurales altera significativamente la respuesta dinámica al incrementar el diámetro efectivo e hidrodinámico de los tubos. Este fenómeno no es uniforme; varía en función de la profundidad y la penetración de luz solar.
-
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=0.9\columnwidth]{figs/001_modelo_plataforma_con_elemento_tubular_masa_de_crecimiento_marino.png}
-    \caption{Influencia del espesor de crecimiento marino en el diámetro efectivo del elemento estructural.}
-    \label{fig:crecimiento_marino}
-\end{figure}
-
-Para el modelo numérico, se implementó un perfil de espesores variable por zonas de profundidad (Zona de Marea vs. Fondo Marino), aumentando consecuentemente los coeficientes de masa e inercia en las regiones más afectadas.
+El crecimiento marino modifica la masa e hidrodinámica efectiva de los tubos por variaciones en el espesor biológico a lo largo de la columna de agua; su impacto depende de la exposición a la luz y de la profundidad \citep{birci2020integrity,salama2020shm}. En el modelo numérico se implementó un perfil de espesores variable por zonas verticales (zona de marea vs. fondo marino), ajustando localmente los coeficientes de masa e inercia en las regiones más afectadas.
 
 \FloatBarrier
 \subsection{Mecánica del Daño Simulado}
@@ -160,14 +132,7 @@ Para el modelo numérico, se implementó un perfil de espesores variable por zon
 A diferencia de los modelos de caja negra, esta investigación utiliza un enfoque basado en física para simular el daño. Se modifican las propiedades geométricas de la sección transversal de los elementos finitos y se reensamblan las matrices globales para obtener las nuevas propiedades modales (problema directo).
 
 \subsubsection{Corrosión Uniforme}
-La corrosión se modela como una reducción uniforme del espesor de pared ($t$) del elemento tubular a lo largo de una longitud afectada ($L_D$). Esto impacta directamente el área de la sección transversal ($A$) y los momentos de inercia ($I$), manteniendo constante el módulo de elasticidad ($E$), como se observa en evidencia experimental de acero corroído \citep{CardenasArias2019_article}.
-
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=0.40\textwidth]{figs/004_caracterizacion_de_como_se_reduce_el_espesor_elemento_tubular_por_corrosion.png}
-    \caption{Caracterización de la reducción de espesor en un elemento tubular por corrosión uniforme.}
-    \label{fig:modelo_corrosion}
-\end{figure}
+La corrosión se modela como una reducción uniforme del espesor de pared ($t$) del elemento tubular a lo largo de una longitud afectada ($L_D$). Esta pérdida geométrica reduce el área de la sección transversal ($A$) y los momentos de inercia ($I$), alterando directamente la rigidez del miembro. Respecto al módulo de elasticidad ($E$), estudios experimentales de Cárdenas‑Arias y Maldonado‑Zepeda (2019) muestran que, en el rango elástico lineal, el acero corroído por inmersión marina no presenta cambios significativos en $E$; por tanto, en este trabajo se mantiene $E$ constante y se consideran únicamente las modificaciones geométricas (A, I) para la caracterización del daño \citep{CardenasArias2019_article}.
 
 \subsubsection{Abolladuras}
 Las abolladuras representan un daño local crítico causado por impactos accidentales. Este daño se modela asumiendo una distorsión de la sección transversal que aplana la cara impactada y ensancha los laterales, conservando el perímetro pero reduciendo drásticamente el momento de inercia local ($I_{red}$) (Figura~\ref{fig:abolladura_seccion}).
@@ -179,7 +144,7 @@ Las abolladuras representan un daño local crítico causado por impactos acciden
     \label{fig:abolladura_seccion}
 \end{figure}
 
-Para evitar discontinuidades numéricas abruptas en la matriz de rigidez, la variación de la inercia a lo largo de la zona abollada se suaviza mediante funciones de interpolación polinómica de cuarto grado, asegurando una transición representativa de la pérdida de rigidez local.
+Para evitar discontinuidades numéricas abruptas en la matriz de rigidez, la variación de la inercia a lo largo de la zona abollada se suaviza mediante funciones de interpolación polinómica de cuarto grado, asegurando una transición representativa de la pérdida de rigidez local (Figura~\ref{fig:interpolacion_abolladura}).
 
 \begin{figure}[!ht]
     \centering
@@ -190,7 +155,7 @@ Para evitar discontinuidades numéricas abruptas en la matriz de rigidez, la var
 
 \subsection{Caso de Estudio: Plataforma Tipo Jacket}
 
-La metodología se valida en un modelo numérico de una plataforma marina fija de tipo Jacket de 4 piernas, representativa de las estructuras instaladas en aguas someras e intermedias del Golfo de México. El modelo, resuelto mediante el método de elementos finitos, incluye la superestructura completa y el sistema de cimentación por pilotes (simulados mediante longitud equivalente al punto de empotramiento aparente).
+La metodología se valida en un modelo numérico de una plataforma marina fija de tipo Jacket de 4 piernas, representativa de las estructuras instaladas en aguas someras e intermedias del Golfo de México (Figura~\ref{fig:caso_estudio}). El modelo, resuelto mediante el método de elementos finitos, incluye la superestructura completa y el sistema de cimentación por pilotes (simulados mediante longitud equivalente al punto de empotramiento aparente).
 
 \begin{figure}[!ht]
     \centering
@@ -204,19 +169,19 @@ La metodología se valida en un modelo numérico de una plataforma marina fija d
 \section{Metodología de Optimización Inversa}
 \label{sec:metodologia}
 
-Para abordar el problema de identificación de daño estructural en plataformas marinas, esta investigación propone un enfoque de optimización combinatoria que integra la física del modelo numérico con técnicas de inteligencia artificial. A diferencia de los métodos tradicionales de actualización de modelos que buscan ajustar los parámetros de rigidez y masa para replicar la respuesta experimental, esta estrategia utiliza un Algoritmo Genético (AG) para calibrar un vector de pesos óptimos. El objetivo es fusionar múltiples índices de daño en un indicador unificado, maximizando la sensibilidad de detección y minimizando los falsos positivos.
+Para abordar el problema de identificación de daño estructural en plataformas marinas, esta investigación extiende el esquema de combinación de índices basado en Algoritmos Genéticos propuesto por Ervin y Zeng \cite{ervin2022index}, quienes demostraron que un AG puede seleccionar y ponderar de forma óptima múltiples índices de daño (DIs) individuales, superando el rendimiento de cualquier indicador aislado. En el presente trabajo, dicho esquema se adapta al contexto de plataformas \textit{jacket} offshore e incorpora como función objetivo el Índice de Calidad de Detección (ICD), una contribución original diseñada para penalizar exponencialmente los falsos positivos y maximizar la confiabilidad del diagnóstico en entornos ruidosos, aspectos no abordados en la formulación original de Ervin y Zeng \cite{ervin2022index}.
 
-La metodología se estructura fundamentalmente en dos etapas acopladas: la simulación mecánica de los escenarios de daño y la optimización estocástica de la detección. El flujo operativo general se detalla en la Figura~\ref{fig:metodologia_general}, donde se observa cómo los datos vibratorios alimentan el proceso de decisión.
+La metodología se estructura fundamentalmente en dos etapas acopladas: la simulación mecánica de los escenarios de daño y la optimización estocástica de la detección. El flujo operativo general se detalla en la Figura~\ref{fig:metodologia_general}. Dicha figura ilustra la cadena completa desde la adquisición de datos en la plataforma real hasta la toma de decisiones de mantenimiento; el alcance del presente trabajo se circunscribe a la etapa central destacada en la figura: la generación del modelo numérico de daño, el cálculo de los ocho DIs y la optimización mediante el ICD+AG para la localización del elemento afectado. En el contexto de planificación de inspecciones, Varela y Tolentino \cite{varela2023cost} señalan que los intervalos de revisión estructural para plataformas fijas pueden alcanzar hasta seis años en determinadas condiciones; esta observación se utiliza aquí para contextualizar el horizonte de mantenimiento considerado en las recomendaciones operativas derivadas del estudio.
 
 \begin{figure*}[!t]
     \centering
     \includegraphics[width=0.9\textwidth]{figs/005_metogologia_propuesta_para_identificar_daños_en_plataformas_reales.jpg}
-    \caption{Esquema general de la metodología propuesta para la identificación de daño.}
+    \caption{Esquema general de la metodología propuesta para la identificación de daño. El recuadro delimitado indica el alcance del presente trabajo: simulación numérica de escenarios de daño, extracción de indicadores vibratorios (DIs) y optimización ICD+AG para la localización del elemento dañado.}
     \label{fig:metodologia_general}
 \end{figure*}
 
 \subsection{Formulación de Indicadores Vibratorios}
-El sistema de detección se alimenta de un conjunto de indicadores de daño (DIs) derivados de las propiedades modales y de la matriz de flexibilidad de la estructura. A continuación, se definen los ocho indicadores matemáticos utilizados como entradas para el algoritmo, donde $u$ representa el estado "sin daño" y $d$ el estado "dañado".
+Siguiendo el marco de Ervin y Zeng \cite{ervin2022index}, el sistema de detección se alimenta de un conjunto de indicadores de daño (DIs) derivados de las propiedades modales y de la matriz de flexibilidad de la estructura. A diferencia del trabajo original, que emplea 51 DIs direccionales uniaxiales y 24 DIs resultantes triaxiales, en este estudio se adoptan ocho indicadores escalares representativos del cambio modal y de flexibilidad, adaptados al modelo tridimensional de la plataforma \textit{jacket}. A continuación se definen las formulaciones matemáticas utilizadas como entradas para el AG, donde $u$ representa el estado ``sin daño'' y $d$ el estado ``dañado''.
 
 \subsubsection{Indicadores Basados en Formas Modales}
 \textbf{$DI_1$: COMAC} \\
@@ -271,7 +236,7 @@ Transforma el puntaje Z en probabilidad asumiendo distribución Gaussiana:
 
 \subsection{El Motor de Búsqueda: Algoritmo Genético (AG)}
 
-El AG se configura como el motor de optimización del sistema. Su función no es modificar la estructura física, sino encontrar la combinación lineal óptima ($\boldsymbol{\alpha}$) de los índices vibratorios descritos anteriormente para minimizar el error de localización respecto a un estado de daño conocido. La arquitectura computacional diseñada para este propósito se presenta en la Figura~\ref{fig:metodologia_AG}.
+Siguiendo el principio de Ervin y Zeng \cite{ervin2022index}, el AG actúa como motor de optimización para encontrar la combinación lineal óptima $\boldsymbol{\alpha} = [\alpha_1, \ldots, \alpha_8]$ de los ocho DIs definidos en la sección anterior. La contribución diferencial de este trabajo reside en que, a diferencia del vector objetivo binario utilizado por Ervin y Zeng, la función de aptitud aquí evaluada es el ICD (Ecuación~\ref{eq:icd}), que penaliza directamente los falsos positivos y está calibrada para el contexto operativo offshore. La arquitectura computacional diseñada para este propósito se presenta en la Figura~\ref{fig:metodologia_AG}.
 
 \begin{figure*}[!t]
     \centering
@@ -294,6 +259,7 @@ Para garantizar un equilibrio entre la exploración del espacio de soluciones y 
 
 El ciclo detallado de estos operadores se ilustra en la Figura~\ref{fig:detalle_AG}.
 
+\FloatBarrier
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=0.85\columnwidth]{figs/015_diagrama_como_funciona_el_AG_para_la_sumas_funcion_P_y_como_se_relaciona_con_operadores_geneticos_del_AG.jpg}
@@ -367,6 +333,7 @@ Aunque la naturaleza física del daño difiere de la corrosión, la tendencia de
 
 Para determinar si la profundidad afecta la confiabilidad del diagnóstico, se segmentó la estructura en las cinco zonas verticales definidas en la Figura~\ref{fig:zonas_plataforma}: Zona de Salpicadura (\textit{Splash Zone}), tres tramos sumergidos intermedios (Sub\,1, Sub\,2 y Sub\,3) y la Línea de Lodo (\textit{Mudline}). Las Figuras~\ref{fig:corrosion_zone} y \ref{fig:abolladura_zone} comparan el desempeño del ICD en estas regiones.
 
+\FloatBarrier
 \begin{figure*}[!t]
     \centering
     \begin{subfigure}[b]{0.48\textwidth}
@@ -384,6 +351,16 @@ Para determinar si la profundidad afecta la confiabilidad del diagnóstico, se s
     \caption{Influencia de la ubicación vertical del daño en la calidad de detección (ICD).}
     \label{fig:zone_analysis}
 \end{figure*}
+
+\FloatBarrier
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.55\columnwidth]{figs/008_nombres_zonas_estudio_modelo_plataforma_marina_splashzone_subs_y_mudline_en_una_sola_grafica.png}
+    \caption{Zonificación vertical de la plataforma tipo Jacket: delimitación de las zonas de
+             estudio por profundidad. Las cotas están expresadas en metros referidas al
+             Nivel Medio del Mar (MSL: \textit{Mean Sea Level}).}
+    \label{fig:zonas_plataforma}
+\end{figure}
 
 El análisis revela una ligera ventaja en la detectabilidad de daños ubicados en la \textit{Splash Zone} y Zona Media en comparación con el \textit{Mudline}. Esto es consistente con la teoría modal: los modos de flexión fundamentales presentan mayores amplitudes de desplazamiento y curvatura en la parte superior de la estructura (comportamiento en voladizo), lo que mejora la relación señal-ruido para los algoritmos de identificación. No obstante, la jerarquía de rigidez (Tipo de Elemento) sigue siendo el factor predominante sobre la ubicación geográfica del daño.
 
@@ -436,101 +413,87 @@ comparabilidad interzonal del análisis.
     \label{fig:distribucion_experimental}
 \end{figure*}
 
-La delimitación geométrica de dichas zonas se ilustra en la Figura~\ref{fig:zonas_plataforma}.
-La plataforma queda dividida en cinco niveles verticales: el \textit{Mudline} (base) y tres
+La plataforma queda dividida en cinco niveles verticales (véase Figura~\ref{fig:zonas_plataforma}): el \textit{Mudline} (base) y tres
 tramos sumergidos intermedios (Sub\,1, Sub\,2 y Sub\,3) de 20~m cada uno, más la
 \textit{Splash Zone} en la interfaz agua--aire, resultando en un calado total sumergido de
 85~m referido al Nivel Medio del Mar.
 
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=0.55\columnwidth]{figs/008_nombres_zonas_estudio_modelo_plataforma_marina_splashzone_subs_y_mudline_en_una_sola_grafica.png}
-    \caption{Zonificación vertical de la plataforma tipo Jacket: delimitación de las zonas de
-             estudio por profundidad. Las cotas están expresadas en metros referidas al
-             Nivel Medio del Mar (MSL: \textit{Mean Sea Level}).}
-    \label{fig:zonas_plataforma}
-\end{figure}
-
 % ─────────────────────────────────────────────────────────────────────────────
 % §4.5  MÉTRICAS DE CLASIFICACIÓN
 % ─────────────────────────────────────────────────────────────────────────────
-\subsection{Métricas de Clasificación: Precision, Recall y F\textsubscript{1}}
+\subsection{Métricas de Clasificación: Precision y Recall}
 \label{subsec:metricas_clasificacion}
 
-Para cuantificar el desempeño del sistema más allá del ICD, se calcularon las métricas
-estándar de clasificación binaria. La Tabla~\ref{tab:metricas_compacta} reporta los valores
-medios por tipo de elemento y escenario de daño.
+Para cuantificar el desempeño del sistema más allá del ICD, se emplean las métricas estándar
+de clasificación binaria, cuya base es la \textbf{matriz de confusión} del problema.
+En cada corrida del AG, el algoritmo produce un vector de predicción
+$\hat{\mathbf{d}} \in \{0,1\}^{N_\text{el}}$ (1~=~elemento predicho como dañado)
+que se compara contra la etiqueta real $\mathbf{d}^* \in \{0,1\}^{N_\text{el}}$
+(exactamente un elemento dañado por corrida). De esta comparación emergen cuatro casos:
+\textit{Verdadero Positivo} (TP: elemento dañado correctamente identificado),
+\textit{Falso Positivo} (FP: elemento sano señalado como dañado),
+\textit{Falso Negativo} (FN: elemento dañado no detectado) y
+\textit{Verdadero Negativo} (TN: elemento sano correctamente descartado).
+Las dos métricas principales derivadas son:
+
+\begin{align}
+    \text{Precision} &= \frac{TP}{TP + FP} \label{eq:precision} \\[4pt]
+    \text{Recall}    &= \frac{TP}{TP + FN} \label{eq:recall}
+\end{align}
+
+\noindent En el contexto de integridad estructural, Precision cuantifica cuántos de los
+elementos señalados como dañados son realmente dañados (costo de falsas alarmas de inspección);
+Recall cuantifica cuántos elementos verdaderamente dañados son detectados (costo de daños no
+detectados).
+La Tabla~\ref{tab:metricas_compacta} reporta los valores medios por tipo de elemento y escenario de daño.
 
 \begin{table*}[!ht]
   \centering
-  \caption{Summary of classification performance at key severity levels. Avg~FP: average number of false alarms per run.}
+  \caption{Summary of classification performance at key severity levels.}
   \label{tab:metricas_compacta}
-  \begin{tabular}{llrrrrr}
+  \begin{tabular}{llrrr}
     \toprule
-    Damage Type & Element & Severity & Precision & Recall & F1 & Avg FP \\
+    Damage Type & Element & Severity & Precision & Recall \\
     \midrule
-    Denting & Brace & 10\% & 0.404 & 0.952 & 0.567 & 1.4 \\
-    Denting & Brace & 20\% & 0.398 & 0.952 & 0.561 & 1.4 \\
-    Denting & Brace & 30\% & 0.365 & 0.952 & 0.528 & 1.7 \\
-    Denting & Brace & 45\% & 0.370 & 0.952 & 0.533 & 1.6 \\
-    \cmidrule{2-7}
-    Denting & Inclined Leg & 10\% & 0.152 & 0.600 & 0.242 & 3.4 \\
-    Denting & Inclined Leg & 20\% & 0.093 & 0.750 & 0.165 & 7.3 \\
-    Denting & Inclined Leg & 30\% & 0.122 & 1.000 & 0.217 & 7.2 \\
-    Denting & Inclined Leg & 45\% & 0.078 & 0.700 & 0.141 & 8.2 \\
-    \cmidrule{2-7}
-    Denting & Beam & 10\% & 0.084 & 1.000 & 0.155 & 10.9 \\
-    Denting & Beam & 20\% & 0.094 & 1.000 & 0.171 & 9.7 \\
-    Denting & Beam & 30\% & 0.116 & 1.000 & 0.208 & 7.6 \\
-    Denting & Beam & 45\% & 0.098 & 1.000 & 0.178 & 9.2 \\
+    Denting & Brace & 10\% & 0.404 & 0.952 \\
+    Denting & Brace & 20\% & 0.398 & 0.952 \\
+    Denting & Brace & 30\% & 0.365 & 0.952 \\
+    Denting & Brace & 45\% & 0.370 & 0.952 \\
+    \cmidrule{2-5}
+    Denting & Inclined Leg & 10\% & 0.152 & 0.600 \\
+    Denting & Inclined Leg & 20\% & 0.093 & 0.750 \\
+    Denting & Inclined Leg & 30\% & 0.122 & 1.000 \\
+    Denting & Inclined Leg & 45\% & 0.078 & 0.700 \\
+    \cmidrule{2-5}
+    Denting & Beam & 10\% & 0.084 & 1.000 \\
+    Denting & Beam & 20\% & 0.094 & 1.000 \\
+    Denting & Beam & 30\% & 0.116 & 1.000 \\
+    Denting & Beam & 45\% & 0.098 & 1.000 \\
     \midrule
-    Corrosion & Brace & 20\% & 0.381 & 0.952 & 0.544 & 1.5 \\
-    Corrosion & Brace & 40\% & 0.377 & 0.952 & 0.541 & 1.6 \\
-    Corrosion & Brace & 60\% & 0.381 & 0.952 & 0.544 & 1.5 \\
-    Corrosion & Brace & 90\% & 0.319 & 0.905 & 0.472 & 1.9 \\
-    \cmidrule{2-7}
-    Corrosion & Inclined Leg & 20\% & 0.286 & 1.000 & 0.444 & 2.5 \\
-    Corrosion & Inclined Leg & 40\% & 0.263 & 1.000 & 0.417 & 2.8 \\
-    Corrosion & Inclined Leg & 60\% & 0.333 & 1.000 & 0.500 & 2.0 \\
-    Corrosion & Inclined Leg & 90\% & 0.339 & 1.000 & 0.506 & 1.9 \\
-    \cmidrule{2-7}
-    Corrosion & Beam & 20\% & 0.099 & 1.000 & 0.181 & 9.1 \\
-    Corrosion & Beam & 40\% & 0.105 & 1.000 & 0.190 & 8.5 \\
-    Corrosion & Beam & 60\% & 0.105 & 1.000 & 0.189 & 8.6 \\
-    Corrosion & Beam & 90\% & 0.121 & 1.000 & 0.216 & 7.2 \\
+    Corrosion & Brace & 20\% & 0.381 & 0.952 \\
+    Corrosion & Brace & 40\% & 0.377 & 0.952 \\
+    Corrosion & Brace & 60\% & 0.381 & 0.952 \\
+    Corrosion & Brace & 90\% & 0.319 & 0.905 \\
+    \cmidrule{2-5}
+    Corrosion & Inclined Leg & 20\% & 0.286 & 1.000 \\
+    Corrosion & Inclined Leg & 40\% & 0.263 & 1.000 \\
+    Corrosion & Inclined Leg & 60\% & 0.333 & 1.000 \\
+    Corrosion & Inclined Leg & 90\% & 0.339 & 1.000 \\
+    \cmidrule{2-5}
+    Corrosion & Beam & 20\% & 0.099 & 1.000 \\
+    Corrosion & Beam & 40\% & 0.105 & 1.000 \\
+    Corrosion & Beam & 60\% & 0.105 & 1.000 \\
+    Corrosion & Beam & 90\% & 0.121 & 1.000 \\
     \bottomrule
   \end{tabular}
 \end{table*}
 
-La Figura~\ref{fig:F1_comparison} compara las curvas de F\textsubscript{1} en función de la
-severidad para ambas campañas. Los \textit{braces} alcanzan sistemáticamente los valores de
-F\textsubscript{1} más elevados ($> 0.85$ a partir del 30\%), mientras que los elementos
-de mayor rigidez (\textit{beams} y piernas inclinadas) muestran valores inferiores por su menor
-sensibilidad modal.
-
-\begin{figure*}[!t]
-    \centering
-    \includegraphics[width=0.9\textwidth]{../outputs/resultados_nuevos/F1_comparison_denting_corrosion.png}
-    \caption{Evolución del F\textsubscript{1}-score en función de la severidad del daño para
-             cada tipo de elemento: Abolladura (izq.) y Corrosión (der.).}
-    \label{fig:F1_comparison}
-\end{figure*}
-
-Las curvas ROC de la Figura~\ref{fig:ROC_curves} sintetizan la relación entre la tasa de
-verdaderos positivos (Recall) y la de falsos positivos (1$-$Especificidad) para el clasificador
-binario resultante. Los valores de AUC-ROC obtenidos ($> 0.90$ para abolladura y $> 0.94$ para
-corrosión) confirman la alta capacidad discriminativa del sistema.
-
-\begin{figure*}[!t]
-    \centering
-    \includegraphics[width=0.9\textwidth]{../outputs/resultados_nuevos/ROC_curve_denting_corrosion.png}
-    \caption{Curvas ROC para el clasificador de daño mediante ICD: Abolladura (izq.)
-             y Corrosión (der.). Valores resumen: AUC--ROC (Abolladura) $>$ 0.90; AUC--ROC
-             (Corrosión) $>$ 0.94. Punto operativo sugerido: si se prioriza baja tasa de
-             falsas alarmas seleccione el umbral cercano al marcador 'Brace (5\%)' (TPR
-             $\approx$ 0.90, FPR $\approx$ 0.01).}
-    \label{fig:ROC_curves}
-\end{figure*}
+La capacidad discriminativa del ICD se refleja en su habilidad para ordenar los elementos
+por grado de afectación y se corrobora mediante las pruebas estadísticas presentadas
+(POD y Wilcoxon) que validan la detección en distintos niveles de severidad. El análisis
+de robustez ante ruido (Sección~\ref{subsec:SNR}) describe cómo se degradan las métricas
+de discriminación y de localización bajo distintos niveles de SNR, aportando el soporte
+experimentado sobre la aplicabilidad del método en condiciones ruidosas.
 
 % ─────────────────────────────────────────────────────────────────────────────
 % §4.6  CURVAS POD (PROBABILITY OF DETECTION)
@@ -732,7 +695,7 @@ escenario, tipo de elemento y severidad, incluyendo la distancia media de los FP
 
 \section{Conclusiones y Trabajo Futuro}
 
-La presente investigación ha validado la eficacia del Índice de Calidad de Detección (ICD) como una métrica robusta para la identificación de daño estructural en plataformas marinas tipo Jacket. A diferencia de los métodos tradicionales de actualización de modelo (\textit{model updating}), la estrategia propuesta de optimización inversa mediante Algoritmos Genéticos (AG) y fusión de datos permite localizar anomalías sin requerir un modelo calibrado perfecto, reduciendo la carga computacional y la dependencia de condiciones iniciales exactas. La campaña de 3{,}240 corridas (1{,}080 abolladura $+$ 2{,}160 corrosión) sobre 120 elementos del modelo ETABS proporciona respaldo estadístico exhaustivo a los resultados reportados.
+La presente investigación ha validado la eficacia del Índice de Calidad de Detección (ICD) como una métrica robusta para la identificación de daño estructural en plataformas marinas tipo Jacket. El enfoque adoptado extiende el esquema de combinación de DIs basado en AG introducido por Ervin y Zeng \cite{ervin2022index} al dominio de plataformas \textit{jacket} offshore, incorporando como función de aptitud el ICD, que a diferencia del vector objetivo binario original penaliza exponencialmente los falsos positivos y pondera la severidad del daño. Esta extensión, junto con la validación estadística sobre 3{,}240 escenarios, constituye la contribución metodológica central del trabajo. La campaña de 3{,}240 corridas (1{,}080 abolladura $+$ 2{,}160 corrosión) sobre 120 elementos del modelo ETABS proporciona respaldo estadístico exhaustivo a los resultados reportados.
 
 El hallazgo más relevante del estudio confirma el comportamiento de los elementos secundarios (diagonales o \textit{braces}) como ``fusibles estructurales''. Los resultados demuestran que el ICD es altamente sensible a daños en estos elementos, detectando reducciones de rigidez a partir del 30\% de severidad (ya sea por corrosión o abolladura) con tasas de detección globales del \textbf{92.2\%} (abolladura) y \textbf{96.5\%} (corrosión) y valores de AUC-ROC superiores a 0.90 para todos los tipos de elementos. Las pruebas de Wilcoxon confirman la superioridad estadística del ICD sobre el mejor DI individual en todos los escenarios evaluados ($p < 0.001$). En contraste, los elementos principales (piernas) mostraron una redundancia significativa, requiriendo daños superiores al 50\% para ser detectables por el sistema. Esto tiene una implicación operativa directa para la gestión de integridad costa afuera: mientras que el monitoreo automático basado en vibraciones es ideal para la vigilancia continua de las diagonales, las inspecciones visuales submarinas deben seguir priorizando los nodos y piernas principales, donde los cambios modales son más sutiles en etapas tempranas.
 
