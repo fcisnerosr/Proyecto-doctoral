@@ -1,4 +1,4 @@
-\begin{thebibliography}{22}
+\begin{thebibliography}{21}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 \providecommand{\url}[1]{\texttt{#1}}
 \providecommand{\href}[2]{#2}
@@ -118,12 +118,6 @@
 \bibinfo{author}{Salama, F.}, \bibinfo{author}{Liew, M.S.}, \bibinfo{author}{Al-Yacouby, A.M.}, \bibinfo{year}{2020}.
 \newblock \bibinfo{title}{Structural health monitoring of an offshore platform: Trend of corrosion and marine growth with predictive maintenance}, in: \bibinfo{booktitle}{Proceedings of the Indonesian Petroleum Association Annual Convention}.
 \newblock \bibinfo{note}{IPA20-SE-424}.
-%Type = Misc
-\bibitem[{{Sinergia Informativa}(2024)}]{sinergia2024recorte}
-\bibinfo{author}{{Sinergia Informativa}}, \bibinfo{year}{2024}.
-\newblock \bibinfo{title}{Recortes presupuestales afectan el mantenimiento de plataformas petroleras en el golfo de méxico}.
-\newblock \bibinfo{howpublished}{Nota periodística}.
-\newblock \bibinfo{note}{Consultado el 6 de abril de 2026}.
 %Type = Article
 \bibitem[{Varela and Tolentino(2023)}]{varela2023cost}
 \bibinfo{author}{Varela, G.}, \bibinfo{author}{Tolentino, D.}, \bibinfo{year}{2023}.
