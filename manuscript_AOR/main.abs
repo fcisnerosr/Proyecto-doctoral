@@ -1,17 +1,17 @@
 The aging of offshore oil infrastructure and the high costs and risks
 associated with traditional underwater inspections demand new integrity
 management strategies. This paper proposes a Structural Health Monitoring
-(SHM) methodology based on inverse optimization using Genetic Algorithms
+(SHM) methodology based on inverse optimisation using Genetic Algorithms
 (GA) for damage identification in Jacket-type platforms. The Detection
-Quality Index (ICD) is introduced as a new objective metric designed to
-fuse multiple vibration indicators and mitigate numerical uncertainty by
-penalizing false positives. Validation was conducted over 3{,}240
+Quality Index (DQI) is introduced as a new objective metric designed to
+fuse multiple vibration-based indicators and mitigate numerical uncertainty by
+penalising false positives. Validation was conducted over 3{,}240
 simulation runs on a calibrated finite-element model under corrosion and
 denting scenarios. Quantitative results demonstrate a differentiated
-structural behavior: secondary elements (braces) act as ``structural
+structural behaviour: secondary elements (braces) act as ``structural
 fuses'', detectable from 30\% damage severity with global detection rates
 of 92.2\% (denting) and 96.5\% (corrosion), while main elements (legs)
 require severity levels exceeding 50\%. A novel Topology-Weighted
 Precision metric is also proposed, correcting systematic underestimation
-of localization quality by the classical Precision metric, yielding gains
+of localisation quality by the classical Precision metric, yielding gains
 of up to $+$22 percentage points for brace elements.

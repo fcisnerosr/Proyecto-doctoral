@@ -1,0 +1,177 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage[hidelinks]{hyperref}
+\usepackage{parskip}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{array}
+\setlength{\headheight}{14.5pt}
+
+\definecolor{impgreen}{RGB}{0,128,64}
+\definecolor{darkgray}{RGB}{60,60,60}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{darkgray}{Reporte de Avances — Comité Tutorial, Junio 2026}}
+\fancyhead[R]{\small\textcolor{darkgray}{F.~J. Cisneros Ruiz}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\titleformat{\section}{\normalsize\bfseries\color{impgreen}}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{10pt}{4pt}
+
+\begin{document}
+
+% ── Portada ──────────────────────────────────────────────────────────────
+\begin{titlepage}
+  \centering
+  \vspace*{1.5cm}
+  {\large\bfseries Instituto Mexicano del Petróleo\\[0.3em]
+  \normalsize Coordinación Académica de Posgrado — Doctorado en Ingeniería\par}
+
+  \vspace{1.8cm}
+  \rule{\textwidth}{1.2pt}\\[0.5em]
+  {\Large\bfseries Reporte de Avances\\[0.2em]
+  \normalsize Comité Tutorial — Último semestre\par}
+  \rule{\textwidth}{1.2pt}
+
+  \vspace{1.5cm}
+  \begin{tabular}{ll}
+    \textbf{Estudiante:}           & Francisco Javier Cisneros Ruiz \\[0.4em]
+    \textbf{Matrícula:}            & 92735 \quad Generación 2022 \\[0.4em]
+    \textbf{Director de tesis:}    & Dr.\ Iván Félix González \\[0.4em]
+    \textbf{Semestre:}             & Enero -- Junio 2026 (último semestre regular) \\[0.4em]
+    \textbf{Sede actual:}          & Veracruz, Veracruz \\[0.4em]
+    \textbf{Fecha de evaluación:}  & 26 de junio de 2026, 12:40 h \\
+  \end{tabular}
+
+  \vspace{1.8cm}
+  {\large\bfseries
+  Detección de Daños en Plataformas Marinas tipo Jacket\\
+  mediante Optimización Inversa con Algoritmos Genéticos\\
+  e Índice de Calidad de Detección (ICD)}
+
+  \vfill
+  {\small Ciudad de México / Veracruz, 22 de junio de 2026}
+\end{titlepage}
+
+% ── Sección 1 ─────────────────────────────────────────────────────────────
+\section{Contexto del Proyecto Doctoral}
+
+Esta tesis propone una metodología de \textbf{Monitoreo de Salud Estructural (SHM)} basada en
+\textbf{Algoritmos Genéticos (AG)} para identificar daños en plataformas \textit{Jacket} del Golfo de México.
+La contribución central es el \textbf{Índice de Calidad de Detección (ICD)}, que fusiona ocho
+indicadores de respuesta vibratoria y penaliza exponencialmente los falsos positivos.
+La validación se realizó sobre \textbf{3\,240 corridas de simulación} bajo escenarios de corrosión y
+abolladura (\textit{denting}) en un modelo de elementos finitos calibrado.
+
+% ── Sección 2 ─────────────────────────────────────────────────────────────
+\section{Avances del Semestre (Enero -- Junio 2026)}
+
+\textbf{Cuatro avances principales} se consolidaron este semestre:
+
+\medskip
+\noindent\textbf{1.\enspace Procesador de Fatiga SACS — Producto de desarrollo (IMP)}
+
+Como parte del proceso de titulación del Doctorado en Ingeniería del IMP, se completó la
+\textbf{segunda de tres participaciones en proyecto institucional}: una herramienta de
+escritorio desarrollada para los ingenieros estructurales del IMP
+(coordinadora: Dra.\ Claudia Rendón Conde) que automatiza la consolidación de reportes
+de análisis de fatiga generados por el software SACS. El problema que resuelve es concreto:
+SACS genera un archivo de reporte independiente por cada período de operación analizado,
+y su suma manual es propensa a errores. La herramienta carga $N$ archivos, extrae y normaliza
+los datos, suma los daños por elemento y los clasifica en cuatro niveles de riesgo (CRÍTICO,
+ALTO, MODERADO, BAJO), exportando un reporte Excel con formato profesional.
+
+La interfaz gráfica (\textit{desktop GUI}, esquema oscuro, tres paneles) opera sin necesidad de
+Python en el equipo del usuario y se distribuye como ejecutable Windows independiente (\texttt{.exe}).
+Fue validada con datos reales de una plataforma marina: 506\,239 líneas de texto procesadas
+sin errores, 2\,304 incidencias consolidadas en menos de 8 segundos.
+La suite de pruebas automatizadas cuenta con \textbf{99 pruebas (100\,\% aprobadas)}.
+
+\medskip
+\noindent\textbf{2.\enspace Envío del artículo a \textit{Marine Structures} (Elsevier)}
+
+El manuscrito doctoral fue enviado el \textbf{21 de junio de 2026} a la revista
+\textit{Marine Structures} (Elsevier), cambiando el destino original (\textit{Applied Ocean Research})
+debido a que esta última opera actualmente en modalidad exclusivamente \textit{Open Access},
+con un costo de publicación (APC) inviable para el estudiante.
+\textit{Marine Structures} mantiene una indexación y factor de impacto equivalentes sin costo para el autor.
+
+\medskip
+\noindent\textbf{3.\enspace Refinaciones del ICD y análisis de vectores de pesos ($\alpha_1$--$\alpha_8$)}
+
+Se realizó un análisis estadístico profundo de los pesos que el AG asigna a cada uno de los
+ocho indicadores de daño, permitiendo contextualizar mejor el ICD: identificar qué indicadores
+dominan según el tipo de elemento (arriostres vs.\ piernas) y el mecanismo de daño,
+y confirmar que el índice escala de forma diferenciada y controlada con la severidad.
+
+\medskip
+\noindent\textbf{4.\enspace Nueva métrica: Precisión Ponderada por Distancia Topológica}
+
+Se propone $\text{Precisión}_w$, que asigna a cada falso positivo (FP) un peso
+según su distancia $d$ en el grafo de conectividad estructural:
+\[
+  w(d) = \frac{d}{d+1}
+\]
+La Precisión clásica penaliza igual a un FP adyacente al nodo dañado que a uno en el extremo
+opuesto de la estructura, subestimando la calidad diagnóstica real. $\text{Precisión}_w$
+corrige esta limitación, con ganancias de hasta \textbf{$+$22 puntos porcentuales} en
+elementos tipo \textit{brace}.
+
+% ── Sección 3 ─────────────────────────────────────────────────────────────
+\section{Participación en Proyecto IMP en Curso}
+
+Como parte del proceso de titulación, el estudiante se encuentra actualmente realizando
+su \textbf{tercera y última participación en proyecto institucional} del IMP, en colaboración
+con el \textbf{Dr.\ Francisco Silva González} del Instituto Mexicano del Petróleo.
+El proyecto tiene una duración estimada de \textbf{tres meses} y representa el cumplimiento
+final de este requisito indispensable para la obtención del grado.
+
+Paralelamente, se está llevando a cabo la \textbf{redacción del documento de tesis doctoral},
+actividad cuya duración estimada es comparable a la del proyecto en curso.
+
+% ── Sección 4 ─────────────────────────────────────────────────────────────
+\section{Estado General y Solicitud de Prórroga}
+
+\begin{table}[h!]
+  \centering
+  \small
+  \caption{Estado de actividades del semestre.}
+  \begin{tabular}{lc}
+    \toprule
+    \textbf{Actividad} & \textbf{Estado} \\
+    \midrule
+    Procesador de Fatiga SACS entregado al IMP         & \textcolor{impgreen}{\textbf{Completado}} \\
+    Envío del artículo a \textit{Marine Structures}    & \textcolor{impgreen}{\textbf{Completado}} \\
+    Refinaciones del ICD y análisis de vectores alpha  & \textcolor{impgreen}{\textbf{Completado}} \\
+    Propuesta de Precisión Ponderada Topológica        & \textcolor{impgreen}{\textbf{Completado}} \\
+    3ra participación IMP (Dr.\ Francisco Silva González) & \textcolor{orange}{\textbf{En curso}} \\
+    Redacción del documento de tesis doctoral            & \textcolor{orange}{\textbf{En curso}} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+El presente semestre constituye el \textbf{último semestre regular} del programa doctoral.
+Dado que el proceso de revisión por pares en revistas indexadas del área puede extenderse
+entre seis meses y un año, se solicitará formalmente ante el Comité Tutorial una
+\textbf{prórroga de un año} para dar tiempo a la aceptación del artículo, requisito
+indispensable para la defensa de tesis.
+
+Los dos pendientes en curso ---la tercera participación en proyecto IMP y la redacción
+de la tesis doctoral--- concluirán \textbf{antes o en el mismo plazo que la aceptación
+de la publicación en revista}, por lo que no representan un retraso adicional respecto
+al horizonte de titulación.
+
+Los detalles técnicos de cada avance se presentarán en la \textbf{última evaluación
+de desempeño del 26 de junio de 2026 a las 12:40 h}.
+
+\end{document}
