@@ -1,0 +1,143 @@
+\begin{thebibliography}{10}
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{\texttt{#1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+\expandafter\ifx\csname href\endcsname\relax
+  \def\href#1#2{#2} \def\path#1{#1}\fi
+
+\bibitem{hlaing2024lifecycle}
+N.~Hlaing, Life-cycle management framework for offshore wind structures
+  leveraging digital twin technology, Ph.D. thesis, University of Liège
+  (2024).
+
+\bibitem{mdpi2024shm_wind}
+W.~Weijtens, T.~Verbelen, M.~Capaldo, C.~Devriendt, An overview on structural
+  health monitoring and fault diagnosis of offshore wind turbine support
+  structures, Journal of Marine Science and Engineering 12~(3) (2024) 377.
+\newblock \href {https://doi.org/10.3390/jmse12030377}
+  {\path{doi:10.3390/jmse12030377}}.
+
+\bibitem{mubarak2020condition}
+A.~Mubarak, R.~Ahmad, S.~Kamaruddin, Condition monitoring of offshore
+  structures: A review of current technologies and challenges, Ocean
+  Engineering 198 (2020) 106995.
+\newblock \href {https://doi.org/10.1016/j.oceaneng.2020.106995}
+  {\path{doi:10.1016/j.oceaneng.2020.106995}}.
+
+\bibitem{instituto2020tech}
+{Instituto Mexicano del Petróleo}, Evaluación tecnológica de sistemas de
+  inspección submarina para plataformas costa afuera, Tech. rep., Instituto
+  Mexicano del Petróleo, Ciudad de México, México (2020).
+
+\bibitem{birci2020integrity}
+A.~M. Al-Yacouby, O.~Khaleel, M.~S. Liew, Comprehensive integrity assessment
+  framework for ageing offshore platforms in tropical marine environments,
+  Budapest International Research in Exact Sciences (BirEx) Journal 2~(4)
+  (2020) 450--461.
+\newblock \href {https://doi.org/10.33258/birex.v2i4.1210}
+  {\path{doi:10.33258/birex.v2i4.1210}}.
+
+\bibitem{API2014_manual}
+{American Petroleum Institute}, {API RP 2A-WSD}: Recommended Practice for
+  Planning, Designing and Constructing Fixed Offshore Platforms --- Working
+  Stress Design, American Petroleum Institute, Washington, D.C., 22nd Edition
+  (2014).
+
+\bibitem{salama2020shm}
+F.~Salama, M.~S. Liew, A.~M. Al-Yacouby, Structural health monitoring of an
+  offshore platform: Trend of corrosion and marine growth with predictive
+  maintenance, in: Proceedings of the Indonesian Petroleum Association Annual
+  Convention, 2020, iPA20-SE-424.
+
+\bibitem{raza2021fatigue}
+A.~Raza, W.~Zhao, C.~Zhang, M.~Umar, Fatigue crack monitoring of {T}-type
+  joints in steel offshore oil and gas jacket platforms, Sensors 21~(9) (2021)
+  3077.
+\newblock \href {https://doi.org/10.3390/s21093077}
+  {\path{doi:10.3390/s21093077}}.
+
+\bibitem{ghsoub2018structural}
+M.~Ghsoub, S.~C. Siriwardane, Structural health monitoring of offshore jacket
+  platforms using modal analysis and damage indices, Ocean Engineering 165
+  (2018) 101--113.
+\newblock \href {https://doi.org/10.1016/j.oceaneng.2018.07.032}
+  {\path{doi:10.1016/j.oceaneng.2018.07.032}}.
+
+\bibitem{doebling1996damage}
+S.~W. Doebling, C.~R. Farrar, M.~B. Prime, D.~W. Shevitz, Damage identification
+  and health monitoring of structural and mechanical systems from changes in
+  their vibration characteristics: A literature review, Tech. Rep. LA-13070-MS,
+  Los Alamos National Laboratory (1996).
+
+\bibitem{aghaeidoost2023generalized}
+V.~Aghaeidoost, M.~Sharbatdar, A generalized framework for structural damage
+  identification using response-based indicators and evolutionary optimization,
+  Engineering Structures 276 (2023) 115356.
+\newblock \href {https://doi.org/10.1016/j.engstruct.2022.115356}
+  {\path{doi:10.1016/j.engstruct.2022.115356}}.
+
+\bibitem{jiang2024model}
+L.~Jiang, R.~Yan, C.~G. Soares, Structural model updating method of medium-deep
+  water jacket platforms based on sensitivity clustering, Journal of Marine
+  Science and Engineering 12~(4) (2024) 375.
+\newblock \href {https://doi.org/10.3390/jmse12040375}
+  {\path{doi:10.3390/jmse12040375}}.
+
+\bibitem{goldberg1989genetic}
+D.~E. Goldberg, Genetic Algorithms in Search, Optimization, and Machine
+  Learning, Addison-Wesley, Reading, Massachusetts, 1989.
+
+\bibitem{rahmani2013ga}
+M.~Rahmani, M.~Behzad, Damage detection in an offshore jacket platform using
+  genetic algorithm based finite element model updating with noisy modal data,
+  Applied Ocean Research 40 (2013) 15--26.
+\newblock \href {https://doi.org/10.1016/j.apor.2012.12.003}
+  {\path{doi:10.1016/j.apor.2012.12.003}}.
+
+\bibitem{malekzadeh2013damage}
+M.~Malekzadeh, G.~Atia, F.~N. Catbas, Performance-based structural health
+  monitoring through an innovative hybrid data interpretation framework,
+  Journal of Civil Structural Health Monitoring 3~(4) (2013) 251--276.
+\newblock \href {https://doi.org/10.1007/s13349-013-0054-7}
+  {\path{doi:10.1007/s13349-013-0054-7}}.
+
+\bibitem{li2024reliability}
+L.~Li, G.~Zou, A novel computational approach for assessing system reliability
+  and damage detection delay in offshore jacket platforms, Ocean Engineering
+  297 (2024) 117023.
+\newblock \href {https://doi.org/10.1016/j.oceaneng.2024.117023}
+  {\path{doi:10.1016/j.oceaneng.2024.117023}}.
+
+\bibitem{ma2024tvml}
+Z.~Ma, P.~Yan, Y.~Shen, Time-vertex machine learning for optimal sensor
+  placement in temporal graph signals: Applications in structural health
+  monitoring, arXiv preprintArXiv:2512.19309 (2024).
+
+\bibitem{ramboll2022digital}
+{Petroleum Safety Authority Norway}, Bruk av digitale løsninger for å
+  overvåke konstruksjoners sikkerhet, Tech. rep., Ramboll / Petroleum Safety
+  Authority Norway,
+  \url{https://www.havtil.no/contentassets/a4dae83127e04a63a00ebf05676a7588/}
+  (2022).
+
+\bibitem{ervin2022index}
+E.~K. Ervin, C.~Zeng, Index combination for damage localization using genetic
+  algorithm, Procedia Structural Integrity 37 (2022) 6--16.
+\newblock \href {https://doi.org/10.1016/j.prostr.2022.01.056}
+  {\path{doi:10.1016/j.prostr.2022.01.056}}.
+
+\bibitem{CardenasArias2019_article}
+A.~C{\'a}rdenas-Arias, C.~Maldonado-Zepeda, Experimental characterization of
+  the elastic modulus of corroded tubular steel elements, Revista de la
+  Construcción 18~(2) (2019) 312--325.
+\newblock \href {https://doi.org/10.7764/RDLC.18.2.312}
+  {\path{doi:10.7764/RDLC.18.2.312}}.
+
+\bibitem{varela2023cost}
+G.~Varela, D.~Tolentino, Cost--benefit assessment of offshore structures
+  considering structural deterioration, Journal of Marine Science and
+  Engineering 11~(7) (2023) 1348.
+\newblock \href {https://doi.org/10.3390/jmse11071348}
+  {\path{doi:10.3390/jmse11071348}}.
+
+\end{thebibliography}
