@@ -1,0 +1,8 @@
+\babel@toc {spanish}{}\relax 
+\beamer@sectionintoc {1}{Implementación MATLAB - Algoritmo Genético}{2}{0}{1}
+\beamer@sectionintoc {2}{Nuevos Resultados de ICD}{4}{0}{2}
+\beamer@sectionintoc {3}{Análisis Estadístico Avanzado}{10}{0}{3}
+\beamer@sectionintoc {4}{Manuscrito: Applied Ocean Research}{13}{0}{4}
+\beamer@sectionintoc {5}{Manuscrito Paralelo: Marine Structures}{15}{0}{5}
+\beamer@sectionintoc {6}{Desarrollo de Producto - Instituto Mexicano del Petróleo}{16}{0}{6}
+\beamer@sectionintoc {7}{Prórroga del Periodo Doctoral}{18}{0}{7}
