@@ -435,24 +435,59 @@
     \end{block}
 \end{frame}
 
+\begin{frame}{P1: Curva POD — ¿Qué es y cómo se calcula?}
+    \small
+    \begin{block}{Probability of Detection (POD)}
+        Para cada nivel de severidad $a_i$ (\% de daño), la POD empírica se calcula como:
+        \begin{equation*}
+            \text{POD}(a_i) = \frac{\text{\# detecciones correctas en nivel } a_i}{\text{\# total de casos en nivel } a_i}
+        \end{equation*}
+        Las bandas de confianza al 95\% se calculan con el \textbf{intervalo de Wilson}:
+        \begin{equation*}
+            \hat{p} = \frac{p + \frac{z^2}{2n}}{1 + \frac{z^2}{n}} \pm \frac{z\sqrt{\frac{p(1-p)}{n} + \frac{z^2}{4n^2}}}{1 + \frac{z^2}{n}}, \quad z = 1.96
+        \end{equation*}
+    \end{block}
+    \vspace{0.1cm}
+    \begin{block}{Comparación}
+        Se compara la curva POD del \textbf{ICD fusionado} contra el \textbf{mejor DI individual} ($DI_6$, identificado por máxima AUC-ROC). \textit{Una curva más alta = el método detecta daños con mayor probabilidad.}
+    \end{block}
+\end{frame}
+
 \begin{frame}{P1: Gráficas — Curvas POD (ICD vs Mejor DI)}
     \centering
     \vspace{0.2cm}
     \includegraphics[width=0.85\textwidth, height=0.8\textheight, keepaspectratio]{P3_POD_ICD_vs_bestDI.png}
 \end{frame}
 
+\begin{frame}{P1: AUC-POD — ¿Qué es y cómo se calcula?}
+    \small
+    \begin{block}{AUC-POD: Área Bajo la Curva POD}
+        Resume el desempeño global de detección en \textbf{un solo número}. Se calcula con la regla del trapecio, normalizada sobre el rango de severidades:
+        \begin{equation*}
+            \text{AUC-POD} = \frac{\int_{a_{\min}}^{a_{\max}} \text{POD}(a)\, da}{a_{\max} - a_{\min}}
+        \end{equation*}
+        \textbf{Rango:} 0 a 1. \quad \textbf{Interpretación:} AUC-POD $\approx 1$ = detección casi perfecta en todos los niveles de severidad.
+    \end{block}
+\end{frame}
+
 \begin{frame}{P1: Gráficas — Comparación AUC/POD}
     \centering
-    \vspace{0.2cm}
-    \includegraphics[width=0.85\textwidth, height=0.8\textheight, keepaspectratio]{P3_AUC_POD_comparison.png}
+    \vspace{0.15cm}
+    \includegraphics[width=0.75\textwidth, height=0.65\textheight, keepaspectratio]{P3_AUC_POD_comparison.png}
+
+    \vspace{0.05cm}
+    \begin{block}{\tiny Referencias (Estándares SHM \& NDT)}
+        \tiny
+        Rummel et al. (1989) MIL-HDBK-1823 · Doebling et al. (1998) · Worden \& Dulieu-Barton (2004) · Figueiredo et al. (2011) · Wilson (1927)
+    \end{block}
 \end{frame}
 
 % ============= P4: ROBUSTEZ AL RUIDO AWGN =============
 
-\begin{frame}{P2: Robustez al Ruido AWGN (Descripción)}
+\begin{frame}{P2: Robustez al Ruido AWGN$^*$ (Descripción)}
     \small
     \begin{block}{Simulación de Condiciones Experimentales Realistas}
-        Se evalúa la estabilidad del ICD bajo \textbf{ruido blanco Gaussiano aditivo (AWGN)}, simulando las imperfecciones inherentes de sensores y equipos de medición en campo:
+        Se evalúa la estabilidad del ICD bajo \textbf{ruido blanco Gaussiano aditivo (AWGN$^*$)}, simulando las imperfecciones inherentes de sensores y equipos de medición en campo:
         \begin{itemize}
             \item Se agrrega AWGN a las respuestas vibratorias sintéticas
             \item Se varía la relación señal-ruido (SNR) en tres niveles: \textbf{20, 30, 40 dB}
@@ -465,6 +500,9 @@
     \begin{block}{Hallazgo Crítico}
         El ICD \textbf{mantiene detectabilidad aceptable} incluso bajo SNR = 20 dB (condición severamente ruidosa), demostrando robustez práctica para aplicaciones de campo.
     \end{block}
+
+    \vspace{0.15cm}
+    {\tiny $^*$AWGN: \textbf{A}dditive \textbf{W}hite \textbf{G}aussian \textbf{N}oise — Ruido que se suma a la señal original, con espectro plano y distribución normal (Shannon, 1948). Estándar en teoría de comunicaciones e ingeniería de confiabilidad.}
 \end{frame}
 
 \begin{frame}{P2: Fórmula — SNR y Degradación}
@@ -556,10 +594,32 @@
     \includegraphics[width=0.85\textwidth, height=0.8\textheight, keepaspectratio]{P5_metrics_denting.png}
 \end{frame}
 
-\begin{frame}{P3: Gráficas — Curvas ROC}
+% ============= PRECISION TOPOLÓGICA — CONTRIBUCIÓN ADICIONAL =============
+
+\begin{frame}{P3: Precisión Topológica — Contribución Adicional a la Investigación}
+    \footnotesize
+    \begin{block}{Limitación de la Precisión Clásica}
+        Penaliza todos los Falsos Positivos (FPs) por igual, sin importar su proximidad al elemento dañado:
+        \begin{equation*}
+            \text{Precision} = \frac{TP}{TP + FP}
+        \end{equation*}
+        En estructuras tipo \textit{lattice} (jacket), un FP adyacente ($d=1$) tiene interpretación muy diferente a uno al extremo opuesto ($d=9$).
+    \end{block}
+
+    \vspace{0.1cm}
+
+    \begin{block}{Precisión Ponderada por Topología — Propuesta Novedosa}
+        Asigna un peso $w(d_i) \in [0,1]$ a cada FP según su distancia topológica $d$ al elemento dañado (BFS sobre el grafo de conectividad):
+        \begin{equation*}
+            \text{Precision}_w = \frac{TP}{TP + \displaystyle\sum_{i \in FP} w(d_i)}
+        \end{equation*}
+    \end{block}
+\end{frame}
+
+\begin{frame}{P3: Gráficas — Precisión Clásica vs Ponderada}
     \centering
     \vspace{0.2cm}
-    \includegraphics[width=0.85\textwidth, height=0.8\textheight, keepaspectratio]{P5_ROC_curves.png}
+    \includegraphics[width=0.88\textwidth, height=0.78\textheight, keepaspectratio]{Precision_global_clasica_vs_ponderada.png}
 \end{frame}
 
 \begin{frame}{P3: Gráficas — Distribución de Falsos Positivos}
