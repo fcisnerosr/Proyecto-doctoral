@@ -1,0 +1,686 @@
+% --- CONFIGURACIÓN CRÍTICA PARA TABLAS ---
+\PassOptionsToPackage{table}{xcolor}
+
+\documentclass{beamer}
+
+\usetheme{Madrid}
+\useoutertheme{miniframes}
+\usecolortheme{whale}
+\setbeamerfont{section in head/foot}{size=\fontsize{6}{7}\selectfont}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\decimalpoint
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{array} % Para formateo avanzado de tablas
+
+% Path configuration
+\graphicspath{{./figs/}{./figs/resultados/abolladura/}{./figs/resultados/corrosion/}}
+
+% Metadata
+\title[Detección de Daño en Plataformas]{Desarrollo de una metodología para la detección de daño en plataformas marinas fijas por medio de análisis de vibraciones}
+\author[M. I. Francisco Cisneros]{M. I. Francisco Cisneros \\ \small{Doctorante del 7mo Semestre}}
+\institute[]{Posgrado en Ingeniería - UNAM}
+\date{Viernes 23 de enero de 2026}
+
+\begin{document}
+
+% Estructura de secciones para barra de navegación
+\section[Intro]{Introducción}
+
+% Slide 1: Carátula Institucional
+\begin{frame}[plain]
+    \centering
+    \includegraphics[height=1.3cm]{000_logo.png}
+    \vspace{0.2cm}
+
+    \vspace{0.1cm}
+    {\footnotesize Coordinación Académica del Posgrado} \\
+    {\footnotesize Dirección de Desarrollo de Talento}
+
+    \vspace{0.6cm}
+
+    {\bfseries \textit{EVALUACIÓN DE DESEMPEÑO}} \\
+    \vspace{0.1cm}
+    Trabajo de Investigación de Doctorado
+
+    \vspace{0.4cm}
+
+    \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+        \usebeamerfont{title}Desarrollo de una metodología para la detección de daño en plataformas marinas fijas por medio de análisis de vibraciones\par
+    \end{beamercolorbox}
+
+    \vspace{0.4cm}
+
+    \textbf{M. I. Francisco Cisneros}
+
+    \vfill
+
+    {\footnotesize
+    Directores: Dr. Iván Félix González y Dr. Rolando Salgado Estrada \\
+    \vspace{0.1cm}
+    Periodo: Invierno 2025
+    }
+    \vspace{0.2cm}
+\end{frame}
+
+% Slide 2: Introducción
+\subsection{Alcance y Problemática}
+\begin{frame}{Introducción y Alcance}
+    \begin{itemize}
+        \item \textbf{Contexto:} Avances finales previos a la defensa de tesis (Evaluación de 7º Semestre).
+        \vspace{0.5cm}
+        \item \textbf{Problemática:}
+        \begin{itemize}
+            \item Crisis de mantenimiento en infraestructura envejecida.
+            \item "Data Scarcity": Escasez de datos reales de daño que inviabiliza el uso puro de algoritmos de Deep Learning.
+        \end{itemize}
+        \vspace{0.5cm}
+        \item \textbf{Solución Propuesta:}
+        \begin{itemize}
+            \item Hibridación de Algoritmos Genéticos (AG) con Modelos de Elemento Finito (FEM).
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+% Slide 3: Metodología
+\section[Metodología]{Metodología}
+\subsection{Flujo General}
+\begin{frame}{Metodología Propuesta (1/3): Flujo General}
+    \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth, height=0.8\textheight, keepaspectratio]{005_metogologia_propuesta_para_identificar_daños_en_plataformas_reales.jpg}
+        \caption{Flujo de identificación en plataformas reales.}
+    \end{figure}
+\end{frame}
+
+% Slide 4: Esquema Computacional
+\subsection{Algoritmo Genético}
+\begin{frame}{Metodología Propuesta (2/3): Esquema Computacional}
+    \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth, height=0.8\textheight, keepaspectratio]{006_metodología_del_AG_para_localizar_daños_a_nivel_computacional.jpg}
+        \caption{Esquema computacional del AG.}
+    \end{figure}
+\end{frame}
+
+% Slide 5: Mecánica AG
+\begin{frame}{Metodología Propuesta (3/3): El Algoritmo Genético}
+    \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth, height=0.8\textheight, keepaspectratio]{015_diagrama_como_funciona_el_AG_para_la_sumas_funcion_P_y_como_se_relaciona_con_operadores_geneticos_del_AG.jpg}
+        \caption{Mecánica del AG: función objetivo y operadores genéticos.}
+    \end{figure}
+\end{frame}
+
+% --- SECCIÓN DE INDICADORES VIBRATORIOS (Recuperada) ---
+\subsection{Indicadores Vibratorios}
+
+% Slide DIs 1: Resumen
+\begin{frame}{Fusión de Datos: Indicadores Vibratorios (DIs)}
+    \footnotesize 
+    \textbf{Estrategia de Fusión:}
+    El AG no evalúa un solo parámetro, sino que optimiza un vector de pesos $\boldsymbol{\alpha}$ para minimizar el error mediante una \textbf{suma ponderada} de 8 indicadores distintos:
+    
+    \begin{equation}
+        \text{Función Objetivo} \approx \min \sum_{j=1}^{8} \alpha_j \cdot DI_j
+    \end{equation}
+    
+    \vspace{0.1cm}
+    
+    \begin{columns}[t]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Basados en Modos ($\phi$)}
+                \begin{itemize} \scriptsize
+                    \item \textbf{$DI_1$ (COMAC):} Correlación de vectores modales.
+                    \item \textbf{$DI_2$ (Diff Abs):} Diferencia absoluta de formas modales.
+                    \item \textbf{$DI_3$ (Razón Rel):} Relación entre vectores dañados e intactos.
+                \end{itemize}
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Basados en Flexibilidad ($F$)}
+                \begin{itemize} \scriptsize
+                    \item \textbf{$DI_4$ (Diff Flex):} Cambio en la diagonal de la matriz.
+                    \item \textbf{$DI_5$ (Razón Flex):} Relación de flexibilidades.
+                    \item \textbf{$DI_6$ (Var \%):} Porcentaje de variación.
+                    \item \textbf{$DI_7$ (Z-Score):} Estandarización estadística.
+                    \item \textbf{$DI_8$ (Probabilidad):} T. Gaussiana normalizada.
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+    
+    \vspace{0.2cm}
+    \centering
+    \scriptsize \textit{*El AG encuentra qué peso ($\alpha_j$) darle a cada $DI_j$ para maximizar la detección.}
+\end{frame}
+
+% Slide DIs 2: Fórmulas Modales
+\begin{frame}{Formulación Matemática: Indicadores Modales ($DI_1 - DI_3$)}
+    \small
+    \textbf{1. COMAC ($DI_1$):}
+    Evalúa la correlación punto a punto de los modos. (1 = Correlación perfecta, 0 = Sin correlación).
+    \begin{equation}
+        \text{DI}_1(j) = 1 - \sqrt{ \frac{ \left( \sum_{i=1}^{N_m} |\phi_{u,ij}| |\phi_{d,ij}| \right)^2 }{ \sum_{i=1}^{N_m} \phi_{u,ij}^2 \sum_{i=1}^{N_m} \phi_{d,ij}^2 } }
+    \end{equation}
+
+    \vspace{0.2cm}
+
+    \textbf{2. Diferencia Absoluta ($DI_2$) y Razón Relativa ($DI_3$):}
+    Cuantifican el desplazamiento de los vectores modales $\boldsymbol{\phi}$.
+    \begin{align}
+        \text{DI}_2(j) &= \mathcal{R}_j \left( \sum_{i=1}^{N_m} | \boldsymbol{\phi}_{u,i} - \boldsymbol{\phi}_{d,i} | \right) \\
+        \text{DI}_3(j) &= \mathcal{R}_j \left( \sum_{i=1}^{N_m} \left| \frac{\boldsymbol{\phi}_{d,i}}{\boldsymbol{\phi}_{u,i} + \epsilon} - 1 \right| \right)
+    \end{align}
+    
+    \footnotesize \textit{*Donde $u$ es estado intacto, $d$ dañado y $\epsilon$ es un factor de regularización.}
+\end{frame}
+
+% Slide DIs 3: Fórmulas Flexibilidad
+\begin{frame}{Formulación Matemática: Flexibilidad y Estadística ($DI_4 - DI_8$)}
+    \small
+    \textbf{Basados en la Matriz de Flexibilidad ($\mathbf{F} \approx \boldsymbol{\Phi} \boldsymbol{\Omega}^{-2} \boldsymbol{\Phi}^T$):}
+    \begin{itemize}
+        \item \textbf{Diferencia ($DI_4$):} $| \text{diag}(\mathbf{F}_d) - \text{diag}(\mathbf{F}_u) |$
+        \item \textbf{Razón ($DI_5$):} $\left| \frac{\text{diag}(\mathbf{F}_d)}{\text{diag}(\mathbf{F}_u) + \epsilon} - 1 \right|$
+        \item \textbf{Variación \% ($DI_6$):} Versión porcentual de la razón ($DI_5 \times 100$).
+    \end{itemize}
+
+    \vspace{0.2cm}
+    \hrule
+    \vspace{0.2cm}
+
+    \textbf{Estandarización Estadística ($DI_7$ y $DI_8$):}
+    Normalizan el daño asumiendo una distribución Gaussiana para resaltar anomalías (outliers).
+    \begin{equation}
+        \text{DI}_7(j) = \frac{\Delta F_j - \mu_{\Delta F}}{\sigma_{\Delta F}} \quad \rightarrow \quad \text{DI}_8(j) = 1 - 2\left( 1 - \Phi_{\text{cdf}}(|\text{DI}_7|) \right)
+    \end{equation}
+\end{frame}
+
+% --- EFECTOS INERCIALES Y AMBIENTALES (Movido Antes de Justificación) ---
+\section[Efectos]{Efectos Inerciales y Ambientales}
+\begin{frame}{Efectos Inerciales y Ambientales (1/2)}
+    \textbf{Consideraciones:} Inclusión de masa añadida hidrodinámica y crecimiento marino (biofouling).
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.85\textwidth, height=0.42\textheight, keepaspectratio]{001_modelo_plataforma_con_elemento_tubular_masa_adherida_y_masa_atrapada.png}
+        \caption{Detalle de Masa Hidrodinámica (Adherida y Atrapada).}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Efectos Inerciales y Ambientales (2/2)}
+    \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth, height=0.45\textheight, keepaspectratio]{001_modelo_plataforma_con_elemento_tubular_masa_de_crecimiento_marino.png}
+        \caption{Modelado del Crecimiento Marino (Biofouling) y coeficientes rugosos.}
+    \end{figure}
+
+    \vfill 
+    \hrule \vspace{0.1cm}
+    \tiny
+    \textbf{Fuente:} American Petroleum Institute. (2014). \textit{Planning, designing, and constructing fixed offshore platforms - working stress design}. Washington, Estados Unidos.
+\end{frame}
+
+\begin{frame}{Modelado de Daño: Corrosión Longitudinal}
+    \small
+    \textbf{Caracterización Geométrica:}
+    Se modela como una reducción uniforme del espesor de pared ($t$) aplicada en tramos discretos del elemento, simulando la pérdida de material en zonas críticas (ej. \textit{Splash Zone}).
+
+    \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth, height=0.5\textheight, keepaspectratio]{004_modelo_elemento_tubular_con_caracterizacion_corrosion_longitudinal_donde_muestran_tramos_con_reduccion_espesor.png}
+        \caption{Perfil de reducción de espesor ($t_{loss}$) a lo largo del elemento tubular.}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Modelado de Daño: Abolladura}
+    \textbf{Caracterización Geométrica:}
+    Se modela como una imperfección geométrica local definida por la profundidad ($d/D$) y la longitud del daño, alterando la inercia local del elemento.
+
+    \begin{figure}
+        \centering
+        % ATENCIÓN: Reemplaza 'nombre_de_tu_imagen_abolladura.png' con tu archivo real
+        \includegraphics[width=\textwidth, height=0.35\textheight, keepaspectratio]{004_seccion_transversal_de_elemento_tubular_parametros_abolladura_con_elementos_discretizados.png}
+        \caption{Representación esquemática del elemento tubular con daño por abolladura.}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Modelado de Daño: Interpolación Longitudinal (Abolladura)}
+    \small
+    \textbf{Continuidad Numérica:}
+    Para evitar discontinuidades abruptas en la matriz de rigidez global, la variación del momento de inercia ($I$) a lo largo de la zona dañada se suaviza matemáticamente.
+
+    \begin{figure}
+        \centering
+        % Ajustamos la imagen al ancho disponible manteniendo la proporción
+        \includegraphics[width=\textwidth, height=0.5\textheight, keepaspectratio]{004_modelo_elemento_tubular_seccion_longitudinal_parametros_abolladura_con_funciones_de_interpolacion.png}
+        \caption{Interpolación de la reducción de inercia mediante polinomios de 4º grado.}
+    \end{figure}
+\end{frame}
+
+% --- JUSTIFICACIÓN Y CARACTERIZACIÓN (Ordenado: Corrosión -> Abolladura) ---
+\section[Justificación]{Justificación y Caracterización}
+
+% 1. CORROSIÓN
+\subsection{Corrosión}
+\begin{frame}{Justificación de Daños: Fenomenología Zonal (1/2)}
+    \small
+    \textbf{¿Por qué modelar Corrosión Uniforme?}
+    Aunque la corrosión puede ser local, para efectos de rigidez global ($EI$) en estructuras Jacket, la normativa (API/ISO) valida el modelo de \textbf{reducción uniforme de espesor} ($t_{loss}$) como el mecanismo que gobierna la pérdida de capacidad de carga.
+
+    \vspace{0.3cm}
+    \textbf{Distribución Vertical de la Severidad:}
+    La pérdida de espesor \textbf{no es constante} en toda la altura. Se concentra drásticamente en la zona de humectación y secado (Splash Zone).
+
+    \vfill 
+    \hrule \vspace{0.1cm}
+    \tiny \color{gray}
+    \textbf{Fuentes Normativas:} \\
+    \textbullet\ \textbf{ISO 19902:2007:} \textit{Petroleum and natural gas industries -- Fixed steel offshore structures.} (Sec. 16.3 Structural Integrity). \\
+    \textbullet\ \textbf{API RP 2A-WSD:} \textit{Recommended Practice for Planning, Designing and Constructing Fixed Offshore Platforms.}
+\end{frame}
+
+\begin{frame}{Justificación de Daños: Fenomenología Zonal (2/2)}
+    \centering
+    \textbf{Evidencia Forense:} Tasas de corrosión medidas en campo.
+    
+    \vspace{0.3cm}
+    
+    \begin{table}
+        \centering
+        \small % Ajustado para dejar espacio al pie de página
+        \caption{Tasas de Pérdida de Espesor por Zona}
+        \begin{tabular}{lcc}
+            \toprule
+            \textbf{Zona Vertical} & \textbf{Tasa Real ($mm/a\tilde{n}o$)} & \textbf{Riesgo Estructural} \\
+            \midrule
+            \rowcolor{red!10} \textbf{Splash Zone} & \textbf{0.8 - 1.2} & \textbf{CRÍTICO (Máx $\Delta t$)} \\
+            Marea (Tidal) & 0.4 - 0.6 & Alto \\
+            Atmosférica & 0.1 - 0.3 & Medio \\
+            Sumergida & $< 0.1$ & Bajo (Controlado por CP) \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+
+    \vfill % Empuja el contenido siguiente al fondo de la diapositiva
+    \hrule \vspace{0.1cm} % Línea divisoria
+    \scriptsize
+    \textbf{Fuente:} Health and Safety Executive (HSE). \textit{Offshore installations: Guidance on design, construction and certification}. Reino Unido.
+\end{frame}
+
+\subsection{Abolladuras}
+
+\begin{frame}{Justificación de Daños: Etiología y Severidad}
+    \centering
+    \small
+    \textbf{Caracterización Forense:} El origen del impacto (etiología) define la morfología del daño.
+    
+    \vspace{0.1cm}
+    
+    \begin{table}
+        \centering
+        \footnotesize 
+        \renewcommand{\arraystretch}{1.2}
+        \caption{Clasificación de Daños por Causa Raíz}
+        \begin{tabular}{l>{\raggedright\arraybackslash}p{3.8cm}l}
+            \toprule
+            \textbf{Causa Raíz} & \textbf{Morfología del Daño} & \textbf{Ubicación Típica} \\
+            \midrule
+            \rowcolor{red!10} \textbf{Colisión Buque} & \textbf{Abolladura Alargada} & \textbf{Splash Zone ($\pm 10$m)} \\
+            Objetos Caídos & Abolladura Aguda & Miembros Horizontales* \\
+            Instalación & Abolladura Interna & Piernas / Elem. diagonales** \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+
+    \vfill
+    \hrule \vspace{0.1cm}
+    \scriptsize
+    \textit{* Ubicación de mayor incidencia estadística reportada.} \\
+    \textit{** Incidencia significativa, aunque menor respecto a los miembros horizontales.} \\
+    \vspace{0.1cm}
+    \textbf{Fuentes de Datos:} \textbf{WOAD:} \textit{Worldwide Offshore Accident Databank}; \textbf{HSE:} \textit{Health and Safety Executive}.
+\end{frame}
+
+% --- ICD Y RESULTADOS ---
+\section[ICD]{Índice de Calidad de Detección (ICD)}
+\begin{frame}{Aportación Novedosa: Formulación Matemática del ICD}
+    % Se cambió el título del bloque para resaltar la novedad
+    \begin{block}{Contribución Metodológica: \textbf{Indice de Calidad de Detección}}
+        Se propone una \textbf{métrica inédita} que integra tres factores normalizados para evaluar la calidad de la solución:
+        \begin{equation}
+            \text{ICD} = D \times C_{\text{norm}}(\delta) \times P_{\text{FP}}(N_{\text{FP}})
+        \end{equation}
+        \vspace{0.1cm}
+        \centering \small \textbf{Interpretación:} $\text{ICD} \in [0, 1]$ \quad (Donde $1.0 =$ Detección perfecta).
+    \end{block}
+
+    \vspace{0.2cm}
+
+    \begin{columns}[t]
+        \begin{column}{0.32\textwidth}
+            \textbf{1. Éxito ($D$)}
+            \begin{itemize} \footnotesize
+                \item \textbf{1.0:} Exacta.
+                \item \textbf{0.5:} Adyacente.
+                \item \textbf{0.0:} Fallo.
+            \end{itemize}
+        \end{column}
+
+        \begin{column}{0.34\textwidth}
+            \textbf{2. Confianza ($C_{\text{norm}}$)}
+            \begin{itemize} \scriptsize
+                \item Escalamiento logarítmico ($\alpha=0.1$).
+            \end{itemize}
+            \vspace{0.1cm}
+            \centering \small
+            $\displaystyle \frac{\ln(1 + \alpha \delta)}{\ln(1 + \alpha \delta_{\max})}$
+        \end{column}
+
+        \begin{column}{0.30\textwidth}
+            \textbf{3. Penalización ($P_{\text{FP}}$)}
+            \begin{itemize} \scriptsize
+                \item Decaimiento exp. ($\beta=0.15$).
+            \end{itemize}
+            \vspace{0.1cm}
+            \centering \small
+            $\displaystyle e^{- \beta N_{\text{FP}}}$
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Caso de Estudio
+\section[Caso]{Caso de Estudio}
+\begin{frame}{Caso de Estudio: Plataforma Tipo Jacket}
+    \begin{itemize}
+        \item Plataforma marina fija discretizada mediante elementos viga.
+    \end{itemize}
+    \vspace{0.3cm}
+    \begin{columns}
+        \column{0.5\textwidth}
+        \begin{figure}
+            \centering
+            \includegraphics[width=\linewidth, height=0.7\textheight, keepaspectratio]{007_modelo_vista_fronta_de_plataforma_tipo_jacket_de_caso_de_estudio.png}
+            \caption{Vista Frontal}
+        \end{figure}
+        
+        \column{0.5\textwidth}
+        \begin{figure}
+            \centering
+            \includegraphics[width=\linewidth, height=0.7\textheight, keepaspectratio]{007_modeo_vista_3d_de_plataforma_tipo_jacket_de_caso_de_estudio.png}
+            \caption{Vista 3D}
+        \end{figure}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Caso de Estudio: Propiedades Geométricas}
+    \begin{columns}[c]
+        \begin{column}{0.5\textwidth}
+            \centering
+            \textbf{Identificación de secciones:}
+            \vspace{0.5cm}
+            
+            \begin{table}
+                \centering
+                \renewcommand{\arraystretch}{1.5}
+                \begin{tabular}{c c c}
+                    \toprule
+                    \textbf{Diámetro} & \textbf{Espesor} & \textbf{Identificador} \\
+                    \textbf{Ext. (m)} & \textbf{(mm)} & \textbf{Color} \\
+                    \midrule
+                    2.18 & 38.1 & \cellcolor{blue!80} \\
+                    1.98 & 38.1 & \cellcolor{violet!80} \\
+                    1.57 & 25.4 & \cellcolor{green!80!black} \\
+                    1.57 & 25.4 & \cellcolor{red!90} \\
+                    \bottomrule
+                \end{tabular}
+            \end{table}
+        \end{column}
+        
+        \begin{column}{0.5\textwidth}
+            \begin{figure}
+                \centering
+                \includegraphics[width=\linewidth, height=0.8\textheight, keepaspectratio]{./figs/016_modelo_colores.png}
+                \caption{Discretización por tipo de sección transversal.}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Desglose de Ejecuciones del AG}
+    \centering
+    
+    \textbf{Desglose del número total de ejecuciones del Algoritmo Genético (AG):}
+    
+    \vspace{0.5cm}
+    
+    \begin{equation*}
+        \text{Total de ejecuciones} = 120 \, \text{elementos} \times 18 \, \text{niveles de daño} = 2160
+    \end{equation*}
+
+    \vspace{0.8cm}
+    
+    Donde los niveles de daño corresponden a:
+    \vspace{0.2cm}
+    
+    \begin{gather*}
+        \text{Niveles de daño} = \{5\%, 10\%, 15\%, \dots, 90\%\} \\
+        \Rightarrow 18 \, \text{niveles en incrementos de } 5\%
+    \end{gather*}
+\end{frame}
+
+\section[Resultados]{Resultados}
+\subsection{Abolladura}
+
+\begin{frame}{Desglose de Ejecuciones: Caso de Abolladura}
+    \centering
+    
+    \textbf{Desglose del número total de ejecuciones del AG para Abolladura:}
+    
+    \vspace{0.5cm}
+    
+    \begin{equation*}
+        \text{Total de ejecuciones} = 120 \, \text{elementos} \times 10 \, \text{niveles de daño} = 1200
+    \end{equation*}
+
+    \vspace{0.8cm}
+    
+    Donde los niveles de daño corresponden a:
+    \vspace{0.2cm}
+    
+    \begin{gather*}
+        \text{Niveles de daño} = \{5\%, 10\%, 15\%, \dots, 50\%\} \\
+        \Rightarrow 10 \, \text{niveles en incrementos de } 5\%
+    \end{gather*}
+\end{frame}
+
+\begin{frame}[t]{Resultados Anteriores}
+\subsection{Corrosión}
+    \vspace*{-1.5cm}
+    \begin{columns}[t]
+        \begin{column}{0.7\textwidth}
+            \begin{figure}
+                \centering
+                \includegraphics[width=\linewidth, height=0.75\textheight, keepaspectratio]{./figs/017_resultados_anteriores.png}
+                \caption{Visualización de resultados anteriores de corrosión.}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.3\textwidth}
+            \begin{figure}
+                \centering
+                \includegraphics[width=\linewidth, keepaspectratio]{"./figs/018_modelo_de_resultados anteriores.png"}
+                \caption{\footnotesize Modelo de referencia}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Definición de Niveles de Profundidad}
+    \begin{figure}
+        \centering
+        \includegraphics[width=\linewidth, height=0.8\textheight, keepaspectratio]{./figs/019_niveles_mudline.png}
+        \caption{Identificación de zonas: Mudline, Sub 1, Sub 2 y Sub 3.}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Resultados: Detección de Abolladura (1/2)}
+    \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth, height=0.77\textheight, keepaspectratio]{005_abolladura_comparativa_global_de_ICD_vs_daño_por_zona_mudline_medio_y_splash_zone.png}
+        \caption{Comparativa Global ICD vs Daño}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Resultados: Detección de Abolladura (2/2)}
+    \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth, height=0.77\textheight, keepaspectratio]{006_abolladura_ICD_por_zona_desglozadp_por_tipo_de_elemento_desde_mudline_medio_y_splash_zone.png}
+        \caption{Desglose por Zona y Tipo de Elemento}
+    \end{figure}
+\end{frame}
+
+\subsection{Corrosión}
+\begin{frame}{Resultados: Detección de Corrosión (1/2)}
+    \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth, height=0.77\textheight, keepaspectratio]{005_corrosion_comparativa_global_de_ICD_vs_daño_por_zona_mudline_medio_y_splash_zone.png}
+        \caption{Comparativa Global ICD vs Corrosión}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Resultados: Detección de Corrosión (2/2)}
+    \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth, height=0.70\textheight, keepaspectratio]{006_corrosion_ICD_por_zona_desglozadp_por_tipo_de_elemento_desde_mudline_medio_y_splash_zone.png}
+        \caption{Desglose por Zona}
+    \end{figure}
+\end{frame}
+
+% --- SECCIÓN DE VALIDACIÓN Y ROBUSTEZ (NUEVO) ---
+
+
+\section[Cierre]{Publicación y Conclusiones}
+
+% Slide 1: Validación Metodológica
+\begin{frame}{Conclusiones Preliminares (1/4): Enfoque Metodológico}
+    \small
+    \begin{block}{Eficacia de la Optimización Inversa}
+        La investigación valida al ICD como una métrica robusta para el monitoreo de salud estructural (SHM). 
+        \vspace{0.2cm}
+        \begin{itemize}
+            \item \textbf{Independencia del Modelo Base:} A diferencia de la actualización de modelo tradicional (\textit{Model Updating}), esta estrategia basada en optimización estocástica (AG) no requiere un modelo de elementos finitos perfectamente calibrado desde el origen.
+            \item \textbf{Eficiencia:} Al centrarse en cambios relativos de patrones modales, reduce significativamente la carga computacional asociada a la identificación de parámetros físicos exactos.
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+% Slide 2: Robustez y Hallazgos
+\begin{frame}{Conclusiones Preliminares (2/4): Robustez y Hallazgos}
+    \small
+    \begin{block}{Penalización de Falsos Positivos}
+        La formulación matemática del ICD penaliza severamente las soluciones que generan residuos distribuidos, favoreciendo la localización precisa y evitando \textbf{falsas alarmas} costosas.
+    \end{block}
+
+    \vspace{0.2cm}
+
+    \begin{block}{Hallazgo: Sensibilidad Diferencial}
+        Los resultados revelan una jerarquía clara en la detectabilidad del daño:
+        \begin{itemize}
+            \item \textbf{Diagonales ("Fusibles"):} Elementos de alta sensibilidad. El sistema detecta reducciones de rigidez a partir del \textbf{30\% de severidad}.
+            \item \textbf{Piernas Principales:} Alta redundancia estructural. Requieren daños severos ($>50\%$) para ser identificados mediante vibraciones globales.
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+% Slide 3: Implicaciones
+\begin{frame}{Conclusiones Preliminares (3/4): Implicación Operativa}
+    \small
+    \begin{alertblock}{Propuesta de Estrategia Híbrida}
+        La disparidad de sensibilidad detectada sugiere un cambio de paradigma en la gestión de integridad:
+        \vspace{0.2cm}
+        \begin{itemize}
+            \item \textbf{Monitoreo Remoto (Vibraciones):} Ideal para la vigilancia continua de las diagonales, donde el riesgo de impacto de buques es alto.
+            \item \textbf{Inspección Visual (ROV/Buzos):} Debe enfocarse prioritariamente en \textbf{vigas y piernas principales}, ya que el monitoreo global es ciego a daños incipientes en estos elementos masivos.
+        \end{itemize}
+    \end{alertblock}
+\end{frame}
+
+% Slide 4: Validación de Campo
+\begin{frame}{Conclusiones Preliminares (4/4): Validación Forense}
+    \small
+    El desempeño del algoritmo coincide con las zonas de mayor riesgo estadístico reportadas en la industria (HSE/WOAD), validando su utilidad práctica:
+
+    \vspace{0.3cm}
+
+    \begin{columns}[t]
+        \column{0.48\textwidth}
+        \textbf{1. Coherencia en Corrosión}
+        \begin{itemize} \footnotesize
+            \item \textbf{Realidad:} La \textit{Splash Zone} sufre la corrosión más agresiva (0.8--1.2 mm/año) según HSE.
+            \item \textbf{AG:} El ICD mostró su \textbf{máxima sensibilidad} precisamente en esta zona, garantizando detección temprana donde el riesgo crítico es mayor.
+        \end{itemize}
+
+        \column{0.48\textwidth}
+        \textbf{2. Coherencia en Abolladuras}
+        \begin{itemize} \footnotesize
+            \item \textbf{Realidad:} Las diagonales en la zona de marea son estadísticamente vulnerables a colisiones de buques (WOAD).
+            \item \textbf{AG:} Al identificar a las diagonales como fusibles altamente detectables, el sistema cubre el riesgo de impacto accidental.
+        \end{itemize}
+    \end{columns}
+
+    \vspace{0.4cm} 
+    \hrule \vspace{0.1cm}
+    \scriptsize \centering
+    \textit{Conclusión: El algoritmo prioriza correctamente las amenazas físicas reales.}
+\end{frame}
+
+% Slide 1: Estatus y Prórroga
+\begin{frame}{Estatus de Publicación y Solicitud de Prórroga}
+    \small
+    \begin{itemize}
+        \item \textbf{Estatus de Publicación (7º Semestre):}
+        \begin{itemize}
+            \item Se realizó el envío del manuscrito a la revista \textit{Ocean Engineering} a mediados del semestre.
+            \item \textbf{Resultado:} El artículo fue rechazado.
+            \item \textbf{Acción Inmediata:} Se realizó un análisis detallado de los comentarios de los revisores para identificar las áreas de mejora críticas.
+            \item \textbf{Nueva Opción:} Se ha seleccionado a la revista \textit{Applied Ocean Research} como el nuevo objetivo de publicación.
+        \end{itemize}
+        
+        \vspace{0.4cm}
+
+        \item \textbf{Necesidad de Prórroga:}
+        \begin{alertblock}{Ajuste de Cronograma de Graduación}
+            Debido a los tiempos de gestión editorial para el nuevo envío a \textit{Applied Ocean Research} y la escritura final, se solicitará una extensión de tiempo.
+            \vspace{0.1cm}
+            \begin{itemize}
+                \item \textbf{Ventana Estimada de Defensa:} Octubre -- Diciembre 2026.
+            \end{itemize}
+        \end{alertblock}
+    \end{itemize}
+\end{frame}
+
+% Slide 2: Estrategia Técnica
+\begin{frame}{Redefinición de Alcances y Estrategia Técnica}
+    \small
+    \begin{block}{Recorte de Alcances}
+        Para viabilizar la nueva fecha de defensa y garantizar la calidad de la publicación, se proponen transferir los análisis de \textbf{grietas por fatiga} y \textbf{deflexiones excesivas} a \textit{Trabajo Futuro}. El 8º Semestre se dedicará 100\% a Escritura y Validación.
+    \end{block}
+
+    \vspace{0.2cm}
+
+    \begin{block}{Fortalecimiento del ICD (Estrategia de Aceptación)}
+        En respuesta al rechazo previo, se implementarán 5 mejoras para blindar el artículo:
+        \begin{enumerate} \footnotesize
+            \item \textbf{Estabilidad del AG:} Reporte del vector $\alpha$ óptimo y su dispersión.
+            \item \textbf{Benchmark:} Comparativa (Mejor DI individual vs. ICD Fusionado).
+            \item \textbf{Robustez:} Simulación de ruido experimental.
+            \item \textbf{Métricas:} Análisis de Verdaderos Positivos / Falsos Positivos.
+        \end{enumerate}
+    \end{block}
+\end{frame}
+
+\end{document}

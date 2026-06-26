@@ -1,0 +1,104 @@
+\chapter{Introducción}
+\label{chap:introduccion}
+
+\section{Contexto Industrial: La Crisis del Envejecimiento en la Infraestructura Costa-Fuera}
+
+La industria global de hidrocarburos offshore enfrenta un desafío estructural sin precedentes a mediados de la década de 2020: el envejecimiento crítico de su flota de activos fijos. Según reportes recientes del Foro Económico Mundial \parencite{wef2024aging}, una proporción significativa de las plataformas tipo Jacket en operaciones ha superado su vida útil de diseño original, típicamente establecida entre 20 y 25 años. En regiones maduras como el Mar del Norte y el Golfo de México, la edad promedio de estas estructuras supera las tres décadas, operando bajo regímenes de extensión de vida útil (\textit{Life Extension}) para garantizar la seguridad energética durante la transición energética.
+
+Esta realidad operativa conlleva un perfil de riesgo exponencial. Un análisis de DNV presentado en 2025 \parencite{dnv2025maritime} revela que los incidentes de seguridad marítima aumentaron un 42\% entre 2018 y 2024, atribuyendo este incremento principalmente a la degradación de activos envejecidos. La gestión de integridad de estas estructuras ya no es una tarea de mantenimiento rutinario, sino un imperativo de seguridad crítica.
+
+Históricamente, la detección de daños se ha basado en inspecciones visuales submarinas realizadas por buzos o Vehículos Operados Remotamente (ROV). Sin embargo, la viabilidad económica de este modelo está fracturada. Las tarifas diarias para embarcaciones de soporte han alcanzado niveles récord, superando los \$400,000 USD diarios en mercados saturados \parencite{riviera2025rates}. Sumado a los costos de desmantelamiento, estimados en más de \$22 millones por plataforma en el Mar del Norte \parencite{jpt2025decom}, la industria busca urgentemente alternativas de monitoreo continuo que reduzcan la dependencia de intervenciones físicas costosas y dependientes del clima.
+
+\section{Planteamiento del Problema}
+\label{subchap:planteamiento}
+
+A pesar de los avances tecnológicos, la industria carece de una metodología unificada que permita localizar daños específicos (corrosión, abolladuras) de manera remota y precisa sin depender de modelos de Caja Negra (\textit{Black Box}) o inspecciones masivas. Los trabajos existentes no abordan detalladamente la distinción entre la Reducción de Rigidez global por corrosión y la pérdida local por abolladuras en un marco de optimización eficiente.
+
+Estos deterioros son difíciles de identificar en la subestructura debido al riesgo asociado al proceso de las inspecciones \parencite{estrada2022metodologia}.
+
+\subsection{Daños en plataformas}
+Las plataformas marinas están expuestas a un entorno agresivo que induce degradación continua. Los daños principales que afectan la integridad de estas estructuras, cuya clasificación y efectos se detallan en la \cref{fig:tipos-de-dano}, son:
+
+\begin{enumerate}
+    \item \textbf{Corrosión:} Degradación electroquímica que reduce el espesor de pared de los miembros tubulares.
+    \item \textbf{Abolladuras:} Deformaciones plásticas locales causadas por impactos de embarcaciones o caída de objetos.
+    \item \textbf{Fatiga:} Agrietamiento progresivo bajo cargas cíclicas de oleaje.
+    \item \textbf{Deflexiones excesivas:} Deformaciones globales permanentes que comprometen la estabilidad geométrica y operativa de la plataforma.
+\end{enumerate}
+
+Estos mecanismos alteran las propiedades de masa y rigidez de la estructura, lo que a su vez modifica su respuesta dinámica (frecuencias y modos). El colapso estructural es el escenario límite de estos procesos acumulativos (\cref{fig:plataformas-danadas}).
+
+\begin{figure}[htbp]
+    \centering
+    % Usamos el nombre de archivo que proporcionaste.
+    \includegraphics[width=0.5\textwidth]{figures/004_ejemplos_danos_plataformas.png}
+    
+    % El pie de foto incluye la cita a la fuente de la imagen.
+    \caption{Ejemplos de plataformas fijas dañadas. Las deflexiones excesivas en las piernas principales de la plataforma provocaron el colapso del sistema estructural \parencite{ghsoub2018structural}.}
+    
+    % Esta etiqueta DEBE COINCIDIR con la que usaste en el \cref.
+    \label{fig:plataformas-danadas}
+\end{figure}
+
+Según \textcite{mubarak2020condition} y \textcite{silva2007clave}, la detección temprana de estos daños es crítica no solo para prevenir el colapso, sino para viabilizar económicamente la extensión de vida útil del activo. En este sentido, el enfoque de este trabajo se centra en correlacionar los cambios en las propiedades geométricas de la sección transversal ($A, I, J$) y la rigidez local inducidos por la degradación con las variaciones medibles en la respuesta global, utilizando un Algoritmo Genético para resolver el problema inverso de localización mediante la optimización de índices de daño.
+
+\begin{figure}[htbp] 
+    \centering
+    % Usamos el nombre de archivo que proporcionaste.
+    \includegraphics[width=0.7\textwidth]{figures/009.png}
+    
+    % El pie de foto incluye la cita a la fuente de la imagen.
+    \caption{Clasificación y efectos de daños estructurales en plataformas Jacket.}
+    
+    % Esta etiqueta DEBE COINCIDIR con la que usaste en el \cref.
+    \label{fig:tipos-de-dano}
+\end{figure}
+
+\section{Estado del Arte en Detección de Daños: Desafíos y Oportunidades}
+
+En la era del "Big Data", existe una tendencia académica a aplicar técnicas de Aprendizaje Profundo (\textit{Deep Learning}) al monitoreo de salud estructural (\textit{Structure Health Monitoring}). Sin embargo, su aplicación directa a plataformas Jacket enfrenta limitaciones de generalización debido a un obstáculo fundamental: la escasez de datos de fallos (\textit{Data Scarcity}).
+
+A diferencia de industrias de manufactura masiva, no existen bases de datos históricas con millones de registros de "plataformas colapsadas" para entrenar algoritmos de clasificación. Como señalan \textcite{aghaeidoost2023generalized}, los métodos puramente basados en datos sufren de una falta de capacidad de generalización cuando se enfrentan a daños estructurales únicos y eventos extremos nunca antes vistos. Entrenar modelos de Caja Negra (\textit{Black Box}) con datos sintéticos a menudo conduce a un sobreajuste que falla en el entorno marino real, donde factores como el crecimiento marino (\textit{biofouling}) pueden alterar las frecuencias naturales en un 6-12\% sin implicar daño estructural \parencite{researchgate2025biofouling}.
+
+Ante las limitaciones del Aprendizaje Produndo en entornos de datos escasos, la literatura reciente (2023-2026) muestra un retorno hacia enfoques de Optimización Inversa guiados por la física. En lugar de aprender patrones estadísticos ciegos, estos métodos utilizan un modelo de Elementos Finitos (FEM) como base y emplean metaheurísticas, como los Algoritmos Genéticos (AG), no para calibrar ciegamente el modelo, sino para optimizar la sensibilidad de detección.
+
+Este enfoque de \textbf{Optimización Inversa para la Maximización de Sensibilidad} convierte la detección de daño en un problema de fusión de datos, donde el AG busca la combinación lineal óptima (pesos $\alpha$) de múltiples índices de daño hasta maximizar la detectabilidad de la anomalía. Estudios recientes de \textcite{li2024power} y \textcite{aghaeidoost2023generalized} validan que este enfoque híbrido es capaz de localizar daños con alta precisión, superando a las redes neuronales en términos de interpretabilidad física y robustez ante la incertidumbre.
+
+Para el desarrollo de algoritmos de localización, es práctica común utilizar modelos simplificados de daño que capturen el comportamiento global de la estructura.
+\begin{enumerate}
+    \item \textbf{Abolladuras como Reducción de Rigidez:} Investigaciones recientes \parencite{bocian2025impact} confirman que modelar una abolladura como una reducción localizada de la rigidez a flexión ($EI$) en un elemento viga induce cambios en la matriz de flexibilidad proyectables a los nodos, lo cual es suficiente y válido para algoritmos de localización nodal.
+    \item \textbf{Corrosión uniforme:} Aunque la corrosión real es estocástica (\textit{pitting}), el modelo de reducción uniforme de espesor sigue siendo el estándar validado para evaluar la degradación de la rigidez global y los cambios en las frecuencias naturales de bajo orden en plataformas Jacket \parencite{hajinezhadian2024reliability, liu2024corrosion}.
+\end{enumerate}
+
+\section{Fundamentos Teóricos: Análisis de Vibraciones}
+
+El Criterio de Aseguramiento Modal (MAC), establecido originalmente por \textcite{allemang1982correlation}, sigue siendo el estándar industrial para validar la coherencia espacial de los modos de vibración. Sin embargo, en estructuras simétricas como las plataformas Jacket, el daño estructural puede inducir el fenómeno de \textbf{Cruce Modal} (\textit{Mode Veering}), alterando el orden de aparición de las frecuencias naturales.
+
+Esta permutación de modos hace que la comparación directa entre el estado sano y el dañado sea errónea si se basa únicamente en el número de modo secuencial. Por lo tanto, el MAC no es solo una métrica de validación, sino una herramienta activa necesaria para algoritmos de emparejamiento como el método Húngaro, garantizando que se comparen formas modales físicamente correspondientes antes de calcular cualquier índice de daño.
+
+Por otro lado, la variación en las frecuencias naturales es el indicador más elemental de cambio estructural. Métodos estadísticos como la Raíz del Error Cuadrático Medio (RECM) permiten cuantificar la discrepancia global entre el modelo numérico y la estructura real, sirviendo como una primera línea de alerta en sistemas de monitoreo \parencite{okula2023understanding}.
+
+\section{Justificación}
+\subsection{Crisis de Mantenimiento y Riesgo Operativo en la Sonda de Campeche}
+
+La crisis de envejecimiento de la infraestructura offshore es un fenómeno global que afecta severamente a cuencas maduras como el Mar del Norte y el Golfo de México. En este contexto internacional, la Sonda de Campeche se presenta como un caso de estudio crítico y representativo de los desafíos que enfrenta la industria energética mundial. La mayoría de las plataformas tipo \textit{Jacket} en esta región superan los 30 años de servicio, operando más allá de su vida útil de diseño original bajo esquemas de "vida extendida". Esta condición exige una vigilancia estructural estricta; sin embargo, la realidad financiera y operativa de PEMEX ha limitado severamente la ejecución de estas tareas.
+
+Reportes recientes de la Auditoría Superior de la Federación (ASF) han documentado irregularidades y subejercicios significativos en los presupuestos de mantenimiento. En la fiscalización de la Cuenta Pública 2021 y 2023, la ASF detectó anomalías financieras superiores a los 756 millones de pesos en rubros de monitoreo y calibración \parencite{asf2021informe, energymagazine2025asf}. Más alarmante aún es el recorte presupuestal sistemático: para el ejercicio 2024, el presupuesto autorizado para mantenimiento de infraestructura sufrió una reducción cercana al 50\% respecto al año anterior, cayendo de aproximadamente 30,500 a 15,700 millones de pesos \parencite{sinergia2024recorte, expansion2024recorte}.
+
+Esta "deuda de mantenimiento" tiene consecuencias tangibles. Accidentes graves, como el incendio en la plataforma Nohoch-A en julio de 2023, han sido vinculados por organismos independientes a la falta de inversión en integridad mecánica \parencite{cemda2023nohoch}. Las pérdidas económicas directas e indirectas derivadas de estos siniestros ascienden a miles de millones de pesos \parencite{efinf2023perdidas}, sin contar el impacto ambiental y humano.
+
+\subsection{Limitaciones Técnicas de la Inspección Visual Tradicional}
+
+El método predominante de aseguramiento de integridad sigue siendo la inspección visual submarina mediante buzos industriales o vehículos operados remotamente (ROV). No obstante, este enfoque adolece de graves limitaciones técnicas y económicas:
+
+\begin{enumerate}
+    \item \textbf{Baja Probabilidad de Detección (POD):} Según la práctica recomendada \textcite{dnv2015rpc210}, la probabilidad de detectar grietas por fatiga en ambiente submarino es estocástica y decrece drásticamente con la turbidez y las condiciones del mar.
+    \item \textbf{Costos Prohibitivos:} Las campañas de inspección requieren embarcaciones de posicionamiento dinámico y equipos de buceo de saturación, cuyos costos operativos son incompatibles con la actual austeridad financiera de la paraestatal \parencite{onexpo2024perdidas}.
+    \item \textbf{Inaccesibilidad:} El crecimiento marino enmascara visualmente los daños, requiriendo limpieza mecánica previa que incrementa el tiempo y costo de la inspección.
+\end{enumerate}
+
+\subsection{Necesidad de un Enfoque Numérico-Evolutivo}
+
+Ante la inviabilidad financiera de inspeccionar físicamente todas las plataformas y la escasez de datos históricos de fallas que impide el uso de herramientas de Aprendizaje Profundo convencional, esta tesis propone una alternativa basada en la \textbf{optimización inversa}. 
+
+Se busca desarrollar una metodología que utilice la respuesta dinámica global de la superestructura —medible de forma remota y económica— para inferir la localización y severidad de daños sumergidos. Al emplear Algoritmos Genéticos (AG), se supera la dependencia de grandes volúmenes de datos de entrenamiento, permitiendo identificar patrones de daño (corrosión, abolladuras, deflexiones excesivas y gritas por fatiga) mediante la optimización de pesos y la fusión de índices de daño. Este enfoque se alinea con la necesidad urgente de focalizar los escasos recursos de inspección en los elementos que realmente presentan riesgo estructural.

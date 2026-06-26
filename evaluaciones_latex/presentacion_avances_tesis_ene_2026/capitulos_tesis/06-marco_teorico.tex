@@ -1,0 +1,472 @@
+\chapter{Marco Teórico: Modelado matemático del daño}
+\label{chap:marco_teorico}
+
+Este capítulo establece las bases teórico-matemáticas utilizadas para la simulación de la plataforma marina y la formulación de los mecanismos de daño. Se describen los fundamentos de la dinámica estructural, el modelado de masas adicionales según normativas internacionales y las deducciones analíticas para representar la corrosión, abolladuras y deformaciones iniciales en los elementos tubulares. Finalmente, se detalla la técnica de reducción de modelos, la formulación de los índices de daño y la estrategia de optimización empleada.
+
+\section{Fundamentos de Dinámica Estructural}
+El comportamiento dinámico de la plataforma marina se modela discretizando la estructura continua en un sistema de múltiples grados de libertad (MDOF). Bajo la suposición de comportamiento lineal elástico y oscilaciones pequeñas, el equilibrio dinámico del sistema se rige por la ecuación diferencial del movimiento. Para el caso de vibración libre no amortiguada —estado base para la obtención de las propiedades modales intrínsecas—, esta ecuación matricial se expresa como \parencite{chopra2017dynamics}:
+
+\begin{equation}
+    \label{eq:ec_movimiento}
+    \mathbf{M}\ddot{\mathbf{u}}(t) + \mathbf{K}\mathbf{u}(t) = \mathbf{0}
+\end{equation}
+
+\noindent donde:
+\begin{itemize}
+    \item $\mathbf{M}$ es la matriz de masa global del sistema ($n \times n$), asumida como concentrada (diagonal), que incluye tanto la masa estructural como las masas hidrodinámicas adicionales.
+    \item $\mathbf{K}$ es la matriz de rigidez global ($n \times n$), ensamblada a partir de las contribuciones locales de cada elemento tubular.
+    \item $\ddot{\mathbf{u}}(t)$ es el vector de aceleraciones nodales.
+    \item $\mathbf{u}(t)$ es el vector de desplazamientos nodales.
+    \item $\mathbf{0}$ es el vector nulo, indicando la ausencia de fuerzas externas dinámicas.
+\end{itemize}
+
+La solución a la ecuación (\ref{eq:ec_movimiento}) describe un movimiento armónico simple, donde todos los grados de libertad oscilan sincrónicamente con la misma frecuencia natural $\omega$ y una forma de deformación constante $\boldsymbol{\phi}$. Matemáticamente, se asume una solución de la forma:
+
+\begin{equation}
+    \mathbf{u}(t) = \boldsymbol{\phi} \sin(\omega t + \theta)
+\end{equation}
+
+\noindent Derivando esta expresión dos veces respecto al tiempo para obtener la aceleración:
+
+\begin{equation}
+    \ddot{\mathbf{u}}(t) = -\omega^2 \boldsymbol{\phi} \sin(\omega t + \theta)
+\end{equation}
+
+\noindent Sustituyendo el desplazamiento y la aceleración en la ecuación del movimiento (\ref{eq:ec_movimiento}), se obtiene:
+
+\begin{equation}
+    -\omega^2 \mathbf{M} \boldsymbol{\phi} \sin(\omega t + \theta) + \mathbf{K} \boldsymbol{\phi} \sin(\omega t + \theta) = \mathbf{0}
+\end{equation}
+
+\noindent Dado que el término seno varía con el tiempo y no es cero en todo instante, la condición para que se satisfaga la ecuación en cualquier tiempo $t$ conduce al \textbf{problema generalizado de eigenvalores}:
+
+\begin{equation}
+    \label{eq:eigenvalores}
+    (\mathbf{K} - \omega^2 \mathbf{M}) \boldsymbol{\phi} = \mathbf{0}
+\end{equation}
+
+Para obtener soluciones no triviales (es decir, $\{\phi\} \neq \{0\}$), el determinante de la matriz característica debe anularse \parencite{clough2003dynamics}:
+
+\begin{equation}
+    \label{eq:determinante}
+    \det(\mathbf{K} - \omega^2 \mathbf{M}) = 0
+\end{equation}
+
+La expansión del determinante (\ref{eq:determinante}) resulta en un polinomio característico de orden $n$ (donde $n$ es el número de grados de libertad dinámicos). Las raíces de este polinomio son los eigenvalores $\omega_n^2$, que representan el cuadrado de las frecuencias naturales circulares del sistema. Para cada frecuencia natural $\omega_n$, existe un eigenvector correspondiente $\boldsymbol{\phi}_n$, conocido como \textit{modo de vibración}, que define la forma deformada de la estructura al vibrar en esa frecuencia específica.
+
+Estos pares de frecuencias y formas modales $(\omega_n, \boldsymbol{\phi}_n)$ constituyen las propiedades dinámicas fundamentales que este proyecto utiliza como huella digital para la identificación del daño estructural.
+
+\section{Modelado de Masa Adicional}
+
+Para representar con fidelidad el comportamiento dinámico de una plataforma en operación, es necesario considerar no solo la masa estructural del acero, sino también los efectos hidrodinámicos y biológicos. Se realizaron modificaciones a la matriz de masa para incluir la masa atrapada y la masa adherida.
+
+\subsection{Masa Atrapada y Masa Adherida}
+
+La \textbf{masa atrapada} corresponde al líquido contenido dentro de los elementos tubulares inundados (ver Figura~\ref{fig:masa_adherida}), mientras que la \textbf{masa adherida} representa el efecto del agua circundante que se mueve solidariamente con la estructura.
+
+El cálculo de la masa adherida depende de la presencia de crecimiento marino, el cual altera la rugosidad del elemento. De acuerdo con la normativa \parencite{api2014planning} se emplean los siguientes coeficientes de masa ($C_m$):
+\begin{align}
+  C_m &= 1.6, \quad \text{para elementos rugosos (con crecimiento marino)}, \\
+  C_m &= 1.2, \quad \text{para elementos lisos (sin crecimiento marino)}.
+\end{align}
+
+El volumen total de la masa adherida por elemento se calcula como:
+\begin{equation}
+  V_{\mathrm{TOTAL}} = C_m \times V, 
+  \quad
+  \text{donde } V \text{ es el volumen desplazado por el elemento}.
+\end{equation}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\linewidth]{figures/016_modelo_masa_adherida.png}
+  \caption{Visualización de masa atrapada y masa adherida en el elemento tubular de la plataforma. La figura de la plataforma de la izquierda fue tomada y modificada del trabajo de \parencite{vilnay2019fidelity}.}
+  \label{fig:masa_adherida}
+\end{figure}
+
+\subsection{Crecimiento Marino}
+
+El crecimiento marino incrementa el espesor hidrodinámico y, consecuentemente, la masa y el arrastre sobre los elementos. Este fenómeno varía en función de la profundidad (Figura~\ref{fig:crecimiento_marino}), siendo mayor en la zona de marea y disminuyendo hacia el fondo marino debido a la menor penetración de luz solar.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\linewidth]{figures/017_modelo_crecimiento_marino.png}
+  \caption{Modelo de acumulación de crecimiento marino. Los elementos cercanos a la superficie presentan mayor espesor de incrustaciones, aumentando los coeficientes hidrodinámicos.}
+  \label{fig:crecimiento_marino}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.35\linewidth]{figures/017_foto_crecimiento_marino_1.jpg}%
+  \hfill
+  \includegraphics[width=0.55\linewidth]{figures/017_foto_crecimiento_marino_2.jpg}
+  \caption{Evidencia fotográfica del crecimiento marino en estructuras costa-fuera. Imagenes extraídas de \textcite{olsen2016marine} y de \textcite{gammon2019oil}.}
+  \label{fig:crecimiento_marino_fotos}
+\end{figure}
+
+Para el modelo numérico, se consideró la distribución de espesores descrita en la siguiente tabla:
+
+\begin{table}[H]
+  \centering
+  \caption{Perfil de crecimiento marino considerado en el modelo \parencite{pemex2021}.}
+  \label{tab:perfil_crecimiento}
+  \begin{tabular}{cc}
+  \toprule
+  \makecell[cl]{Intervalo respecto al N.M.M. (m)} & \makecell[cl]{Espesor (cm)} \\
+  \midrule
+  +1.0 a -20.0   & 7.5 \\
+  -20.0 a -50.0  & 5.5 \\
+  -50.0 a -80.0  & 3.5 \\
+  -80.0 a -100.0 & 0.0 \\
+  \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{Mecánica del Daño en Elementos Tubulares}
+
+Cada tipología de daño altera de forma específica las propiedades geométricas y mecánicas de los elementos, impactando su matriz de rigidez local. A continuación se presentan las formulaciones matemáticas empleadas.
+
+\subsection{Abolladura (Dent)}
+
+La abolladura provoca una reducción local del momento de inercia y una redistribución de la rigidez. Se modela asumiendo que el perímetro de la sección transversal permanece constante, resultando en un aplanamiento de la cara impactada (eje fuerte) y un ensanchamiento lateral (eje débil), como se muestra en la Figura~\ref{fig:parametros_abolladura}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.45\textwidth]{figures/018_parametros_abolladura_01.png}
+  \hfill
+  \includegraphics[width=0.5\textwidth]{figures/018_parametros_abolladura_02.png}
+  \caption{Parametrización de la sección abollada (\textbf{A}) y discretización para el cálculo numérico del momento de inercia (\textbf{B}).}
+  \label{fig:parametros_abolladura}
+\end{figure}
+
+La profundidad de la abolladura se parametriza como un porcentaje del diámetro. Para calcular las nuevas propiedades inerciales ($I_y, I_z$) en la zona dañada, se discretiza la sección y se integra numéricamente ajustando la geometría deformada mediante funciones sinusoidales y aplicando el teorema de ejes paralelos.
+
+La matriz de flexibilidad local del elemento dañado se obtiene ensamblando los segmentos intactos y el segmento dañado de longitud $L_D$. Para el segmento dañado, los términos de flexión en la matriz de flexibilidad se ven incrementados debido a la reducción de inercia:
+
+\[
+\mathbf{f}_{local} \;=\;
+\begin{pmatrix}
+A & B \\[1.5ex]
+B & A
+\end{pmatrix}
+\]
+Donde los bloques $A$ y $B$ contienen los términos de flexibilidad estándar (ver Ecs. de viga de Timoshenko o Euler-Bernoulli según corresponda), modificados en los términos $\frac{L}{EI}$ y $\frac{L^3}{EI}$ con los valores de inercia reducida $I_{red}$.
+
+Posteriormente, se realiza un ajuste polinómico de cuarto grado para interpolar la variación de la inercia a lo largo de la zona afectada, suavizando la transición de rigidez (Figura~\ref{fig:interpolacion}).
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\linewidth]{figures/021_interpolacion.png}
+  \caption{Interpolación polinómica del momento de inercia en la zona de la abolladura.}
+  \label{fig:interpolacion}
+\end{figure}
+
+\subsection{Corrosión}
+
+La corrosión se modela como una reducción uniforme del espesor de la pared ($t$) a lo largo de una longitud $L_D$ del elemento (Figura~\ref{fig:longitud_corrosion}). Esto disminuye el área de la sección transversal ($A$) y los momentos de inercia.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.85\linewidth]{figures/022_longitud_corrosion.png}
+  \caption{Modelo de daño por corrosión uniforme.}
+  \label{fig:longitud_corrosion}
+\end{figure}
+
+\begin{table}[H]
+  \centering
+  \caption{Nomenclatura para el modelo de corrosión.}
+  \label{tab:def-corrosion}
+  \small
+  \begin{tabular}{@{}ll@{}}
+    $L_U$ & Longitud de sección intacta \\
+    $L_D$ & Longitud de sección corroída \\
+    $f_u$ & Matriz de flexibilidad de la sección sin daño \\
+    $f_d$ & Matriz de flexibilidad de la sección con daño \\
+    $f_t$ & Matriz de flexibilidad total \\
+    $k_T$ & Matriz de rigidez total local del elemento con corrosión \\
+  \end{tabular}
+\end{table}
+
+Respecto al módulo de elasticidad ($E$), investigaciones experimentales \parencite{CardenasArias2019_article} que, en el rango elástico lineal, el acero corroído por inmersión marina no presenta cambios significativos en $E$ (ver Figura~\ref{fig:probetas}). Por tanto, se mantiene $E$ constante y solo se afectan las propiedades geométricas ($A, I$).
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.45\textwidth]{figures/023_probetas.png}
+  \caption{Curvas esfuerzo-deformación de probetas corroídas, demostrando la estabilidad del módulo de elasticidad \parencite{CardenasArias2019_article}.}
+  \label{fig:probetas}
+\end{figure}
+
+\subsection{Deformaciones Iniciales (Pandeo Global)}
+
+Este daño representa una imperfección geométrica o curvatura inicial en el elemento, sin cambios en la sección transversal (Figura~\ref{fig:elemento-deflexion}). Ésta induce momentos de segundo orden ($P-\Delta$) que reducen la rigidez geométrica efectiva.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\linewidth]{figures/025_elemento_deflexion.png}
+  \caption{Elemento tubular con pandeo global inicial.}
+  \label{fig:elemento-deflexion}
+\end{figure}
+
+Debido a la complejidad de modelar la deformada exacta de un elemento empotrado con pandeo inicial sin recurrir a mallados finos de elementos finitos (lo cual elevaría excesivamente el coste computacional del AG), se propone una aproximación sinusoidal. El elemento se idealiza como biarticulado para la función de forma, ajustando la rigidez en los extremos promedio.
+
+La deformada total $v(x)$ se expresa como la suma de la imperfección inicial $v_0(x)$ y la deflexión adicional debida a la carga axial $P$ y amplificación dinámica:
+
+\begin{equation}\label{eq:pandeo_total}
+  v(x) = \bar{v}(x) + v_{o}(x)
+\end{equation}
+
+Siguiendo la formulación de Carol (2022), y asumiendo una forma sinusoidal $v_0 = V_0 \sin(\pi x / L)$, la ecuación diferencial del equilibrio es:
+
+\begin{equation}\label{eq:ecuacion_deflexion}
+\ddot{\tilde v} = -\,\frac{P}{E I}\,\tilde v \;-\; \frac{P}{E I}\,V_{0}\,\sin\!\biggl(\frac{\pi x}{L}\biggr)
+\end{equation}
+
+La solución analítica para la deformada total amplificada, considerando el factor de amplificación $\alpha$, resulta en:
+
+\begin{equation}\label{eq:pendido_total_carol}
+  v(x) = \alpha\,V_{0}\,\sin\!\bigl(\tfrac{\pi x}{L}\bigr), 
+  \quad \text{donde } \alpha = \frac{1}{1 - \frac{P}{P_{\mathrm{CR}}}}
+\end{equation}
+
+Esta formulación permite calcular la reducción de rigidez axial efectiva del elemento sin necesidad de discretización por elementos finitos.
+
+\subsection{Grietas por fatiga}
+\textit{Por ahora se dejará pendiente esta sección. Ya que la terminaré en el siguiente semestre}
+
+\section{Técnicas de Reducción de Modelos: Condensación Estática}
+
+Para optimizar la evaluación de la función objetivo dentro del AG, se aplica la condensación estática  a las matrices globales de rigidez ($\mathbf{K}$) y masa ($\mathbf{M}$). Este método reduce el tamaño del problema al retener solo los grados de libertad (GDL) traslacionales principales y condensar los GDL rotacionales.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\linewidth]{figures/030_condensacion.png}
+  \caption{Selección de GDL maestros (verde) y esclavos (rojo) para la condensación.}
+  \label{fig:seleccion_gdl}
+\end{figure}
+
+Particionando el vector de desplazamientos y las matrices en componentes retenidas ($d$) y reducidas ($r$):
+\[
+\begin{bmatrix}
+\mathbf{K}_{dd} & \mathbf{K}_{dr} \\
+\mathbf{K}_{rd} & \mathbf{K}_{rr}
+\end{bmatrix}
+\begin{Bmatrix}
+\mathbf{u}_d \\ \mathbf{u}_r
+\end{Bmatrix}
+=
+\begin{Bmatrix}
+\mathbf{f}_d \\ \mathbf{f}_r
+\end{Bmatrix}
+\]
+Asumiendo $\mathbf{f}_r = \mathbf{0}$, se obtiene la relación estática entre $\mathbf{u}_r$ y $\mathbf{u}_d$. La matriz de rigidez condensada $\mathbf{K}_{red}$ se calcula como:
+
+\begin{equation}\label{eq:condensacion_estatica}
+  \mathbf{K}_{red} = \mathbf{K}_{dd} - \mathbf{K}_{dr} \mathbf{K}_{rr}^{-1} \mathbf{K}_{rd}
+\end{equation}
+
+Esta transformación preserva la energía elástica del sistema para cargas aplicadas en los GDL retenidos y aproxima adecuadamente las frecuencias naturales más bajas, que son las de interés para la detección de daño.
+
+\section{Formulación de Índices de Daño}
+\label{sec:indices_dano}
+
+Siguiendo la metodología de fusión de datos propuesta por \textcite{ervin2022index}, este estudio implementa ocho índices de daño (DIs) que explotan diferentes características dinámicas de la estructura. La selección de estos índices abarca cambios en las formas modales, variaciones en la matriz de flexibilidad y análisis estadísticos de dichas variaciones, permitiendo una detección robusta ante diferentes tipologías de daño.
+
+Para garantizar la consistencia en la entrada del AG, se definen dos operadores matemáticos preliminares basados en el post-procesamiento implementado:
+
+\begin{enumerate}
+    \item \textbf{Agrupamiento Nodal (Resultante):} Dado que el modelo numérico discretiza múltiples grados de libertad (GDL) por nodo, se calcula la magnitud resultante vectorial para unificar la métrica por nodo. Para un vector de características $\mathbf{v}$ y un nodo $j$ con componentes $\{x, y, z\}$, el operador $\mathcal{R}_j$ se define como la norma Euclidiana ($L_2$):
+    \begin{equation}
+        \mathcal{R}_j(\mathbf{v}) = \sqrt{ \sum_{k \in \text{GDL}_j} v_k^2 }
+    \end{equation}
+    Esta operación alinea la metodología con los índices "Resultante" ($R$) descritos por \parencite{ervin2022index}.
+    
+    \item \textbf{Normalización Min-Max:} Para hacer comparables magnitudes físicas dispares (e.g., curvatura vs. flexibilidad), todo índice $DI$ se normaliza al intervalo $[0, 1]$:
+    \begin{equation}
+        \hat{DI} = \frac{DI - \min(DI)}{\max(DI) - \min(DI)}
+    \end{equation}
+\end{enumerate}
+
+A continuación, se describen los tres bloques de índices utilizados, donde los subíndices $u$ y $d$ denotan los estados intacto (\textit{undamaged}) y dañado (\textit{damaged}), respectivamente.
+
+\subsection{Índices Basados en Formas Modales}
+
+Estos índices evalúan la correlación y desviación directa de los eigenvectores.
+
+\textbf{$DI_1$: COMAC} \\
+El COMAC cuantifica la correlación punto a punto entre dos conjuntos de modos. Para detectar el daño, se emplea el complemento de su raíz cuadrada para aumentar la sensibilidad ante cambios locales:
+\begin{equation}
+    \text{DI}_1(j) = 1 - \sqrt{ \frac{ \left( \sum_{i=1}^{N_m} |\phi_{u,ij}| |\phi_{d,ij}| \right)^2 }{ \sum_{i=1}^{N_m} \phi_{u,ij}^2 \sum_{i=1}^{N_m} \phi_{d,ij}^2 } }
+\end{equation}
+donde $\phi_{ij}$ es la componente modal en el GDL $j$ para el modo $i$, y $N_m$ es el número total de modos considerados.
+
+\textbf{$DI_2$: Diferencia Absoluta de Modos} \\
+Calcula la magnitud del cambio en el vector de desplazamiento modal, agrupado por nodo:
+\begin{equation}
+    \text{DI}_2(j) = \mathcal{R}_j \left( \sum_{i=1}^{N_m} | \boldsymbol{\phi}_{u,i} - \boldsymbol{\phi}_{d,i} | \right)
+\end{equation}
+
+\textbf{$DI_3$: Razón Relativa de Modos} \\
+Evalúa la desviación de la relación entre modos dañados e intactos respecto a la unidad. Para garantizar la estabilidad numérica en nodos cercanos a puntos de inflexión modal (donde el desplazamiento tiende a cero), se introduce un valor umbral de regularización $\epsilon$ en el denominador. Esto previene singularidades numéricas sin alterar la física del problema:
+\begin{equation}
+    \text{DI}_3(j) = \mathcal{R}_j \left( \sum_{i=1}^{N_m} \left| \frac{\boldsymbol{\phi}_{d,i}}{\boldsymbol{\phi}_{u,i} + \epsilon} - 1 \right| \right)
+\end{equation}
+
+\subsection{Índices Basados en Flexibilidad}
+
+La matriz de flexibilidad modal aproxima la inversa de la rigidez y es intrínsecamente más sensible a daños locales en los modos de baja frecuencia. Se aproxima como $\mathbf{F} \approx \boldsymbol{\Phi} \boldsymbol{\Omega}^{-2} \boldsymbol{\Phi}^T$.
+
+\textbf{$DI_4$: Diferencia de Flexibilidad} \\
+Se obtiene de la diferencia absoluta entre las diagonales principales de las matrices de flexibilidad:
+\begin{equation}
+    \text{DI}_4(j) = \mathcal{R}_j \left( | \text{diag}(\mathbf{F}_d) - \text{diag}(\mathbf{F}_u) | \right)
+\end{equation}
+
+\textbf{$DI_5$: Razón de Flexibilidad} \\
+Similar al $DI_3$, mide la proporción de cambio en los términos diagonales de flexibilidad, aplicando el mismo principio de regularización para asegurar estabilidad:
+\begin{equation}
+    \text{DI}_5(j) = \mathcal{R}_j \left( \left| \frac{\text{diag}(\mathbf{F}_d)}{\text{diag}(\mathbf{F}_u) + \epsilon} - 1 \right| \right)
+\end{equation}
+
+\textbf{$DI_6$: Porcentaje de Variación de Flexibilidad} \\
+Representa el cambio porcentual normalizado respecto a la condición base, siguiendo la nomenclatura \textit{PercF} de \parencite{ervin2022index}:
+\begin{equation}
+    \text{DI}_6(j) = \mathcal{R}_j \left( 100 \cdot \frac{| \text{diag}(\mathbf{F}_d) - \text{diag}(\mathbf{F}_u) |}{\text{diag}(\mathbf{F}_u) + \epsilon} \right)
+\end{equation}
+
+\subsection{Índices Estadísticos}
+
+Estos índices asumen una distribución de las variaciones de flexibilidad para identificar anomalías estadísticas (outliers).
+
+\textbf{$DI_7$: Z-Score de Flexibilidad} \\
+Estandariza las diferencias de flexibilidad agrupadas nodalmente ($\Delta F_j = \mathcal{R}_j(|\mathbf{F}_d - \mathbf{F}_u|)$). Si $\mu$ y $\sigma$ son la media y desviación estándar de $\Delta F$ a través de todos los nodos:
+\begin{equation}
+    \text{DI}_7(j) = \frac{\Delta F_j - \mu_{\Delta F}}{\sigma_{\Delta F}}
+\end{equation}
+
+\textbf{$DI_8$: Probabilidad de Daño} \\
+Transforma el puntaje Z en una probabilidad de anomalía bilateral, asumiendo una distribución Gaussiana. Un valor cercano a 1 indica alta probabilidad de daño:
+\begin{equation}
+    \text{DI}_8(j) = 1 - 2\left( 1 - \Phi_{\text{cdf}}(|\text{DI}_7(j)|) \right)
+\end{equation}
+donde $\Phi_{\text{cdf}}$ es la función de distribución acumulada de la normal estándar.
+
+\section{Optimización Estocástica mediante AG}
+\label{sec:teoria_ag}
+
+El problema de localización de daño se aborda en esta investigación como un problema de optimización combinatoria y fusión de datos. Siguiendo la metodología propuesta por \parencite{ervin2022index}, en lugar de depender de un único indicador de daño —que puede ser insuficiente para capturar mecanismos de falla complejos—, se propone la integración de múltiples índices de daño (DIs) en un vector unificado. Para determinar la contribución óptima de cada índice, se emplea un AG que ajusta los pesos de participación basándose en la minimización del error de localización.
+
+\subsection{Fundamentos del AG}
+
+Un AG es una técnica de búsqueda heurística inspirada en la teoría de la evolución biológica y la selección natural. Formalizados por \parencite{holland1992adaptation} y \parencite{goldberg1989genetic}, los AGs operan sobre una población de soluciones candidatas, haciéndolas evolucionar iterativamente mediante operadores estocásticos para encontrar el óptimo global. Su robustez radica en que no requieren el cálculo de gradientes, lo que los hace ideales para espacios de búsqueda discontinuos o con ruido experimental.
+
+\subsection{Formulación Matemática para la Detección de Daño}
+
+La implementación del AG se adapta para resolver el problema de ponderación de índices. De acuerdo con el esquema de fusión de datos presentado por \parencite{ervin2022index}, se definen los siguientes componentes:
+
+\subsubsection{Representación (Codificación)}
+El espacio de búsqueda corresponde al espacio de importancia relativa de los indicadores de diagnóstico. El cromosoma o individuo se define como un vector de valores reales $\boldsymbol{\alpha}$ de dimensión $K=8$, que representa los coeficientes de peso asignados a cada índice de daño ($DI_k$):
+
+\begin{equation}
+    \boldsymbol{\alpha} = [\alpha_1, \alpha_2, \dots, \alpha_8], \quad \text{sujeto a } \alpha_k \in [0, 1]
+\end{equation}
+
+\subsubsection{Función de Aptitud (Fitness Function)}
+El núcleo del algoritmo es la construcción de un \textbf{Indicador de Daño Unificado} ($P$). Adaptando la formulación de \textcite{ervin2022index}, el índice combinado para un nodo $j$ se calcula como la suma ponderada de los $K$ índices normalizados:
+
+\begin{equation}
+    P_j(\boldsymbol{\alpha}) = \sum_{k=1}^{8} \alpha_k \cdot DI_k(j)
+\end{equation}
+
+El objetivo es minimizar la discrepancia entre este perfil de daño predicho ($P$) y un perfil objetivo ($T$, Target Vector). El vector $T$ es una representación binaria del estado ideal del sistema, donde $T_j=1$ indica un nodo dañado y $T_j=0$ un nodo intacto. La función de costo a minimizar es el RMSE:
+
+\begin{equation}
+    \label{eq:funcion_objetivo_ag}
+    \min f(\boldsymbol{\alpha}) = \sqrt{\frac{1}{N_{nodos}} \sum_{j=1}^{N_{nodos}} \left( P_j(\boldsymbol{\alpha}) - T_j \right)^2 }
+\end{equation}
+
+Esta estrategia permite que el algoritmo penalice aquellos índices que generan falsos positivos y amplifique la influencia de aquellos que correlacionan correctamente con la ubicación real del daño.
+
+\subsection{Operadores Genéticos}
+
+La evolución de la población se rige por operadores probabilísticos estándar \parencite{mathworks2024gadoc}:
+
+\begin{itemize}
+    \item \textbf{Selección:} Escoge los individuos con menor RMSE para actuar como progenitores.
+    \item \textbf{Cruce (Crossover):} Combina los vectores $\boldsymbol{\alpha}$ de los padres para explorar nuevas combinaciones de sensibilidad.
+    \item \textbf{Mutación:} Altera aleatoriamente los pesos $\alpha_k$ para mantener la diversidad genética y evitar óptimos locales.
+\end{itemize}
+
+Se implementa además una estrategia de \textbf{elitismo} para conservar el mejor vector de pesos encontrado en cada generación, asegurando la convergencia del error hacia un mínimo global.
+
+\section{Métricas de Evaluación de Desempeño}
+\label{sec:metricas_evaluacion}
+
+Si bien la función de aptitud del Algoritmo Genético se basa en la minimización del RMSE para guiar la búsqueda de los pesos óptimos, la evaluación final de la efectividad del sistema requiere una métrica que capture la utilidad operativa del diagnóstico. Las métricas binarias tradicionales (como la Exactitud o el \textit{Accuracy}) resultan insuficientes en el contexto del Monitoreo de Salud Estructural (SHM) de plataformas marinas, donde no todos los errores tienen el mismo impacto en la toma de decisiones.
+
+Para superar estas limitaciones, se propone el \textbf{Índice de Calidad de Detección (ICD)}. Esta métrica compuesta evalúa el desempeño del sistema considerando tres factores críticos: el éxito en la localización, la dificultad intrínseca asociada a la severidad del daño y la confiabilidad ante falsas alarmas.
+
+\subsection{Formulación del Índice de Calidad de Detección (ICD)}
+
+El ICD se define matemáticamente como el producto de tres componentes normalizados:
+
+\begin{equation}
+    \label{eq:icd_formula}
+    \text{ICD} = D \times C_{\text{norm}}(\delta) \times P_{\text{FP}}(N_{\text{FP}})
+\end{equation}
+
+\noindent donde:
+\begin{itemize}
+    \item $D$ es el factor de éxito de la detección.
+    \item $C_{\text{norm}}$ es el factor de confianza logarítmico dependiente del porcentaje de daño ($\delta$).
+    \item $P_{\text{FP}}$ es el factor de penalización exponencial por falsos positivos ($N_{\text{FP}}$).
+\end{itemize}
+
+A continuación, se detalla la formulación y justificación física de cada componente.
+
+\subsubsection{Factor de Éxito de Localización ($D$)}
+Este término cuantifica la precisión espacial del hallazgo. Dado que en estructuras reticulares tipo Jacket la rigidez es compartida entre nodos adyacentes, una detección en un nodo conectado directamente al elemento dañado, aunque no sea el "objetivo" exacto, ofrece valor informativo. Por tanto, se discretiza como:
+
+\begin{equation}
+    D = 
+    \begin{cases} 
+      1.0 & \text{si la detección es exacta en el nodo objetivo.} \\
+      0.5 & \text{si la detección ocurre en un nodo adyacente inmediato (detección parcial).} \\
+      0.0 & \text{si no se detecta daño o la ubicación es errónea.}
+    \end{cases}
+\end{equation}
+
+\subsubsection{Factor de Confianza Logarítmico ($C_{\text{norm}}$)}
+La detectabilidad del daño estructural no es lineal. Basado en la física del problema, un daño incipiente induce cambios mínimos en la respuesta dinámica, haciendo su identificación extremadamente difícil y sujeta a incertidumbre. Por el contrario, un daño severo altera significativamente las propiedades modales, facilitando su detección.
+
+Para modelar esta realidad, se introduce un escalamiento logarítmico que normaliza la "calidad" del acierto según la dificultad del escenario:
+
+\begin{equation}
+    C_{\text{norm}}(\delta) = \frac{\ln(1 + \alpha \cdot \delta)}{\ln(1 + \alpha \cdot \delta_{\max})}
+\end{equation}
+
+\noindent donde:
+\begin{itemize}
+    \item $\delta$ es el porcentaje de daño presente en el escenario evaluado.
+    \item $\delta_{\max}$ es la severidad máxima de daño considerada en el diseño experimental (valor de normalización).
+    \item $\alpha = 0.1$ es el coeficiente de ajuste de curvatura. Este valor permite que el factor crezca rápidamente para daños pequeños (reconociendo el alto valor de detectar fallas incipientes) y se sature gradualmente para daños mayores.
+\end{itemize}
+
+\subsubsection{Penalización Exponencial por Falsos Positivos ($P_{\text{FP}}$)}
+La viabilidad industrial de un sistema SHM depende de su tasa de falsas alarmas. Un sistema que genera múltiples falsos positivos pierde rápidamente la confianza del operador y genera costos innecesarios de inspección. Para penalizar severamente la degradación de la confiabilidad, se emplea una función de decaimiento exponencial:
+
+\begin{equation}
+    P_{\text{FP}} = e^{-\beta \cdot N_{\text{FP}}}
+\end{equation}
+
+\noindent donde:
+\begin{itemize}
+    \item $N_{\text{FP}}$ es el número total de nodos sanos identificados incorrectamente como dañados.
+    \item $\beta = 0.15$ es el coeficiente de severidad.
+\end{itemize}
+
+La elección de $\beta = 0.15$ modela la "fatiga operativa": un único falso positivo reduce el índice levemente, manteniendo el resultado aceptable; sin embargo, la acumulación de errores (e.g., más de 5 falsos positivos) reduce el índice drásticamente, penalizando el sistema como no confiable.
+
+\subsection{Interpretación del Índice}
+El ICD es una métrica adimensional acotada en el intervalo $[0, 1]$. Un valor de $\text{ICD} \approx 1$ indica una detección perfecta de un daño severo sin falsas alarmas. Valores bajos reflejan, ya sea una falla en la localización, o una detección correcta que ha sido invalidada por una cantidad excesiva de ruido (falsos positivos), alineando así la evaluación matemática con los criterios de decisión de la ingeniería costa-fuera.
+
+En resumen, la metodología propuesta integra el modelado físico riguroso de daños en plataformas tipo Jacket con una estrategia de optimización inversa basada en Algoritmos Genéticos. Mediante la incorporación del emparejamiento modal (Algoritmo Húngaro) y la definición de una métrica de desempeño especializada (ICD), el sistema está diseñado para superar las limitaciones de falsos positivos y cruce modal identificadas en el estado del arte. En el siguiente capítulo, se presenta la validación de esta metodología aplicando estos algoritmos a diversos escenarios de daño por corrosión y abolladuras, evaluando su precisión y robustez operativa.

@@ -1,0 +1,111 @@
+\chapter{Resultados y Discusión}
+\label{chap:resultados}
+En este capítulo se presenta la validación numérica de la metodología de optimización inversa propuesta. Se analiza el desempeño del AG y la sensibilidad del ICD frente a dos mecanismos de daño primarios que afectan la integridad de las plataformas en la Sonda de Campeche: la pérdida generalizada de sección por corrosión y la pérdida localizada de rigidez por abolladuras.
+
+El análisis se centra en la capacidad del sistema para discriminar la ubicación y severidad del daño en función de la zona estructural (desde el lecho marino hasta la zona de salpicaduras) y la tipología del elemento tubular (piernas, diagonales y vigas).
+
+\section{Evaluación del Daño por Corrosión (Daño Global)}
+
+La corrosión se modeló como una reducción uniforme del espesor de pared a lo largo del elemento. En este estudio, este fenómeno se considera fundamentalmente como una degradación de las propiedades geométricas que impacta la matriz de rigidez ($\mathbf{K}$) mediante la reducción del área de la sección transversal, los momentos de inercia y el momento polar de inercia, sin considerar alteraciones en la matriz de masa global.
+
+\subsection{Sensibilidad por Zona Estructural}
+
+La Figura~\ref{fig:corrosion_zona} muestra la evolución del ICD promedio en función del porcentaje de daño, segmentado por las zonas estratégicas de la plataforma.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/resultados/corrosion/005_corrosion_ICD_zona.png}
+    \caption{Comparativa global del ICD vs. \% de Daño por Corrosión clasificado por zona estructural.}
+    \label{fig:corrosion_zona}
+\end{figure}
+
+Se observa un desempeño notablemente alto en la Zona de Salpicaduras  y en el Nivel del Lecho Marino, con valores de ICD superiores a 0.80 para daños severos (reducción de espesor $\ge 30\%$). Esto es consistente con la física del problema:
+\begin{itemize}
+    \item En la \textbf{Zona de Salpicaduras}, la pérdida de masa del acero genera variaciones significativas en las fuerzas inerciales. Este resultado constituye una validación cruzada fundamental con la Sección \ref{subsec:corrosion_zonificacion}, donde se documentó que la corrosión real observada en campo (hasta 1.2 mm/año) puede superar en un 300\% a la tasa de diseño conservadora sugerida de $~0.4$ mm/año sugerida por las normas como la \textcite{norsokm001}. La alta consisencia del ICD en esta región confirma que el algoritmo es capaz de identificar la \textbf{acumulación crítica de daño} resultante de estas tasas aceleradas, actuando como una herramienta de verificación \textit{post-factum} para escenarios donde la corrosión real ya ha rebasado los márgenes de seguridad normativos, sin requerir ponderaciones artificiales \textit{a priori}.
+    \item En el \textbf{Nivel del Lecho Marino}, la reducción de sección en la base altera la condición de empotramiento efectivo, modificando la curvatura de los modos fundamentales de flexión.
+\end{itemize}
+
+\subsection{Desempeño por Tipología de Elemento}
+
+Al desagregar los resultados por tipo de elemento (Figura~\ref{fig:corrosion_tipo}), se revela uno de los hallazgos más importantes de este estudio en contraste con otros tipos de daño.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/resultados/corrosion/004_corrosion_ICD_tipo_elemento.png}
+    \caption{Impacto del tipo de elemento estructural en la calidad de detección de corrosión.}
+    \label{fig:corrosion_tipo}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{Diagonales (Braces):} Se consolidan como los "centinelas" del sistema (Línea roja). Su curva de sensibilidad muestra una pendiente pronunciada inicial, alcanzando un ICD de 0.60 con tan solo un 30\% de daño.
+    \item \textbf{Piernas (Inclined Legs):} Muestran una respuesta más tardía (Línea azul). Para alcanzar el mismo nivel de confiabilidad (ICD $\approx 0.60$), requieren un daño acumulado superior al 50\%.
+    \item \textbf{Vigas (Beams):} Su respuesta es marginal (Línea verde), confirmando que no gobiernan la respuesta dinámica global.
+\end{itemize}
+
+Esta diferencia de sensibilidad tiene una ventaja práctica para la inspección. La Figura \ref{fig:corrosion_desglose} revela que las Diagonales funcionan como \textbf{"fusibles de alerta"}: alcanzan una alta probabilidad de detección con daños moderados (30\%), mucho antes que las Piernas. Esto significa que si la corrosión real está avanzando más rápido de lo previsto por norma (el escenario de 1.2 mm/año vs 0.4 mm/año discutido en la Sección \ref{subsec:corrosion_zonificacion}), el algoritmo lo detectará primero en las diagonales, dando tiempo suficiente para intervenir antes de que el daño afecte a los elementos principales de soporte.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/resultados/corrosion/006_corrosion_ICD_zona.png}
+    \caption{Análisis detallado de ICD por zona y tipo de elemento para corrosión.}
+    \label{fig:corrosion_desglose}
+\end{figure}
+
+\section{Evaluación del Daño por Abolladura (Daño Local)}
+
+La abolladura representa un desafío distinto para el sistema de monitoreo, caracterizándose por una reducción drástica de la inercia en una zona confinada del elemento, sin pérdida de masa significativa.
+
+\subsection{Sensibilidad por Zona Estructural}
+
+Como se aprecia en la Figura~\ref{fig:abolladura_zona}, la detección de abolladuras depende fuertemente de las condiciones de frontera.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/resultados/abolladura/005_abolladura_ICD_vs_zona.png}
+    \caption{Comparativa global del ICD vs. \% de Daño por Abolladura clasificado por zona estructural.}
+    \label{fig:abolladura_zona}
+\end{figure}
+
+El sistema muestra su mejor desempeño en el Nivel del Lecho Marino, superando claramente a las zonas intermedias. Esto sugiere que las abolladuras cercanas a los apoyos generan concentraciones de curvatura modal más fáciles de identificar que aquellas ubicadas en tramos intermedios, donde la redistribución de esfuerzos enmascara el defecto.
+
+\subsection{Desempeño por Tipología de Elemento}
+
+La Figura~\ref{fig:abolladura_tipo} evidencia la limitación física de detectar daños locales en elementos masivos mediante vibraciones globales.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/resultados/abolladura/004_abolladura_tipo_de_elemento.png}
+    \caption{Impacto del tipo de elemento estructural en la calidad de detección de abolladuras.}
+    \label{fig:abolladura_tipo}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{Diagonales (Braces):} Son los únicos elementos confiablemente monitoreables para abolladuras (Línea verde). Esta observación corrobora la mecánica del daño analizada en la Sección \ref{subsec:abolladuras}, donde se describió cómo los impactos (por barcos o caída de objetos) comprometen la capacidad de carga axial de los miembros tubulares. A diferencia de las piernas que trabajan a flexo-compresión global, las diagonales dependen críticamente de su estabilidad local; por tanto, la reducción de rigidez detectada por el algoritmo (ICD proporcional a la severidad) es un reflejo directo de la pérdida de capacidad estructural $d/D$ y no un artefacto numérico, validando la sensibilidad del método ante las patologías descritas en la literatura de accidentes como WOAD.
+    \item \textbf{Piernas y Vigas:} El desempeño es drásticamente bajo (ICD $< 0.20$). La gran inercia de las piernas principales hace que una abolladura local sea imperceptible para las frecuencias naturales globales, quedando el daño oculto dentro del ruido numérico.
+\end{itemize}
+
+La Figura~\ref{fig:abolladura_desglose} confirma visualmente que, salvo en las diagonales, la abolladura es un fenómeno "silencioso" para el resto de los elementos estructurales.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/resultados/abolladura/006_abolladura_tipo_elemento_y_zona.png}
+    \caption{Análisis detallado de ICD por zona y tipo de elemento para abolladuras.}
+    \label{fig:abolladura_desglose}
+\end{figure}
+
+\section{Discusión Comparativa: Daño Global vs. Local}
+
+Al contrastar los resultados de corrosión y abolladura, se establecen las siguientes conclusiones sobre la capacidad operativa del sistema:
+
+\begin{enumerate}
+    \item \textbf{Visibilidad de las Piernas Principales:} El hallazgo más relevante es la disparidad en la detección de daños en las piernas (\textit{Inclined Legs}). Mientras que para la \textbf{corrosión} el sistema logra identificarlas con alta confianza (ICD $\approx 0.8$), para las \textbf{abolladuras} resultan prácticamente invisibles. Esto indica que el método propuesto es eficaz para evaluar la integridad global de las piernas (pérdida de espesor), pero insuficiente para detectar daños puntuales por impacto en estos elementos masivos.
+    \item \textbf{Dominio de las Diagonales:} Las diagonales (\textit{Braces}) se confirman como los elementos "centinela" de la estructura. Independientemente de si el daño es global o local, cualquier alteración en ellas se refleja inmediatamente en la respuesta modal, garantizando una alta probabilidad de detección.
+    \item \textbf{Influencia de la Ubicación:} Se observa una inversión de sensibilidad. Para fenómenos de masa/rigidez global (corrosión), la Zona de Salpicaduras ofrece excelente detectabilidad. Para fenómenos de rigidez local (abolladura), el empotramiento en el Lecho Marino es la zona más sensible.
+\end{enumerate}
+
+\section{Análisis de Deformaciones Excesivas y Grietas por Fatiga}
+
+La validación experimental y numérica para los escenarios de daño correspondientes a deformaciones globales (deflexiones excesivas por asentamientos o sobrecargas) y la propagación de grietas por fatiga en los nodos soldados se encuentra actualmente en una fase de desarrollo.
+
+Los resultados preliminares y la calibración final de los índices de daño para estas tipologías serán integrados en la versión final de este documento. Por el momento, el alcance de los resultados concluyentes se limita a los fenómenos de corrosión y abolladura presentados en las secciones anteriores.
+
+

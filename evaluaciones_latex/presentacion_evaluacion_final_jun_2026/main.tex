@@ -147,65 +147,67 @@
     \end{figure}
 \end{frame}
 
-\begin{frame}{Fusión de Datos: Indicadores Vibratorios (DIs)}
-    \footnotesize
-    \textbf{Estrategia de Fusión:}
-    El AG no evalúa un solo parámetro, sino que optimiza un vector de pesos $\boldsymbol{\alpha}$ para minimizar el error mediante una \textbf{suma ponderada} de 8 indicadores distintos:
+% Slide 8 (comentado)
+% \begin{frame}{Fusión de Datos: Indicadores Vibratorios (DIs)}
+%     \footnotesize
+%     \textbf{Estrategia de Fusión:}
+%     El AG no evalúa un solo parámetro, sino que optimiza un vector de pesos $\boldsymbol{\alpha}$ para minimizar el error mediante una \textbf{suma ponderada} de 8 indicadores distintos:
+%
+%     \begin{equation}
+%         \text{Función Objetivo} \approx \min \sum_{j=1}^{8} \alpha_j \cdot DI_j
+%     \end{equation}
+%
+%     \vspace{0.1cm}
+%
+%     \begin{columns}[t]
+%         \begin{column}{0.48\textwidth}
+%             \begin{block}{Basados en Modos ($\phi$)}
+%                 \begin{itemize} \scriptsize
+%                     \item \textbf{$DI_1$ (COMAC):} Correlación de vectores modales.
+%                     \item \textbf{$DI_2$ (Diff Abs):} Diferencia absoluta de formas modales.
+%                     \item \textbf{$DI_3$ (Razón Rel):} Relación entre vectores dañados e intactos.
+%                 \end{itemize}
+%             \end{block}
+%         \end{column}
+%
+%         \begin{column}{0.48\textwidth}
+%             \begin{block}{Basados en Flexibilidad ($F$)}
+%                 \begin{itemize} \scriptsize
+%                     \item \textbf{$DI_4$ (Diff Flex):} Cambio en la diagonal de la matriz.
+%                     \item \textbf{$DI_5$ (Razón Flex):} Relación de flexibilidades.
+%                     \item \textbf{$DI_6$ (Var \%):} Porcentaje de variación.
+%                     \item \textbf{$DI_7$ (Z-Score):} Estandarización estadística.
+%                     \item \textbf{$DI_8$ (Probabilidad):} T. Gaussiana normalizada.
+%                 \end{itemize}
+%             \end{block}
+%         \end{column}
+%     \end{columns}
+%
+%     \vspace{0.2cm}
+%     \centering
+%     \scriptsize \textit{*El AG encuentra qué peso ($\alpha_j$) darle a cada $DI_j$ para maximizar la detección.}
+% \end{frame}
 
-    \begin{equation}
-        \text{Función Objetivo} \approx \min \sum_{j=1}^{8} \alpha_j \cdot DI_j
-    \end{equation}
-
-    \vspace{0.1cm}
-
-    \begin{columns}[t]
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Basados en Modos ($\phi$)}
-                \begin{itemize} \scriptsize
-                    \item \textbf{$DI_1$ (COMAC):} Correlación de vectores modales.
-                    \item \textbf{$DI_2$ (Diff Abs):} Diferencia absoluta de formas modales.
-                    \item \textbf{$DI_3$ (Razón Rel):} Relación entre vectores dañados e intactos.
-                \end{itemize}
-            \end{block}
-        \end{column}
-
-        \begin{column}{0.48\textwidth}
-            \begin{block}{Basados en Flexibilidad ($F$)}
-                \begin{itemize} \scriptsize
-                    \item \textbf{$DI_4$ (Diff Flex):} Cambio en la diagonal de la matriz.
-                    \item \textbf{$DI_5$ (Razón Flex):} Relación de flexibilidades.
-                    \item \textbf{$DI_6$ (Var \%):} Porcentaje de variación.
-                    \item \textbf{$DI_7$ (Z-Score):} Estandarización estadística.
-                    \item \textbf{$DI_8$ (Probabilidad):} T. Gaussiana normalizada.
-                \end{itemize}
-            \end{block}
-        \end{column}
-    \end{columns}
-
-    \vspace{0.2cm}
-    \centering
-    \scriptsize \textit{*El AG encuentra qué peso ($\alpha_j$) darle a cada $DI_j$ para maximizar la detección.}
-\end{frame}
-
-\begin{frame}{Formulación Matemática: Indicadores Modales ($DI_1 - DI_3$)}
-    \small
-    \textbf{1. COMAC ($DI_1$):}
-    Evalúa la correlación punto a punto de los modos. (1 = Correlación perfecta, 0 = Sin correlación).
-    \begin{equation}
-        \text{DI}_1(j) = 1 - \sqrt{ \frac{ \left( \sum_{i=1}^{N_m} |\phi_{u,ij}| |\phi_{d,ij}| \right)^2 }{ \sum_{i=1}^{N_m} \phi_{u,ij}^2 \sum_{i=1}^{N_m} \phi_{d,ij}^2 } }
-    \end{equation}
-
-    \vspace{0.2cm}
-
-    \textbf{2. Diferencia Absoluta ($DI_2$) y Razón Relativa ($DI_3$):}
-    Cuantifican el desplazamiento de los vectores modales $\boldsymbol{\phi}$.
-    \begin{align}
-        \text{DI}_2(j) &= \mathcal{R}_j \left( \sum_{i=1}^{N_m} | \boldsymbol{\phi}_{u,i} - \boldsymbol{\phi}_{d,i} | \right) \\
-        \text{DI}_3(j) &= \mathcal{R}_j \left( \sum_{i=1}^{N_m} \left| \frac{\boldsymbol{\phi}_{d,i}}{\boldsymbol{\phi}_{u,i} + \epsilon} - 1 \right| \right)
-    \end{align}
-
-    \footnotesize \textit{*Donde $u$ es estado intacto, $d$ dañado y $\epsilon$ es un factor de regularización.}
-\end{frame}
+% Slide 9 (comentado)
+% \begin{frame}{Formulación Matemática: Indicadores Modales ($DI_1 - DI_3$)}
+%     \small
+%     \textbf{1. COMAC ($DI_1$):}
+%     Evalúa la correlación punto a punto de los modos. (1 = Correlación perfecta, 0 = Sin correlación).
+%     \begin{equation}
+%         \text{DI}_1(j) = 1 - \sqrt{ \frac{ \left( \sum_{i=1}^{N_m} |\phi_{u,ij}| |\phi_{d,ij}| \right)^2 }{ \sum_{i=1}^{N_m} \phi_{u,ij}^2 \sum_{i=1}^{N_m} \phi_{d,ij}^2 } }
+%     \end{equation}
+%
+%     \vspace{0.2cm}
+%
+%     \textbf{2. Diferencia Absoluta ($DI_2$) y Razón Relativa ($DI_3$):}
+%     Cuantifican el desplazamiento de los vectores modales $\boldsymbol{\phi}$.
+%     \begin{align}
+%         \text{DI}_2(j) &= \mathcal{R}_j \left( \sum_{i=1}^{N_m} | \boldsymbol{\phi}_{u,i} - \boldsymbol{\phi}_{d,i} | \right) \\
+%         \text{DI}_3(j) &= \mathcal{R}_j \left( \sum_{i=1}^{N_m} \left| \frac{\boldsymbol{\phi}_{d,i}}{\boldsymbol{\phi}_{u,i} + \epsilon} - 1 \right| \right)
+%     \end{align}
+%
+%     \footnotesize \textit{*Donde $u$ es estado intacto, $d$ dañado y $\epsilon$ es un factor de regularización.}
+% \end{frame}
 
 \begin{frame}{Formulación Matemática: Flexibilidad y Estadística ($DI_4 - DI_8$)}
     \small

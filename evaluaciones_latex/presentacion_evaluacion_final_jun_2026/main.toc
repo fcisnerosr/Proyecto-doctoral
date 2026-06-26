@@ -1,9 +1,9 @@
 \babel@toc {spanish}{}\relax 
 \beamer@sectionintoc {1}{Introducción y Avances MATLAB}{2}{0}{1}
-\beamer@sectionintoc {2}{Metodología: Indicadores Vibratorios e ICD}{7}{0}{2}
-\beamer@sectionintoc {3}{Nuevos Resultados de ICD}{11}{0}{3}
-\beamer@sectionintoc {4}{Análisis Estadístico Avanzado}{17}{0}{4}
-\beamer@sectionintoc {5}{Publicación de Paper}{34}{0}{5}
-\beamer@subsectionintoc {5}{1}{Estrategia Multi-Journal}{36}{0}{5}
-\beamer@sectionintoc {6}{Trámites Administrativos}{37}{0}{6}
-\beamer@subsectionintoc {6}{1}{Prórroga del Periodo Doctoral}{39}{0}{6}
+\beamer@sectionintoc {2}{Metodología: Indicadores Vibratorios e ICD}{4}{0}{2}
+\beamer@sectionintoc {3}{Nuevos Resultados de ICD}{8}{0}{3}
+\beamer@sectionintoc {4}{Análisis Estadístico Avanzado}{14}{0}{4}
+\beamer@sectionintoc {5}{Publicación de Paper}{31}{0}{5}
+\beamer@subsectionintoc {5}{1}{Estrategia Multi-Journal}{33}{0}{5}
+\beamer@sectionintoc {6}{Trámites Administrativos}{34}{0}{6}
+\beamer@subsectionintoc {6}{1}{Prórroga del Periodo Doctoral}{36}{0}{6}

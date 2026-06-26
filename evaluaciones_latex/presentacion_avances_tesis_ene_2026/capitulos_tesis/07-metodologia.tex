@@ -1,0 +1,280 @@
+\chapter{Metodología}
+\label{chap:metodologia}
+
+En este capítulo se describe el procedimiento experimental y numérico llevado a cabo para validar la técnica de detección de daños propuesta. La metodología integra el análisis de vibraciones estructurales con algoritmos de optimización estocástica para identificar alteraciones en las propiedades de rigidez y masa de la plataforma.
+
+\section{Diseño de la Investigación}
+La estrategia general se fundamenta en un esquema de \textbf{Fusión de Datos y Optimización Combinatoria}.
+A diferencia de la \textit{Actualización de Modelos} (Model Updating) tradicional ---que busca ajustar parámetros estructurales para replicar la respuesta experimental---, esta metodología emplea un AG para \textbf{calibrar un vector de pesos óptimos} ($\boldsymbol{\alpha}$).
+El objetivo es integrar múltiples índices de daño (DIs) en un \textbf{Indicador Unificado} ($P$) mediante una suma ponderada, minimizando la discrepancia (RMSE) entre el perfil de daño predicho y la ubicación real conocida del daño (Vector Objetivo $T$).
+El flujo de trabajo se ilustra en la Figura~\ref{fig:diagrama_metodologia}.
+
+\begin{landscape}
+  \begin{figure}[p]
+    \centering
+    \includegraphics[width=\linewidth]{figures/013_Diagrama_de_flujo_metodología_ene 25_seleccionado.jpg}
+    \caption{Diagrama de flujo general de la metodología para la detección y localización de daños.}
+    \label{fig:diagrama_metodologia}
+  \end{figure}
+\end{landscape}
+
+Las etapas principales del proceso son:
+
+\section{Descripción Detallada de las Etapas Metodológicas}
+
+La metodología desarrollada se estructura en un flujo de trabajo cíclico que integra la simulación mecánica del daño con un proceso de optimización estocástica. El procedimiento se divide en tres etapas principales: la generación del modelo numérico base, la simulación física de los mecanismos de daño y la calibración de pesos mediante el AG.
+
+\subsection{Etapa 1: Pre-procesamiento y Construcción del Modelo Base}
+
+El proceso inicia con la definición de la geometría y propiedades materiales de la plataforma en un software comercial (ETABS). Esta información se exporta para construir las matrices globales del sistema en el entorno de programación matemática.
+
+En esta fase se implementan las modificaciones necesarias para representar las condiciones operativas reales de la estructura marina. Se calcula la matriz de masas global incluyendo no solo la masa estructural, sino también los efectos hidrodinámicos: la masa adherida (asociada al coeficiente de inercia y al crecimiento marino) y la masa atrapada en los elementos inundados. Posteriormente, se aplica una técnica de condensación estática para reducir los grados de libertad del sistema, conservando únicamente los desplazamientos traslacionales de la superestructura para optimizar el coste computacional.
+
+\subsection{Etapa 2: Ruta de Simulación de Daño}
+
+Esta etapa corresponde a la evaluación determinista de la estructura bajo escenarios de daño controlados. Se define el tipo de daño a estudiar (corrosión, abolladura, deformación excesiva o grieta por fatiga) y el elemento tubular afectado.
+
+Para la simulación del daño, se emplean funciones de daño locales que modifican las propiedades geométricas de la sección transversal.  Con estas propiedades modificadas, se reensambla la matriz de rigidez global del sistema dañado. Finalmente, se resuelve el problema de eigenvalores para extraer las nuevas propiedades dinámicas (frecuencias y formas modales) que alimentarán el cálculo de los índices de daño.
+
+\subsection{Etapa 3: Ruta de Optimización con AG}
+
+Paralelamente a la simulación física, se ejecuta el bucle de optimización. El AG inicializa una población de individuos, donde cada cromosoma representa un vector de pesos $\alpha$. El objetivo del algoritmo es encontrar la combinación lineal óptima de los ocho índices de daño calculados.
+
+En cada generación, el AG evalúa la aptitud de cada individuo mediante una función objetivo. Se construye un indicador de daño unificado $P$ como la suma ponderada de los índices normalizados multiplicados por los pesos $\alpha$ propuestos por el individuo actual.
+
+La función de coste a minimizar es RMSE entre este indicador unificado $P$ y un vector objetivo $T$, el cual representa la ubicación real conocida del daño (donde $T=1$ en nodos dañados y $T=0$ en nodos sanos). A través de operadores de selección, cruce y mutación, el AG evoluciona los pesos $\alpha$ iterativamente hasta minimizar el error de localización o alcanzar el número máximo de generaciones.
+
+\section{Descripción del Caso de Estudio}
+
+La estructura analizada corresponde a una plataforma marina fija tipo Jacket de cuatro piernas, diseñada para operar en profundidades intermedias. Para garantizar la fiabilidad del modelo numérico base empleado en el algoritmo de optimización, las propiedades dinámicas —específicamente las frecuencias naturales y las formas modales— fueron validadas y corroboradas utilizando el software comercial de análisis estructural ETABS.
+
+\subsection{Configuración Geométrica}
+
+La configuración global de la plataforma se presenta en la Figura~\ref{fig:vistas_generales}. El modelo tridimensional (a) exhibe el sistema de arrostramiento en $X$ y $Y$, fundamental para la rigidez lateral, mientras que la vista en elevación (b) detalla la esbeltez y la distribución de niveles del modelo de plataforma.
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{figures/042_modelo_3d.png}
+        \caption*{(a) Vista Isométrica 3D}
+    \end{minipage}\hfill
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.85\linewidth]{figures/041_modelo_elevacion.png}
+        \caption*{(b) Vista en Elevación}
+    \end{minipage}
+    \caption{Representación gráfica del modelo numérico de la plataforma Jacket.}
+    \label{fig:vistas_generales}
+\end{figure}
+
+\subsection{Propiedades de las Secciones}
+
+La estructura está discretizada mediante elementos tubulares de acero divididos en grupos según su demanda estructural. Los elementos de la base (piernas y diagonales inferiores) presentan secciones más robustas para soportar las cargas hidrodinámicas, disminuyendo su calibre en la superestructura.
+
+Para facilitar la identificación visual de estas variaciones, la Figura~\ref{fig:modelo_colores} muestra el modelo codificado por colores según el tipo de propiedad asignada.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.25\textwidth]{figures/043_modelo_colores.png}
+    \caption{Distribución de secciones tubulares identificadas por código de colores.}
+    \label{fig:modelo_colores}
+\end{figure}
+
+La correspondencia entre los colores visualizados y las dimensiones geométricas exactas (diámetro exterior y espesor de pared) se detalla en la Tabla~\ref{tab:colores_secciones}.
+
+% Definición de colores personalizados para la tabla
+\definecolor{etabsBlue}{RGB}{0, 90, 200}
+\definecolor{etabsPurple}{RGB}{112, 48, 160}
+\definecolor{etabsGreen}{RGB}{0, 176, 80}
+\definecolor{etabsRed}{RGB}{255, 0, 0}
+
+\begin{table}[H]
+    \centering
+    \caption{Propiedades geométricas e identificación por color de las secciones.}
+    \label{tab:colores_secciones}
+    \begin{tabular}{ccc}
+        \toprule
+        \textbf{\makecell{Diámetro exterior \\ (m)}} & \textbf{Espesor (mm)} & \textbf{Identificador color} \\
+        \midrule
+        2.18 & 38.1 & \cellcolor{etabsBlue} \textcolor{white}{\textbf{Azul}} \\
+        1.98 & 38.1 & \cellcolor{etabsPurple} \textcolor{white}{\textbf{Morado}} \\
+        1.57 & 25.4 & \cellcolor{etabsGreen} \textcolor{white}{\textbf{Verde}} \\
+        1.57 & 25.4 & \cellcolor{etabsRed} \textcolor{white}{\textbf{Rojo}} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Propiedades del Material}
+
+Finalmente, se consideró un comportamiento elástico lineal para todo el acero estructural (tipo A992 Grado 50). Los parámetros constitutivos empleados en el análisis se resumen en la Tabla~\ref{tab:propiedades_material}.
+
+\begin{table}[H]
+    \centering
+    \caption{Propiedades mecánicas del material (Acero).}
+    \label{tab:propiedades_material}
+    \begin{tabular}{lc}
+        \toprule
+        \textbf{Propiedad} & \textbf{Valor} \\
+        \midrule
+        Módulo de Elasticidad ($E$) & 200 GPa \\
+        Módulo de Cortante ($G$) & 77 GPa \\
+        Relación de Poisson ($\nu$) & 0.3 \\
+        Densidad de Masa ($\rho$) & 7850 kg/m³ \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Limitaciones y Alcance}
+Debido a restricciones presupuestarias y logísticas, no fue posible implementar la metodología en una plataforma real en operación. Por consiguiente:
+\begin{itemize}
+    \item La etapa de medición experimental instrumental se sustituye por simulaciones numéricas.
+    \item El modelo se limita al comportamiento lineal elástico, aunque se incluyen efectos de segundo orden para la simulación de imperfecciones geométricas.
+    \item No se utilizó el Método de Elementos Finitos (FEM) completo para mallar los tubos, sino un enfoque matricial directo para mantener la eficiencia computacional del AG.
+\end{itemize}
+
+\subsection{Procesamiento del Modelo}
+Los datos del modelo estructural (coordenadas nodales, propiedades de sección, conectividad) fueron exportados para su procesamiento en MATLAB. A partir de esta información, se construyeron las matrices de masa ($\mathbf{M}$) y rigidez ($\mathbf{K}$) globales del sistema. Para la matriz de masa, se incorporaron los efectos de \textbf{masa atrapada} y \textbf{masa adherida} según las formulaciones descritas en el Capítulo~\ref{chap:marco_teorico} (Marco Teórico).
+
+\section{Configuración y Flujo del AG}
+
+El núcleo de la metodología es el AG, configurado no para actualizar los parámetros físicos del modelo (Model Updating), sino para resolver un problema de \textbf{Fusión de Datos}. El objetivo es calibrar un vector de pesos óptimos que maximice la capacidad de detección del sistema mediante la combinación lineal de múltiples índices de daño. 
+
+La implementación global sigue el esquema de dos rutas (simulación y optimización) mostrado en la Figura~\ref{fig:diagrama_AG}, mientras que la lógica interna del optimizador se detalla en el flujo top-down de la Figura~\ref{fig:diagrama_ag}.
+
+\subsection{Entradas del Algoritmo}
+Antes de iniciar el ciclo evolutivo, el AG recibe dos conjuntos de datos inmutables que actúan como la base de comparación (bloques de entrada en la Figura~\ref{fig:diagrama_ag}):
+
+\begin{enumerate}
+    \item \textbf{Matriz de Índices de Daño (DIs):} Una matriz pre-calculada donde cada columna corresponde a uno de los 8 DIs normalizados. Es fundamental destacar que estos índices han sido procesados previamente mediante el \textbf{Algoritmo Húngaro} para corregir el fenómeno de \textit{Mode Veering}, garantizando que la entrada al AG sea físicamente consistente.
+    \item \textbf{Vector Objetivo ($T$):} Una representación binaria del estado real del daño (1 para nodos dañados, 0 para intactos), utilizada por la función de aptitud para calcular el error de cada combinación de pesos.
+\end{enumerate}
+
+\subsection{Parámetros y Operadores Genéticos}
+Los parámetros de configuración se han definido para equilibrar la exploración del espacio de búsqueda con la explotación de las mejores soluciones encontradas:
+
+\begin{itemize}
+    \item \textbf{Codificación (Cromosoma):} Un vector de valores reales $\boldsymbol{\alpha} = [\alpha_1, \alpha_2, \dots, \alpha_8]$, donde cada gen representa el peso asignado a un Índice de Daño específico ($DI_k$). Los valores están acotados en el rango $[0, 1]$.
+    \item \textbf{Población Inicial:} Se generan $N=300$ individuos de forma aleatoria para asegurar una cobertura amplia del espacio de soluciones.
+    \item \textbf{Función de Aptitud (Fitness):} Como se observa en el bloque de evaluación de la Figura~\ref{fig:diagrama_ag}, el algoritmo calcula el Indicador de Daño Unificado ($P$) mediante la suma ponderada $P = \sum (\alpha_k \cdot DI_k)$. La aptitud se determina mediante la minimización de la RMSE entre $P$ y el vector objetivo $T$.
+    \item \textbf{Operadores Evolutivos:}
+    \begin{itemize}
+        \item \textit{Elitismo:} Estrategia crucial para conservar los mejores individuos de cada generación, evitando que las soluciones óptimas se pierdan por efectos de la mutación.
+        \item \textit{Selección:} Método de Torneo para elegir a los progenitores con menor RMSE.
+        \item \textit{Cruce (Crossover):} Operador aritmético que combina la información genética de los padres para generar nuevos vectores de pesos.
+        \item \textit{Mutación:} Alteración aleatoria Gaussiana para mantener la diversidad y evitar la convergencia prematura en óptimos locales.
+    \end{itemize}
+\end{itemize}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\linewidth]{figures/014_diagrama_AG.jpg}
+  \caption{Arquitectura del AG implementado: Fusión de la ruta de simulación y la ruta de optimización.}
+  \label{fig:diagrama_AG}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.85\linewidth]{figures/015_diagrama_como_funciona_el_AG.jpg}
+  \caption{Ciclo evolutivo detallado del AG aplicado a la ponderación de índices de daño.}
+  \label{fig:diagrama_ag}
+\end{figure}
+
+\section{Ruta de Simulación: Generación de Escenarios de Daño}
+
+A diferencia del enfoque tradicional donde el AG modifica el modelo estructural en cada iteración, en esta metodología la "Ruta de Simulación" (línea morada en la Figura~\ref{fig:diagrama_AG}) actúa como un generador de datos de entrada estáticos. Esto permite que el AG se enfoque exclusivamente en la optimización de la sensibilidad de detección.
+
+El proceso consiste en crear un banco de escenarios de daño modificando las matrices de rigidez locales de los elementos seleccionados, siguiendo los modelos mecánicos del \textbf{Capítulo~\ref{chap:marco_teorico}}:
+
+\begin{enumerate}
+    \item \textbf{Corrosión:} Reducción del área y la inercia del elemento simulando un adelgazamiento de pared uniforme.
+    \item \textbf{Abolladura:} Integración de la inercia variable de la sección para obtener una matriz de rigidez equivalente.
+    \item \textbf{Deformaciones Iniciales:} Ajuste de la rigidez geométrica considerando los efectos P-Delta de la imperfección.
+\end{enumerate}
+
+Para cada escenario, se resuelve el problema de eigenvalores $[\mathbf{K}_{\text{daño}} - \omega^2 \mathbf{M}] \boldsymbol{\Phi} = 0$ para obtener las frecuencias y modos que posteriormente alimentarán el cálculo de los 8 DIs.
+
+\section{Criterios de Convergencia}
+
+El proceso iterativo mostrado en la Figura~\ref{fig:diagrama_ag} se detiene cuando se satisface alguna de las siguientes condiciones:
+
+\begin{enumerate}
+    \item \textbf{Precisión de Localización:} El valor del RMSE desciende por debajo de un umbral de tolerancia preestablecido ($1 \times 10^{-6}$).
+    \item \textbf{Estancamiento:} No se observa una mejora significativa en la aptitud del mejor individuo durante un número determinado de generaciones consecutivas.
+    \item \textbf{Límite de Cómputo:} Se alcanza el número máximo de generaciones (500 iteraciones).
+\end{enumerate}
+
+Al finalizar, el mejor individuo $\boldsymbol{\alpha}_{best}$ se reporta como el vector de pesos óptimo para la localización y cuantificación del daño estructural.
+
+\section{Métricas de Evaluación de Desempeño}
+\label{sec:metricas_evaluacion}
+
+Si bien la función de aptitud del AG se basa en la minimización del RMSE para guiar la búsqueda de los pesos óptimos, la evaluación final de la efectividad del sistema requiere una métrica que capture la utilidad operativa del diagnóstico. Las métricas binarias tradicionales (como la Exactitud o el \textit{Accuracy}) resultan insuficientes en el contexto del Monitoreo de Salud Estructural (SHM) de plataformas marinas, donde no todos los errores tienen el mismo impacto en la toma de decisiones.
+
+Para superar estas limitaciones, se propone el \textbf{Índice de Calidad de Detección (ICD)}. Esta métrica compuesta evalúa el desempeño del sistema considerando tres factores críticos: el éxito en la localización, la dificultad intrínseca asociada a la severidad del daño y la confiabilidad ante falsas alarmas.
+
+\subsection{Formulación del Índice de Calidad de Detección (ICD)}
+
+El ICD se define matemáticamente como el producto de tres componentes normalizados:
+
+\begin{equation}
+    \label{eq:icd_formula}
+    \text{ICD} = D \times C_{\text{norm}}(\delta) \times P_{\text{FP}}(N_{\text{FP}})
+\end{equation}
+
+\noindent donde:
+\begin{itemize}
+    \item $D$ es el factor de éxito de la detección.
+    \item $C_{\text{norm}}$ es el factor de confianza logarítmico dependiente del porcentaje de daño ($\delta$).
+    \item $P_{\text{FP}}$ es el factor de penalización exponencial por falsos positivos ($N_{\text{FP}}$).
+\end{itemize}
+
+A continuación, se detalla la formulación y justificación física de cada componente.
+
+\subsubsection{Factor de Éxito de Localización ($D$)}
+Este término cuantifica la precisión espacial del hallazgo. Dado que en estructuras reticulares tipo Jacket la rigidez es compartida entre nodos adyacentes, una detección en un nodo conectado directamente al elemento dañado, aunque no sea el "objetivo" exacto, ofrece valor informativo. Por tanto, se discretiza como:
+
+\begin{equation}
+    D = 
+    \begin{cases} 
+      1.0 & \text{si la detección es exacta en el nodo objetivo.} \\
+      0.5 & \text{si la detección ocurre en un nodo adyacente inmediato (detección parcial).} \\
+      0.0 & \text{si no se detecta daño o la ubicación es errónea.}
+    \end{cases}
+\end{equation}
+
+\subsubsection{Factor de Confianza Logarítmico ($C_{\text{norm}}$)}
+La detectabilidad del daño estructural no es lineal. Basado en la física del problema, un daño incipiente induce cambios mínimos en la respuesta dinámica, haciendo su identificación extremadamente difícil y sujeta a incertidumbre. Por el contrario, un daño severo altera significativamente las propiedades modales, facilitando su detección.
+
+Para modelar esta realidad, se introduce un escalamiento logarítmico que normaliza la "calidad" del acierto según la dificultad del escenario:
+
+\begin{equation}
+    C_{\text{norm}}(\delta) = \frac{\ln(1 + \alpha \cdot \delta)}{\ln(1 + \alpha \cdot \delta_{\max})}
+\end{equation}
+
+\noindent donde:
+\begin{itemize}
+    \item $\delta$ es el porcentaje de daño presente en el escenario evaluado.
+    \item $\delta_{\max}$ es la severidad máxima de daño considerada en el diseño experimental (valor de normalización).
+    \item $\alpha = 0.1$ es el coeficiente de ajuste de curvatura. Este valor permite que el factor crezca rápidamente para daños pequeños (reconociendo el alto valor de detectar fallas incipientes) y se sature gradualmente para daños mayores.
+\end{itemize}
+
+\subsubsection{Penalización Exponencial por Falsos Positivos ($P_{\text{FP}}$)}
+La viabilidad industrial de un sistema SHM depende de su tasa de falsas alarmas. Un sistema que genera múltiples falsos positivos pierde rápidamente la confianza del operador y genera costos innecesarios de inspección. Para penalizar severamente la degradación de la confiabilidad, se emplea una función de decaimiento exponencial:
+
+\begin{equation}
+    P_{\text{FP}} = e^{-\beta \cdot N_{\text{FP}}}
+\end{equation}
+
+\noindent donde:
+\begin{itemize}
+    \item $N_{\text{FP}}$ es el número total de nodos sanos identificados incorrectamente como dañados.
+    \item $\beta = 0.15$ es el coeficiente de severidad.
+\end{itemize}
+
+La elección de $\beta = 0.15$ modela la "fatiga operativa": un único falso positivo reduce el índice levemente, manteniendo el resultado aceptable; sin embargo, la acumulación de errores (e.g., más de 5 falsos positivos) reduce el índice drásticamente, penalizando el sistema como no confiable.
+
+\subsection{Interpretación del Índice}
+El ICD es una métrica adimensional acotada en el intervalo $[0, 1]$. Un valor de $\text{ICD} \approx 1$ indica una detección perfecta de un daño severo sin falsas alarmas. Valores bajos reflejan, ya sea una falla en la localización, o una detección correcta que ha sido invalidada por una cantidad excesiva de ruido (falsos positivos), alineando así la evaluación matemática con los criterios de decisión de la ingeniería costa-fuera.
+
+En resumen, la metodología propuesta integra el modelado físico riguroso de daños en plataformas tipo Jacket con una estrategia de optimización inversa basada en AGs. Mediante la incorporación del emparejamiento modal (Algoritmo Húngaro) y la definición de una métrica de desempeño especializada (ICD), el sistema está diseñado para superar las limitaciones de falsos positivos y cruce modal identificadas en el estado del arte. En el siguiente capítulo, se presenta la validación de esta metodología aplicando estos algoritmos a diversos escenarios de daño por corrosión y abolladuras, evaluando su precisión y robustez operativa.

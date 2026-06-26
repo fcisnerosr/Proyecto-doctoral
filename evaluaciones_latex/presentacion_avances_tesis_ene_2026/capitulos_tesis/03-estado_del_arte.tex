@@ -1,0 +1,117 @@
+\chapter{Estado del Arte}
+\label{chap:estado_arte}
+
+\section{Patologías Estructurales y Mecanismos de Daño en Plataformas Costa-Fuera}
+
+La integridad estructural de las plataformas fijas en madurez operativa se ve amenazada por una combinación sinérgica de mecanismos de degradación física y electroquímica. La extensión de vida útil de activos tipo Jacket más allá de sus horizontes de diseño originales (típicamente 20-25 años) exige una comprensión fenomenológica profunda de cómo estos daños afectan la rigidez y masa del sistema dinámico. A continuación, se detallan las patologías más críticas identificadas en la literatura reciente.
+
+\subsection{Corrosión Uniforme y Zonificación Ambiental}
+\label{subsec:corrosion_zonificacion}
+
+La corrosión en ambientes marinos no es un proceso lineal determinista, sino un fenómeno estocástico altamente dependiente de la zonificación vertical. Según datos de campañas de desmantelamiento en el Mar del Norte y el Golfo de México, la pérdida de espesor de pared ($t_{loss}$) varía drásticamente según la exposición al oxígeno y la acción mecánica del oleaje.
+
+\subsubsection{Zonificación Crítica y Modelos No Lineales}
+La literatura técnica y normativas como la ISO 19902 reconocen cinco zonas, siendo la Zona de Salpicadura (\textit{Splash Zone}) la más crítica. En esta región, la humectación cíclica y la erosión del recubrimiento por impacto de olas aceleran la cinética de corrosión.
+
+Modelos recientes como el propuesto por \textcite{yang2019numerical} demuestran que la corrosión en la zona de salpicadura sigue una distribución de Weibull, caracterizada por tres fases: iniciación lenta, aceleración tras fallo del recubrimiento y desaceleración asintótica. Contrario a los modelos lineales de diseño ($d(T) \approx 0.1$ mm/año), la realidad muestra tasas que pueden alcanzar 0.4 a 1.2 mm/año una vez comprometida la protección.
+
+\subsubsection{Impacto Estructural y Disparidad Normativa}
+Existe una "brecha de corrosión" significativa entre las tasas de diseño (ej. NORSOK M-001 \parencite{norsokm001} sugiere 0.4 mm/año) y las observaciones de campo (hasta 300\% superiores). Esta discrepancia es vital para la evaluación de integridad, ya que la reducción de espesor $t_{loss}/t_{nom}$ en la zona de salpicadura puede degradar la capacidad de colapso plástico en más de un 20\%, actuando como el "talón de Aquiles" de la estructura ante cargas laterales extremas.
+
+\subsection{Daño Mecánico Local: Abolladuras}
+\label{subsec:abolladuras}
+
+Las abolladuras representan daños puntuales causados por eventos de impacto accidental. A diferencia de la corrosión, son eventos discretos de alta energía que introducen no linealidades geométricas inmediatas.
+
+\subsubsection{Etiología y Clasificación Forense}
+Las bases de datos de accidentes, como WOAD \parencite{woad} y HSE OTO \parencite{hseoto2001}, identifican dos causas raíces predominantes:
+\begin{itemize}
+    \item Colisión de Buques: Principalmente por embarcaciones de suministro. Generan daños característicos en la Zona de Salpicadura: abolladuras alargadas combinadas con flexión global. Aunque la velocidad de impacto suele ser baja ($< 2 m/s$), la gran masa desplazada ($> 5000 t$) transfiere suficiente energía cinética para pandear localmente la pared del tubo.
+    \item Objetos Caídos: Durante operaciones de izaje, la caída de cargas puntuales (BOPs, tuberías) genera impactos de alta velocidad en zonas sumergidas profundas y miembros horizontales. Estos impactos suelen producir abolladuras "agudas" o de "filo de cuchillo", actuando como severos concentradores de tensión.
+\end{itemize}
+
+La severidad del daño se mide mediante la relación profundidad/diámetro ($d/D$). Abolladuras con $d/D > 10\%$ reducen significativamente la capacidad de carga axial, mientras que daños severos ($d/D > 30\%$) pueden precipitar el colapso del miembro bajo cargas de servicio normales.
+
+\section{Deformaciones Globales y Pérdida de Rectitud}
+
+La deflexión global permanente, conocida técnicamente como \textit{Global Bow} o \textit{Out-of-Straightness} (OOS), es la manifestación macroscópica del daño por impacto.
+
+\subsection{Mecánica de la Deformación}
+Cuando un miembro tubular absorbe energía de impacto más allá de su capacidad local, se forma un mecanismo de colapso plástico (típicamente de tres articulaciones) que resulta en una curvatura permanente del eje neutro. Este fenómeno es exacerbado por el "efecto P-Delta": la presencia de carga axial de compresión durante el impacto amplifica la deflexión lateral final.
+
+\subsection{Implicaciones para la Capacidad Residual}
+La deflexión global ($\delta$) actúa como una excentricidad inicial amplificada. Según la teoría de columnas, una imperfección geométrica $\delta/L$ del 1\% puede reducir la resistencia al pandeo en más de un 30-40\%.
+Las inspecciones reales revelan que, si bien la mayoría de los daños son moderados ($\delta/L < 0.5\%$), existen casos documentados de deflexiones extremas (> 3.0\%) que comprometen totalmente la redundancia estructural. Existe una fuerte correlación estadística: es raro encontrar una deflexión global severa sin una abolladura local asociada, lo que justifica la modelación conjunta de estos defectos en los análisis de elementos finitos.
+
+\section{Evolución de la Detección de Daños en Plataformas Costa-Fuera}
+
+La detección de daños en estructuras marinas ha experimentado una evolución significativa desde los enfoques iniciales basados en inspección visual hasta los modernos sistemas de monitoreo de salud estructural (SHM) basados en vibraciones. Esta transformación ha sido impulsada por la necesidad de evaluar la integridad de plataformas tipo Jacket que operan en ambientes hostiles y, en muchos casos, más allá de su vida útil de diseño.
+
+\subsection{El MAC y Métricas de Correlación}
+
+La historia de la detección de daños basada en vibraciones tiene un hito fundamental en los trabajos pioneros de \textcite{dodds1980west} a principios de la década de los 80. Dodds aplicó técnicas de análisis modal para identificar cortes progresivos en miembros tubulares, demostrando que el daño estructural induce cambios medibles en las propiedades dinámicas. Antes de la estandarización de estas técnicas, la verificación de ortogonalidad era el método predominante, aunque propenso a errores al carecer de modelos analíticos de referencia robustos \parencite{allemang1982correlation}.
+
+La introducción del MAC revolucionó el campo al proporcionar una métrica estadística para cuantificar la correlación entre modos de vibración, definida conceptualmente como el coseno cuadrado del ángulo entre dos autovectores. Esta métrica permite comparar un modo experimental con uno analítico, siendo 1 indicativo de correlación perfecta y 0 de ortogonalidad.
+
+Desarrollos posteriores realizados por Pandey \& Biswas (\citeyear{pandey1991damage}) extendieron este concepto hacia el análisis de la curvatura de las formas modales, observando que las variaciones locales en la curvatura eran indicadores más sensibles al daño que los cambios en la frecuencia natural por sí solos. En paralelo, \textcite{neyriotman1991identification} aplicó estas técnicas específicamente a juntas tubulares de plataformas Jacket, validando experimentalmente la detección de grietas por fatiga.
+
+A pesar de su utilidad, el MAC presenta limitaciones notables. \textcite{allemang1982correlation} advirtió sobre su sensibilidad en estructuras con modos de vibración espacialmente similares, un problema crítico en estructuras simétricas. Para mitigar esto, se han propuesto variantes como el Criterio de Aseguramiento Modal Normalizado (NMAC) \parencite{gentile2008ambient} y el Criterio de Aseguramiento Modal por Coordenadas (COMAC), evaluados por \textcite{barrios2000deteccion} para la localización de daños en vigas, aunque con resultados limitados en la detección de daños leves (menores al 10\% de reducción de rigidez).
+
+\subsection{Precisión en la Estimación de Frecuencias: RMSE}
+
+Junto con el análisis de formas modales, la comparación de frecuencias naturales mediante la Raíz del Error Cuadrático Medio (RMSE) se ha consolidado como un estándar para la validación de modelos. Estudios recientes \parencite{okula2023understanding, chang2017evaluation} enfatizan que la precisión en la estimación de frecuencias es vital para evitar resonancias y caracterizar el comportamiento dinámico. El RMSE ofrece una métrica cuantitativa global de la discrepancia entre el modelo numérico y la estructura real, siendo fundamental para ponderar la precisión del modelo en la función objetivo global.
+
+\section{Paradigmas de Optimización: Del Determinismo a la Estocasticidad}
+
+La Actualización de Modelos de Wlementos Finitos (FEMU) para la detección de daños se formula matemáticamente como un problema inverso de optimización. El objetivo es encontrar el vector de parámetros de daño $\boldsymbol{\theta}$ que minimice la discrepancia entre las respuestas medidas y predichas. Sin embargo, la elección del algoritmo de optimización es objeto de un intenso debate académico.
+
+\subsection{Limitaciones de los Métodos Basados en Sensibilidad}
+
+Históricamente, la ingeniería estructural ha confiado en métodos basados en el gradiente, como el algoritmo de Levenberg-Marquardt, el cual regulariza la matriz Hessiana aproximada. Estos métodos linealizan el problema mediante una expansión de Taylor y actualizan los parámetros iterativamente para minimizar el residuo entre la respuesta experimental y analítica.
+
+Sin embargo, para plataformas costa-fuera envejecidas, este enfoque presenta fallas críticas identificadas en la literatura reciente \parencite{jafariasl2025advanced}:
+
+\begin{enumerate}
+    \item \textbf{Dependencia del punto inicial:} Al ser buscadores locales, si el modelo inicial $\boldsymbol{\theta}_0$ no es preciso (algo común en estructuras con décadas de servicio), el método converge invariablemente a un mínimo local, arrojando "falsos positivos" de daño.
+    \item \textbf{Problemas mal condicionados:} La matriz de información de Fisher suele ser singular debido a la escasez de sensores y la redundancia estructural de las Jackets, provocando inestabilidad numérica.
+    \item \textbf{Ruido Experimental:} Los métodos de gradiente son altamente sensibles al ruido; pequeñas perturbaciones en los datos medidos pueden alterar drásticamente la dirección de búsqueda.
+\end{enumerate}
+
+\subsection{Algoritmos Genéticos: Una Necesidad para Problemas Inversos Mal Planteados}
+
+Frente a estas limitaciones, los AG emergen no como una alternativa opcional, sino como una necesidad metodológica. Investigaciones de \textcite{liujuan2011improved}, \textcite{malekzadeh2013damage} y \textcite{ghsoub2018structural} validan que los AG, al ser métodos de búsqueda global estocástica, superan las deficiencias de los métodos de sensibilidad:
+
+\begin{itemize}
+    \item \textbf{Búsqueda Global:} Operan sobre una población de soluciones, explorando múltiples regiones del espacio de búsqueda simultáneamente y evitando atrapamiento en mínimos locales.
+    \item \textbf{Robustez al Ruido:} Al no depender del cálculo de derivadas, son intrínsecamente más robustos ante datos ruidosos e incompletos.
+    \item \textbf{Flexibilidad Topológica:} Permiten modelar el daño como variables discretas (presencia/ausencia de elemento), lo cual es ideal para simular fallas completas en riostras.
+\end{itemize}
+
+\textcite{huang2016sensor} y \textcite{hosseinlou2021improvement} destacan además la idoneidad de los AG para la paralelización, compensando su mayor costo computacional con la garantía de encontrar soluciones físicamente coherentes en espacios de búsqueda complejos.
+
+\section{Desafíos de Identificación Modal en Estructuras Simétricas}
+
+Un desafío específico de las plataformas Jacket, a menudo ignorado en la literatura clásica pero crítico en la práctica, es la alta densidad modal y la simetría estructural.
+
+\subsection{Fenómenos de Viraje Modal (\textit{Mode Veering}) e Intercambio Modal (\textit{Mode Swapping})}
+
+Las plataformas Jacket suelen presentar rigideces laterales similares en sus ejes principales (X e Y), lo que resulta en frecuencias naturales muy cercanas (apilamiento espectral). Cuando ocurre un daño progresivo, las frecuencias cambian y las curvas de autovalores pueden acercarse.
+
+Estudios recientes en el sector eólico costa-fuera \parencite{richmond2020feasibility} diferencian entre:
+
+\begin{itemize}
+    \item \textbf{Cruce Modal (\textit{Crossing}):} Intersección matemática de autovalores (raro en sistemas acoplados).
+    \item \textbf{Viraje Modal (\textit{Mode Veering}):} Los modos se "repelen" al acercarse, intercambiando sus características físicas (formas modales) en el proceso.
+\end{itemize}
+
+Este fenómeno provoca el intercambio modal (\textit{Mode Swapping}): el "Modo 1" físico (ej. flexión en X) puede convertirse en el "Modo 2" matemático tras el daño. Los métodos tradicionales de emparejamiento basados en el orden de frecuencia fallan catastróficamente aquí, comparando modos ortogonales (MAC $\approx$ 0) y descarrilando la optimización.
+
+\subsection{Algoritmos de Asignación Óptima: El Algoritmo Húngaro}
+
+Para resolver el problema de emparejamiento modal (\textit{Mode Pairing}) bajo incertidumbre, la literatura contemporánea \parencite{chocholaty2024effects} propone abandonar las heurísticas voraces (\textit{greedy}) en favor de algoritmos de optimización combinatoria rigurosa.
+
+El Algoritmo Húngaro (Kuhn-Munkres) es el estándar de oro para resolver el Problema de Asignación Lineal (LAP). Su objetivo es encontrar la permutación de pares que maximice la correlación global (suma de la diagonal de la matriz MAC).
+
+A diferencia de los enfoques simples, el Algoritmo Húngaro garantiza encontrar el emparejamiento óptimo global, permitiendo al AG rastrear correctamente la evolución de los modos a través de zonas de viraje espectral. La validación técnica demuestra que esta integración (AG + Húngaro) reduce drásticamente los errores de identificación en estructuras simétricas como las estudiadas en esta tesis.
+
+Por tanto, la incorporación del Algoritmo Húngaro dentro del bucle de evaluación del AG no es un lujo, sino un requisito para evitar que el algoritmo de optimización converja a soluciones erróneas debido a un emparejamiento modal incorrecto en estructuras simétricas.
