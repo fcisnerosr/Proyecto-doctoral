@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.3.18)  24 JUN 2026 16:50
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.3.18)  25 JUN 2026 21:23
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -768,7 +768,7 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 )
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\\' on input line 25.
+(hyperref)                removing `\\' on input line 36.
 
 (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
@@ -781,24 +781,24 @@ LaTeX Info: Redefining \% on input line 11.
 )
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -856,64 +856,64 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Package hyperref Info: Link coloring OFF on input line 29.
+Package hyperref Info: Link coloring OFF on input line 40.
 
 (./main.out) (./main.out)
 \@outlinefile=\write5
 \openout5 = `main.out'.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 29.
+(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 40.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 29.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 40.
 \symnumbers=\mathgroup6
 \sympureletters=\mathgroup7
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/cmr/m/n on input line 29.
-LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 29.
+(Font)                  OT1/cmss/m/n --> OT1/cmr/m/n on input line 40.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 40.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 29.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 40.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 29.
-LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 29.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/b/n on input line 40.
+LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 40.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/m/n on input line 29.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/m/n on input line 40.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> OT1/cmss/m/n on input line 29.
-LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 29.
+(Font)                  OT1/cmss/bx/n --> OT1/cmss/m/n on input line 40.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 40.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> OT1/cmss/m/it on input line 29.
+(Font)                  OT1/cmr/m/it --> OT1/cmss/m/it on input line 40.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> OT1/cmss/m/it on input line 29.
-LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 29.
+(Font)                  OT1/cmr/bx/it --> OT1/cmss/m/it on input line 40.
+LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 40.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 29.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 40.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 29.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 40.
 LaTeX Font Info:    Overwriting symbol font `numbers' in version `bold'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/b/n on input line 29.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/b/n on input line 40.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  OT1/cmss/m/it --> OT1/cmss/b/it on input line 29.
+(Font)                  OT1/cmss/m/it --> OT1/cmss/b/it on input line 40.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `bold'
-(Font)                  OT1/cmss/b/n --> OT1/cmr/b/n on input line 29.
+(Font)                  OT1/cmss/b/n --> OT1/cmr/b/n on input line 40.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmss/b/n --> OT1/cmss/b/n on input line 29.
+(Font)                  OT1/cmss/b/n --> OT1/cmss/b/n on input line 40.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/b/n on input line 29.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/b/n on input line 40.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmss/m/it --> OT1/cmss/b/it on input line 29.
+(Font)                  OT1/cmss/m/it --> OT1/cmss/b/it on input line 40.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/b/n on input line 29.
-LaTeX Font Info:    Redeclaring symbol font `pureletters' on input line 29.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/b/n on input line 40.
+LaTeX Font Info:    Redeclaring symbol font `pureletters' on input line 40.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `normal'
-(Font)                  OT1/cmss/m/it --> OT1/mathkerncmss/m/sl on input line 2
-9.
+(Font)                  OT1/cmss/m/it --> OT1/mathkerncmss/m/sl on input line 4
+0.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  OT1/cmss/b/it --> OT1/mathkerncmss/m/sl on input line 2
-9.
+(Font)                  OT1/cmss/b/it --> OT1/mathkerncmss/m/sl on input line 4
+0.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
 (Font)                  OT1/mathkerncmss/m/sl --> OT1/mathkerncmss/bx/sl on inp
-ut line 29.
+ut line 40.
 
 (/usr/share/texlive/texmf-dist/tex/latex/translator/translator-basic-dictionary
 -English.dict
@@ -939,122 +939,143 @@ Dictionary: translator-numbers-dictionary, Language: English
 ry-English.dict
 Dictionary: translator-theorem-dictionary, Language: English 
 )
-LaTeX Info: Redefining \. on input line 29.
-LaTeX Info: Redefining \% on input line 29.
+LaTeX Info: Redefining \. on input line 40.
+LaTeX Info: Redefining \% on input line 40.
  (./main.nav)
-<./figs/imp/logo_imp.png, id=123, 390.45876pt x 182.6825pt>
+<./figs/imp/logo_imp.png, id=127, 390.45876pt x 182.6825pt>
 File: ./figs/imp/logo_imp.png Graphic file (type png)
 <use ./figs/imp/logo_imp.png>
-Package pdftex.def Info: ./figs/imp/logo_imp.png  used on input line 65.
+Package pdftex.def Info: ./figs/imp/logo_imp.png  used on input line 76.
 (pdftex.def)             Requested size: 48.64635pt x 22.76228pt.
 
 
 LaTeX Font Warning: Font shape `OT1/cmss/bx/it' undefined
-(Font)              using `OT1/cmss/bx/n' instead on input line 65.
+(Font)              using `OT1/cmss/bx/n' instead on input line 76.
 
 
-Overfull \vbox (3.73393pt too high) detected at line 65
+Overfull \vbox (3.73393pt too high) detected at line 76
  []
 
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./figs/imp/logo_imp.png>]
-LaTeX Font Info:    Trying to load font information for U+msa on input line 86.
+<./figs/INTRO_005_metodologia.jpg, id=217, 1419.3025pt x 709.65125pt>
+File: ./figs/INTRO_005_metodologia.jpg Graphic file (type jpg)
+<use ./figs/INTRO_005_metodologia.jpg>
+Package pdftex.def Info: ./figs/INTRO_005_metodologia.jpg  used on input line 8
+4.
+(pdftex.def)             Requested size: 325.17662pt x 162.5883pt.
+ [2
 
- (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
+ <./figs/INTRO_005_metodologia.jpg>]
+<./figs/INTRO_006_AG.jpg, id=363, 1502.61375pt x 669.50125pt>
+File: ./figs/INTRO_006_AG.jpg Graphic file (type jpg)
+<use ./figs/INTRO_006_AG.jpg>
+Package pdftex.def Info: ./figs/INTRO_006_AG.jpg  used on input line 89.
+(pdftex.def)             Requested size: 325.16504pt x 144.8798pt.
+ [3
+
+ <./figs/INTRO_006_AG.jpg>]
+LaTeX Font Info:    Trying to load font information for U+msa on input line 107
+.
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 86.
-
+LaTeX Font Info:    Trying to load font information for U+msb on input line 107
+.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Trying to load font information for OT1+mathkerncmss on inp
-ut line 86.
+ut line 107.
 
 (/usr/share/texlive/texmf-dist/tex/latex/sansmathaccent/ot1mathkerncmss.fd
 File: ot1mathkerncmss.fd 2020/01/31 Fontinst v1.933 font definitions for OT1/ma
 thkerncmss.
 )
 LaTeX Font Info:    Font shape `OT1/cmss/b/n' in size <10> not available
-(Font)              Font shape `OT1/cmss/bx/n' tried instead on input line 86.
-LaTeX Font Info:    Font shape `OT1/cmss/b/n' in size <7> not available
-(Font)              Font shape `OT1/cmss/bx/n' tried instead on input line 86.
-LaTeX Font Info:    Font shape `OT1/cmss/b/n' in size <5> not available
-(Font)              Font shape `OT1/cmss/bx/n' tried instead on input line 86.
+(Font)              Font shape `OT1/cmss/bx/n' tried instead on input line 107.
 
-[2
+LaTeX Font Info:    Font shape `OT1/cmss/b/n' in size <7> not available
+(Font)              Font shape `OT1/cmss/bx/n' tried instead on input line 107.
+
+LaTeX Font Info:    Font shape `OT1/cmss/b/n' in size <5> not available
+(Font)              Font shape `OT1/cmss/bx/n' tried instead on input line 107.
+
+
+[4
 
 ]
 LaTeX Font Info:    Trying to load font information for TS1+cmss on input line 
-99.
+120.
  (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmss.fd
 File: ts1cmss.fd 2023/04/13 v2.5m Standard LaTeX font definitions
-) [3
+) [5
 
-{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}] [4
+{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}] [6
 
-] [5
+] [7
 
 ]
 <./figs/resultados/abolladura/005_abolladura_comparativa_global_de_ICD_vs_daño
-_por_zona_mudline_medio_y_splash_zone.png, id=764, 1003.8303pt x 570.933pt>
+_por_zona_mudline_medio_y_splash_zone.png, id=1012, 1003.8303pt x 570.933pt>
 File: ./figs/resultados/abolladura/005_abolladura_comparativa_global_de_ICD_vs_
 daño_por_zona_mudline_medio_y_splash_zone.png Graphic file (type png)
 <use ./figs/resultados/abolladura/005_abolladura_comparativa_global_de_ICD_vs_d
 año_por_zona_mudline_medio_y_splash_zone.png>
 Package pdftex.def Info: ./figs/resultados/abolladura/005_abolladura_comparativ
 a_global_de_ICD_vs_daño_por_zona_mudline_medio_y_splash_zone.png  used on inpu
-t line 145.
-(pdftex.def)             Requested size: 317.73994pt x 180.71602pt.
+t line 166.
+(pdftex.def)             Requested size: 330.82083pt x 188.15582pt.
 
-Overfull \vbox (15.53378pt too high) detected at line 145
+Overfull \vbox (13.30696pt too high) detected at line 166
  []
 
-[6
+[8
 
  <./figs/resultados/abolladura/005_abolladura_comparativa_global_de_ICD_vs_dañ
 o_por_zona_mudline_medio_y_splash_zone.png>]
 <./figs/resultados/abolladura/006_abolladura_ICD_por_zona_desglozadp_por_tipo_d
-e_elemento_desde_mudline_medio_y_splash_zone.png, id=873, 1293.633pt x 865.7946
-pt>
+e_elemento_desde_mudline_medio_y_splash_zone.png, id=1125, 1293.633pt x 865.794
+6pt>
 File: ./figs/resultados/abolladura/006_abolladura_ICD_por_zona_desglozadp_por_t
 ipo_de_elemento_desde_mudline_medio_y_splash_zone.png Graphic file (type png)
 <use ./figs/resultados/abolladura/006_abolladura_ICD_por_zona_desglozadp_por_ti
 po_de_elemento_desde_mudline_medio_y_splash_zone.png>
 Package pdftex.def Info: ./figs/resultados/abolladura/006_abolladura_ICD_por_zo
 na_desglozadp_por_tipo_de_elemento_desde_mudline_medio_y_splash_zone.png  used 
-on input line 153.
-(pdftex.def)             Requested size: 270.01285pt x 180.71251pt.
+on input line 174.
+(pdftex.def)             Requested size: 281.12604pt x 188.15027pt.
 
-Overfull \vbox (14.97472pt too high) detected at line 153
+Overfull \vbox (12.74585pt too high) detected at line 174
  []
 
-[7
+[9
 
  <./figs/resultados/abolladura/006_abolladura_ICD_por_zona_desglozadp_por_tipo_
 de_elemento_desde_mudline_medio_y_splash_zone.png>]
 <./figs/resultados/corrosion/005_corrosion_comparativa_global_de_ICD_vs_daño_p
-or_zona_mudline_medio_y_splash_zone.png, id=982, 1004.553pt x 570.933pt>
+or_zona_mudline_medio_y_splash_zone.png, id=1238, 1004.553pt x 570.933pt>
 File: ./figs/resultados/corrosion/005_corrosion_comparativa_global_de_ICD_vs_da
 ño_por_zona_mudline_medio_y_splash_zone.png Graphic file (type png)
 <use ./figs/resultados/corrosion/005_corrosion_comparativa_global_de_ICD_vs_da�
 �o_por_zona_mudline_medio_y_splash_zone.png>
 Package pdftex.def Info: ./figs/resultados/corrosion/005_corrosion_comparativa_
 global_de_ICD_vs_daño_por_zona_mudline_medio_y_splash_zone.png  used on input 
-line 161.
-(pdftex.def)             Requested size: 317.96869pt x 180.71602pt.
+line 182.
+(pdftex.def)             Requested size: 331.05899pt x 188.15582pt.
 
-Overfull \vbox (15.53378pt too high) detected at line 161
+Overfull \vbox (13.30696pt too high) detected at line 182
  []
 
-[8
+[10
 
  <./figs/resultados/corrosion/005_corrosion_comparativa_global_de_ICD_vs_daño_
 por_zona_mudline_medio_y_splash_zone.png>]
 <./figs/resultados/corrosion/006_corrosion_ICD_por_zona_desglozadp_por_tipo_de_
-elemento_desde_mudline_medio_y_splash_zone.png, id=1091, 1293.633pt x 865.7946p
+elemento_desde_mudline_medio_y_splash_zone.png, id=1350, 1293.633pt x 865.7946p
 t>
 File: ./figs/resultados/corrosion/006_corrosion_ICD_por_zona_desglozadp_por_tip
 o_de_elemento_desde_mudline_medio_y_splash_zone.png Graphic file (type png)
@@ -1062,162 +1083,161 @@ o_de_elemento_desde_mudline_medio_y_splash_zone.png Graphic file (type png)
 _de_elemento_desde_mudline_medio_y_splash_zone.png>
 Package pdftex.def Info: ./figs/resultados/corrosion/006_corrosion_ICD_por_zona
 _desglozadp_por_tipo_de_elemento_desde_mudline_medio_y_splash_zone.png  used on
- input line 169.
-(pdftex.def)             Requested size: 245.45726pt x 164.27809pt.
- [9
+ input line 190.
+(pdftex.def)             Requested size: 255.56374pt x 171.0421pt.
+ [11
 
  <./figs/resultados/corrosion/006_corrosion_ICD_por_zona_desglozadp_por_tipo_de
-_elemento_desde_mudline_medio_y_splash_zone.png>] [10
-
-] [11
-
-] [12
+_elemento_desde_mudline_medio_y_splash_zone.png>] [12
 
 ] [13
 
+] [14
+
+] [15
+
 ]
-<./figs/P1_experimental_design.png, id=1665, 1147.6476pt x 372.1905pt>
+<./figs/P1_experimental_design.png, id=1945, 1147.6476pt x 372.1905pt>
 File: ./figs/P1_experimental_design.png Graphic file (type png)
 <use ./figs/P1_experimental_design.png>
 Package pdftex.def Info: ./figs/P1_experimental_design.png  used on input line 
-255.
+276.
 (pdftex.def)             Requested size: 342.30061pt x 111.01057pt.
- [14
+ [16
 
- <./figs/P1_experimental_design.png>]
-[15
+ <./figs/P1_experimental_design.png>] [17
 
-] [16
+] [18
 
 ]
-<./figs/P3_POD_ICD_vs_bestDI.png, id=2040, 1147.1658pt x 733.5405pt>
+<./figs/P3_POD_ICD_vs_bestDI.png, id=2331, 1147.1658pt x 733.5405pt>
 File: ./figs/P3_POD_ICD_vs_bestDI.png Graphic file (type png)
 <use ./figs/P3_POD_ICD_vs_bestDI.png>
-Package pdftex.def Info: ./figs/P3_POD_ICD_vs_bestDI.png  used on input line 29
-8.
+Package pdftex.def Info: ./figs/P3_POD_ICD_vs_bestDI.png  used on input line 31
+9.
 (pdftex.def)             Requested size: 290.93927pt x 186.03738pt.
- [17
+ [19
 
  <./figs/P3_POD_ICD_vs_bestDI.png>]
-<./figs/P3_AUC_POD_comparison.png, id=2148, 1002.6258pt x 357.2547pt>
+<./figs/P3_AUC_POD_comparison.png, id=2445, 1002.6258pt x 357.2547pt>
 File: ./figs/P3_AUC_POD_comparison.png Graphic file (type png)
 <use ./figs/P3_AUC_POD_comparison.png>
 Package pdftex.def Info: ./figs/P3_AUC_POD_comparison.png  used on input line 3
-04.
+25.
 (pdftex.def)             Requested size: 290.95291pt x 103.67207pt.
- [18
+ [20
 
- <./figs/P3_AUC_POD_comparison.png>] [19
+ <./figs/P3_AUC_POD_comparison.png>] [21
 
-] [20
+] [22
 
 ]
-<./figs/P4_SNR_degradation.png, id=2520, 1002.6258pt x 357.2547pt>
+<./figs/P4_SNR_degradation.png, id=2828, 1002.6258pt x 357.2547pt>
 File: ./figs/P4_SNR_degradation.png Graphic file (type png)
 <use ./figs/P4_SNR_degradation.png>
-Package pdftex.def Info: ./figs/P4_SNR_degradation.png  used on input line 351.
+Package pdftex.def Info: ./figs/P4_SNR_degradation.png  used on input line 372.
 
 (pdftex.def)             Requested size: 290.95291pt x 103.67207pt.
- [21
+ [23
 
  <./figs/P4_SNR_degradation.png>]
-<./figs/P4_SNR_bars.png, id=2629, 1003.1076pt x 358.7001pt>
+<./figs/P4_SNR_bars.png, id=2941, 1003.1076pt x 358.7001pt>
 File: ./figs/P4_SNR_bars.png Graphic file (type png)
 <use ./figs/P4_SNR_bars.png>
-Package pdftex.def Info: ./figs/P4_SNR_bars.png  used on input line 357.
+Package pdftex.def Info: ./figs/P4_SNR_bars.png  used on input line 378.
 (pdftex.def)             Requested size: 290.95499pt x 104.04225pt.
- [22
+ [24
 
  <./figs/P4_SNR_bars.png>]
-Overfull \vbox (40.14693pt too high) detected at line 382
+Overfull \vbox (30.4803pt too high) detected at line 403
  []
 
-[23
+[25
 
-] [24
+] [26
 
 ]
-<./figs/P5_metrics_corrosion.png, id=3000, 1075.6185pt x 368.3361pt>
+<./figs/P5_metrics_corrosion.png, id=3325, 1075.6185pt x 368.3361pt>
 File: ./figs/P5_metrics_corrosion.png Graphic file (type png)
 <use ./figs/P5_metrics_corrosion.png>
-Package pdftex.def Info: ./figs/P5_metrics_corrosion.png  used on input line 40
-7.
+Package pdftex.def Info: ./figs/P5_metrics_corrosion.png  used on input line 42
+8.
 (pdftex.def)             Requested size: 290.94608pt x 99.63191pt.
- [25
-
- <./figs/P5_metrics_corrosion.png>]
-<./figs/P5_metrics_denting.png, id=3110, 1075.6185pt x 368.3361pt>
-File: ./figs/P5_metrics_denting.png Graphic file (type png)
-<use ./figs/P5_metrics_denting.png>
-Package pdftex.def Info: ./figs/P5_metrics_denting.png  used on input line 413.
-
-(pdftex.def)             Requested size: 290.94608pt x 99.63191pt.
- [26
-
- <./figs/P5_metrics_denting.png>]
-<./figs/P5_ROC_curves.png, id=3219, 1003.1076pt x 428.5611pt>
-File: ./figs/P5_ROC_curves.png Graphic file (type png)
-<use ./figs/P5_ROC_curves.png>
-Package pdftex.def Info: ./figs/P5_ROC_curves.png  used on input line 419.
-(pdftex.def)             Requested size: 290.95499pt x 124.30568pt.
  [27
 
- <./figs/P5_ROC_curves.png>]
-<./figs/P5_FP_distribution.png, id=3327, 1001.4213pt x 357.7365pt>
-File: ./figs/P5_FP_distribution.png Graphic file (type png)
-<use ./figs/P5_FP_distribution.png>
-Package pdftex.def Info: ./figs/P5_FP_distribution.png  used on input line 425.
+ <./figs/P5_metrics_corrosion.png>]
+<./figs/P5_metrics_denting.png, id=3438, 1075.6185pt x 368.3361pt>
+File: ./figs/P5_metrics_denting.png Graphic file (type png)
+<use ./figs/P5_metrics_denting.png>
+Package pdftex.def Info: ./figs/P5_metrics_denting.png  used on input line 434.
 
-(pdftex.def)             Requested size: 290.95483pt x 103.93742pt.
+(pdftex.def)             Requested size: 290.94608pt x 99.63191pt.
  [28
 
- <./figs/P5_FP_distribution.png>]
-Overfull \vbox (36.53586pt too high) detected at line 450
- []
+ <./figs/P5_metrics_denting.png>]
+<./figs/P5_ROC_curves.png, id=3550, 1003.1076pt x 428.5611pt>
+File: ./figs/P5_ROC_curves.png Graphic file (type png)
+<use ./figs/P5_ROC_curves.png>
+Package pdftex.def Info: ./figs/P5_ROC_curves.png  used on input line 440.
+(pdftex.def)             Requested size: 290.95499pt x 124.30568pt.
+ [29
 
-[29
+ <./figs/P5_ROC_curves.png>]
+<./figs/P5_FP_distribution.png, id=3663, 1001.4213pt x 357.7365pt>
+File: ./figs/P5_FP_distribution.png Graphic file (type png)
+<use ./figs/P5_FP_distribution.png>
+Package pdftex.def Info: ./figs/P5_FP_distribution.png  used on input line 446.
 
-]
-LaTeX Font Info:    Font shape `OT1/cmss/b/n' in size <9> not available
-(Font)              Font shape `OT1/cmss/bx/n' tried instead on input line 468.
-
-LaTeX Font Info:    Font shape `OT1/cmss/b/n' in size <6> not available
-(Font)              Font shape `OT1/cmss/bx/n' tried instead on input line 468.
-
+(pdftex.def)             Requested size: 290.95483pt x 103.93742pt.
  [30
 
-]
-Overfull \vbox (77.99059pt too high) detected at line 495
+ <./figs/P5_FP_distribution.png>]
+Overfull \vbox (26.86923pt too high) detected at line 471
  []
 
 [31
 
 ]
-LaTeX Font Info:    Font shape `OT1/cmss/b/n' in size <10.95> not available
-(Font)              Font shape `OT1/cmss/bx/n' tried instead on input line 522.
+LaTeX Font Info:    Font shape `OT1/cmss/b/n' in size <9> not available
+(Font)              Font shape `OT1/cmss/bx/n' tried instead on input line 489.
 
-LaTeX Font Info:    Font shape `OT1/cmss/b/n' in size <8> not available
-(Font)              Font shape `OT1/cmss/bx/n' tried instead on input line 522.
+LaTeX Font Info:    Font shape `OT1/cmss/b/n' in size <6> not available
+(Font)              Font shape `OT1/cmss/bx/n' tried instead on input line 489.
 
-File: ./figs/imp/logo_imp.png Graphic file (type png)
-<use ./figs/imp/logo_imp.png>
-Package pdftex.def Info: ./figs/imp/logo_imp.png  used on input line 522.
-(pdftex.def)             Requested size: 136.91862pt x 64.05968pt.
  [32
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 547--547
-[]|\OT1/cmss/m/n/9 PyInstaller (Win-dows \OT1/cmtt/m/n/9 .exe\OT1/cmss/m/n/9 ),
-
+Overfull \vbox (68.32396pt too high) detected at line 516
  []
 
 [33
 
 ]
-Overfull \vbox (58.57036pt too high) detected at line 580
+LaTeX Font Info:    Font shape `OT1/cmss/b/n' in size <10.95> not available
+(Font)              Font shape `OT1/cmss/bx/n' tried instead on input line 543.
+
+LaTeX Font Info:    Font shape `OT1/cmss/b/n' in size <8> not available
+(Font)              Font shape `OT1/cmss/bx/n' tried instead on input line 543.
+
+File: ./figs/imp/logo_imp.png Graphic file (type png)
+<use ./figs/imp/logo_imp.png>
+Package pdftex.def Info: ./figs/imp/logo_imp.png  used on input line 543.
+(pdftex.def)             Requested size: 136.91862pt x 64.05968pt.
+ [34
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 568--568
+[]|\OT1/cmss/m/n/9 PyInstaller (Win-dows \OT1/cmtt/m/n/9 .exe\OT1/cmss/m/n/9 ),
+
  []
 
-[34
+[35
+
+]
+Overfull \vbox (48.90373pt too high) detected at line 601
+ []
+
+[36
 
 ]
 \tf@nav=\write6
@@ -1242,13 +1262,13 @@ L3 programming layer <2024-01-22>
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 2837BB74DE52678BE7FB7C677BC47650;1654.
+(rerunfilecheck)             Checksum: 1E8CE0EFCD53E3A53C10743B5358BC8B;1583.
  ) 
 Here is how much of TeX's memory you used:
- 23942 strings out of 476047
- 469415 string characters out of 5792075
+ 23957 strings out of 476047
+ 469630 string characters out of 5792075
  1963975 words of memory out of 5000000
- 45375 multiletter control sequences out of 15000+600000
+ 45386 multiletter control sequences out of 15000+600000
  580933 words of font info for 109 fonts, out of 8000000 for 9000
  85 hyphenation exceptions out of 8191
  128i,19n,123p,387b,816s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -1274,10 +1294,10 @@ ist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fo
 nts/type1/public/amsfonts/cm/cmtt9.pfb></usr/share/texlive/texmf-dist/fonts/typ
 e1/public/amsfonts/symbols/msam10.pfb></usr/share/texmf/fonts/type1/public/cm-s
 uper/sfss1000.pfb>
-Output written on main.pdf (34 pages, 3326813 bytes).
+Output written on main.pdf (36 pages, 3650852 bytes).
 PDF statistics:
- 4258 PDF objects out of 4296 (max. 8388607)
- 2491 compressed objects within 25 object streams
- 76 named destinations out of 1000 (max. 500000)
- 1309 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 4621 PDF objects out of 5155 (max. 8388607)
+ 2692 compressed objects within 27 object streams
+ 80 named destinations out of 1000 (max. 500000)
+ 1319 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -17,6 +17,17 @@
 \usepackage{array}
 \usepackage{amssymb}
 
+% Quitar barra azul de subsección entre timeline y título
+\setbeamertemplate{headline}{%
+  \begin{beamercolorbox}[colsep=1.5pt]{upper separation line head}
+  \end{beamercolorbox}
+  \begin{beamercolorbox}{section in head/foot}
+    \vskip2pt\insertnavigation{\paperwidth}\vskip2pt
+  \end{beamercolorbox}
+  \begin{beamercolorbox}[colsep=1.5pt]{lower separation line head}
+  \end{beamercolorbox}
+}
+
 % Path configuration
 \graphicspath{{./figs/}{./figs/resultados/abolladura/}{./figs/resultados/corrosion/}{./figs/imp/}}
 
@@ -64,8 +75,18 @@
     \vspace{0.2cm}
 \end{frame}
 
-% --- SECCIÓN 1: MATLAB - ALGORITMO GENÉTICO ---
-\section[MATLAB]{Implementación MATLAB - Algoritmo Genético}
+% --- SECCIÓN 1: INTRODUCCIÓN (incluye MATLAB) ---
+\section[Introducción]{Introducción y Avances MATLAB}
+
+\begin{frame}{Metodología Propuesta}
+    \centering
+    \includegraphics[width=0.95\textwidth, height=0.82\textheight, keepaspectratio]{INTRO_005_metodologia.jpg}
+\end{frame}
+
+\begin{frame}{Esquema Computacional del AG}
+    \centering
+    \includegraphics[width=0.95\textwidth, height=0.82\textheight, keepaspectratio]{INTRO_006_AG.jpg}
+\end{frame}
 
 \begin{frame}{Avances Feb 2026: Optimización del AG (1/2)}
     \small
