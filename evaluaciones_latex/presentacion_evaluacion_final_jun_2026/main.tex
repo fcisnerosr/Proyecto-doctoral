@@ -88,52 +88,53 @@
     \includegraphics[width=0.95\textwidth, height=0.82\textheight, keepaspectratio]{INTRO_006_AG.jpg}
 \end{frame}
 
-\begin{frame}{Avances Feb 2026: Optimización del AG (1/2)}
-    \small
-    \begin{block}{Export de Parámetros Óptimos}
-        Se implementó la exportación automática del vector de pesos óptimos $\boldsymbol{\alpha}^*_1, \ldots, \alpha^*_8$ del Algoritmo Genético a archivos CSV estructurados.
-        \vspace{0.2cm}
-        \begin{itemize}
-            \item \textbf{Antes:} Los pesos se perdían al final de cada ejecución.
-            \item \textbf{Ahora:} Trazabilidad completa de la evolución del AG durante 2160 ejecuciones totales.
-        \end{itemize}
-    \end{block}
-
-    \vspace{0.3cm}
-
-    \begin{block}{Limpieza de Output}
-        Eliminación de campos de dispersión redundantes (PromDispersion, StdDispersion, MeanAbsDispersion) que no aportaban información física útil al análisis de detección de daño.
-    \end{block}
-\end{frame}
-
-\begin{frame}{Avances Feb 2026: Optimización del AG (2/2)}
-    \small
-    \begin{block}{Corrección de Pipeline}
-        Se corrigieron rutas de ejecución y dependencias de archivos `.m` para garantizar reproducibilidad de simulaciones en 120 elementos × 18 niveles de daño.
-        \vspace{0.2cm}
-        \begin{itemize}
-            \item Validación end-to-end de 2,160 ejecuciones (abolladura + corrosión)
-            \item Automatización de gestión de archivos temporales
-            \item Documentación de parámetros del AG para futuras referencias
-        \end{itemize}
-    \end{block}
-\end{frame}
-
-\begin{frame}{Estructura del Código MATLAB (Framework)}
-    \tiny
-    \texttt{\hspace{0.3cm} 001\_framework\_resultados\_journal/ \\
-    \hspace{0.6cm} 000\_framework/ \\
-    \hspace{1.0cm} calcularMatrizMAC.m, createMask.m, ... (9 archivos) \\
-    \hspace{0.6cm} 001\_runExperimentos/ \\
-    \hspace{1.0cm} 001\_funcion\_abolladura/ (ab\_build\_*, ab\_flexibility\_*, ...) \\
-    \hspace{1.0cm} 002\_funcion\_corrosion/ (coerce\_*, pipe\_props\_*, ...) \\
-    \hspace{1.0cm} 003\_funcion\_deformaciones/ (analisis\_*, funcion\_*, ...) \\
-    \hspace{1.0cm} GA.m, objective\_function.m, assignWeights.m, ... \\
-    \hspace{0.6cm} 002\_ensamblaje\_matriz\_rigidez\_global\_sin\_dano/ \\
-    \hspace{1.0cm} FEMdent.m, localkeframe3D.m, TransfM3Dframe.m, ... \\
-    \hspace{0.6cm} 003\_calcular\_DIs/ \\
-    \hspace{1.0cm} calcCOMAC.m, calcular\_DIs.m, calcular\_Flexibility.m, ...}
-\end{frame}
+% COMENTADO: Diapositivas 4, 5 y 6
+% \begin{frame}{Avances Feb 2026: Optimización del AG (1/2)}
+%     \small
+%     \begin{block}{Export de Parámetros Óptimos}
+%         Se implementó la exportación automática del vector de pesos óptimos $\boldsymbol{\alpha}^*_1, \ldots, \alpha^*_8$ del Algoritmo Genético a archivos CSV estructurados.
+%         \vspace{0.2cm}
+%         \begin{itemize}
+%             \item \textbf{Antes:} Los pesos se perdían al final de cada ejecución.
+%             \item \textbf{Ahora:} Trazabilidad completa de la evolución del AG durante 2160 ejecuciones totales.
+%         \end{itemize}
+%     \end{block}
+%
+%     \vspace{0.3cm}
+%
+%     \begin{block}{Limpieza de Output}
+%         Eliminación de campos de dispersión redundantes (PromDispersion, StdDispersion, MeanAbsDispersion) que no aportaban información física útil al análisis de detección de daño.
+%     \end{block}
+% \end{frame}
+%
+% \begin{frame}{Avances Feb 2026: Optimización del AG (2/2)}
+%     \small
+%     \begin{block}{Corrección de Pipeline}
+%         Se corrigieron rutas de ejecución y dependencias de archivos `.m` para garantizar reproducibilidad de simulaciones en 120 elementos × 18 niveles de daño.
+%         \vspace{0.2cm}
+%         \begin{itemize}
+%             \item Validación end-to-end de 2,160 ejecuciones (abolladura + corrosión)
+%             \item Automatización de gestión de archivos temporales
+%             \item Documentación de parámetros del AG para futuras referencias
+%         \end{itemize}
+%     \end{block}
+% \end{frame}
+%
+% \begin{frame}{Estructura del Código MATLAB (Framework)}
+%     \tiny
+%     \texttt{\hspace{0.3cm} 001\_framework\_resultados\_journal/ \\
+%     \hspace{0.6cm} 000\_framework/ \\
+%     \hspace{1.0cm} calcularMatrizMAC.m, createMask.m, ... (9 archivos) \\
+%     \hspace{0.6cm} 001\_runExperimentos/ \\
+%     \hspace{1.0cm} 001\_funcion\_abolladura/ (ab\_build\_*, ab\_flexibility\_*, ...) \\
+%     \hspace{1.0cm} 002\_funcion\_corrosion/ (coerce\_*, pipe\_props\_*, ...) \\
+%     \hspace{1.0cm} 003\_funcion\_deformaciones/ (analisis\_*, funcion\_*, ...) \\
+%     \hspace{1.0cm} GA.m, objective\_function.m, assignWeights.m, ... \\
+%     \hspace{0.6cm} 002\_ensamblaje\_matriz\_rigidez\_global\_sin\_dano/ \\
+%     \hspace{1.0cm} FEMdent.m, localkeframe3D.m, TransfM3Dframe.m, ... \\
+%     \hspace{0.6cm} 003\_calcular\_DIs/ \\
+%     \hspace{1.0cm} calcCOMAC.m, calcular\_DIs.m, calcular\_Flexibility.m, ...}
+% \end{frame}
 
 % --- SECCIÓN 2: METODOLOGÍA ---
 \section[Metodología]{Metodología: Indicadores Vibratorios e ICD}
