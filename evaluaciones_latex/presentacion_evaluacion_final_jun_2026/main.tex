@@ -366,7 +366,7 @@
 % --- SECCIÓN 3: ANÁLISIS ESTADÍSTICO ---
 \section[Estadística]{Análisis Estadístico Avanzado}
 
-\begin{frame}{Análisis Estadístico: 3 Puntos Clave}
+\begin{frame}{Análisis Estadístico: 2 Puntos Clave}
     \centering
     \large
     \vspace{0.5cm}
@@ -378,13 +378,8 @@
 
         \vspace{0.5cm}
 
-        \item[\textbf{P2}] \textbf{Robustez al Ruido AWGN} \\
-        \small Desempeño del ICD bajo condiciones experimentales ruidosas (SNR variables)
-
-        \vspace{0.5cm}
-
-        \item[\textbf{P3}] \textbf{Métricas de Clasificación y Hungarian Algorithm} \\
-        \small Asignación óptima de detecciones y cálculo preciso de TP/FP
+        \item[\textbf{P2}] \textbf{Precisión Topológica: Propuesta Novedosa} \\
+        \small Métrica que penaliza FPs según su distancia topológica al daño real
     \end{enumerate}
 \end{frame}
 
@@ -482,117 +477,15 @@
     \end{block}
 \end{frame}
 
-% ============= P4: ROBUSTEZ AL RUIDO AWGN =============
-
-\begin{frame}{P2: Robustez al Ruido AWGN$^*$ (Descripción)}
-    \small
-    \begin{block}{Simulación de Condiciones Experimentales Realistas}
-        Se evalúa la estabilidad del ICD bajo \textbf{ruido blanco Gaussiano aditivo (AWGN$^*$)}, simulando las imperfecciones inherentes de sensores y equipos de medición en campo:
-        \begin{itemize}
-            \item Se agrrega AWGN a las respuestas vibratorias sintéticas
-            \item Se varía la relación señal-ruido (SNR) en tres niveles: \textbf{20, 30, 40 dB}
-            \item Se mide la degradación de detectabilidad del ICD en cada nivel
-        \end{itemize}
-    \end{block}
-
-    \vspace{0.3cm}
-
-    \begin{block}{Hallazgo Crítico}
-        El ICD \textbf{mantiene detectabilidad aceptable} incluso bajo SNR = 20 dB (condición severamente ruidosa), demostrando robustez práctica para aplicaciones de campo.
-    \end{block}
-
-    \vspace{0.15cm}
-    {\tiny $^*$AWGN: \textbf{A}dditive \textbf{W}hite \textbf{G}aussian \textbf{N}oise — Ruido que se suma a la señal original, con espectro plano y distribución normal (Shannon, 1948). Estándar en teoría de comunicaciones e ingeniería de confiabilidad.}
-\end{frame}
-
-\begin{frame}{P2: Fórmula — SNR y Degradación}
-    \small
-    \begin{block}{Relación Señal-Ruido (SNR)}
-        Se define formalmente como:
-        \begin{equation*}
-            \text{SNR}_{dB} = 10 \log_{10} \left( \frac{P_{\text{señal}}}{P_{\text{ruido}}} \right)
-        \end{equation*}
-        donde $P_{\text{señal}}$ y $P_{\text{ruido}}$ son potencias (varianzas en el caso de señales de media cero).
-    \end{block}
-
-    \vspace{0.2cm}
-
-    \begin{block}{Respuesta Ruidosa}
-        La respuesta vibradora contaminada es:
-        \begin{equation*}
-            \mathbf{y}_{\text{noisy}} = \mathbf{y}_{\text{limpia}} + \mathbf{n} \quad \text{donde} \quad \mathbf{n} \sim \mathcal{N}(0, \sigma_n^2)
-        \end{equation*}
-        y $\sigma_n^2$ se ajusta para lograr los SNR objetivo (20, 30, 40 dB).
-    \end{block}
-\end{frame}
-
-\begin{frame}{P2: Gráficas — AUC/ROC vs SNR}
-    \centering
-    \vspace{0.2cm}
-    \includegraphics[width=0.85\textwidth, height=0.8\textheight, keepaspectratio]{P4_SNR_degradation.png}
-\end{frame}
-
-\begin{frame}{P2: Gráficas — Desempeño por Nivel SNR}
-    \centering
-    \vspace{0.2cm}
-    \includegraphics[width=0.85\textwidth, height=0.8\textheight, keepaspectratio]{P4_SNR_bars.png}
-\end{frame}
-
-% ============= P5: HUNGARIAN ALGORITHM & MÉTRICAS =============
-
-\begin{frame}{P3: Hungarian Algorithm y Métricas de Clasificación (Descripción)}
-    \small
-    \begin{block}{Asignación Óptima de Detecciones}
-        Se implementa el Algoritmo Húngaro (Hungarian Algorithm) para resolver el problema de asignación óptima:
-        \begin{itemize}
-            \item Empareja de forma biunívoca cada \textbf{detección predicha} con un \textbf{daño verdadero} (ground-truth)
-            \item Minimiza la distancia topológica total
-            \item Evita doble-conteo y garantiza un mapeo uno-a-uno
-        \end{itemize}
-    \end{block}
-
-    \vspace{0.3cm}
-
-    \begin{block}{Métricas Resultantes}
-        Con la asignación óptima se calculan:
-        \begin{itemize}
-            \item \textbf{TP (Verdaderos Positivos):} detecciones correctas
-            \item \textbf{FP (Falsos Positivos):} predicciones sin correspondencia
-            \item \textbf{Precision, Recall, F1:} indicadores de desempeño global
-        \end{itemize}
-    \end{block}
-\end{frame}
-
-\begin{frame}{P3: Fórmula — Hungarian Algorithm}
-    \small
-    \begin{block}{Problema de Asignación}
-        Sea $\mathcal{P} = \{p_1, \ldots, p_m\}$ el conjunto de predicciones y $\mathcal{G} = \{g_1, \ldots, g_n\}$ el ground-truth. Se busca:
-        \begin{equation*}
-            \sigma^* = \arg\min_{\sigma \in S_m} \sum_{i=1}^{\min(m,n)} d(p_i, g_{\sigma(i)})
-        \end{equation*}
-        donde $d(p_i, g_j)$ es la distancia Euclidiana entre nodos en el espacio 3D.
-    \end{block}
-
-    \vspace{0.2cm}
-
-    \begin{block}{Métricas de Clasificación}
-        \begin{equation*}
-            \text{Precision} = \frac{TP}{TP + FP}, \quad \text{Recall} = \frac{TP}{TP + FN}, \quad F1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}
-        \end{equation*}
-    \end{block}
-\end{frame}
-
-\begin{frame}{P3: Gráficas — Métricas de Clasificación (Corrosión)}
-    \centering
-    \vspace{0.2cm}
-    \includegraphics[width=0.85\textwidth, height=0.8\textheight, keepaspectratio]{P5_metrics_corrosion.png}
-\end{frame}
-
-\begin{frame}{P3: Gráficas — Métricas de Clasificación (Abolladura)}
-    \centering
-    \vspace{0.2cm}
-    \includegraphics[width=0.85\textwidth, height=0.8\textheight, keepaspectratio]{P5_metrics_denting.png}
-\end{frame}
+% ============= P2/P3: COMENTADO (AWGN + HUNGARIAN ALGORITHM) =============
+% \begin{frame}{P2: Robustez al Ruido AWGN$^*$ (Descripción)} ... \end{frame}
+% \begin{frame}{P2: Fórmula — SNR y Degradación} ... \end{frame}
+% \begin{frame}{P2: Gráficas — AUC/ROC vs SNR} ... \end{frame}
+% \begin{frame}{P2: Gráficas — Desempeño por Nivel SNR} ... \end{frame}
+% \begin{frame}{P3: Hungarian Algorithm y Métricas de Clasificación} ... \end{frame}
+% \begin{frame}{P3: Fórmula — Hungarian Algorithm} ... \end{frame}
+% \begin{frame}{P3: Gráficas — Métricas de Clasificación (Corrosión)} ... \end{frame}
+% \begin{frame}{P3: Gráficas — Métricas de Clasificación (Abolladura)} ... \end{frame}
 
 % ============= PRECISION TOPOLÓGICA — CONTRIBUCIÓN ADICIONAL =============
 
@@ -662,8 +555,6 @@
         \item \textbf{Estabilidad del AG:} Reporte explícito del vector $\boldsymbol{\alpha}^*$ óptimo y su dispersión sobre múltiples ejecuciones (semillas aleatorias diferentes).
 
         \item \textbf{Benchmark Comparativo:} Tabla que contrasta el mejor indicador individual (ej. $\max DI_j$) vs. la suma ponderada del ICD — demuestra ganancia cuantitativa.
-
-        \item \textbf{Robustez a Ruido:} Gráficas de SNR vs Tasa de Detección — simulaciones AWGN en 20, 30, 40 dB.
 
         \item \textbf{Métricas de Clasificación:} Cálculo preciso de Verdaderos Positivos (TP), Falsos Positivos (FP), con discusión del trade-off entre sensibilidad y especificidad.
 
