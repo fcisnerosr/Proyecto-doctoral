@@ -135,7 +135,98 @@
     \hspace{1.0cm} calcCOMAC.m, calcular\_DIs.m, calcular\_Flexibility.m, ...}
 \end{frame}
 
-% --- SECCIÓN 2: RESULTADOS ICD ---
+% --- SECCIÓN 2: METODOLOGÍA ---
+\section[Metodología]{Metodología: Indicadores Vibratorios e ICD}
+
+\begin{frame}{Metodología Propuesta (3/3): El Algoritmo Genético}
+    \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth, height=0.8\textheight, keepaspectratio]{015_diagrama_como_funciona_el_AG_para_la_sumas_funcion_P_y_como_se_relaciona_con_operadores_geneticos_del_AG.jpg}
+        \caption{Mecánica del AG: función objetivo y operadores genéticos.}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Fusión de Datos: Indicadores Vibratorios (DIs)}
+    \footnotesize
+    \textbf{Estrategia de Fusión:}
+    El AG no evalúa un solo parámetro, sino que optimiza un vector de pesos $\boldsymbol{\alpha}$ para minimizar el error mediante una \textbf{suma ponderada} de 8 indicadores distintos:
+
+    \begin{equation}
+        \text{Función Objetivo} \approx \min \sum_{j=1}^{8} \alpha_j \cdot DI_j
+    \end{equation}
+
+    \vspace{0.1cm}
+
+    \begin{columns}[t]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Basados en Modos ($\phi$)}
+                \begin{itemize} \scriptsize
+                    \item \textbf{$DI_1$ (COMAC):} Correlación de vectores modales.
+                    \item \textbf{$DI_2$ (Diff Abs):} Diferencia absoluta de formas modales.
+                    \item \textbf{$DI_3$ (Razón Rel):} Relación entre vectores dañados e intactos.
+                \end{itemize}
+            \end{block}
+        \end{column}
+
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Basados en Flexibilidad ($F$)}
+                \begin{itemize} \scriptsize
+                    \item \textbf{$DI_4$ (Diff Flex):} Cambio en la diagonal de la matriz.
+                    \item \textbf{$DI_5$ (Razón Flex):} Relación de flexibilidades.
+                    \item \textbf{$DI_6$ (Var \%):} Porcentaje de variación.
+                    \item \textbf{$DI_7$ (Z-Score):} Estandarización estadística.
+                    \item \textbf{$DI_8$ (Probabilidad):} T. Gaussiana normalizada.
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+
+    \vspace{0.2cm}
+    \centering
+    \scriptsize \textit{*El AG encuentra qué peso ($\alpha_j$) darle a cada $DI_j$ para maximizar la detección.}
+\end{frame}
+
+\begin{frame}{Formulación Matemática: Indicadores Modales ($DI_1 - DI_3$)}
+    \small
+    \textbf{1. COMAC ($DI_1$):}
+    Evalúa la correlación punto a punto de los modos. (1 = Correlación perfecta, 0 = Sin correlación).
+    \begin{equation}
+        \text{DI}_1(j) = 1 - \sqrt{ \frac{ \left( \sum_{i=1}^{N_m} |\phi_{u,ij}| |\phi_{d,ij}| \right)^2 }{ \sum_{i=1}^{N_m} \phi_{u,ij}^2 \sum_{i=1}^{N_m} \phi_{d,ij}^2 } }
+    \end{equation}
+
+    \vspace{0.2cm}
+
+    \textbf{2. Diferencia Absoluta ($DI_2$) y Razón Relativa ($DI_3$):}
+    Cuantifican el desplazamiento de los vectores modales $\boldsymbol{\phi}$.
+    \begin{align}
+        \text{DI}_2(j) &= \mathcal{R}_j \left( \sum_{i=1}^{N_m} | \boldsymbol{\phi}_{u,i} - \boldsymbol{\phi}_{d,i} | \right) \\
+        \text{DI}_3(j) &= \mathcal{R}_j \left( \sum_{i=1}^{N_m} \left| \frac{\boldsymbol{\phi}_{d,i}}{\boldsymbol{\phi}_{u,i} + \epsilon} - 1 \right| \right)
+    \end{align}
+
+    \footnotesize \textit{*Donde $u$ es estado intacto, $d$ dañado y $\epsilon$ es un factor de regularización.}
+\end{frame}
+
+\begin{frame}{Formulación Matemática: Flexibilidad y Estadística ($DI_4 - DI_8$)}
+    \small
+    \textbf{Basados en la Matriz de Flexibilidad ($\mathbf{F} \approx \boldsymbol{\Phi} \boldsymbol{\Omega}^{-2} \boldsymbol{\Phi}^T$):}
+    \begin{itemize}
+        \item \textbf{Diferencia ($DI_4$):} $| \text{diag}(\mathbf{F}_d) - \text{diag}(\mathbf{F}_u) |$
+        \item \textbf{Razón ($DI_5$):} $\left| \frac{\text{diag}(\mathbf{F}_d)}{\text{diag}(\mathbf{F}_u) + \epsilon} - 1 \right|$
+        \item \textbf{Variación \% ($DI_6$):} Versión porcentual de la razón ($DI_5 \times 100$).
+    \end{itemize}
+
+    \vspace{0.2cm}
+    \hrule
+    \vspace{0.2cm}
+
+    \textbf{Estandarización Estadística ($DI_7$ y $DI_8$):}
+    Normalizan el daño asumiendo una distribución Gaussiana para resaltar anomalías (outliers).
+    \begin{equation}
+        \text{DI}_7(j) = \frac{\Delta F_j - \mu_{\Delta F}}{\sigma_{\Delta F}} \quad \rightarrow \quad \text{DI}_8(j) = 1 - 2\left( 1 - \Phi_{\text{cdf}}(|\text{DI}_7|) \right)
+    \end{equation}
+\end{frame}
+
+% --- SECCIÓN 3: RESULTADOS ICD ---
 \section[Resultados ICD]{Nuevos Resultados de ICD}
 
 \begin{frame}{Regeneración de Resultados: Abolladura y Corrosión (Feb-Mar 2026)}
@@ -215,29 +306,29 @@
 
     \begin{enumerate}
         \setcounter{enumi}{0}
-        \item[\textbf{P1}] \textbf{Tabla de Diseño Experimental} \\
+        \item \textbf{Tabla de Diseño Experimental} \\
         \small Caracterización formal del experimento (elementos, niveles de daño, ejecuciones)
 
         \vspace{0.5cm}
 
-        \item[\textbf{P3}] \textbf{Prueba de Wilcoxon: ICD vs Baseline} \\
+        \item[\textbf{P1}] \textbf{Prueba de Wilcoxon: ICD vs Baseline} \\
         \small Significancia estadística del ICD fusionado vs mejor indicador individual
 
         \vspace{0.5cm}
 
-        \item[\textbf{P4}] \textbf{Robustez al Ruido AWGN} \\
+        \item[\textbf{P2}] \textbf{Robustez al Ruido AWGN} \\
         \small Desempeño del ICD bajo condiciones experimentales ruidosas (SNR variables)
 
         \vspace{0.5cm}
 
-        \item[\textbf{P5}] \textbf{Métricas de Clasificación y Hungarian Algorithm} \\
+        \item[\textbf{P3}] \textbf{Métricas de Clasificación y Hungarian Algorithm} \\
         \small Asignación óptima de detecciones y cálculo preciso de TP/FP
     \end{enumerate}
 \end{frame}
 
 % ============= P1: TABLA DE DISEÑO EXPERIMENTAL =============
 
-\begin{frame}{P1: Tabla de Diseño Experimental (Descripción)}
+\begin{frame}{Tabla de Diseño Experimental (Descripción)}
     \small
     \begin{block}{Caracterización Formal del Experimento}
         Se documentó completamente el diseño experimental en una tabla de referencia que especifica:
@@ -250,38 +341,39 @@
     \end{block}
 \end{frame}
 
-\begin{frame}{P1: Propósito y Reproducibilidad}
-    \small
-    \begin{block}{Facilitación de Reproducibilidad}
-        El diseño experimental documentado \textbf{permite la replicación exacta} del experimento y la comparación de metodologías alternativas de detección de daño sobre la misma base experimental:
-        \begin{itemize}
-            \item Especificación detallada de parámetros del AG
-            \item Definición precisa de universo de elementos y niveles de daño
-            \item Documentación de validación y métricas
-        \end{itemize}
-    \end{block}
-\end{frame}
-
-\begin{frame}{P1: Fórmula del Diseño Experimental}
-    \small
-    \begin{block}{Configuración Paramétrica}
-        El diseño experimental se define mediante el vector de configuración:
-        \begin{equation*}
-            \mathcal{E} = \{\mathcal{S}, \mathcal{D}, \mathcal{A}\}
-        \end{equation*}
-        donde:
-        \begin{itemize}
-            \item $\mathcal{S} = \{e_1, e_2, \ldots, e_{120}\}$ — conjunto de elementos estructurales
-            \item $\mathcal{D} = \{d_1, d_2, \ldots, d_{18}\}$ — niveles de severidad ($d_i = 5i\%$ para $i=1,\ldots,18$)
-            \item $\mathcal{A} = (\text{pop}, g_{\max}, p_m, p_c)$ — parámetros del AG
-        \end{itemize}
-
-        Total de pares elemento-severidad:
-        \begin{equation*}
-            N_{\text{ejecuciones}} = |\mathcal{S}| \times |\mathcal{D}| = 120 \times 18 = 2160
-        \end{equation*}
-    \end{block}
-\end{frame}
+% COMENTADO: Diapositivas 15-16
+% \begin{frame}{P1: Propósito y Reproducibilidad}
+%     \small
+%     \begin{block}{Facilitación de Reproducibilidad}
+%         El diseño experimental documentado \textbf{permite la replicación exacta} del experimento y la comparación de metodologías alternativas de detección de daño sobre la misma base experimental:
+%         \begin{itemize}
+%             \item Especificación detallada de parámetros del AG
+%             \item Definición precisa de universo de elementos y niveles de daño
+%             \item Documentación de validación y métricas
+%         \end{itemize}
+%     \end{block}
+% \end{frame}
+%
+% \begin{frame}{P1: Fórmula del Diseño Experimental}
+%     \small
+%     \begin{block}{Configuración Paramétrica}
+%         El diseño experimental se define mediante el vector de configuración:
+%         \begin{equation*}
+%             \mathcal{E} = \{\mathcal{S}, \mathcal{D}, \mathcal{A}\}
+%         \end{equation*}
+%         donde:
+%         \begin{itemize}
+%             \item $\mathcal{S} = \{e_1, e_2, \ldots, e_{120}\}$ — conjunto de elementos estructurales
+%             \item $\mathcal{D} = \{d_1, d_2, \ldots, d_{18}\}$ — niveles de severidad ($d_i = 5i\%$ para $i=1,\ldots,18$)
+%             \item $\mathcal{A} = (\text{pop}, g_{\max}, p_m, p_c)$ — parámetros del AG
+%         \end{itemize}
+%
+%         Total de pares elemento-severidad:
+%         \begin{equation*}
+%             N_{\text{ejecuciones}} = |\mathcal{S}| \times |\mathcal{D}| = 120 \times 18 = 2160
+%         \end{equation*}
+%     \end{block}
+% \end{frame}
 
 \begin{frame}{P1: Gráficas — Distribución Experimental}
     \begin{figure}
@@ -293,10 +385,10 @@
 
 % ============= P3: PRUEBA DE WILCOXON =============
 
-\begin{frame}{P3: Prueba de Wilcoxon — ICD vs Baseline (Descripción)}
+\begin{frame}{P1: Prueba de Wilcoxon — ICD vs Baseline (Descripción)}
     \small
-    \begin{block}{Análisis No-Paramétrico de Significancia}
-        Se realiza una prueba de rangos de Wilcoxon (test no-paramétrico) para evaluar si el ICD fusionado es \textbf{estadísticamente superior} al mejor indicador individual ($DI_6$, baseline):
+    \begin{block}{Prueba de Significancia Estadística}
+        Se realiza la prueba de rangos con signo de Wilcoxon para evaluar si el ICD fusionado es \textbf{estadísticamente superior} al mejor indicador individual ($DI_6$, baseline):
         \begin{itemize}
             \item $H_0$ (hipótesis nula): Mediana del ICD = Mediana del $DI_6$
             \item $H_1$ (hipótesis alternativa): Mediana del ICD $>$ Mediana del $DI_6$
@@ -310,15 +402,20 @@
     \end{block}
 \end{frame}
 
-\begin{frame}{P3: Fórmula — Prueba de Wilcoxon}
+\begin{frame}{P1: Fórmula — Prueba de Wilcoxon}
     \footnotesize
     \begin{block}{Estadístico de Prueba}
         El estadístico de Wilcoxon se calcula como:
         \begin{equation*}
             W = \sum_{i=1}^{n} \text{sgn}(X_i - Y_i) \cdot R_i
         \end{equation*}
-        \vspace{-0.3cm}
-        donde: $X_i$ = ICD, $Y_i$ = $DI_6$ baseline, $R_i$ = rango de diferencias, $\text{sgn}(\cdot)$ = función signo
+        \vspace{0.25cm}
+        \textbf{Definiciones:}
+        \begin{itemize} \footnotesize
+            \item $X_i$ = ICD para el caso $i$; $Y_i$ = $DI_6$ baseline
+            \item $\text{sgn}(x)$ = función signo: devuelve $+1$ (ICD mejor), $-1$ ($DI_6$ mejor), $0$ (iguales)
+            \item $R_i$ = posición (rango) de $|X_i - Y_i|$ al ordenar todas las diferencias de menor a mayor
+        \end{itemize}
     \end{block}
 
     \vspace{0.15cm}
@@ -328,13 +425,13 @@
     \end{block}
 \end{frame}
 
-\begin{frame}{P3: Gráficas — Curvas POD (ICD vs Mejor DI)}
+\begin{frame}{P1: Gráficas — Curvas POD (ICD vs Mejor DI)}
     \centering
     \vspace{0.2cm}
     \includegraphics[width=0.85\textwidth, height=0.8\textheight, keepaspectratio]{P3_POD_ICD_vs_bestDI.png}
 \end{frame}
 
-\begin{frame}{P3: Gráficas — Comparación AUC/POD}
+\begin{frame}{P1: Gráficas — Comparación AUC/POD}
     \centering
     \vspace{0.2cm}
     \includegraphics[width=0.85\textwidth, height=0.8\textheight, keepaspectratio]{P3_AUC_POD_comparison.png}
@@ -342,7 +439,7 @@
 
 % ============= P4: ROBUSTEZ AL RUIDO AWGN =============
 
-\begin{frame}{P4: Robustez al Ruido AWGN (Descripción)}
+\begin{frame}{P2: Robustez al Ruido AWGN (Descripción)}
     \small
     \begin{block}{Simulación de Condiciones Experimentales Realistas}
         Se evalúa la estabilidad del ICD bajo \textbf{ruido blanco Gaussiano aditivo (AWGN)}, simulando las imperfecciones inherentes de sensores y equipos de medición en campo:
@@ -360,7 +457,7 @@
     \end{block}
 \end{frame}
 
-\begin{frame}{P4: Fórmula — SNR y Degradación}
+\begin{frame}{P2: Fórmula — SNR y Degradación}
     \small
     \begin{block}{Relación Señal-Ruido (SNR)}
         Se define formalmente como:
@@ -381,13 +478,13 @@
     \end{block}
 \end{frame}
 
-\begin{frame}{P4: Gráficas — AUC/ROC vs SNR}
+\begin{frame}{P2: Gráficas — AUC/ROC vs SNR}
     \centering
     \vspace{0.2cm}
     \includegraphics[width=0.85\textwidth, height=0.8\textheight, keepaspectratio]{P4_SNR_degradation.png}
 \end{frame}
 
-\begin{frame}{P4: Gráficas — Desempeño por Nivel SNR}
+\begin{frame}{P2: Gráficas — Desempeño por Nivel SNR}
     \centering
     \vspace{0.2cm}
     \includegraphics[width=0.85\textwidth, height=0.8\textheight, keepaspectratio]{P4_SNR_bars.png}
@@ -395,7 +492,7 @@
 
 % ============= P5: HUNGARIAN ALGORITHM & MÉTRICAS =============
 
-\begin{frame}{P5: Hungarian Algorithm y Métricas de Clasificación (Descripción)}
+\begin{frame}{P3: Hungarian Algorithm y Métricas de Clasificación (Descripción)}
     \small
     \begin{block}{Asignación Óptima de Detecciones}
         Se implementa el Algoritmo Húngaro (Hungarian Algorithm) para resolver el problema de asignación óptima:
@@ -418,7 +515,7 @@
     \end{block}
 \end{frame}
 
-\begin{frame}{P5: Fórmula — Hungarian Algorithm}
+\begin{frame}{P3: Fórmula — Hungarian Algorithm}
     \small
     \begin{block}{Problema de Asignación}
         Sea $\mathcal{P} = \{p_1, \ldots, p_m\}$ el conjunto de predicciones y $\mathcal{G} = \{g_1, \ldots, g_n\}$ el ground-truth. Se busca:
@@ -437,32 +534,32 @@
     \end{block}
 \end{frame}
 
-\begin{frame}{P5: Gráficas — Métricas de Clasificación (Corrosión)}
+\begin{frame}{P3: Gráficas — Métricas de Clasificación (Corrosión)}
     \centering
     \vspace{0.2cm}
     \includegraphics[width=0.85\textwidth, height=0.8\textheight, keepaspectratio]{P5_metrics_corrosion.png}
 \end{frame}
 
-\begin{frame}{P5: Gráficas — Métricas de Clasificación (Abolladura)}
+\begin{frame}{P3: Gráficas — Métricas de Clasificación (Abolladura)}
     \centering
     \vspace{0.2cm}
     \includegraphics[width=0.85\textwidth, height=0.8\textheight, keepaspectratio]{P5_metrics_denting.png}
 \end{frame}
 
-\begin{frame}{P5: Gráficas — Curvas ROC}
+\begin{frame}{P3: Gráficas — Curvas ROC}
     \centering
     \vspace{0.2cm}
     \includegraphics[width=0.85\textwidth, height=0.8\textheight, keepaspectratio]{P5_ROC_curves.png}
 \end{frame}
 
-\begin{frame}{P5: Gráficas — Distribución de Falsos Positivos}
+\begin{frame}{P3: Gráficas — Distribución de Falsos Positivos}
     \centering
     \vspace{0.2cm}
     \includegraphics[width=0.85\textwidth, height=0.8\textheight, keepaspectratio]{P5_FP_distribution.png}
 \end{frame}
 
-% --- SECCIÓN 4: MANUSCRITO AOR ---
-\section[Manuscrito AOR]{Manuscrito: Applied Ocean Research}
+% --- SECCIÓN 4: PUBLICACIÓN DE PAPER ---
+\section[Publicación]{Publicación de Paper}
 
 \begin{frame}{Estado de Publicación: Transición a AOR}
     \small
@@ -504,8 +601,8 @@
     \end{enumerate}
 \end{frame}
 
-% --- SECCIÓN 5: MANUSCRITO MS ---
-\section[Manuscrito MS]{Manuscrito Paralelo: Marine Structures}
+% --- Subsección Manuscrito MS (dentro de Publicación) ---
+\subsection{Estrategia Multi-Journal}
 
 \begin{frame}{Estrategia Multi-Journal (Junio 2026)}
     \small
@@ -531,8 +628,8 @@
     \end{block}
 \end{frame}
 
-% --- SECCIÓN 6: DESARROLLO DE PRODUCTO IMP ---
-\section[IMP]{Desarrollo de Producto - Instituto Mexicano del Petróleo}
+% --- SECCIÓN 6: TRÁMITES ADMINISTRATIVOS ---
+\section[Trámites]{Trámites Administrativos}
 
 \begin{frame}{Procesador de Fatiga SACS v1.0}
     \begin{columns}[c]
@@ -583,8 +680,8 @@
     \textbf{Licencia:} Código propietario del Instituto Mexicano del Petróleo.
 \end{frame}
 
-% --- SECCIÓN 7: PRÓRROGA ---
-\section[Prórroga]{Prórroga del Periodo Doctoral}
+% --- Subsección Prórroga (dentro de Trámites) ---
+\subsection{Prórroga del Periodo Doctoral}
 
 \begin{frame}{Solicitud de Prórroga: 1 Año Adicional}
     \small
