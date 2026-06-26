@@ -171,67 +171,257 @@
 % --- SECCIÓN 3: ANÁLISIS ESTADÍSTICO ---
 \section[Estadística]{Análisis Estadístico Avanzado}
 
-\begin{frame}{P1: Tabla de Diseño Experimental}
+\begin{frame}{Análisis Estadístico: 4 Puntos Clave}
+    \centering
+    \large
+    \vspace{0.5cm}
+
+    \begin{enumerate}
+        \setcounter{enumi}{0}
+        \item[\textbf{P1}] \textbf{Tabla de Diseño Experimental} \\
+        \small Caracterización formal del experimento (elementos, niveles de daño, ejecuciones)
+
+        \vspace{0.5cm}
+
+        \item[\textbf{P3}] \textbf{Prueba de Wilcoxon: ICD vs Baseline} \\
+        \small Significancia estadística del ICD fusionado vs mejor indicador individual
+
+        \vspace{0.5cm}
+
+        \item[\textbf{P4}] \textbf{Robustez al Ruido AWGN} \\
+        \small Desempeño del ICD bajo condiciones experimentales ruidosas (SNR variables)
+
+        \vspace{0.5cm}
+
+        \item[\textbf{P5}] \textbf{Métricas de Clasificación y Hungarian Algorithm} \\
+        \small Asignación óptima de detecciones y cálculo preciso de TP/FP
+    \end{enumerate}
+\end{frame}
+
+% ============= P1: TABLA DE DISEÑO EXPERIMENTAL =============
+
+\begin{frame}{P1: Tabla de Diseño Experimental (Descripción)}
     \small
-    \begin{block}{Caracterización Experimental (Marzo 2026)}
-        Se documentó formalmente el diseño experimental en una tabla consolidada que especifica:
+    \begin{block}{Caracterización Formal del Experimento}
+        Se documentó completamente el diseño experimental en una tabla de referencia que especifica:
         \begin{itemize}
-            \item 120 elementos de la estructura Jacket
-            \item 18 niveles de daño en incrementos de 5\% (5\% a 90\%)
-            \item 2,160 ejecuciones totales del AG por tipo de daño (Corrosión / Abolladura)
-            \item Parámetros del AG: población, generaciones, tasas de mutación/cruce
+            \item \textbf{Universo Estructural:} 120 elementos discretos de la plataforma Jacket
+            \item \textbf{Severidad de Daño:} 18 niveles en incrementos de 5\% (5\%, 10\%, \ldots, 90\%)
+            \item \textbf{Volumen Computacional:} 2,160 ejecuciones totales del AG (120 elem. × 18 niveles)
+            \item \textbf{Configuración del AG:} población inicial, número de generaciones, tasas de mutación/cruce
         \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{P1: Propósito y Reproducibilidad}
+    \small
+    \begin{block}{Facilitación de Reproducibilidad}
+        El diseño experimental documentado \textbf{permite la replicación exacta} del experimento y la comparación de metodologías alternativas de detección de daño sobre la misma base experimental:
+        \begin{itemize}
+            \item Especificación detallada de parámetros del AG
+            \item Definición precisa de universo de elementos y niveles de daño
+            \item Documentación de validación y métricas
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{P1: Fórmula del Diseño Experimental}
+    \small
+    \begin{block}{Configuración Paramétrica}
+        El diseño experimental se define mediante el vector de configuración:
+        \begin{equation*}
+            \mathcal{E} = \{\mathcal{S}, \mathcal{D}, \mathcal{A}\}
+        \end{equation*}
+        donde:
+        \begin{itemize}
+            \item $\mathcal{S} = \{e_1, e_2, \ldots, e_{120}\}$ — conjunto de elementos estructurales
+            \item $\mathcal{D} = \{d_1, d_2, \ldots, d_{18}\}$ — niveles de severidad ($d_i = 5i\%$ para $i=1,\ldots,18$)
+            \item $\mathcal{A} = (\text{pop}, g_{\max}, p_m, p_c)$ — parámetros del AG
+        \end{itemize}
+
+        Total de pares elemento-severidad:
+        \begin{equation*}
+            N_{\text{ejecuciones}} = |\mathcal{S}| \times |\mathcal{D}| = 120 \times 18 = 2160
+        \end{equation*}
+    \end{block}
+\end{frame}
+
+\begin{frame}{P1: Gráficas — Distribución Experimental}
+    \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth, height=0.77\textheight, keepaspectratio]{P1_experimental_design.png}
+        \caption{Distribución del diseño experimental: elementos y niveles de severidad}
+    \end{figure}
+\end{frame}
+
+% ============= P3: PRUEBA DE WILCOXON =============
+
+\begin{frame}{P3: Prueba de Wilcoxon — ICD vs Baseline (Descripción)}
+    \small
+    \begin{block}{Análisis No-Paramétrico de Significancia}
+        Se realiza una prueba de rangos de Wilcoxon (test no-paramétrico) para evaluar si el ICD fusionado es \textbf{estadísticamente superior} al mejor indicador individual ($DI_6$, baseline):
+        \begin{itemize}
+            \item $H_0$ (hipótesis nula): Mediana del ICD = Mediana del $DI_6$
+            \item $H_1$ (hipótesis alternativa): Mediana del ICD $>$ Mediana del $DI_6$
+        \end{itemize}
+    \end{block}
+
+    \vspace{0.3cm}
+
+    \begin{block}{Resultado Clave}
+        \textbf{$p$-value $< 0.01$} — confirmamos con significancia estadística del 99\% que el ICD fusionado supera significativamente al mejor indicador individual sobre todos los casos de daño.
+    \end{block}
+\end{frame}
+
+\begin{frame}{P3: Fórmula — Prueba de Wilcoxon}
+    \footnotesize
+    \begin{block}{Estadístico de Prueba}
+        El estadístico de Wilcoxon se calcula como:
+        \begin{equation*}
+            W = \sum_{i=1}^{n} \text{sgn}(X_i - Y_i) \cdot R_i
+        \end{equation*}
+        \vspace{-0.3cm}
+        donde: $X_i$ = ICD, $Y_i$ = $DI_6$ baseline, $R_i$ = rango de diferencias, $\text{sgn}(\cdot)$ = función signo
+    \end{block}
+
+    \vspace{0.15cm}
+
+    \begin{block}{P-value}
+        Si $p < 0.01$, se rechaza $H_0$ con confianza del 99\%.
+    \end{block}
+\end{frame}
+
+\begin{frame}{P3: Gráficas — Curvas POD (ICD vs Mejor DI)}
+    \centering
+    \vspace{0.2cm}
+    \includegraphics[width=0.85\textwidth, height=0.8\textheight, keepaspectratio]{P3_POD_ICD_vs_bestDI.png}
+\end{frame}
+
+\begin{frame}{P3: Gráficas — Comparación AUC/POD}
+    \centering
+    \vspace{0.2cm}
+    \includegraphics[width=0.85\textwidth, height=0.8\textheight, keepaspectratio]{P3_AUC_POD_comparison.png}
+\end{frame}
+
+% ============= P4: ROBUSTEZ AL RUIDO AWGN =============
+
+\begin{frame}{P4: Robustez al Ruido AWGN (Descripción)}
+    \small
+    \begin{block}{Simulación de Condiciones Experimentales Realistas}
+        Se evalúa la estabilidad del ICD bajo \textbf{ruido blanco Gaussiano aditivo (AWGN)}, simulando las imperfecciones inherentes de sensores y equipos de medición en campo:
+        \begin{itemize}
+            \item Se agrrega AWGN a las respuestas vibratorias sintéticas
+            \item Se varía la relación señal-ruido (SNR) en tres niveles: \textbf{20, 30, 40 dB}
+            \item Se mide la degradación de detectabilidad del ICD en cada nivel
+        \end{itemize}
+    \end{block}
+
+    \vspace{0.3cm}
+
+    \begin{block}{Hallazgo Crítico}
+        El ICD \textbf{mantiene detectabilidad aceptable} incluso bajo SNR = 20 dB (condición severamente ruidosa), demostrando robustez práctica para aplicaciones de campo.
+    \end{block}
+\end{frame}
+
+\begin{frame}{P4: Fórmula — SNR y Degradación}
+    \small
+    \begin{block}{Relación Señal-Ruido (SNR)}
+        Se define formalmente como:
+        \begin{equation*}
+            \text{SNR}_{dB} = 10 \log_{10} \left( \frac{P_{\text{señal}}}{P_{\text{ruido}}} \right)
+        \end{equation*}
+        donde $P_{\text{señal}}$ y $P_{\text{ruido}}$ son potencias (varianzas en el caso de señales de media cero).
     \end{block}
 
     \vspace{0.2cm}
 
-    \begin{block}{Reproducibilidad}
-        La tabla facilita que otros investigadores repliquen exactamente el mismo experimento y comparen metodologías alternativas de detección.
+    \begin{block}{Respuesta Ruidosa}
+        La respuesta vibradora contaminada es:
+        \begin{equation*}
+            \mathbf{y}_{\text{noisy}} = \mathbf{y}_{\text{limpia}} + \mathbf{n} \quad \text{donde} \quad \mathbf{n} \sim \mathcal{N}(0, \sigma_n^2)
+        \end{equation*}
+        y $\sigma_n^2$ se ajusta para lograr los SNR objetivo (20, 30, 40 dB).
     \end{block}
 \end{frame}
 
-\begin{frame}{P3 \& P4: Robustez Estadística del ICD}
-    \small
-    \begin{block}{P3: Prueba de Wilcoxon — ICD vs Baseline}
-        Se realiza un análisis no-paramétrico de significancia estadística comparando:
-        \begin{equation*}
-            H_0: \text{Mediana}(ICD) = \text{Mediana}(DI_6) \quad \text{vs} \quad H_1: \text{Mediana}(ICD) > \text{Mediana}(DI_6)
-        \end{equation*}
-        \vspace{0.1cm}
-        \textbf{Resultado:} $p$-value $< 0.01$ confirma que el ICD fusionado supera significativamente al mejor indicador individual.
-    \end{block}
-
-    \vspace{0.3cm}
-
-    \begin{block}{P4: Robustez al Ruido AWGN}
-        Se simulan condiciones experimentales reales agregando ruido blanco Gaussiano (AWGN) a las respuestas viratorias:
-        \begin{equation*}
-            \text{SNR} = 10 \log_{10} \left( \frac{P_{\text{señal}}}{P_{\text{ruido}}} \right) \in \{20, 30, 40\} \text{ dB}
-        \end{equation*}
-        \textbf{Hallazgo:} El ICD mantiene detectabilidad aceptable incluso bajo SNR = 20 dB (condición severamente ruidosa).
-    \end{block}
+\begin{frame}{P4: Gráficas — AUC/ROC vs SNR}
+    \centering
+    \vspace{0.2cm}
+    \includegraphics[width=0.85\textwidth, height=0.8\textheight, keepaspectratio]{P4_SNR_degradation.png}
 \end{frame}
 
-\begin{frame}{P5: Implementación del Hungarian Algorithm}
+\begin{frame}{P4: Gráficas — Desempeño por Nivel SNR}
+    \centering
+    \vspace{0.2cm}
+    \includegraphics[width=0.85\textwidth, height=0.8\textheight, keepaspectratio]{P4_SNR_bars.png}
+\end{frame}
+
+% ============= P5: HUNGARIAN ALGORITHM & MÉTRICAS =============
+
+\begin{frame}{P5: Hungarian Algorithm y Métricas de Clasificación (Descripción)}
     \small
     \begin{block}{Asignación Óptima de Detecciones}
-        Se implementa el Algoritmo Húngaro para resolver el problema de asignación bipartita:
-        \begin{equation*}
-            \min \sum_{i,j} \text{cost}(i,j) \quad \text{sujeto a} \quad \text{cada predicción} \Leftrightarrow \text{un ground-truth}
-        \end{equation*}
-        \vspace{0.1cm}
-        donde $\text{cost}(i,j) = \text{distancia Euclidiana entre nodo predicho } i \text{ y verdadero } j$.
+        Se implementa el Algoritmo Húngaro (Hungarian Algorithm) para resolver el problema de asignación óptima:
+        \begin{itemize}
+            \item Empareja de forma biunívoca cada \textbf{detección predicha} con un \textbf{daño verdadero} (ground-truth)
+            \item Minimiza la distancia topológica total
+            \item Evita doble-conteo y garantiza un mapeo uno-a-uno
+        \end{itemize}
     \end{block}
 
     \vspace{0.3cm}
 
-    \begin{block}{Beneficios}
-        \begin{itemize} \footnotesize
-            \item Evita doble-conteo de detecciones (un elemento no puede asignarse a dos detecciones).
-            \item Computa exactamente Verdaderos Positivos, Falsos Positivos, Falsos Negativos.
-            \item Justifica la penalización de FP en la formulación del ICD.
+    \begin{block}{Métricas Resultantes}
+        Con la asignación óptima se calculan:
+        \begin{itemize}
+            \item \textbf{TP (Verdaderos Positivos):} detecciones correctas
+            \item \textbf{FP (Falsos Positivos):} predicciones sin correspondencia
+            \item \textbf{Precision, Recall, F1:} indicadores de desempeño global
         \end{itemize}
     \end{block}
+\end{frame}
+
+\begin{frame}{P5: Fórmula — Hungarian Algorithm}
+    \small
+    \begin{block}{Problema de Asignación}
+        Sea $\mathcal{P} = \{p_1, \ldots, p_m\}$ el conjunto de predicciones y $\mathcal{G} = \{g_1, \ldots, g_n\}$ el ground-truth. Se busca:
+        \begin{equation*}
+            \sigma^* = \arg\min_{\sigma \in S_m} \sum_{i=1}^{\min(m,n)} d(p_i, g_{\sigma(i)})
+        \end{equation*}
+        donde $d(p_i, g_j)$ es la distancia Euclidiana entre nodos en el espacio 3D.
+    \end{block}
+
+    \vspace{0.2cm}
+
+    \begin{block}{Métricas de Clasificación}
+        \begin{equation*}
+            \text{Precision} = \frac{TP}{TP + FP}, \quad \text{Recall} = \frac{TP}{TP + FN}, \quad F1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}
+        \end{equation*}
+    \end{block}
+\end{frame}
+
+\begin{frame}{P5: Gráficas — Métricas de Clasificación (Corrosión)}
+    \centering
+    \vspace{0.2cm}
+    \includegraphics[width=0.85\textwidth, height=0.8\textheight, keepaspectratio]{P5_metrics_corrosion.png}
+\end{frame}
+
+\begin{frame}{P5: Gráficas — Métricas de Clasificación (Abolladura)}
+    \centering
+    \vspace{0.2cm}
+    \includegraphics[width=0.85\textwidth, height=0.8\textheight, keepaspectratio]{P5_metrics_denting.png}
+\end{frame}
+
+\begin{frame}{P5: Gráficas — Curvas ROC}
+    \centering
+    \vspace{0.2cm}
+    \includegraphics[width=0.85\textwidth, height=0.8\textheight, keepaspectratio]{P5_ROC_curves.png}
+\end{frame}
+
+\begin{frame}{P5: Gráficas — Distribución de Falsos Positivos}
+    \centering
+    \vspace{0.2cm}
+    \includegraphics[width=0.85\textwidth, height=0.8\textheight, keepaspectratio]{P5_FP_distribution.png}
 \end{frame}
 
 % --- SECCIÓN 4: MANUSCRITO AOR ---
