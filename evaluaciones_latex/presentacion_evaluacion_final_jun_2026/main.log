@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.3.18)  25 JUN 2026 23:02
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.3.18)  25 JUN 2026 23:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -942,7 +942,7 @@ Dictionary: translator-theorem-dictionary, Language: English
 LaTeX Info: Redefining \. on input line 40.
 LaTeX Info: Redefining \% on input line 40.
  (./main.nav)
-<./figs/imp/logo_imp.png, id=125, 390.45876pt x 182.6825pt>
+<./figs/imp/logo_imp.png, id=123, 390.45876pt x 182.6825pt>
 File: ./figs/imp/logo_imp.png Graphic file (type png)
 <use ./figs/imp/logo_imp.png>
 Package pdftex.def Info: ./figs/imp/logo_imp.png  used on input line 76.
@@ -959,7 +959,7 @@ Overfull \vbox (3.73393pt too high) detected at line 76
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./figs/imp/logo_imp.png>]
-<./figs/INTRO_005_metodologia.jpg, id=212, 1419.3025pt x 709.65125pt>
+<./figs/INTRO_005_metodologia.jpg, id=209, 1419.3025pt x 709.65125pt>
 File: ./figs/INTRO_005_metodologia.jpg Graphic file (type jpg)
 <use ./figs/INTRO_005_metodologia.jpg>
 Package pdftex.def Info: ./figs/INTRO_005_metodologia.jpg  used on input line 8
@@ -968,7 +968,7 @@ Package pdftex.def Info: ./figs/INTRO_005_metodologia.jpg  used on input line 8
  [2
 
  <./figs/INTRO_005_metodologia.jpg>]
-<./figs/INTRO_006_AG.jpg, id=350, 1502.61375pt x 669.50125pt>
+<./figs/INTRO_006_AG.jpg, id=344, 1502.61375pt x 669.50125pt>
 File: ./figs/INTRO_006_AG.jpg Graphic file (type jpg)
 <use ./figs/INTRO_006_AG.jpg>
 Package pdftex.def Info: ./figs/INTRO_006_AG.jpg  used on input line 89.
@@ -977,7 +977,7 @@ Package pdftex.def Info: ./figs/INTRO_006_AG.jpg  used on input line 89.
 
  <./figs/INTRO_006_AG.jpg>]
 <./figs/015_diagrama_como_funciona_el_AG_para_la_sumas_funcion_P_y_como_se_rela
-ciona_con_operadores_geneticos_del_AG.jpg, id=455, 1896.08376pt x 829.0975pt>
+ciona_con_operadores_geneticos_del_AG.jpg, id=447, 1896.08376pt x 829.0975pt>
 File: ./figs/015_diagrama_como_funciona_el_AG_para_la_sumas_funcion_P_y_como_se
 _relaciona_con_operadores_geneticos_del_AG.jpg Graphic file (type jpg)
 <use ./figs/015_diagrama_como_funciona_el_AG_para_la_sumas_funcion_P_y_como_se_
@@ -1025,7 +1025,7 @@ LaTeX Font Info:    Font shape `OT1/cmss/b/n' in size <14.4> not available
 [5
 
 ]
-<./figs/019_niveles_mudline.png, id=676, 397.485pt x 599.99156pt>
+<./figs/019_niveles_mudline.png, id=664, 397.485pt x 599.99156pt>
 File: ./figs/019_niveles_mudline.png Graphic file (type png)
 <use ./figs/019_niveles_mudline.png>
 Package pdftex.def Info: ./figs/019_niveles_mudline.png  used on input line 275
@@ -1034,63 +1034,80 @@ Package pdftex.def Info: ./figs/019_niveles_mudline.png  used on input line 275
  [6
 
  <./figs/019_niveles_mudline.png>]
+LaTeX Font Info:    Trying to load font information for TS1+cmss on input line 
+290.
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmss.fd
+File: ts1cmss.fd 2023/04/13 v2.5m Standard LaTeX font definitions
+) [7
+
+{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
+<./figs/P1_experimental_design.png, id=888, 1147.6476pt x 372.1905pt>
+File: ./figs/P1_experimental_design.png Graphic file (type png)
+<use ./figs/P1_experimental_design.png>
+Package pdftex.def Info: ./figs/P1_experimental_design.png  used on input line 
+332.
+(pdftex.def)             Requested size: 342.30061pt x 111.01057pt.
+ [8
+
+ <./figs/P1_experimental_design.png>]
 <./figs/resultados/abolladura/005_abolladura_comparativa_global_de_ICD_vs_daño
-_por_zona_mudline_medio_y_splash_zone.png, id=781, 1003.8303pt x 570.933pt>
+_por_zona_mudline_medio_y_splash_zone.png, id=993, 1003.8303pt x 570.933pt>
 File: ./figs/resultados/abolladura/005_abolladura_comparativa_global_de_ICD_vs_
 daño_por_zona_mudline_medio_y_splash_zone.png Graphic file (type png)
 <use ./figs/resultados/abolladura/005_abolladura_comparativa_global_de_ICD_vs_d
 año_por_zona_mudline_medio_y_splash_zone.png>
 Package pdftex.def Info: ./figs/resultados/abolladura/005_abolladura_comparativ
 a_global_de_ICD_vs_daño_por_zona_mudline_medio_y_splash_zone.png  used on inpu
-t line 283.
+t line 340.
 (pdftex.def)             Requested size: 325.8121pt x 185.30708pt.
 
-Overfull \vbox (14.15723pt too high) detected at line 283
+Overfull \vbox (14.15723pt too high) detected at line 340
  []
 
-[7
+[9
 
  <./figs/resultados/abolladura/005_abolladura_comparativa_global_de_ICD_vs_dañ
 o_por_zona_mudline_medio_y_splash_zone.png>]
 <./figs/resultados/abolladura/006_abolladura_ICD_por_zona_desglozadp_por_tipo_d
-e_elemento_desde_mudline_medio_y_splash_zone.png, id=889, 1293.633pt x 865.7946
-pt>
+e_elemento_desde_mudline_medio_y_splash_zone.png, id=1097, 1293.633pt x 865.794
+6pt>
 File: ./figs/resultados/abolladura/006_abolladura_ICD_por_zona_desglozadp_por_t
 ipo_de_elemento_desde_mudline_medio_y_splash_zone.png Graphic file (type png)
 <use ./figs/resultados/abolladura/006_abolladura_ICD_por_zona_desglozadp_por_ti
 po_de_elemento_desde_mudline_medio_y_splash_zone.png>
 Package pdftex.def Info: ./figs/resultados/abolladura/006_abolladura_ICD_por_zo
 na_desglozadp_por_tipo_de_elemento_desde_mudline_medio_y_splash_zone.png  used 
-on input line 291.
+on input line 348.
 (pdftex.def)             Requested size: 276.8821pt x 185.30992pt.
 
-Overfull \vbox (13.6045pt too high) detected at line 291
+Overfull \vbox (13.6045pt too high) detected at line 348
  []
 
-[8
+[10
 
  <./figs/resultados/abolladura/006_abolladura_ICD_por_zona_desglozadp_por_tipo_
 de_elemento_desde_mudline_medio_y_splash_zone.png>]
 <./figs/resultados/corrosion/005_corrosion_comparativa_global_de_ICD_vs_daño_p
-or_zona_mudline_medio_y_splash_zone.png, id=996, 1004.553pt x 570.933pt>
+or_zona_mudline_medio_y_splash_zone.png, id=1202, 1004.553pt x 570.933pt>
 File: ./figs/resultados/corrosion/005_corrosion_comparativa_global_de_ICD_vs_da
 ño_por_zona_mudline_medio_y_splash_zone.png Graphic file (type png)
 <use ./figs/resultados/corrosion/005_corrosion_comparativa_global_de_ICD_vs_da�
 �o_por_zona_mudline_medio_y_splash_zone.png>
 Package pdftex.def Info: ./figs/resultados/corrosion/005_corrosion_comparativa_
 global_de_ICD_vs_daño_por_zona_mudline_medio_y_splash_zone.png  used on input 
-line 299.
+line 356.
 (pdftex.def)             Requested size: 326.04666pt x 185.30708pt.
 
-Overfull \vbox (14.15723pt too high) detected at line 299
+Overfull \vbox (14.15723pt too high) detected at line 356
  []
 
-[9
+[11
 
  <./figs/resultados/corrosion/005_corrosion_comparativa_global_de_ICD_vs_daño_
 por_zona_mudline_medio_y_splash_zone.png>]
 <./figs/resultados/corrosion/006_corrosion_ICD_por_zona_desglozadp_por_tipo_de_
-elemento_desde_mudline_medio_y_splash_zone.png, id=1102, 1293.633pt x 865.7946p
+elemento_desde_mudline_medio_y_splash_zone.png, id=1306, 1293.633pt x 865.7946p
 t>
 File: ./figs/resultados/corrosion/006_corrosion_ICD_por_zona_desglozadp_por_tip
 o_de_elemento_desde_mudline_medio_y_splash_zone.png Graphic file (type png)
@@ -1098,82 +1115,66 @@ o_de_elemento_desde_mudline_medio_y_splash_zone.png Graphic file (type png)
 _de_elemento_desde_mudline_medio_y_splash_zone.png>
 Package pdftex.def Info: ./figs/resultados/corrosion/006_corrosion_ICD_por_zona
 _desglozadp_por_tipo_de_elemento_desde_mudline_medio_y_splash_zone.png  used on
- input line 307.
+ input line 364.
 (pdftex.def)             Requested size: 251.69485pt x 168.45276pt.
- [10
+ [12
 
  <./figs/resultados/corrosion/006_corrosion_ICD_por_zona_desglozadp_por_tipo_de
-_elemento_desde_mudline_medio_y_splash_zone.png>] [11
+_elemento_desde_mudline_medio_y_splash_zone.png>] [13
 
-]
-LaTeX Font Info:    Trying to load font information for TS1+cmss on input line 
-352.
-
-(/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmss.fd
-File: ts1cmss.fd 2023/04/13 v2.5m Standard LaTeX font definitions
-) [12
-
-{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
-<./figs/P1_experimental_design.png, id=1435, 1147.6476pt x 372.1905pt>
-File: ./figs/P1_experimental_design.png Graphic file (type png)
-<use ./figs/P1_experimental_design.png>
-Package pdftex.def Info: ./figs/P1_experimental_design.png  used on input line 
-394.
-(pdftex.def)             Requested size: 342.30061pt x 111.01057pt.
- [13
-
- <./figs/P1_experimental_design.png>] [14
+] [14
 
 ]
 LaTeX Font Info:    Font shape `OT1/cmss/b/n' in size <9> not available
-(Font)              Font shape `OT1/cmss/bx/n' tried instead on input line 436.
+(Font)              Font shape `OT1/cmss/bx/n' tried instead on input line 431.
 
 LaTeX Font Info:    Font shape `OT1/cmss/b/n' in size <6> not available
-(Font)              Font shape `OT1/cmss/bx/n' tried instead on input line 436.
+(Font)              Font shape `OT1/cmss/bx/n' tried instead on input line 431.
 
  [15
 
 ]
-<./figs/P3_POD_ICD_vs_bestDI.png, id=1804, 1147.1658pt x 733.5405pt>
+<./figs/P3_POD_ICD_vs_bestDI.png, id=1772, 1147.1658pt x 733.5405pt>
 File: ./figs/P3_POD_ICD_vs_bestDI.png Graphic file (type png)
 <use ./figs/P3_POD_ICD_vs_bestDI.png>
-Package pdftex.def Info: ./figs/P3_POD_ICD_vs_bestDI.png  used on input line 44
-2.
+Package pdftex.def Info: ./figs/P3_POD_ICD_vs_bestDI.png  used on input line 43
+7.
 (pdftex.def)             Requested size: 290.93927pt x 186.03738pt.
  [16
 
  <./figs/P3_POD_ICD_vs_bestDI.png>]
-<./figs/P3_AUC_POD_comparison.png, id=1911, 1002.6258pt x 357.2547pt>
+<./figs/P3_AUC_POD_comparison.png, id=1877, 1002.6258pt x 357.2547pt>
 File: ./figs/P3_AUC_POD_comparison.png Graphic file (type png)
 <use ./figs/P3_AUC_POD_comparison.png>
 Package pdftex.def Info: ./figs/P3_AUC_POD_comparison.png  used on input line 4
-48.
+43.
 (pdftex.def)             Requested size: 290.95291pt x 103.67207pt.
- [17
+
+[17
 
  <./figs/P3_AUC_POD_comparison.png>] [18
 
 ] [19
 
 ]
-<./figs/P4_SNR_degradation.png, id=2276, 1002.6258pt x 357.2547pt>
+<./figs/P4_SNR_degradation.png, id=2236, 1002.6258pt x 357.2547pt>
 File: ./figs/P4_SNR_degradation.png Graphic file (type png)
 <use ./figs/P4_SNR_degradation.png>
-Package pdftex.def Info: ./figs/P4_SNR_degradation.png  used on input line 495.
+Package pdftex.def Info: ./figs/P4_SNR_degradation.png  used on input line 490.
 
 (pdftex.def)             Requested size: 290.95291pt x 103.67207pt.
  [20
 
  <./figs/P4_SNR_degradation.png>]
-<./figs/P4_SNR_bars.png, id=2383, 1003.1076pt x 358.7001pt>
+<./figs/P4_SNR_bars.png, id=2341, 1003.1076pt x 358.7001pt>
 File: ./figs/P4_SNR_bars.png Graphic file (type png)
 <use ./figs/P4_SNR_bars.png>
-Package pdftex.def Info: ./figs/P4_SNR_bars.png  used on input line 501.
+Package pdftex.def Info: ./figs/P4_SNR_bars.png  used on input line 496.
 (pdftex.def)             Requested size: 290.95499pt x 104.04225pt.
  [21
 
  <./figs/P4_SNR_bars.png>]
-Overfull \vbox (34.1793pt too high) detected at line 526
+Overfull \vbox (34.1793pt too high) detected at line 521
  []
 
 [22
@@ -1181,42 +1182,42 @@ Overfull \vbox (34.1793pt too high) detected at line 526
 ] [23
 
 ]
-<./figs/P5_metrics_corrosion.png, id=2747, 1075.6185pt x 368.3361pt>
+<./figs/P5_metrics_corrosion.png, id=2699, 1075.6185pt x 368.3361pt>
 File: ./figs/P5_metrics_corrosion.png Graphic file (type png)
 <use ./figs/P5_metrics_corrosion.png>
-Package pdftex.def Info: ./figs/P5_metrics_corrosion.png  used on input line 55
-1.
+Package pdftex.def Info: ./figs/P5_metrics_corrosion.png  used on input line 54
+6.
 (pdftex.def)             Requested size: 290.94608pt x 99.63191pt.
  [24
 
  <./figs/P5_metrics_corrosion.png>]
-<./figs/P5_metrics_denting.png, id=2854, 1075.6185pt x 368.3361pt>
+<./figs/P5_metrics_denting.png, id=2803, 1075.6185pt x 368.3361pt>
 File: ./figs/P5_metrics_denting.png Graphic file (type png)
 <use ./figs/P5_metrics_denting.png>
-Package pdftex.def Info: ./figs/P5_metrics_denting.png  used on input line 557.
+Package pdftex.def Info: ./figs/P5_metrics_denting.png  used on input line 552.
 
 (pdftex.def)             Requested size: 290.94608pt x 99.63191pt.
  [25
 
  <./figs/P5_metrics_denting.png>]
-<./figs/P5_ROC_curves.png, id=2961, 1003.1076pt x 428.5611pt>
+<./figs/P5_ROC_curves.png, id=2909, 1003.1076pt x 428.5611pt>
 File: ./figs/P5_ROC_curves.png Graphic file (type png)
 <use ./figs/P5_ROC_curves.png>
-Package pdftex.def Info: ./figs/P5_ROC_curves.png  used on input line 563.
+Package pdftex.def Info: ./figs/P5_ROC_curves.png  used on input line 558.
 (pdftex.def)             Requested size: 290.95499pt x 124.30568pt.
  [26
 
  <./figs/P5_ROC_curves.png>]
-<./figs/P5_FP_distribution.png, id=3068, 1001.4213pt x 357.7365pt>
+<./figs/P5_FP_distribution.png, id=3014, 1001.4213pt x 357.7365pt>
 File: ./figs/P5_FP_distribution.png Graphic file (type png)
 <use ./figs/P5_FP_distribution.png>
-Package pdftex.def Info: ./figs/P5_FP_distribution.png  used on input line 569.
+Package pdftex.def Info: ./figs/P5_FP_distribution.png  used on input line 564.
 
 (pdftex.def)             Requested size: 290.95483pt x 103.93742pt.
  [27
 
  <./figs/P5_FP_distribution.png>]
-Overfull \vbox (30.56824pt too high) detected at line 594
+Overfull \vbox (30.56824pt too high) detected at line 589
  []
 
 [28
@@ -1224,26 +1225,26 @@ Overfull \vbox (30.56824pt too high) detected at line 594
 ] [29
 
 ]
-Overfull \vbox (72.02296pt too high) detected at line 639
+Overfull \vbox (72.02296pt too high) detected at line 634
  []
 
 [30
 
 ]
 LaTeX Font Info:    Font shape `OT1/cmss/b/n' in size <10.95> not available
-(Font)              Font shape `OT1/cmss/bx/n' tried instead on input line 666.
+(Font)              Font shape `OT1/cmss/bx/n' tried instead on input line 661.
 
 LaTeX Font Info:    Font shape `OT1/cmss/b/n' in size <8> not available
-(Font)              Font shape `OT1/cmss/bx/n' tried instead on input line 666.
+(Font)              Font shape `OT1/cmss/bx/n' tried instead on input line 661.
 
 File: ./figs/imp/logo_imp.png Graphic file (type png)
 <use ./figs/imp/logo_imp.png>
-Package pdftex.def Info: ./figs/imp/logo_imp.png  used on input line 666.
+Package pdftex.def Info: ./figs/imp/logo_imp.png  used on input line 661.
 (pdftex.def)             Requested size: 136.91862pt x 64.05968pt.
  [31
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 691--691
+Underfull \hbox (badness 10000) in paragraph at lines 686--686
 []|\OT1/cmss/m/n/9 PyInstaller (Win-dows \OT1/cmtt/m/n/9 .exe\OT1/cmss/m/n/9 ),
 
  []
@@ -1251,7 +1252,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 691--691
 [32
 
 ]
-Overfull \vbox (52.60274pt too high) detected at line 724
+Overfull \vbox (52.60274pt too high) detected at line 719
  []
 
 [33
@@ -1278,60 +1279,42 @@ L3 programming layer <2024-01-22>
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-
-Package rerunfilecheck Warning: File `main.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `main.out':
-(rerunfilecheck)             Before: 0B11637DAE40C9F6E427913926F23C16;1557
-(rerunfilecheck)             After:  52E5E1A32F1CA682E96F601A27135BBA;1557.
+Package rerunfilecheck Info: File `main.out' has not changed.
+(rerunfilecheck)             Checksum: 52E5E1A32F1CA682E96F601A27135BBA;1557.
  ) 
 Here is how much of TeX's memory you used:
- 23927 strings out of 476047
- 468902 string characters out of 5792075
+ 23922 strings out of 476047
+ 468844 string characters out of 5792075
  1962975 words of memory out of 5000000
- 45357 multiletter control sequences out of 15000+600000
+ 45355 multiletter control sequences out of 15000+600000
  582709 words of font info for 115 fonts, out of 8000000 for 9000
  85 hyphenation exceptions out of 8191
  128i,19n,123p,379b,816s stack positions out of 10000i,1000n,20000p,200000b,200000s
-
-pdfTeX warning (dest): name{Navigation34} has been referenced but does not exis
-t, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{Outline0.6.1.34} has been referenced but does not e
-xist, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{Outline0.5.1.31} has been referenced but does not e
-xist, replaced by a fixed one
-
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/
-share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex9.pfb></usr/sh
-are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/te
-xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-di
-st/fonts/type1/public/amsfonts/cmextra/cmmib9.pfb></usr/share/texlive/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/font
-s/type1/public/amsfonts/cm/cmss12.pfb></usr/share/texlive/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmss9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
-nts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmssi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-ssi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi8.
-pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi9.pfb></
-usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/sh
-are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/tex
-live/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmtt9.pfb></usr/share/texlive/texmf-dist/fonts
-/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texmf/fonts/type1/public/
-cm-super/sfss1000.pfb>
-Output written on main.pdf (33 pages, 3900180 bytes).
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex9.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/
+texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-
+dist/fonts/type1/public/amsfonts/cmextra/cmmib9.pfb></usr/share/texlive/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmss12.pfb></usr/share/texlive/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmss9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmssi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmssi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi
+8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi9.pfb>
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/t
+exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmtt9.pfb></usr/share/texlive/texmf-dist/fon
+ts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texmf/fonts/type1/publi
+c/cm-super/sfss1000.pfb>
+Output written on main.pdf (33 pages, 3898512 bytes).
 PDF statistics:
- 3982 PDF objects out of 4296 (max. 8388607)
- 2344 compressed objects within 24 object streams
- 78 named destinations out of 1000 (max. 500000)
+ 3913 PDF objects out of 4296 (max. 8388607)
+ 2309 compressed objects within 24 object streams
+ 75 named destinations out of 1000 (max. 500000)
  1013 words of extra memory for PDF output out of 10000 (max. 10000000)
 

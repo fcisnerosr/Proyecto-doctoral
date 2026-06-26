@@ -2,7 +2,7 @@
 \beamer@sectionintoc {1}{Introducción y Avances MATLAB}{2}{0}{1}
 \beamer@sectionintoc {2}{Metodología: Indicadores Vibratorios e ICD}{4}{0}{2}
 \beamer@sectionintoc {3}{Nuevos Resultados de ICD}{6}{0}{3}
-\beamer@sectionintoc {4}{Análisis Estadístico Avanzado}{11}{0}{4}
+\beamer@sectionintoc {4}{Análisis Estadístico Avanzado}{13}{0}{4}
 \beamer@sectionintoc {5}{Publicación de Paper}{28}{0}{5}
 \beamer@subsectionintoc {5}{1}{Estrategia Multi-Journal}{30}{0}{5}
 \beamer@sectionintoc {6}{Trámites Administrativos}{31}{0}{6}
