@@ -189,25 +189,25 @@
 % \end{frame}
 
 % Slide 9 (comentado)
-% \begin{frame}{Formulación Matemática: Indicadores Modales ($DI_1 - DI_3$)}
-%     \small
-%     \textbf{1. COMAC ($DI_1$):}
-%     Evalúa la correlación punto a punto de los modos. (1 = Correlación perfecta, 0 = Sin correlación).
-%     \begin{equation}
-%         \text{DI}_1(j) = 1 - \sqrt{ \frac{ \left( \sum_{i=1}^{N_m} |\phi_{u,ij}| |\phi_{d,ij}| \right)^2 }{ \sum_{i=1}^{N_m} \phi_{u,ij}^2 \sum_{i=1}^{N_m} \phi_{d,ij}^2 } }
-%     \end{equation}
-%
-%     \vspace{0.2cm}
-%
-%     \textbf{2. Diferencia Absoluta ($DI_2$) y Razón Relativa ($DI_3$):}
-%     Cuantifican el desplazamiento de los vectores modales $\boldsymbol{\phi}$.
-%     \begin{align}
-%         \text{DI}_2(j) &= \mathcal{R}_j \left( \sum_{i=1}^{N_m} | \boldsymbol{\phi}_{u,i} - \boldsymbol{\phi}_{d,i} | \right) \\
-%         \text{DI}_3(j) &= \mathcal{R}_j \left( \sum_{i=1}^{N_m} \left| \frac{\boldsymbol{\phi}_{d,i}}{\boldsymbol{\phi}_{u,i} + \epsilon} - 1 \right| \right)
-%     \end{align}
-%
-%     \footnotesize \textit{*Donde $u$ es estado intacto, $d$ dañado y $\epsilon$ es un factor de regularización.}
-% \end{frame}
+\begin{frame}{Formulación Matemática: Indicadores Modales ($DI_1 - DI_3$)}
+    \small
+    \textbf{1. COMAC ($DI_1$):}
+    Evalúa la correlación punto a punto de los modos. (1 = Correlación perfecta, 0 = Sin correlación).
+    \begin{equation}
+        \text{DI}_1(j) = 1 - \sqrt{ \frac{ \left( \sum_{i=1}^{N_m} |\phi_{u,ij}| |\phi_{d,ij}| \right)^2 }{ \sum_{i=1}^{N_m} \phi_{u,ij}^2 \sum_{i=1}^{N_m} \phi_{d,ij}^2 } }
+    \end{equation}
+
+    \vspace{0.2cm}
+
+    \textbf{2. Diferencia Absoluta ($DI_2$) y Razón Relativa ($DI_3$):}
+    Cuantifican el desplazamiento de los vectores modales $\boldsymbol{\phi}$.
+    \begin{align}
+        \text{DI}_2(j) &= \mathcal{R}_j \left( \sum_{i=1}^{N_m} | \boldsymbol{\phi}_{u,i} - \boldsymbol{\phi}_{d,i} | \right) \\
+        \text{DI}_3(j) &= \mathcal{R}_j \left( \sum_{i=1}^{N_m} \left| \frac{\boldsymbol{\phi}_{d,i}}{\boldsymbol{\phi}_{u,i} + \epsilon} - 1 \right| \right)
+    \end{align}
+
+    \footnotesize \textit{*Donde $u$ es estado intacto, $d$ dañado y $\epsilon$ es un factor de regularización.}
+\end{frame}
 
 \begin{frame}{Formulación Matemática: Flexibilidad y Estadística ($DI_4 - DI_8$)}
     \small
@@ -442,10 +442,9 @@
             \hat{p} = \frac{p + \frac{z^2}{2n}}{1 + \frac{z^2}{n}} \pm \frac{z\sqrt{\frac{p(1-p)}{n} + \frac{z^2}{4n^2}}}{1 + \frac{z^2}{n}}, \quad z = 1.96
         \end{equation*}
     \end{block}
-    \vspace{0.1cm}
-    \begin{block}{Comparación}
-        Se compara la curva POD del \textbf{ICD fusionado} contra el \textbf{mejor DI individual} ($DI_6$, identificado por máxima AUC-ROC). \textit{Una curva más alta = el método detecta daños con mayor probabilidad.}
-    \end{block}
+    \vspace{0.15cm}
+    \footnotesize
+    \textbf{Notas:} El \textbf{intervalo de Wilson (1927)} es el estándar recomendado (ASTM E2546) para CIs de proporciones en SHM/NDT, robusto con muestras pequeñas o proporciones cercanas a 0 o 1. \quad $z=1.96$ es el valor crítico de la normal estándar para 95\% de confianza (valor fijo y universal).
 \end{frame}
 
 \begin{frame}{P1: Gráficas — Curvas POD (ICD vs Mejor DI)}
@@ -607,10 +606,6 @@
 
         \column{0.5\textwidth}
         \centering
-        \includegraphics[width=0.8\linewidth, keepaspectratio]{logo_imp.png}
-
-        \vspace{1cm}
-
         \small
         \textit{Requisito de titulación independiente del proyecto doctoral}
     \end{columns}
@@ -618,27 +613,27 @@
 
 \begin{frame}{Procesador SACS v1.0: 7 Etapas Completadas}
     \footnotesize
-    \begin{table}
-        \centering
-        \begin{tabular}{p{2.5cm}p{5cm}p{1.5cm}}
-            \toprule
-            \textbf{Etapa} & \textbf{Funcionalidad} & \textbf{Tests} \\
-            \midrule
-            \rowcolor{green!20} 1. Limpieza & Normalización Fortran, encoding, filtrado & 31 \checkmark \\
-            \rowcolor{green!20} 2. Parsing & Máquina de estados, JOINTs alfanuméricos & 16 \checkmark \\
-            \rowcolor{green!20} 3. Consolidación & Suma NumPy, clasificación de riesgo & 46 \checkmark \\
-            \rowcolor{green!20} 4. GUI & Tkinter modo oscuro, tabla colorizada & — \\
-            \rowcolor{green!20} 5. Excel & Exportación \texttt{.xlsx} con estilos profesionales & — \\
-            \rowcolor{green!20} 6. Testing & 93/93 tests pasando (pytest) & \checkmark \checkmark \checkmark \\
-            \rowcolor{green!20} 7. Empaquetado & PyInstaller (Windows \texttt{.exe}), \texttt{run\_app.sh} (Linux/Mac) & \checkmark \\
-            \bottomrule
-        \end{tabular}
-    \end{table}
-
-    \vspace{0.3cm}
-
-    \textbf{Release:} v1.0.0 liberada el 18 de mayo de 2026. \\
-    \textbf{Licencia:} Código propietario del Instituto Mexicano del Petróleo.
+%    \begin{table}
+%        \centering
+%        \begin{tabular}{p{2.5cm}p{5cm}p{1.5cm}}
+%            \toprule
+%            \textbf{Etapa} & \textbf{Funcionalidad} & \textbf{Tests} \\
+%            \midrule
+%            \rowcolor{green!20} 1. Limpieza & Normalización Fortran, encoding, filtrado & 31 \checkmark \\
+%            \rowcolor{green!20} 2. Parsing & Máquina de estados, JOINTs alfanuméricos & 16 \checkmark \\
+%            \rowcolor{green!20} 3. Consolidación & Suma NumPy, clasificación de riesgo & 46 \checkmark \\
+%            \rowcolor{green!20} 4. GUI & Tkinter modo oscuro, tabla colorizada & — \\
+%            \rowcolor{green!20} 5. Excel & Exportación \texttt{.xlsx} con estilos profesionales & — \\
+%            \rowcolor{green!20} 6. Testing & 93/93 tests pasando (pytest) & \checkmark \checkmark \checkmark \\
+%            \rowcolor{green!20} 7. Empaquetado & PyInstaller (Windows \texttt{.exe}), \texttt{run\_app.sh} (Linux/Mac) & \checkmark \\
+%            \bottomrule
+%        \end{tabular}
+%    \end{table}
+%
+%    \vspace{0.3cm}
+%
+%    \textbf{Release:} v1.0.0 liberada el 18 de mayo de 2026. \\
+%    \textbf{Licencia:} Código propietario del Instituto Mexicano del Petróleo.
 \end{frame}
 
 % --- Subsección Prórroga (dentro de Trámites) ---
@@ -653,25 +648,32 @@
     \vspace{0.3cm}
 
     \begin{alertblock}{Temporalidad: Cercano al Vencimiento}
-        \small
-        \textbf{Aclaración importante para el comité:}
-        \vspace{0.1cm}
-
-        Es \textbf{normal y procedimentalmente correcto} solicitar la prórroga \textbf{cercano al vencimiento} del periodo, NO con meses de anticipación. Esto responde a:
-        \begin{itemize} \footnotesize
-            \item Trámite administrativo que requiere fecha de inicio claro.
-            \item Evaluación realista del avance en función del tiempo remanente.
-            \item Evitar compromisos prematuros basados en estimaciones inciertas.
-        \end{itemize}
-        \vspace{0.1cm}
-        Este cronograma NO implica retraso inesperado, sino cumplimiento de protocolos estándar de Posgrado.
+        \footnotesize
+        Es \textbf{normal y procedimentalmente correcto} solicitar la prórroga cercano al vencimiento. Esto responde a protocolos estándar de Posgrado (fecha de inicio claro, evaluación realista, evitar compromisos prematuros).
     \end{alertblock}
 
-    \vspace{0.3cm}
+    \vspace{0.15cm}
 
     \begin{block}{Ventana de Defensa Estimada}
         Con esta prórroga, la defensa de tesis y publicación del artículo en AOR se proyecta para: \textbf{Octubre -- Diciembre 2026}.
     \end{block}
+\end{frame}
+
+\begin{frame}{Estado de Actividades: Hito Actual (Junio 2026)}
+    \centering
+    \small
+    \vspace{0.3cm}
+    \begin{tabular}{p{3.8cm}p{2cm}}
+        \toprule
+        \textbf{Actividad} & \textbf{Estado} \\
+        \midrule
+        Escritura de tesis (borrador) & \textcolor{green!70}{Completado} \\
+        Artículo Marine Structures & \textcolor{green!70}{Completado} \\
+        Segunda participación & \textcolor{green!70}{Completado} \\
+        Tercera participación IMP & \textcolor{orange}{En proceso} \\
+        Aceptación artículo & \textcolor{orange}{En curso} \\
+        \bottomrule
+    \end{tabular}
 \end{frame}
 
 \end{document}
